@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ideen-Archiv – Das Atelier der Radikalen Mitte</title>
+  <meta name="description" content="Denkproben, Widerspruchssalon-Themen und Beiträge aus der Community.">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="inner">
+      <div class="brand">
+        <span class="brand-mark">NICHT ANERKANNT</span>
+        <span>Das Atelier der Radikalen Mitte</span>
+      </div>
+      <nav class="header-links" aria-label="Navigation">
+        <a href="../index.html">Startseite</a>
+        <a href="ideen-archiv.html">Ideen-Archiv</a>
+        <a href="medien.html">Medien</a>
+        <a href="roadmap.html">Roadmap</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="page-hero" aria-labelledby="archiv-title">
+      <p class="eyebrow">Archiv / Community / Denkproben</p>
+      <h1 id="archiv-title">Ideen-Archiv</h1>
+      <p class="subtitle">Denkproben, Widerspruchssalon-Themen und Beiträge aus der Community</p>
+    </section>
+
+    <!-- Explanation -->
+    <section class="section">
+      <div class="section-label">Über das Archiv</div>
+      <div class="section-body">
+        <p>Dieses Archiv lebt von Beiträgen. Jede Idee, jede Denkprobe, jeder Widerspruch kann über einen Pull Request auf GitHub eingereicht werden.</p>
+      </div>
+    </section>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <button class="active" data-filter="alle">Alle</button>
+      <button data-filter="denkprobe">Denkproben</button>
+      <button data-filter="widerspruchssalon">Widerspruchssalon</button>
+      <button data-filter="community">Community</button>
+    </div>
+
+    <!-- Archiv Grid -->
+    <div class="archiv-grid" id="archiv-grid">
+
+      <article class="archiv-card" data-category="denkprobe">
+        <span class="tag tag--denkprobe">Denkprobe</span>
+        <h3>Kann KI urteilen – oder nur berechnen?</h3>
+        <p>Eine Denkprobe über die Grenze zwischen statistischer Mustererkennung und echtem Urteilsvermögen. Wo endet die Maschine, wo beginnt der Mensch?</p>
+      </article>
+
+      <article class="archiv-card" data-category="widerspruchssalon">
+        <span class="tag tag--widerspruchssalon">Widerspruchssalon</span>
+        <h3>Radikale Mitte in der Klimadebatte</h3>
+        <p>Zwischen Aktivismus und Verleugnung: Gibt es eine Haltung, die Widersprüche aushält und trotzdem handlungsfähig bleibt?</p>
+      </article>
+
+      <article class="archiv-card" data-category="community">
+        <span class="tag tag--community">Community</span>
+        <h3>Bildung ohne Abschluss: Utopie oder Notwendigkeit?</h3>
+        <p>Ein Community-Beitrag zur Frage, ob formale Zertifikate noch zeitgemäß sind – oder ob Urteilskraft andere Nachweise braucht.</p>
+      </article>
+
+      <article class="archiv-card" data-category="denkprobe">
+        <span class="tag tag--denkprobe">Denkprobe</span>
+        <h3>Ist Neutralität feige oder weise?</h3>
+        <p>Die Denkprobe untersucht, ob das Verweigern einer klaren Position Schwäche verrät – oder eine höhere Form der Differenzierung darstellt.</p>
+      </article>
+
+      <article class="archiv-card" data-category="widerspruchssalon">
+        <span class="tag tag--widerspruchssalon">Widerspruchssalon</span>
+        <h3>KI als Sparringspartner: Chance oder Illusion?</h3>
+        <p>Ein Salon über die Frage, ob KI uns wirklich besser denken lässt – oder ob sie nur den Anschein von Tiefe erzeugt.</p>
+      </article>
+
+      <article class="archiv-card" data-category="community">
+        <span class="tag tag--community">Community</span>
+        <h3>Was bedeutet Handlungsfähigkeit in der Überforderung?</h3>
+        <p>Wenn alles gleichzeitig drängt und nichts eindeutig ist: Wie entsteht Handlung, die nicht bloß Reflex ist?</p>
+      </article>
+
+    </div>
+
+    <!-- Beitragen -->
+    <section class="section">
+      <div class="section-label">Beitragen</div>
+      <div class="section-body">
+        <h2>Deine Idee einreichen</h2>
+        <p>Das Ideen-Archiv ist ein offenes System. Du kannst Denkproben, Widerspruchssalon-Themen oder eigene Beiträge über einen Pull Request auf GitHub einreichen.</p>
+        <p><strong>So funktioniert es:</strong></p>
+        <ol>
+          <li>Forke das Repository auf GitHub.</li>
+          <li>Erstelle eine neue Datei im Ordner <code>data/</code> mit deiner Idee.</li>
+          <li>Beschreibe deine Denkprobe, dein Thema oder deinen Widerspruch.</li>
+          <li>Öffne einen Pull Request mit einer kurzen Begründung.</li>
+        </ol>
+        <div class="actions" style="margin-top: 1.2rem;">
+          <a class="button button--accent" href="https://github.com/Wolf-Achtung/nicht-anerkannt" target="_blank" rel="noopener">Zum GitHub-Repository</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <h2>Nicht mehr Stoff. Mehr Urteil.</h2>
+        <p>Ein Archiv für Ideen, die nicht in Lager passen.</p>
+      </div>
+      <div class="footer-stamp">Extrem mittig</div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+  <script>
+    // Simple filter logic for archiv cards
+    (function () {
+      var buttons = document.querySelectorAll('.filter-bar button');
+      var cards = document.querySelectorAll('.archiv-card');
+
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          buttons.forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          var filter = btn.getAttribute('data-filter');
+
+          cards.forEach(function (card) {
+            if (filter === 'alle' || card.getAttribute('data-category') === filter) {
+              card.style.display = '';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    }());
+  </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "messages": [
+    {
+      "type": "update",
+      "text": "Nächster Widerspruchssalon: Thema wird demnächst bekanntgegeben",
+      "date": "2026-04-05"
+    },
+    {
+      "type": "zitat",
+      "text": "\"Die Radikale Mitte vermittelt nicht zwischen allem. Sie unterscheidet.\"",
+      "date": "2026-04-01"
+    },
+    {
+      "type": "update",
+      "text": "Neue Denkprobe im Ideen-Archiv: Wie verändert KI unser Urteilsvermögen?",
+      "date": "2026-03-28"
+    },
+    {
+      "type": "zitat",
+      "text": "\"Wer mit KI nur Output produziert, wird austauschbar.\"",
+      "date": "2026-03-25"
+    },
+    {
+      "type": "update",
+      "text": "Das Atelier sucht Mitdenker:innen – Pull Requests willkommen!",
+      "date": "2026-03-20"
+    },
+    {
+      "type": "zitat",
+      "text": "\"Spiel ist kein Gegensatz zur Ernsthaftigkeit.\"",
+      "date": "2026-03-15"
+    },
+    {
+      "type": "update",
+      "text": "Manifest Version 1.0 veröffentlicht – Feedback erwünscht",
+      "date": "2026-03-10"
+    }
+  ]
+}
