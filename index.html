@@ -20,6 +20,7 @@
         <a href="#mitte">Radikale Mitte</a>
         <a href="#atelier">Atelier</a>
         <a href="#einladung">Einladung</a>
+        <a href="#score">Denkprofil</a>
         <a href="pages/ideen-archiv.html">Ideen-Archiv</a>
         <a href="pages/werkstatt.html">KI-Werkstatt</a>
         <a href="pages/medien.html">Medien</a>
@@ -105,6 +106,18 @@
             <button class="live-ticker-next" id="ticker-next" type="button" aria-label="Nächste Nachricht">&#8594;</button>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- TÄGLICHE DENKPROBE                                         -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="section" id="daily">
+      <div class="section-label">Tägliche Denkprobe</div>
+      <div class="section-body">
+        <h2>Denkprobe des Tages</h2>
+        <p>Jeden Tag eine neue Frage, die nicht gegoogelt werden kann. Beantworte sie in einem Satz.</p>
+        <div id="daily-container" aria-live="polite"></div>
       </div>
     </section>
 
@@ -286,6 +299,17 @@
         </div>
       </div>
     </section>
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- ATELIER-SCORE                                              -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="section" id="score">
+      <div class="section-label">Denkprofil</div>
+      <div class="section-body">
+        <h2>Dein Atelier-Score</h2>
+        <p>Kein Gamification-Score, sondern ein Denkprofil. Fünf Dimensionen zeigen, wie du die Werkzeuge des Ateliers nutzt – nicht wie viel, sondern wie breit und tief.</p>
+        <div id="atelier-score-widget" aria-live="polite"></div>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
@@ -305,5 +329,8 @@
   <script src="assets/js/ticker.js"></script>
   <script src="assets/js/chat.js"></script>
   <script src="assets/js/quiz.js"></script>
+  <script src="assets/js/daily.js"></script>
+  <script src="assets/js/sharecard.js"></script>
+  <script src="assets/js/score.js"></script>
 </body>
 </html>

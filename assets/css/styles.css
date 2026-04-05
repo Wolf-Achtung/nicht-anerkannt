@@ -1449,6 +1449,338 @@ body.read-mode::before {
   }
 }
 
+/* ─── Daily Challenge ─── */
+.daily-card {
+  border: 2px solid var(--ink);
+  box-shadow: 0.4rem 0.4rem 0 rgba(17,17,17,0.9);
+  background: var(--paper);
+  padding: 1.5rem 1.8rem;
+  transform: rotate(-0.4deg);
+}
+
+.daily-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.daily-badge {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fff;
+  background: var(--accent);
+  padding: 0.3rem 0.7rem;
+}
+
+.daily-date {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.daily-titel {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  margin: 0.5rem 0;
+}
+
+.daily-impuls {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.daily-frage {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 1.2rem;
+}
+
+.daily-answer-area {
+  display: flex;
+  gap: 0.6rem;
+  align-items: stretch;
+}
+
+.daily-input {
+  flex: 1;
+  font-family: var(--serif);
+  font-size: 1rem;
+  padding: 0.7rem 1rem;
+  border: 2px solid var(--ink);
+  background: #fff;
+  outline: none;
+}
+
+.daily-input:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.daily-submit {
+  white-space: nowrap;
+}
+
+.daily-saved {
+  padding: 1rem;
+  background: rgba(190,30,30,0.05);
+  border-left: 3px solid var(--accent);
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.daily-saved-label {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.daily-fallback {
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  color: var(--muted);
+  padding: 1rem 0;
+}
+
+/* ─── Argumentkarte ─── */
+.argmap {
+  margin-top: 1rem;
+}
+
+.argmap-these {
+  text-align: center;
+  border: 3px solid var(--ink);
+  box-shadow: 0.3rem 0.3rem 0 rgba(17,17,17,0.9);
+  background: var(--paper);
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.argmap-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.argmap-col-title {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+  padding: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.argmap-col-title--pro {
+  color: #1a7a3a;
+  border-bottom: 2px solid #1a7a3a;
+}
+
+.argmap-col-title--contra {
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+}
+
+.argmap-node--pro {
+  border-left: 3px solid #1a7a3a;
+}
+
+.argmap-node--contra {
+  border-left: 3px solid var(--accent);
+}
+
+.argmap-einwand {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.4rem;
+}
+
+.argmap-synthese {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .argmap-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Stille-Modus Chat ─── */
+.stille-chat {
+  border: 2px solid var(--ink);
+  background: var(--paper);
+}
+
+.stille-messages {
+  height: 300px;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.stille-msg {
+  max-width: 80%;
+  padding: 0.7rem 1rem;
+  margin-bottom: 0.8rem;
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.stille-msg--user {
+  margin-left: auto;
+  background: var(--ink);
+  color: #fff;
+  text-align: right;
+}
+
+.stille-msg--ki {
+  margin-right: auto;
+  background: rgba(190,30,30,0.08);
+  border-left: 3px solid var(--accent);
+  font-style: italic;
+}
+
+.stille-typing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0.7rem 1rem;
+}
+
+.stille-input-area {
+  display: flex;
+  border-top: 2px solid var(--ink);
+}
+
+.stille-input {
+  flex: 1;
+  font-family: var(--serif);
+  font-size: 1rem;
+  padding: 0.8rem 1rem;
+  border: none;
+  background: #fff;
+  outline: none;
+}
+
+.stille-input:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.stille-input-area .button {
+  border: none;
+  border-radius: 0;
+}
+
+/* ─── Share Card Button ─── */
+.sharecard-btn {
+  margin-top: 0.4rem;
+}
+
+/* ─── Atelier-Score ─── */
+.score-profile {
+  border: 2px solid var(--ink);
+  box-shadow: 0.3rem 0.3rem 0 rgba(17,17,17,0.9);
+  background: var(--paper);
+  padding: 1.5rem;
+}
+
+.score-header {
+  margin-bottom: 1rem;
+}
+
+.score-total {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.score-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.score-bar-row {
+  display: grid;
+  grid-template-columns: 160px 1fr 40px;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.score-bar-label {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.score-bar-track {
+  height: 12px;
+  background: rgba(17,17,17,0.08);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.score-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.6s ease;
+}
+
+.score-bar-value {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-align: right;
+}
+
+.score-insight {
+  margin-top: 1rem;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--ink);
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--line);
+}
+
+.score-empty-text {
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  color: var(--muted);
+  padding: 1rem 0;
+}
+
+@media (max-width: 640px) {
+  .score-bar-row {
+    grid-template-columns: 1fr 40px;
+  }
+  .score-bar-label {
+    grid-column: 1 / -1;
+    margin-bottom: -0.4rem;
+  }
+  .daily-answer-area {
+    flex-direction: column;
+  }
+}
+
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
   .ticker {

@@ -31,7 +31,7 @@
       <div class="hero-copy" style="grid-column: 1 / -1;">
         <p class="eyebrow">KI als Sparringspartner / Denkwerkzeuge / Urteilstraining</p>
         <h1 id="page-title">KI-Werkstatt</h1>
-        <p class="lede">Sechs KI-gestützte Werkzeuge, die dein Denken herausfordern – nicht ersetzen. KI ist hier Sparringspartner, Gegenstimme und Stresstest.</p>
+        <p class="lede">Zehn KI-gestützte Werkzeuge, die dein Denken herausfordern – nicht ersetzen. KI ist hier Sparringspartner, Gegenstimme und Stresstest.</p>
       </div>
     </section>
 
@@ -145,6 +145,84 @@
         </div>
       </div>
     </section>
+
+    <!-- ═══ TOOL 7: PERSPEKTIVENWECHSEL-MASCHINE ═══ -->
+    <section class="section" id="perspektivenwechsel">
+      <div class="section-label">Perspektive</div>
+      <div class="section-body">
+        <h2>Perspektivenwechsel-Maschine</h2>
+        <p>Gib deine Position ein und wähle eine Perspektive – die KI formuliert deine Position empathisch und überzeugend aus der gewählten Sicht um. Kein Strohmann, sondern echtes Verständnis.</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="pw-position">Deine Position</label>
+          <textarea class="werkstatt-input" id="pw-position" rows="3" placeholder="z.B. &quot;Homeoffice sollte die Regel sein, nicht die Ausnahme.&quot;" maxlength="500"></textarea>
+          <label class="stempel-label" for="pw-perspektive">Perspektive einnehmen</label>
+          <select class="stempel-input" id="pw-perspektive" style="padding: 0.6rem 0.9rem;">
+            <option value="Konservative:r Traditionalist:in">Konservative:r Traditionalist:in</option>
+            <option value="Linke:r Aktivist:in">Linke:r Aktivist:in</option>
+            <option value="Liberale:r Unternehmer:in">Liberale:r Unternehmer:in</option>
+            <option value="Pragmatische:r Realist:in">Pragmatische:r Realist:in</option>
+            <option value="Betroffene:r Bürger:in">Betroffene:r Bürger:in</option>
+            <option value="Akademiker:in / Wissenschaftler:in">Akademiker:in / Wissenschaftler:in</option>
+            <option value="Jugendliche:r / Gen Z">Jugendliche:r / Gen Z</option>
+            <option value="Zyniker:in / Skeptiker:in">Zyniker:in / Skeptiker:in</option>
+            <option value="Spirituelle:r / Philosoph:in">Spirituelle:r / Philosoph:in</option>
+            <option value="Technologie-Optimist:in">Technologie-Optimist:in</option>
+          </select>
+          <button class="button button--accent" id="pw-btn" type="button">Perspektive wechseln</button>
+          <div class="werkstatt-output" id="pw-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 8: KI-GEGENREDE ═══ -->
+    <section class="section" id="gegenrede">
+      <div class="section-label">Gegenrede</div>
+      <div class="section-body">
+        <h2>KI-Gegenrede zu Nachrichtenartikeln</h2>
+        <p>Kopiere einen Nachrichtenartikel oder Meinungsbeitrag – die KI liefert die Gegenposition, die ungestellte Frage, die ungesagten Annahmen und die fehlende Stimme.</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="gr-text">Artikeltext einfügen (max. 8000 Zeichen)</label>
+          <textarea class="werkstatt-input" id="gr-text" rows="8" placeholder="Kopiere hier den Text eines Nachrichtenartikels, einer Kolumne oder eines Meinungsbeitrags..." maxlength="8000"></textarea>
+          <div style="font-family: var(--sans); font-size: 0.75rem; color: var(--muted); margin-bottom: 0.6rem;"><span id="gr-count">0</span> / 8000 Zeichen</div>
+          <button class="button button--accent" id="gr-btn" type="button">Gegenrede generieren</button>
+          <div class="werkstatt-output" id="gr-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 9: ARGUMENTKARTE ═══ -->
+    <section class="section" id="argumentkarte">
+      <div class="section-label">Argumentkarte</div>
+      <div class="section-body">
+        <h2>Argumentkarte</h2>
+        <p>Gib eine These ein – die KI erstellt eine visuelle Argumentkarte mit Pro- und Contra-Ästen, Begründungen, Einwänden und einer Synthese.</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="ak-these">These</label>
+          <input class="stempel-input" type="text" id="ak-these" placeholder="z.B. &quot;KI sollte in Schulen als Pflichtfach unterrichtet werden.&quot;" maxlength="300">
+          <button class="button button--accent" id="ak-btn" type="button">Argumentkarte erstellen</button>
+          <div class="werkstatt-output" id="ak-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 10: STILLE-MODUS ═══ -->
+    <section class="section" id="stille-modus">
+      <div class="section-label">Stille</div>
+      <div class="section-body">
+        <h2>Stille-Modus: KI stellt nur Fragen</h2>
+        <p>Kein Rat, keine Meinung, keine Antwort. Im Stille-Modus stellt die KI ausschließlich Fragen – rein sokratisch. Schreib, was dich beschäftigt, und lass dich nur durch Fragen führen.</p>
+        <div class="werkstatt-tool">
+          <div class="stille-chat" id="stille-chat">
+            <div class="stille-messages" id="stille-messages" role="log" aria-live="polite"></div>
+            <div class="stille-input-area">
+              <label class="sr-only" for="stille-input">Deine Nachricht</label>
+              <input type="text" id="stille-input" class="stille-input" placeholder="Was beschäftigt dich?" maxlength="500">
+              <button class="button button--accent" id="stille-btn" type="button">Senden</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
@@ -158,6 +236,7 @@
   </footer>
 
   <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/score.js"></script>
   <script src="../assets/js/werkstatt.js"></script>
 </body>
 </html>
