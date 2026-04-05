@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Das Atelier der Radikalen Mitte</title>
+  <meta name="description" content="Manifest und Website-Studie für Das Atelier der Radikalen Mitte – experimentell, typografisch markant und lesbar.">
+  <style>
+    :root {
+      --bg: #f3ecdf;
+      --paper: #fffaf1;
+      --ink: #111111;
+      --muted: #5d5d5d;
+      --accent: #be1e1e;
+      --line: rgba(17,17,17,0.18);
+      --shadow: 0 18px 50px rgba(0,0,0,0.12);
+      --radius: 18px;
+      --max: 1180px;
+      --serif: Georgia, "Times New Roman", Times, serif;
+      --sans: Arial, Helvetica, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 20% 15%, rgba(190,30,30,0.08), transparent 28%),
+        radial-gradient(circle at 85% 10%, rgba(17,17,17,0.06), transparent 24%),
+        linear-gradient(180deg, #f5efe5 0%, var(--bg) 100%);
+      font-family: var(--serif);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.1;
+      background-image:
+        linear-gradient(rgba(17,17,17,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(17,17,17,0.05) 1px, transparent 1px);
+      background-size: 46px 46px, 46px 46px;
+      mix-blend-mode: multiply;
+    }
+
+    a { color: inherit; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(12px);
+      background: rgba(243,236,223,0.78);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .site-header .inner,
+    .hero,
+    .section,
+    .footer-inner {
+      width: min(var(--max), calc(100vw - 2.4rem));
+      margin: 0 auto;
+    }
+
+    .site-header .inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      font-family: var(--sans);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .brand-mark {
+      border: 2px solid var(--ink);
+      padding: 0.25rem 0.45rem;
+      transform: rotate(-3deg);
+      font-weight: 700;
+      background: var(--paper);
+    }
+
+    .header-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .header-links a {
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 0.12rem;
+    }
+
+    .header-links a:hover,
+    .header-links a:focus {
+      border-color: currentColor;
+      outline: none;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      padding: clamp(3.5rem, 6vw, 6rem) 0 3rem;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: clamp(1.6rem, 4vw, 3rem);
+      align-items: center;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 5;
+    }
+
+    .eyebrow {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin: 0 0 1rem;
+      color: var(--muted);
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 7.2rem);
+      line-height: 0.92;
+      margin: 0 0 1.25rem;
+      letter-spacing: -0.04em;
+      text-wrap: balance;
+    }
+
+    .hero h1 .shift {
+      display: inline-block;
+      transform: rotate(-2.4deg);
+      background: var(--accent);
+      color: #fff;
+      padding: 0.05em 0.16em 0.1em;
+      box-shadow: 0.18em 0.18em 0 0 rgba(17,17,17,0.9);
+      margin-left: 0.08em;
+    }
+
+    .lede {
+      max-width: 38rem;
+      font-size: clamp(1.08rem, 2vw, 1.38rem);
+      line-height: 1.55;
+      margin: 0 0 1.6rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+    }
+
+    .button,
+    button {
+      appearance: none;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+      color: var(--ink);
+      padding: 0.82rem 1rem;
+      font-family: var(--sans);
+      font-size: 0.92rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0.25rem 0.25rem 0 rgba(17,17,17,0.95);
+      transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+    }
+
+    .button:hover,
+    .button:focus,
+    button:hover,
+    button:focus {
+      transform: translate(-2px, -2px);
+      box-shadow: 0.38rem 0.38rem 0 rgba(17,17,17,0.95);
+      outline: none;
+    }
+
+    .button--accent {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .microcopy {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      max-width: 44rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .hero-stage {
+      position: relative;
+      min-height: 36rem;
+      background: rgba(255,250,241,0.68);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero-stage::before {
+      content: "cut-up / collage / widerspruch / spiel / urteil";
+      position: absolute;
+      inset: 0;
+      font-family: var(--sans);
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      font-size: clamp(0.65rem, 1vw, 0.82rem);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(17,17,17,0.07);
+      transform: rotate(-17deg) scale(1.2);
+      white-space: nowrap;
+      z-index: 0;
+    }
+
+    .floating-word,
+    .stamp,
+    .cut-card {
+      position: absolute;
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      box-shadow: 0.5rem 0.5rem 0 rgba(17,17,17,0.88);
+      user-select: none;
+    }
+
+    .floating-word {
+      padding: 0.45rem 0.7rem;
+      font-family: var(--sans);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: clamp(0.82rem, 1vw, 1rem);
+      transition: transform 300ms ease, left 300ms ease, top 300ms ease;
+      z-index: 3;
+    }
+
+    .floating-word.accent {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .stamp {
+      font-family: var(--sans);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      padding: 0.6rem 0.8rem;
+      color: var(--accent);
+      background: rgba(255,250,241,0.94);
+      z-index: 4;
+    }
+
+    .cut-card {
+      padding: 1rem 1rem 1.1rem;
+      width: min(25rem, 76%);
+      z-index: 2;
+      background: rgba(255,250,241,0.93);
+    }
+
+    .cut-card p {
+      margin: 0;
+      font-size: clamp(1rem, 1.2vw, 1.18rem);
+      line-height: 1.48;
+    }
+
+    .cut-card strong {
+      font-family: var(--sans);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.82rem;
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+
+    .ticker-wrap {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+      background: rgba(17,17,17,0.03);
+    }
+
+    .ticker {
+      display: inline-flex;
+      gap: 2.2rem;
+      white-space: nowrap;
+      min-width: 100%;
+      padding: 0.88rem 0;
+      animation: ticker 36s linear infinite;
+      font-family: var(--sans);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.82rem;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .section {
+      display: grid;
+      grid-template-columns: 12rem 1fr;
+      gap: 1.6rem;
+      padding: clamp(2.5rem, 4vw, 4.5rem) 0;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+    }
+
+    .section-label {
+      font-family: var(--sans);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.78rem;
+      color: var(--muted);
+      position: sticky;
+      top: 5rem;
+      align-self: start;
+      padding-top: 0.3rem;
+    }
+
+    .section-body h2 {
+      margin: 0 0 1rem;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+      text-wrap: balance;
+    }
+
+    .section-body p {
+      font-size: clamp(1.05rem, 1.6vw, 1.22rem);
+      line-height: 1.72;
+      margin: 0 0 1rem;
+      max-width: 54rem;
+    }
+
+    .section-body .big-line {
+      font-size: clamp(1.5rem, 3.2vw, 2.6rem);
+      line-height: 1.12;
+      margin: 1.3rem 0;
+      font-weight: 700;
+      max-width: 44rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+
+    .card {
+      background: rgba(255,250,241,0.86);
+      border: 1px solid var(--line);
+      border-left: 8px solid var(--accent);
+      padding: 1rem 1rem 1.1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      margin: 0 0 0.55rem;
+      font-family: var(--sans);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.9rem;
+    }
+
+    .card p {
+      font-size: 1rem;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.95rem;
+      margin-top: 1.4rem;
+    }
+
+    .principle {
+      padding: 1rem 1rem 1rem 1.15rem;
+      border: 1px solid var(--line);
+      background: rgba(255,250,241,0.78);
+      position: relative;
+    }
+
+    .principle::before {
+      content: "■";
+      position: absolute;
+      left: 0.45rem;
+      top: 0.92rem;
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+
+    .principle strong {
+      font-family: var(--sans);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 0.88rem;
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+
+    .quote-block {
+      margin: 1.5rem 0;
+      padding: 1.2rem 1.25rem;
+      border: 2px solid var(--ink);
+      box-shadow: 0.45rem 0.45rem 0 rgba(17,17,17,0.9);
+      background: var(--paper);
+      max-width: 40rem;
+      transform: rotate(-1.1deg);
+    }
+
+    .quote-block p {
+      margin: 0;
+      font-size: clamp(1.22rem, 2vw, 1.5rem);
+      line-height: 1.35;
+    }
+
+    .quote-block span {
+      display: block;
+      margin-top: 0.6rem;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .cta-panel {
+      margin-top: 1.6rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      padding: 1.4rem;
+      background: var(--ink);
+      color: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .cta-panel p {
+      margin: 0;
+      max-width: 42rem;
+      font-size: 1.04rem;
+      line-height: 1.55;
+    }
+
+    .cta-panel .button {
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .footer {
+      padding: 2.2rem 0 3.8rem;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .footer h2 {
+      margin: 0 0 0.6rem;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      line-height: 1;
+    }
+
+    .footer p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.65;
+      max-width: 40rem;
+    }
+
+    .footer-stamp {
+      align-self: center;
+      justify-self: end;
+      padding: 0.9rem 1rem;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      font-family: var(--sans);
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      transform: rotate(-5deg);
+      background: rgba(255,250,241,0.84);
+    }
+
+    .read-mode .floating-word,
+    .read-mode .stamp,
+    .read-mode .quote-block,
+    .read-mode .hero h1 .shift,
+    .read-mode .footer-stamp,
+    .read-mode .brand-mark {
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .read-mode .ticker {
+      animation: none;
+      transform: none;
+    }
+
+    .read-mode .hero-stage::before {
+      display: none;
+    }
+
+    .read-mode body::before,
+    body.read-mode::before {
+      opacity: 0.04;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .section,
+      .footer-inner,
+      .cta-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stage {
+        min-height: 29rem;
+      }
+
+      .section-label {
+        position: static;
+        padding-top: 0;
+      }
+
+      .cards,
+      .principles {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-stamp {
+        justify-self: start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .site-header .inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 2.6rem;
+      }
+
+      .hero-stage {
+        min-height: 24rem;
+      }
+
+      .cut-card {
+        width: 88%;
+      }
+
+      .actions {
+        align-items: stretch;
+      }
+
+      .button,
+      button {
+        width: 100%;
+        text-align: center;
+      }
+
+      .header-links {
+        gap: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="inner">
+      <div class="brand">
+        <span class="brand-mark">NICHT ANERKANNT</span>
+        <span>Das Atelier der Radikalen Mitte</span>
+      </div>
+      <nav class="header-links" aria-label="Seitenbereiche">
+        <a href="#problem">Problem</a>
+        <a href="#mitte">Radikale Mitte</a>
+        <a href="#atelier">Atelier</a>
+        <a href="#einladung">Einladung</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Manifest / Website-Studie / asymmetrische Lesefläche</p>
+        <h1 id="hero-title">Das Atelier der <span class="shift">Radikalen Mitte</span></h1>
+        <p class="lede">Du brauchst nicht mehr Stoff. Du brauchst Urteil, Haltung und Handlungskraft in einer Welt aus KI, Krisen, Überforderung und zu viel fremder Gewissheit.</p>
+        <div class="actions">
+          <a class="button button--accent" href="#manifest">Manifest lesen</a>
+          <button id="shuffle" type="button">Manifest neu montieren</button>
+          <button id="readmode" type="button" aria-pressed="false">Lesemodus</button>
+        </div>
+        <p class="microcopy">Experimentell in der Form, klar in der Aussage: asymmetrische Komposition, Typo-Kollision, Stempel, Cut-up-Flächen – aber mit bewusstem Lesemodus, damit die Radikalität nicht auf Kosten der Verständlichkeit geht.</p>
+      </div>
+
+      <div class="hero-stage" aria-hidden="true">
+        <div class="stamp" data-shuffle style="left: 7%; top: 7%; transform: rotate(-9deg);">Staatlich NICHT anerkannt</div>
+        <div class="stamp" data-shuffle style="right: 6%; top: 14%; transform: rotate(8deg);">Politisch NICHT vereinnahmbar</div>
+        <div class="floating-word accent" data-shuffle style="left: 13%; top: 31%; transform: rotate(-6deg);">Urteil</div>
+        <div class="floating-word" data-shuffle style="left: 54%; top: 23%; transform: rotate(12deg);">Widerspruch</div>
+        <div class="floating-word" data-shuffle style="left: 20%; top: 62%; transform: rotate(7deg);">Spiel</div>
+        <div class="floating-word accent" data-shuffle style="left: 64%; top: 55%; transform: rotate(-10deg);">Handlung</div>
+        <div class="floating-word" data-shuffle style="left: 38%; top: 72%; transform: rotate(-4deg);">KI ≠ Geist</div>
+        <div class="cut-card" data-shuffle style="left: 11%; top: 43%; transform: rotate(4deg);">
+          <strong>Der Satz</strong>
+          <p>Nicht mehr Stoff. Mehr Urteil.</p>
+        </div>
+        <div class="cut-card" data-shuffle style="left: 48%; top: 66%; transform: rotate(-3deg);">
+          <strong>Die Schule</strong>
+          <p>Für Menschen, die nicht in Lager passen und trotzdem handeln wollen.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="ticker-wrap" aria-hidden="true">
+      <div class="ticker">
+        <span>nicht mehr stoff</span>
+        <span>mehr urteil</span>
+        <span>keine lager</span>
+        <span>echte fragen</span>
+        <span>ki als sparringspartner</span>
+        <span>spiel als methode</span>
+        <span>widerspruch als training</span>
+        <span>wirksamkeit statt pose</span>
+        <span>nicht mehr stoff</span>
+        <span>mehr urteil</span>
+        <span>keine lager</span>
+        <span>echte fragen</span>
+        <span>ki als sparringspartner</span>
+        <span>spiel als methode</span>
+        <span>widerspruch als training</span>
+        <span>wirksamkeit statt pose</span>
+      </div>
+    </div>
+
+    <section class="section" id="manifest">
+      <div class="section-label">Manifest</div>
+      <div class="section-body">
+        <h2>Für junge Menschen, die nicht in Lager passen</h2>
+        <p>Wir leben in einer Zeit, in der alles gleichzeitig verfügbar ist: Wissen, Meinungen, Empörung, Tutorials, Ideologien, Identitäten, KI-Output, Lebensentwürfe. Alles ist da. Alles spricht. Alles fordert Aufmerksamkeit. Und fast nichts hilft dir dabei, wirklich zu unterscheiden.</p>
+        <p>Die alten Bildungsformen tun oft so, als sei das Problem noch immer Informationsmangel. Als müsste man dir nur genug Stoff geben, genug Prüfungen, genug Zertifikate, genug Inhalte. Aber das ist vorbei. Das eigentliche Problem ist nicht, dass wir zu wenig wissen. Das eigentliche Problem ist, dass wir in zu viel Material leben und zu wenig Orte haben, an denen daraus Urteil, Haltung und Handlung werden.</p>
+        <p class="big-line">Billig wird Reproduktion. Teuer werden Urteil, Originalität, Verantwortung, Präsenz und Mut.</p>
+        <div class="cards">
+          <article class="card">
+            <h3>Kein Stoffproblem</h3>
+            <p>Die Gegenwart leidet nicht an zu wenig Information, sondern an zu wenig Unterscheidungskraft.</p>
+          </article>
+          <article class="card">
+            <h3>KI verschiebt den Wert</h3>
+            <p>Standardisiertes Wissen wird billig. Richtung, Haltung und Urteil werden kostbar.</p>
+          </article>
+          <article class="card">
+            <h3>Bildung muss real werden</h3>
+            <p>Nicht mehr nur Wiederholung und Prüfung, sondern Reibung, Arbeit, Öffentlichkeit und Folgen.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="problem">
+      <div class="section-label">Das Problem</div>
+      <div class="section-body">
+        <h2>Die falsche Alternative</h2>
+        <p>Jungen Menschen wird heute oft eine falsche Wahl angeboten: entweder Anpassung oder Lagerdenken. Entweder Lebenslaufoptimierung, funktionales Mitlaufen und verwertbare Selbstdarstellung. Oder ideologische Überhitzung, reflexhafte Feindbilder und die angenehme Erleichterung, nicht mehr selbst denken zu müssen.</p>
+        <p>Beides ist zu klein. Die Anpassung macht dich brauchbar, aber nicht lebendig. Das Lager macht dich leidenschaftlich, aber nicht frei.</p>
+        <div class="quote-block">
+          <p>Du musst dich nicht zwischen Zynismus und Fanatismus entscheiden.</p>
+          <span>Das Atelier</span>
+        </div>
+        <p>Zwischen den Extremen liegt nicht einfach die lauwarme Mitte. Es gibt noch etwas anderes: eine Haltung, die Widerspruch aushält, Wirklichkeit ernst nimmt und trotzdem handelt.</p>
+      </div>
+    </section>
+
+    <section class="section" id="mitte">
+      <div class="section-label">Radikale Mitte</div>
+      <div class="section-body">
+        <h2>Keine laue Mitte. Eine denkende Mitte.</h2>
+        <p>Die Radikale Mitte ist nicht das matte Irgendwo-dazwischen. Sie ist keine feige Äquidistanz zwischen Wahrheit und Lüge. Sie ist keine Verwaltung der Erschöpfung. Sie ist eine Haltung, die radikal ist, weil sie denken muss, wo andere nur reagieren.</p>
+        <p>Sie verbindet, ohne zu verwässern. Sie urteilt, ohne vorschnell zu schließen. Sie handelt, ohne auf vollständige Sicherheit zu warten. Sie vermittelt nicht zwischen allem – sie unterscheidet. Und gerade deshalb kann sie verbinden.</p>
+        <div class="principles">
+          <div class="principle"><strong>Radikal rechtsstaatlich</strong>Freiheit ohne Form kippt in Willkür.</div>
+          <div class="principle"><strong>Radikal dialogisch</strong>Niemand allein ist klug genug für die Gegenwart.</div>
+          <div class="principle"><strong>Radikal wirklichkeitsfähig</strong>Ideologien sind oft nur Schutzräume gegen das Reale.</div>
+          <div class="principle"><strong>Radikal handlungsbereit</strong>Analyse ohne Konsequenz ist ein Stilmittel.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="atelier">
+      <div class="section-label">Das Atelier</div>
+      <div class="section-body">
+        <h2>Keine Schule des Meinungsbesitzes. Eine Schule des Urteils.</h2>
+        <p>Das Atelier sagt dir nicht, was du denken sollst. Es ist ein Ort, an dem du lernst, besser zu denken, tiefer zu fragen und entschiedener zu handeln. Es beginnt nicht mit fertigen Antworten. Es beginnt mit Fragen, die niemand im Raum sofort auflösen kann.</p>
+        <p>Wir lernen interdisziplinär, weil alle echten Probleme interdisziplinär sind. Klimawandel ist nicht nur Naturwissenschaft. KI ist nicht nur Technologie. Demokratie ist nicht nur Verfassungsrecht. Einsamkeit ist nicht nur Psychologie. Die wichtigen Fragen unserer Zeit sind <em>Wicked Problems</em>.</p>
+        <p>Wir arbeiten in Gruppen, weil Denken sozial ist. Nicht als Kuschelveranstaltung, sondern als Reibung. Wir arbeiten mit KI, aber nicht als Orakel. KI ist Sparringspartner, Gegenstimme und Stresstest. Wer mit KI nur Output produziert, wird austauschbar. Wer mit KI besser denkt, wird gefährlich für jede Form geistiger Trägheit.</p>
+        <div class="cards">
+          <article class="card">
+            <h3>Echte Fragen</h3>
+            <p>Nicht: Was muss ich können, um zu bestehen? Sondern: Welche Frage ist so real, dass sie mich verändert?</p>
+          </article>
+          <article class="card">
+            <h3>Echte Reibung</h3>
+            <p>Gruppenarbeit als Aushandlung, Widerspruch, Perspektivwechsel und gemeinsames Bauen.</p>
+          </article>
+          <article class="card">
+            <h3>Echte Folgen</h3>
+            <p>Öffentliche Resultate, reale Adressaten, Konsequenzen jenseits der Note.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Was entsteht</div>
+      <div class="section-body">
+        <h2>Wir bilden keine Meinungsträger aus.</h2>
+        <p class="big-line">Wir bilden Menschen aus, die unter Unsicherheit denken und handeln können.</p>
+        <p>Menschen, die nicht sofort ins Lager kippen, wenn es kompliziert wird. Menschen, die Widerspruch aushalten können, ohne weich zu werden. Menschen, die offen bleiben, ohne beliebig zu werden. Menschen, die Technologie benutzen können, ohne von ihr benutzt zu werden.</p>
+        <p>Was hier entsteht, ist nicht bloß Kompetenz. Es ist Urteilskraft. Gegenwartsfähigkeit. Selbstwirksamkeit. Standfestigkeit. Zusammenarbeit. Formwille. Verantwortung.</p>
+      </div>
+    </section>
+
+    <section class="section" id="einladung">
+      <div class="section-label">Einladung</div>
+      <div class="section-body">
+        <h2>Wenn du nur Sicherheit suchst, bist du hier falsch.</h2>
+        <p>Wenn du nur Akkreditierung suchst, bist du hier falsch. Wenn du fertige Antworten suchst, bist du hier falsch. Wenn du einen Ort suchst, an dem Denken keine Vorbereitung auf das Leben ist, sondern eine Form des Lebens selbst, dann beginnt es hier.</p>
+        <div class="cta-panel">
+          <p><strong>Das Atelier der Radikalen Mitte</strong><br>Für Menschen, die nicht in Lager passen und trotzdem handeln wollen.</p>
+          <a class="button" href="manifest-das-atelier-radikale-mitte.md" download>Manifest herunterladen</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <h2>Nicht mehr Stoff. Mehr Urteil.</h2>
+        <p>Experimentell in der Gestaltung, bewusst klar in der Botschaft. Die Seite ist als erste visuelle Richtung angelegt: provokant, merkfähig, asymmetrisch – aber mit Lesemodus, damit Form nicht gegen Inhalt arbeitet.</p>
+      </div>
+      <div class="footer-stamp">Extrem mittig</div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const stage = document.querySelector('.hero-stage');
+      const shuffleBtn = document.getElementById('shuffle');
+      const readModeBtn = document.getElementById('readmode');
+      const pieces = Array.from(document.querySelectorAll('[data-shuffle]'));
+      const slogans = [
+        'Nicht mehr Stoff. Mehr Urteil.',
+        'Keine Lager. Echte Fragen.',
+        'KI ist Sparringspartner, nicht Orakel.',
+        'Widerspruch ist Methode.',
+        'Nicht angepasst. Handlungsfähig.'
+      ];
+
+      function random(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      function shuffleStage() {
+        const width = stage.clientWidth;
+        const height = stage.clientHeight;
+
+        pieces.forEach((piece, index) => {
+          const rectW = piece.offsetWidth || 180;
+          const rectH = piece.offsetHeight || 60;
+          const left = random(2, Math.max(3, width - rectW - 8));
+          const top = random(2, Math.max(3, height - rectH - 8));
+          const rotate = random(-16, 16).toFixed(1);
+          piece.style.left = left + 'px';
+          piece.style.top = top + 'px';
+          piece.style.transform = `rotate(${rotate}deg)`;
+          piece.style.zIndex = String(2 + (index % 4));
+        });
+
+        const cards = stage.querySelectorAll('.cut-card p');
+        cards.forEach((card, i) => {
+          card.textContent = slogans[Math.floor(random(0, slogans.length))];
+        });
+      }
+
+      shuffleBtn.addEventListener('click', shuffleStage);
+
+      readModeBtn.addEventListener('click', () => {
+        const active = document.body.classList.toggle('read-mode');
+        readModeBtn.setAttribute('aria-pressed', String(active));
+        readModeBtn.textContent = active ? 'Kompositionsmodus' : 'Lesemodus';
+      });
+
+      window.addEventListener('resize', () => {
+        if (!document.body.classList.contains('read-mode')) {
+          shuffleStage();
+        }
+      });
+    }());
+  </script>
+</body>
+</html>
