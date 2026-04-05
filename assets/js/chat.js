@@ -257,6 +257,9 @@
     }
     if (chatOpen && inputEl) {
       inputEl.focus();
+    } else {
+      var fab = document.getElementById('chat-fab');
+      if (fab) fab.focus();
     }
   }
 
@@ -286,6 +289,8 @@
     // Chat window
     chatEl = document.createElement('div');
     chatEl.id = 'chat-window';
+    chatEl.setAttribute('role', 'dialog');
+    chatEl.setAttribute('aria-label', 'KI-Sparringspartner Chat');
     chatEl.style.cssText = 'position:fixed;bottom:5rem;right:1.5rem;z-index:10000;' +
       'width:min(400px,calc(100vw - 2rem));height:min(520px,calc(100vh - 7rem));' +
       'display:none;flex-direction:column;' +
@@ -329,6 +334,9 @@
 
     // Messages area
     messagesEl = document.createElement('div');
+    messagesEl.setAttribute('role', 'log');
+    messagesEl.setAttribute('aria-live', 'polite');
+    messagesEl.setAttribute('aria-label', 'Chat-Nachrichten');
     messagesEl.style.cssText = 'flex:1;overflow-y:auto;padding:0.8rem;' +
       'display:flex;flex-direction:column;';
 
@@ -342,7 +350,7 @@
     inputEl.setAttribute('aria-label', 'Nachricht eingeben');
     inputEl.style.cssText = 'flex:1;border:none;padding:0.75rem 0.9rem;' +
       'font-family:Georgia,serif;font-size:0.95rem;background:#fffaf1;' +
-      'outline:none;color:#111;';
+      'color:#111;';
 
     var sendBtn = document.createElement('button');
     sendBtn.textContent = 'Senden';
@@ -370,6 +378,33 @@
 
     document.body.appendChild(fab);
     document.body.appendChild(chatEl);
+
+    // Escape key closes chat
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && chatOpen) {
+        toggleChat();
+      }
+    });
+
+    // Focus trap inside chat dialog
+    chatEl.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      var focusable = chatEl.querySelectorAll('button, input, [tabindex]:not([tabindex="-1"])');
+      if (focusable.length === 0) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
   }
 
   function init() {

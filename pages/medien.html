@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
 
   <header class="site-header">
     <div class="inner">
@@ -24,7 +25,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <!-- Hero -->
     <section class="page-hero" aria-labelledby="medien-title">
       <p class="eyebrow">Audio / Video / Downloads / Teilen</p>
@@ -84,7 +85,7 @@
       <div class="section-body">
         <h2>Zitate teilen</h2>
         <p>Verbreite die Kerngedanken des Manifests. Klicke auf ein Zitat, um es zu kopieren und zu teilen.</p>
-        <div class="share-buttons">
+        <div class="share-buttons" aria-live="polite">
           <button class="share-btn" data-quote="Nicht mehr Stoff. Mehr Urteil.">Nicht mehr Stoff. Mehr Urteil.</button>
           <button class="share-btn" data-quote="Du musst dich nicht zwischen Zynismus und Fanatismus entscheiden.">Zynismus vs. Fanatismus</button>
           <button class="share-btn" data-quote="KI ist Sparringspartner, nicht Orakel.">KI als Sparringspartner</button>
@@ -101,7 +102,7 @@
         <h2>Nicht mehr Stoff. Mehr Urteil.</h2>
         <p>Das Manifest in allen Formaten – hören, sehen, herunterladen, teilen.</p>
       </div>
-      <div class="footer-stamp">Extrem mittig</div>
+      <div class="footer-stamp" aria-hidden="true">Extrem mittig</div>
     </div>
   </footer>
 

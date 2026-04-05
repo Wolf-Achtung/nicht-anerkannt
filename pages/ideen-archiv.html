@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
 
   <header class="site-header">
     <div class="inner">
@@ -24,7 +25,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <!-- Hero -->
     <section class="page-hero" aria-labelledby="archiv-title">
       <p class="eyebrow">Archiv / Community / Denkproben</p>
@@ -40,15 +41,18 @@
       </div>
     </section>
 
-    <!-- Filter Bar -->
-    <div class="filter-bar">
-      <button class="active" data-filter="alle">Alle</button>
-      <button data-filter="denkprobe">Denkproben</button>
-      <button data-filter="widerspruchssalon">Widerspruchssalon</button>
-      <button data-filter="community">Community</button>
-    </div>
+    <!-- Archiv Beiträge -->
+    <section class="section">
+      <div class="section-label">Beiträge</div>
+      <div class="section-body">
+        <h2>Alle Beiträge</h2>
+        <div class="filter-bar" role="group" aria-label="Beiträge filtern">
+          <button class="active" data-filter="alle" aria-pressed="true">Alle</button>
+          <button data-filter="denkprobe" aria-pressed="false">Denkproben</button>
+          <button data-filter="widerspruchssalon" aria-pressed="false">Widerspruchssalon</button>
+          <button data-filter="community" aria-pressed="false">Community</button>
+        </div>
 
-    <!-- Archiv Grid -->
     <div class="archiv-grid" id="archiv-grid">
 
       <article class="archiv-card" data-category="denkprobe">
@@ -88,6 +92,8 @@
       </article>
 
     </div>
+      </div>
+    </section>
 
     <!-- Beitragen -->
     <section class="section">
@@ -103,7 +109,7 @@
           <li>Öffne einen Pull Request mit einer kurzen Begründung.</li>
         </ol>
         <div class="actions" style="margin-top: 1.2rem;">
-          <a class="button button--accent" href="https://github.com/Wolf-Achtung/nicht-anerkannt" target="_blank" rel="noopener">Zum GitHub-Repository</a>
+          <a class="button button--accent" href="https://github.com/Wolf-Achtung/nicht-anerkannt" target="_blank" rel="noopener">Zum GitHub-Repository <span class="sr-only">(öffnet in neuem Tab)</span></a>
         </div>
       </div>
     </section>
@@ -115,7 +121,7 @@
         <h2>Nicht mehr Stoff. Mehr Urteil.</h2>
         <p>Ein Archiv für Ideen, die nicht in Lager passen.</p>
       </div>
-      <div class="footer-stamp">Extrem mittig</div>
+      <div class="footer-stamp" aria-hidden="true">Extrem mittig</div>
     </div>
   </footer>
 
@@ -128,8 +134,12 @@
 
       buttons.forEach(function (btn) {
         btn.addEventListener('click', function () {
-          buttons.forEach(function (b) { b.classList.remove('active'); });
+          buttons.forEach(function (b) {
+            b.classList.remove('active');
+            b.setAttribute('aria-pressed', 'false');
+          });
           btn.classList.add('active');
+          btn.setAttribute('aria-pressed', 'true');
           var filter = btn.getAttribute('data-filter');
 
           cards.forEach(function (card) {

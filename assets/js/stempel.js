@@ -26,8 +26,10 @@
       subLine += (nameText ? ' — ' : '') + ortText;
     }
 
+    var ariaLabel = 'Stempel: STAATLICH NICHT ANERKANNT' + (nameText ? ' — ' + nameText : '') + (ortText ? ', ' + ortText : '');
     var svg = '';
-    svg += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + w + ' ' + h + '" width="' + w + '" height="' + h + '">';
+    svg += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + w + ' ' + h + '" width="' + w + '" height="' + h + '" role="img" aria-label="' + ariaLabel + '">';
+    svg += '<title>' + ariaLabel + '</title>';
     svg += '<g transform="rotate(-3, ' + cx + ', ' + cy + ')">';
 
     // Outer border

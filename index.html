@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
   <header class="site-header">
     <div class="inner">
       <div class="brand">
@@ -26,7 +27,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <!-- ═══════════════════════════════════════════════════════════ -->
     <!-- HERO                                                       -->
     <!-- ═══════════════════════════════════════════════════════════ -->
@@ -96,7 +97,7 @@
         <div class="live-ticker" id="live-ticker-container">
           <div class="live-ticker-controls">
             <button class="live-ticker-prev" id="ticker-prev" type="button" aria-label="Vorherige Nachricht">&#8592;</button>
-            <div class="live-ticker-item" id="ticker-display">
+            <div class="live-ticker-item" id="ticker-display" aria-live="polite" aria-atomic="true">
               <span class="live-ticker-badge live-ticker-badge--update">Update</span>
               <span class="live-ticker-text">Lade Nachrichten...</span>
             </div>
@@ -142,7 +143,7 @@
         <h2>Manifest neu denken</h2>
         <p>Das Manifest ist kein fester Text. Es ist Material. Drücke den Button und lass die Sätze neu zusammenfinden – Cut-up als Methode.</p>
         <div class="remixer-panel">
-          <blockquote class="remixer-output" id="remixer-output">
+          <blockquote class="remixer-output" id="remixer-output" aria-live="polite">
             <p>Drücke „Remix", um einen neuen Gedanken zu erzeugen.</p>
           </blockquote>
           <button class="button button--accent remixer-btn" id="remixer-btn" type="button">Remix Manifest</button>
@@ -231,7 +232,7 @@
               <button class="button" id="stempel-share" type="button">Teilen</button>
             </div>
           </div>
-          <div class="stempel-preview" id="stempel-preview">
+          <div class="stempel-preview" id="stempel-preview" aria-live="polite" aria-label="Stempel-Vorschau">
             <!-- SVG wird dynamisch generiert -->
           </div>
         </div>
@@ -246,7 +247,7 @@
       <div class="section-body">
         <h2>Widerspruchsquiz: Wo stehst du?</h2>
         <p>Keine Schublade, sondern ein Spiegel. Sieben Fragen – keine richtigen Antworten, aber ehrliche Reflexion.</p>
-        <div class="quiz-container" id="quiz-container">
+        <div class="quiz-container" id="quiz-container" aria-live="polite">
           <div class="quiz-progress" id="quiz-progress"></div>
           <div class="quiz-question" id="quiz-question">
             <p>Lade Quiz...</p>
@@ -292,7 +293,7 @@
         <h2>Nicht mehr Stoff. Mehr Urteil.</h2>
         <p>Experimentell in der Gestaltung, bewusst klar in der Botschaft. Die Seite ist als erste visuelle Richtung angelegt: provokant, merkfähig, asymmetrisch – aber mit Lesemodus, damit Form nicht gegen Inhalt arbeitet.</p>
       </div>
-      <div class="footer-stamp">Extrem mittig</div>
+      <div class="footer-stamp" aria-hidden="true">Extrem mittig</div>
     </div>
   </footer>
 
