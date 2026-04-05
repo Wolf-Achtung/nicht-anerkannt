@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KI-Werkstatt – Das Atelier der Radikalen Mitte</title>
+  <meta name="description" content="KI-gestützte Denkwerkzeuge: Widerspruchssalon, Denkproben-Generator, Urteilstraining, Wicked-Problem-Werkstatt, Text-Stresstest und Manifest-Übersetzer.">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="inner">
+      <div class="brand">
+        <span class="brand-mark">NICHT ANERKANNT</span>
+        <span>Das Atelier der Radikalen Mitte</span>
+      </div>
+      <nav class="header-links" aria-label="Navigation">
+        <a href="../index.html">Startseite</a>
+        <a href="ideen-archiv.html">Ideen-Archiv</a>
+        <a href="werkstatt.html" class="nav-link--active">KI-Werkstatt</a>
+        <a href="medien.html">Medien</a>
+        <a href="roadmap.html">Roadmap</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" style="min-height: auto; padding-bottom: 2rem;" aria-labelledby="page-title">
+      <div class="hero-copy" style="grid-column: 1 / -1;">
+        <p class="eyebrow">KI als Sparringspartner / Denkwerkzeuge / Urteilstraining</p>
+        <h1 id="page-title">KI-Werkstatt</h1>
+        <p class="lede">Sechs KI-gestützte Werkzeuge, die dein Denken herausfordern – nicht ersetzen. KI ist hier Sparringspartner, Gegenstimme und Stresstest.</p>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 1: WIDERSPRUCHSSALON ═══ -->
+    <section class="section" id="widerspruchssalon">
+      <div class="section-label">Widerspruch</div>
+      <div class="section-body">
+        <h2>Widerspruchssalon</h2>
+        <p>Stelle eine These auf – die KI generiert drei fundierte Gegenpositionen aus verschiedenen Perspektiven. Kein Strohmann, sondern echte Herausforderung.</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="ws-these">Deine These</label>
+          <textarea class="werkstatt-input" id="ws-these" rows="3" placeholder="z.B. &quot;Social Media sollte für unter 16-Jährige verboten werden.&quot;" maxlength="500"></textarea>
+          <button class="button button--accent" id="ws-btn" type="button">Gegenpositionen generieren</button>
+          <div class="werkstatt-output" id="ws-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 2: DENKPROBEN-GENERATOR ═══ -->
+    <section class="section" id="denkprobe">
+      <div class="section-label">Denkprobe</div>
+      <div class="section-body">
+        <h2>Denkproben-Generator</h2>
+        <p>Gib ein aktuelles Thema ein – die KI erzeugt eine strukturierte Denkprobe im Stil des Ateliers: Problemstellung, falsche Alternative, radikale Mitte, offene Fragen.</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="dp-thema">Thema</label>
+          <input class="stempel-input" type="text" id="dp-thema" placeholder="z.B. &quot;Grundeinkommen&quot;, &quot;KI in der Schule&quot;, &quot;Klimaproteste&quot;" maxlength="200">
+          <button class="button button--accent" id="dp-btn" type="button">Denkprobe generieren</button>
+          <div class="werkstatt-output" id="dp-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 3: URTEILSTRAINING ═══ -->
+    <section class="section" id="urteilstraining">
+      <div class="section-label">Urteil</div>
+      <div class="section-body">
+        <h2>Urteilstraining</h2>
+        <p>Ein echtes Dilemma – kein Richtig oder Falsch. Fälle dein Urteil, und die KI zeigt dir deine blinden Stellen, deine Stärken und treibt dein Denken weiter.</p>
+        <div class="werkstatt-tool">
+          <div id="ut-dilemma" class="werkstatt-dilemma"></div>
+          <button class="button" id="ut-new" type="button">Neues Dilemma</button>
+          <div id="ut-answer-area" style="display:none; margin-top: 1.2rem;">
+            <label class="stempel-label" for="ut-urteil">Dein Urteil</label>
+            <textarea class="werkstatt-input" id="ut-urteil" rows="4" placeholder="Wie urteilst du? Begründe deine Position..." maxlength="1000"></textarea>
+            <button class="button button--accent" id="ut-judge" type="button">Urteil prüfen lassen</button>
+          </div>
+          <div class="werkstatt-output" id="ut-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 4: WICKED-PROBLEM-WERKSTATT ═══ -->
+    <section class="section" id="wicked">
+      <div class="section-label">Wicked Problem</div>
+      <div class="section-body">
+        <h2>Wicked-Problem-Werkstatt</h2>
+        <p>Wähle ein komplexes Problem und durchlaufe fünf Denkschritte: Disziplinen, Stakeholder, Widersprüche, Handlungsoptionen, Urteil. Am Ende entsteht dein persönliches Arbeitspapier.</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="wp-problem">Wicked Problem</label>
+          <input class="stempel-input" type="text" id="wp-problem" placeholder="z.B. &quot;Klimawandel&quot;, &quot;Einsamkeit&quot;, &quot;KI-Regulierung&quot;" maxlength="200">
+          <button class="button button--accent" id="wp-btn" type="button">Werkstatt starten</button>
+          <div class="werkstatt-steps" id="wp-steps">
+            <div class="werkstatt-progress" id="wp-progress"></div>
+          </div>
+          <div class="werkstatt-output" id="wp-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 5: TEXT-STRESSTEST ═══ -->
+    <section class="section" id="stresstest">
+      <div class="section-label">Stresstest</div>
+      <div class="section-body">
+        <h2>Text-Stresstest</h2>
+        <p>Lade einen eigenen Text hoch – die KI prüft nicht Grammatik, sondern Denkqualität. Wo wird behauptet statt begründet? Wo fehlt der Widerspruch? Wo ist Meinung als Urteil verkleidet?</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="st-text">Dein Text (max. 5000 Zeichen)</label>
+          <textarea class="werkstatt-input" id="st-text" rows="8" placeholder="Füge hier deinen Text ein – Essay, Blogpost, Bewerbung, Kommentar..." maxlength="5000"></textarea>
+          <div style="font-family: var(--sans); font-size: 0.75rem; color: var(--muted); margin-bottom: 0.6rem;"><span id="st-count">0</span> / 5000 Zeichen</div>
+          <button class="button button--accent" id="st-btn" type="button">Stresstest starten</button>
+          <div class="werkstatt-output" id="st-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 6: MANIFEST-ÜBERSETZER ═══ -->
+    <section class="section" id="uebersetzer">
+      <div class="section-label">Übersetzer</div>
+      <div class="section-body">
+        <h2>Manifest-Übersetzer</h2>
+        <p>Nicht Google Translate. Eine kulturelle Adaptation – wie klingt „Radikale Mitte" auf Japanisch? Was ist das arabische Äquivalent von „Urteilskraft"?</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="tr-text">Text aus dem Manifest</label>
+          <textarea class="werkstatt-input" id="tr-text" rows="3" maxlength="500">Nicht mehr Stoff. Mehr Urteil. Du brauchst nicht mehr Information. Du brauchst Urteil, Haltung und Handlungskraft.</textarea>
+          <label class="stempel-label" for="tr-lang">Zielsprache</label>
+          <select class="stempel-input" id="tr-lang" style="padding: 0.6rem 0.9rem;">
+            <option value="Englisch">Englisch</option>
+            <option value="Französisch">Französisch</option>
+            <option value="Spanisch">Spanisch</option>
+            <option value="Japanisch">Japanisch</option>
+            <option value="Arabisch">Arabisch</option>
+            <option value="Portugiesisch">Portugiesisch</option>
+            <option value="Türkisch">Türkisch</option>
+            <option value="Chinesisch (Mandarin)">Chinesisch</option>
+            <option value="Koreanisch">Koreanisch</option>
+            <option value="Hindi">Hindi</option>
+          </select>
+          <button class="button button--accent" id="tr-btn" type="button">Kulturell übersetzen</button>
+          <div class="werkstatt-output" id="tr-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <h2>Nicht mehr Stoff. Mehr Urteil.</h2>
+        <p>KI ist Sparringspartner, nicht Orakel. Alle Werkzeuge fordern dein Denken – sie ersetzen es nicht.</p>
+      </div>
+      <div class="footer-stamp" aria-hidden="true">Extrem mittig</div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/werkstatt.js"></script>
+</body>
+</html>
