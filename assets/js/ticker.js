@@ -88,7 +88,8 @@
     prevBtn.setAttribute('aria-label', 'Vorherige Nachricht');
     prevBtn.style.cssText = 'border:1px solid rgba(17,17,17,0.2);background:transparent;' +
       'cursor:pointer;padding:0.2rem 0.5rem;font-size:0.8rem;color:#111;box-shadow:none;' +
-      'line-height:1;font-family:Arial,sans-serif;';
+      'line-height:1;font-family:Arial,sans-serif;min-width:44px;min-height:44px;' +
+      'display:inline-flex;align-items:center;justify-content:center;';
 
     var nextBtn = document.createElement('button');
     nextBtn.textContent = '\u25B6';
@@ -97,6 +98,7 @@
 
     var display = document.createElement('div');
     display.className = 'ticker-display';
+    display.setAttribute('aria-live', 'polite');
     display.style.cssText = 'flex:1;transition:opacity 0.35s ease;';
 
     prevBtn.addEventListener('click', function () {

@@ -62,11 +62,24 @@
       item.appendChild(dot);
       item.appendChild(content);
 
-      // Toggle description on click
+      // Keyboard accessible toggle
+      item.setAttribute('role', 'button');
+      item.setAttribute('tabindex', '0');
+      item.setAttribute('aria-expanded', 'false');
       item.style.cursor = 'pointer';
-      item.addEventListener('click', function () {
+
+      function toggleDesc() {
         var isOpen = desc.style.display !== 'none';
         desc.style.display = isOpen ? 'none' : 'block';
+        item.setAttribute('aria-expanded', String(!isOpen));
+      }
+
+      item.addEventListener('click', toggleDesc);
+      item.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleDesc();
+        }
       });
 
       container.appendChild(item);
