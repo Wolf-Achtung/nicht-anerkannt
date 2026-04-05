@@ -67,6 +67,10 @@
           }
 
           output.innerHTML = html;
+
+          if (window.AtelierScore && window.AtelierScore.track) {
+            window.AtelierScore.track('widerspruch');
+          }
         })
         .catch(function () { showError(output, 'Verbindungsfehler. Bitte erneut versuchen.'); })
         .finally(function () { btn.disabled = false; });
@@ -123,6 +127,10 @@
 
           html += '</div>';
           output.innerHTML = html;
+
+          if (window.AtelierScore && window.AtelierScore.track) {
+            window.AtelierScore.track('denkprobe');
+          }
         })
         .catch(function () { showError(output, 'Verbindungsfehler. Bitte erneut versuchen.'); })
         .finally(function () { btn.disabled = false; });
@@ -196,6 +204,10 @@
               '<p class="werkstatt-frage"><strong>' + escapeHtml(data.vertiefung) + '</strong></p></div>';
             html += '</div>';
             output.innerHTML = html;
+
+            if (window.AtelierScore && window.AtelierScore.track) {
+              window.AtelierScore.track('urteil');
+            }
           })
           .catch(function () { showError(output, 'Verbindungsfehler.'); })
           .finally(function () { judgeBtn.disabled = false; });
@@ -392,6 +404,10 @@
 
           html += '</div>';
           output.innerHTML = html;
+
+          if (window.AtelierScore && window.AtelierScore.track) {
+            window.AtelierScore.track('stresstest');
+          }
         })
         .catch(function () { showError(output, 'Verbindungsfehler.'); })
         .finally(function () { btn.disabled = false; });
@@ -432,9 +448,271 @@
 
           html += '</div>';
           output.innerHTML = html;
+
+          if (window.AtelierScore && window.AtelierScore.track) {
+            window.AtelierScore.track('translate');
+          }
         })
         .catch(function () { showError(output, 'Verbindungsfehler.'); })
         .finally(function () { btn.disabled = false; });
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // 7. PERSPEKTIVENWECHSEL-MASCHINE
+  // ═══════════════════════════════════════════════════════════
+  function initPerspektive() {
+    var btn = document.getElementById('pw-btn');
+    var posInput = document.getElementById('pw-position');
+    var perspSelect = document.getElementById('pw-perspektive');
+    var output = document.getElementById('pw-output');
+    if (!btn || !posInput || !perspSelect || !output) return;
+
+    btn.addEventListener('click', function () {
+      var position = posInput.value.trim();
+      if (!position) { posInput.focus(); return; }
+
+      btn.disabled = true;
+      showLoading(output);
+
+      postJSON('/api/perspektive', { position: position, perspektive: perspSelect.value })
+        .then(function (data) {
+          if (data.error || data.raw) {
+            showError(output, data.error || data.raw);
+            return;
+          }
+
+          var html = '<div class="werkstatt-perspektive">';
+          html += '<div class="werkstatt-card werkstatt-card--accent">' +
+            '<div class="werkstatt-card-label">Aus Sicht: ' + escapeHtml(data.perspektive) + '</div>' +
+            '<p>' + escapeHtml(data.reformulierung) + '</p></div>';
+
+          if (data.ueberraschung) {
+            html += '<div class="werkstatt-card">' +
+              '<div class="werkstatt-card-label">Was du übersehen hast</div>' +
+              '<p>' + escapeHtml(data.ueberraschung) + '</p></div>';
+          }
+
+          if (data.bruecke) {
+            html += '<div class="werkstatt-card">' +
+              '<div class="werkstatt-card-label">Brücke zwischen den Perspektiven</div>' +
+              '<p>' + escapeHtml(data.bruecke) + '</p></div>';
+          }
+
+          html += '</div>';
+          output.innerHTML = html;
+
+          if (window.AtelierScore && window.AtelierScore.track) {
+            window.AtelierScore.track('perspektive');
+          }
+        })
+        .catch(function () { showError(output, 'Verbindungsfehler. Bitte erneut versuchen.'); })
+        .finally(function () { btn.disabled = false; });
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // 8. KI-GEGENREDE
+  // ═══════════════════════════════════════════════════════════
+  function initGegenrede() {
+    var btn = document.getElementById('gr-btn');
+    var input = document.getElementById('gr-text');
+    var counter = document.getElementById('gr-count');
+    var output = document.getElementById('gr-output');
+    if (!btn || !input || !output) return;
+
+    if (counter) {
+      input.addEventListener('input', function () {
+        counter.textContent = input.value.length;
+      });
+    }
+
+    btn.addEventListener('click', function () {
+      var text = input.value.trim();
+      if (!text) { input.focus(); return; }
+
+      btn.disabled = true;
+      showLoading(output);
+
+      postJSON('/api/gegenrede', { text: text })
+        .then(function (data) {
+          if (data.error || data.raw) {
+            showError(output, data.error || data.raw);
+            return;
+          }
+
+          var html = '<div class="werkstatt-gegenrede">';
+
+          html += '<div class="werkstatt-card werkstatt-card--accent">' +
+            '<div class="werkstatt-card-label">Gegenposition</div>' +
+            '<p>' + escapeHtml(data.gegenposition) + '</p></div>';
+
+          html += '<div class="werkstatt-card">' +
+            '<div class="werkstatt-card-label">Die ungestellte Frage</div>' +
+            '<p class="werkstatt-frage"><strong>' + escapeHtml(data.ungestellte_frage) + '</strong></p></div>';
+
+          if (data.annahmen && data.annahmen.length) {
+            html += '<div class="werkstatt-card">' +
+              '<div class="werkstatt-card-label">Ungesagte Annahmen</div><ul>';
+            data.annahmen.forEach(function (a) {
+              html += '<li>' + escapeHtml(a) + '</li>';
+            });
+            html += '</ul></div>';
+          }
+
+          html += '<div class="werkstatt-card">' +
+            '<div class="werkstatt-card-label">Fehlende Stimme</div>' +
+            '<p>' + escapeHtml(data.fehlende_stimme) + '</p></div>';
+
+          html += '</div>';
+          output.innerHTML = html;
+
+          if (window.AtelierScore && window.AtelierScore.track) {
+            window.AtelierScore.track('gegenrede');
+          }
+        })
+        .catch(function () { showError(output, 'Verbindungsfehler. Bitte erneut versuchen.'); })
+        .finally(function () { btn.disabled = false; });
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // 9. ARGUMENTKARTE
+  // ═══════════════════════════════════════════════════════════
+  function initArgumentkarte() {
+    var btn = document.getElementById('ak-btn');
+    var input = document.getElementById('ak-these');
+    var output = document.getElementById('ak-output');
+    if (!btn || !input || !output) return;
+
+    btn.addEventListener('click', function () {
+      var these = input.value.trim();
+      if (!these) { input.focus(); return; }
+
+      btn.disabled = true;
+      showLoading(output);
+
+      postJSON('/api/argumentkarte', { these: these })
+        .then(function (data) {
+          if (data.error || data.raw) {
+            showError(output, data.error || data.raw);
+            return;
+          }
+
+          var html = '<div class="argmap">';
+
+          // Central thesis
+          html += '<div class="argmap-these">' +
+            '<div class="werkstatt-card-label">These</div>' +
+            '<p><strong>' + escapeHtml(data.these) + '</strong></p></div>';
+
+          // Pro/Contra columns
+          html += '<div class="argmap-columns">';
+
+          // Pro column
+          html += '<div class="argmap-col argmap-col--pro">';
+          html += '<h4 class="argmap-col-title argmap-col-title--pro">Pro</h4>';
+          if (data.pro && data.pro.length) {
+            data.pro.forEach(function (p) {
+              html += '<div class="werkstatt-card argmap-node argmap-node--pro">' +
+                '<div class="werkstatt-card-label">' + escapeHtml(p.argument) + '</div>' +
+                '<p>' + escapeHtml(p.begruendung) + '</p>' +
+                '<p class="argmap-einwand"><em>Einwand: ' + escapeHtml(p.einwand) + '</em></p></div>';
+            });
+          }
+          html += '</div>';
+
+          // Contra column
+          html += '<div class="argmap-col argmap-col--contra">';
+          html += '<h4 class="argmap-col-title argmap-col-title--contra">Contra</h4>';
+          if (data.contra && data.contra.length) {
+            data.contra.forEach(function (c) {
+              html += '<div class="werkstatt-card argmap-node argmap-node--contra">' +
+                '<div class="werkstatt-card-label">' + escapeHtml(c.argument) + '</div>' +
+                '<p>' + escapeHtml(c.begruendung) + '</p>' +
+                '<p class="argmap-einwand"><em>Einwand: ' + escapeHtml(c.einwand) + '</em></p></div>';
+            });
+          }
+          html += '</div>';
+          html += '</div>';
+
+          // Synthese
+          if (data.synthese) {
+            html += '<div class="werkstatt-card werkstatt-card--accent argmap-synthese">' +
+              '<div class="werkstatt-card-label">Synthese – Radikale Mitte</div>' +
+              '<p>' + escapeHtml(data.synthese) + '</p></div>';
+          }
+
+          html += '</div>';
+          output.innerHTML = html;
+
+          if (window.AtelierScore && window.AtelierScore.track) {
+            window.AtelierScore.track('argumentkarte');
+          }
+        })
+        .catch(function () { showError(output, 'Verbindungsfehler. Bitte erneut versuchen.'); })
+        .finally(function () { btn.disabled = false; });
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // 10. STILLE-MODUS (sokratischer Chat)
+  // ═══════════════════════════════════════════════════════════
+  function initStille() {
+    var btn = document.getElementById('stille-btn');
+    var input = document.getElementById('stille-input');
+    var messagesEl = document.getElementById('stille-messages');
+    if (!btn || !input || !messagesEl) return;
+
+    var history = [];
+
+    function addMessage(sender, text) {
+      var div = document.createElement('div');
+      div.className = 'stille-msg stille-msg--' + sender;
+      div.textContent = text;
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function send() {
+      var text = input.value.trim();
+      if (!text) { input.focus(); return; }
+
+      addMessage('user', text);
+      history.push({ sender: 'user', text: text });
+      input.value = '';
+      btn.disabled = true;
+
+      // Show typing indicator
+      var typing = document.createElement('div');
+      typing.className = 'stille-msg stille-msg--ki stille-typing';
+      typing.innerHTML = '<span class="werkstatt-loading-dot"></span>' +
+        '<span class="werkstatt-loading-dot"></span>' +
+        '<span class="werkstatt-loading-dot"></span>';
+      messagesEl.appendChild(typing);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+
+      postJSON('/api/chat', { message: text, history: history, stille: true })
+        .then(function (data) {
+          if (typing.parentNode) typing.parentNode.removeChild(typing);
+          var reply = data.reply || data.error || 'Keine Antwort erhalten.';
+          addMessage('ki', reply);
+          history.push({ sender: 'ki', text: reply });
+
+          if (window.AtelierScore && window.AtelierScore.track) {
+            window.AtelierScore.track('stille');
+          }
+        })
+        .catch(function () {
+          if (typing.parentNode) typing.parentNode.removeChild(typing);
+          addMessage('ki', 'Verbindungsfehler. Bitte erneut versuchen.');
+        })
+        .finally(function () { btn.disabled = false; input.focus(); });
+    }
+
+    btn.addEventListener('click', send);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') send();
     });
   }
 
@@ -448,5 +726,9 @@
     initWicked();
     initStresstest();
     initTranslate();
+    initPerspektive();
+    initGegenrede();
+    initArgumentkarte();
+    initStille();
   });
 }());

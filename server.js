@@ -51,21 +51,34 @@ async function callClaude(systemPrompt, messages, maxTokens = 300) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// 1. CHAT – KI-Sparringspartner
+// 1. CHAT – KI-Sparringspartner (+ Stille-Modus)
 // ═══════════════════════════════════════════════════════════
 app.use('/api/chat', express.json());
 
 app.post('/api/chat', async (req, res) => {
-  const { message, history } = req.body;
+  const { message, history, stille } = req.body;
   if (!message) return res.status(400).json({ reply: 'Keine Nachricht erhalten.' });
 
-  const systemPrompt = `Du bist der KI-Sparringspartner des Ateliers der Radikalen Mitte.
+  const normalPrompt = `Du bist der KI-Sparringspartner des Ateliers der Radikalen Mitte.
 Deine Aufgabe ist es, Nutzer:innen herauszufordern, nicht ihnen zuzustimmen.
 Du stellst sokratische Gegenfragen, deckst Widersprüche auf und forderst präziseres Denken.
 Du bist nicht nett, aber respektvoll. Du bist nicht neutral, sondern provokant im Dienst der Klarheit.
 Deine Antworten sind kurz (2-4 Sätze), direkt und auf Deutsch.
 Du orientierst dich am Manifest: Urteil statt Meinung, Handlung statt Pose, Widerspruch als Methode.
 Vermeide Floskeln. Sei konkret. Fordere heraus.`;
+
+  const stillePrompt = `Du bist der Stille-Modus des Ateliers der Radikalen Mitte.
+WICHTIGSTE REGEL: Du stellst NUR Fragen. Du gibst NIEMALS Antworten, Meinungen, Erklärungen oder Aussagen.
+Du bist ein rein sokratischer Gesprächspartner.
+Jede deiner Antworten besteht aus GENAU EINER Frage – kurz, präzise, bohrend.
+Deine Fragen sollen:
+- Annahmen sichtbar machen
+- Widersprüche aufdecken
+- Blinde Stellen beleuchten
+- Zum tieferen Nachdenken zwingen
+Du antwortest auf Deutsch. Kein Smalltalk. Keine Einleitungen. Nur die Frage.`;
+
+  const systemPrompt = stille ? stillePrompt : normalPrompt;
 
   const messages = [];
   if (history && Array.isArray(history)) {
@@ -333,6 +346,160 @@ Sei direkt und konkret. Zitiere Passagen wo möglich. Antworte auf Deutsch im JS
 
   const messages = [{ role: 'user', content: `Prüfe diesen Text:\n\n${text}` }];
   const result = await callClaude(systemPrompt, messages, 1000);
+  if (result.error) return res.status(result.status).json({ error: result.error });
+
+  try {
+    const jsonMatch = result.text.match(/\{[\s\S]*\}/);
+    res.json(jsonMatch ? JSON.parse(jsonMatch[0]) : { raw: result.text });
+  } catch (e) {
+    res.json({ raw: result.text });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+// 8. TÄGLICHE DENKPROBE (Daily Challenge)
+// ═══════════════════════════════════════════════════════════
+app.use('/api/daily', express.json());
+
+app.post('/api/daily', async (req, res) => {
+  const { seed } = req.body;
+
+  const systemPrompt = `Du bist der Generator der Täglichen Denkprobe des Ateliers der Radikalen Mitte.
+Erzeuge eine kurze, scharfe Denkprobe des Tages. Sie soll:
+- Ein aktuelles oder zeitloses Thema aufgreifen
+- In 2-3 Sätzen eine Spannung formulieren
+- Eine einzige, präzise Frage stellen, die in einem Satz beantwortbar ist
+- Zum Nachdenken zwingen, nicht zum Googeln
+
+Antworte auf Deutsch im JSON-Format:
+{
+  "titel": "Kurzer Titel (max 8 Wörter)",
+  "impuls": "2-3 Sätze, die die Spannung aufbauen",
+  "frage": "Die eine Frage des Tages"
+}`;
+
+  const messages = [{ role: 'user', content: `Generiere die Denkprobe des Tages. Seed: ${seed || Date.now()}` }];
+  const result = await callClaude(systemPrompt, messages, 400);
+  if (result.error) return res.status(result.status).json({ error: result.error });
+
+  try {
+    const jsonMatch = result.text.match(/\{[\s\S]*\}/);
+    res.json(jsonMatch ? JSON.parse(jsonMatch[0]) : { raw: result.text });
+  } catch (e) {
+    res.json({ raw: result.text });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+// 9. PERSPEKTIVENWECHSEL-MASCHINE
+// ═══════════════════════════════════════════════════════════
+app.use('/api/perspektive', express.json());
+
+app.post('/api/perspektive', async (req, res) => {
+  const { position, perspektive } = req.body;
+  if (!position || !perspektive) return res.status(400).json({ error: 'Position und Perspektive erforderlich.' });
+
+  const systemPrompt = `Du bist die Perspektivenwechsel-Maschine des Ateliers der Radikalen Mitte.
+Du erhältst eine Position/Meinung und eine gewählte Perspektive.
+Deine Aufgabe: Formuliere die Position EMPATHISCH und ÜBERZEUGEND aus der gewählten Perspektive um.
+Nicht als Karikatur, nicht als Strohmann – sondern als bestmögliche Version dieser Perspektive.
+Zeige, wie jemand aus dieser Perspektive EHRLICH und INTELLIGENT argumentieren würde.
+
+Antworte auf Deutsch im JSON-Format:
+{
+  "perspektive": "Name der eingenommenen Perspektive",
+  "reformulierung": "Die Position aus der neuen Perspektive (3-5 Sätze, empathisch und überzeugend)",
+  "ueberraschung": "Ein Punkt, den die Originalperspektive übersehen hat (1-2 Sätze)",
+  "bruecke": "Was beide Perspektiven gemeinsam haben könnten (1-2 Sätze)"
+}`;
+
+  const messages = [{
+    role: 'user',
+    content: `Position: "${position}"\nPerspektive: ${perspektive}`
+  }];
+  const result = await callClaude(systemPrompt, messages, 700);
+  if (result.error) return res.status(result.status).json({ error: result.error });
+
+  try {
+    const jsonMatch = result.text.match(/\{[\s\S]*\}/);
+    res.json(jsonMatch ? JSON.parse(jsonMatch[0]) : { raw: result.text });
+  } catch (e) {
+    res.json({ raw: result.text });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+// 10. KI-GEGENREDE zu Nachrichtenartikeln
+// ═══════════════════════════════════════════════════════════
+app.use('/api/gegenrede', express.json({ limit: '50kb' }));
+
+app.post('/api/gegenrede', async (req, res) => {
+  const { text } = req.body;
+  if (!text) return res.status(400).json({ error: 'Kein Artikeltext erhalten.' });
+  if (text.length > 8000) return res.status(400).json({ error: 'Text zu lang (max. 8000 Zeichen).' });
+
+  const systemPrompt = `Du bist die KI-Gegenrede des Ateliers der Radikalen Mitte.
+Du erhältst den Text eines Nachrichtenartikels oder Meinungsbeitrags.
+Deine Aufgabe ist es, den Text kritisch zu durchleuchten – nicht parteiisch, sondern im Dienst besseren Denkens.
+
+Liefere:
+1. GEGENPOSITION: Die stärkste Gegenposition zum Artikel (3-4 Sätze)
+2. UNGESTELLTE FRAGE: Die wichtigste Frage, die der Artikel nicht stellt (1-2 Sätze)
+3. UNGESAGTE ANNAHMEN: 2-3 implizite Annahmen, die der Artikel macht, ohne sie auszusprechen
+4. FEHLENDE STIMME: Welche Perspektive/Betroffenengruppe kommt nicht zu Wort?
+
+Sei scharf, aber fair. Keine Polemik. Antworte auf Deutsch im JSON-Format:
+{
+  "gegenposition": "...",
+  "ungestellte_frage": "...",
+  "annahmen": ["...", "...", "..."],
+  "fehlende_stimme": "..."
+}`;
+
+  const messages = [{ role: 'user', content: `Analysiere diesen Artikel:\n\n${text}` }];
+  const result = await callClaude(systemPrompt, messages, 1000);
+  if (result.error) return res.status(result.status).json({ error: result.error });
+
+  try {
+    const jsonMatch = result.text.match(/\{[\s\S]*\}/);
+    res.json(jsonMatch ? JSON.parse(jsonMatch[0]) : { raw: result.text });
+  } catch (e) {
+    res.json({ raw: result.text });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+// 11. ARGUMENTKARTE (Argument Mapping)
+// ═══════════════════════════════════════════════════════════
+app.use('/api/argumentkarte', express.json());
+
+app.post('/api/argumentkarte', async (req, res) => {
+  const { these } = req.body;
+  if (!these) return res.status(400).json({ error: 'Keine These erhalten.' });
+
+  const systemPrompt = `Du bist die Argumentkarte des Ateliers der Radikalen Mitte.
+Du erhältst eine These und erstellst eine strukturierte Argumentkarte.
+Die Karte hat die These im Zentrum, mit Pro- und Contra-Ästen.
+Jeder Ast hat Unterargumente und mögliche Einwände.
+
+Antworte auf Deutsch im JSON-Format:
+{
+  "these": "Die Originalthese",
+  "pro": [
+    {"argument": "Pro-Argument 1", "begruendung": "Kurze Begründung", "einwand": "Möglicher Einwand"},
+    {"argument": "Pro-Argument 2", "begruendung": "Kurze Begründung", "einwand": "Möglicher Einwand"},
+    {"argument": "Pro-Argument 3", "begruendung": "Kurze Begründung", "einwand": "Möglicher Einwand"}
+  ],
+  "contra": [
+    {"argument": "Contra-Argument 1", "begruendung": "Kurze Begründung", "einwand": "Möglicher Einwand"},
+    {"argument": "Contra-Argument 2", "begruendung": "Kurze Begründung", "einwand": "Möglicher Einwand"},
+    {"argument": "Contra-Argument 3", "begruendung": "Kurze Begründung", "einwand": "Möglicher Einwand"}
+  ],
+  "synthese": "Eine Synthese-Position, die das Beste beider Seiten ernst nimmt (2-3 Sätze)"
+}`;
+
+  const messages = [{ role: 'user', content: `These: "${these}"` }];
+  const result = await callClaude(systemPrompt, messages, 1200);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
   try {
