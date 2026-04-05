@@ -173,22 +173,28 @@
     return div.innerHTML;
   }
 
-  function findResponse(userText) {
-    // Future API integration:
-    // return fetch('/api/chat', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ message: userText, history: history })
-    // })
-    // .then(function (res) { return res.json(); })
-    // .then(function (data) { return data.reply; });
-
+  function localFallback(userText) {
     for (var i = 0; i < triggers.length; i++) {
       if (triggers[i].trigger.test(userText)) {
         return pick(triggers[i].responses);
       }
     }
     return pick(genericResponses);
+  }
+
+  function findResponse(userText, callback) {
+    fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: userText, history: history })
+    })
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      callback(data.reply || localFallback(userText));
+    })
+    .catch(function () {
+      callback(localFallback(userText));
+    });
   }
 
   function addMessage(text, sender) {
@@ -230,11 +236,10 @@
     inputEl.value = '';
     addMessage(text, 'user');
 
-    // Simulate slight delay for bot response
-    setTimeout(function () {
-      var response = findResponse(text);
+    // Call API with local fallback
+    findResponse(text, function (response) {
       addMessage(response, 'bot');
-    }, 400 + Math.random() * 600);
+    });
   }
 
   function resetChat() {
