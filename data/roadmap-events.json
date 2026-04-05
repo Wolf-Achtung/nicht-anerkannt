@@ -1,0 +1,79 @@
+{
+  "milestones": [
+    {
+      "id": "m1",
+      "title": "Manifest & Website-Studie",
+      "description": "Erstveröffentlichung des Manifests und der experimentellen Website als visuelle Richtung.",
+      "status": "completed",
+      "date": "2026-Q1"
+    },
+    {
+      "id": "m2",
+      "title": "Interaktive Plattform",
+      "description": "Manifest-Remixer, Stempel-Generator und Live-Ticker machen die Ideen erlebbar.",
+      "status": "active",
+      "date": "2026-Q2"
+    },
+    {
+      "id": "m3",
+      "title": "KI-Sparringspartner",
+      "description": "Chat-Widget ermöglicht den direkten Dialog mit KI als Denkwerkzeug.",
+      "status": "upcoming",
+      "date": "2026-Q2"
+    },
+    {
+      "id": "m4",
+      "title": "Ideen-Archiv & Community",
+      "description": "Offenes Archiv für Denkproben, Widerspruchssalon-Themen und Pull-Request-Beiträge.",
+      "status": "upcoming",
+      "date": "2026-Q3"
+    },
+    {
+      "id": "m5",
+      "title": "Erster Widerspruchssalon",
+      "description": "Öffentliche Veranstaltung: moderierter Dialog zu einem kontroversen Gegenwartsthema.",
+      "status": "upcoming",
+      "date": "2026-Q3"
+    },
+    {
+      "id": "m6",
+      "title": "Micro-Experimente & Quiz",
+      "description": "Interaktive Tools zum Selbsttest: Wo stehst du? Welche Fragen bewegen dich?",
+      "status": "upcoming",
+      "date": "2026-Q3"
+    },
+    {
+      "id": "m7",
+      "title": "Medien & Audio-Manifest",
+      "description": "Das Manifest als Audio-Version, Kurzvideos und weitere Medienformate.",
+      "status": "upcoming",
+      "date": "2026-Q4"
+    },
+    {
+      "id": "m8",
+      "title": "Atelier-Pilotprogramm",
+      "description": "Erste Kohorte startet: interdisziplinäres Lernen an echten Fragen.",
+      "status": "upcoming",
+      "date": "2027-Q1"
+    }
+  ],
+  "events": [
+    {
+      "title": "Website-Launch",
+      "date": "2026-04-05",
+      "type": "launch"
+    },
+    {
+      "title": "Widerspruchssalon #1",
+      "date": "2026-07-15",
+      "type": "event",
+      "description": "Thema: Kann KI urteilen?"
+    },
+    {
+      "title": "Widerspruchssalon #2",
+      "date": "2026-09-20",
+      "type": "event",
+      "description": "Thema: Was ist radikale Mitte in der Klimadebatte?"
+    }
+  ]
+}

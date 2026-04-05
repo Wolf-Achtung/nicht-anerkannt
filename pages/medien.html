@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Medien – Das Atelier der Radikalen Mitte</title>
+  <meta name="description" content="Das Manifest hören, sehen und teilen – Audio, Video, Downloads und Social Media.">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="inner">
+      <div class="brand">
+        <span class="brand-mark">NICHT ANERKANNT</span>
+        <span>Das Atelier der Radikalen Mitte</span>
+      </div>
+      <nav class="header-links" aria-label="Navigation">
+        <a href="../index.html">Startseite</a>
+        <a href="ideen-archiv.html">Ideen-Archiv</a>
+        <a href="medien.html">Medien</a>
+        <a href="roadmap.html">Roadmap</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="page-hero" aria-labelledby="medien-title">
+      <p class="eyebrow">Audio / Video / Downloads / Teilen</p>
+      <h1 id="medien-title">Medien</h1>
+      <p class="subtitle">Das Manifest hören, sehen und teilen</p>
+    </section>
+
+    <!-- Audio-Manifest -->
+    <section class="section">
+      <div class="section-label">Audio-Manifest</div>
+      <div class="section-body">
+        <h2>Das Manifest zum Hören</h2>
+        <div class="media-player">
+          <p>Das Manifest als Audiofassung – demnächst verfügbar.</p>
+          <audio controls>
+            <!-- Audio-Quelle wird ergänzt, sobald die Aufnahme vorliegt -->
+            Dein Browser unterstützt das Audio-Element nicht.
+          </audio>
+        </div>
+      </div>
+    </section>
+
+    <!-- Video -->
+    <section class="section">
+      <div class="section-label">Video</div>
+      <div class="section-body">
+        <h2>Kurzfilm: Das Atelier in 60 Sekunden</h2>
+        <div class="video-container">
+          <p>Kurzfilm: Das Atelier in 60 Sekunden – in Produktion.</p>
+          <video controls>
+            <!-- Video-Quelle wird ergänzt, sobald der Film fertig ist -->
+            Dein Browser unterstützt das Video-Element nicht.
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <!-- Downloads -->
+    <section class="section">
+      <div class="section-label">Downloads</div>
+      <div class="section-body">
+        <h2>Material herunterladen</h2>
+        <ul class="download-list">
+          <li>
+            <a href="../manifest-das-atelier-radikale-mitte.md" download>Manifest als PDF</a>
+          </li>
+          <li>
+            <a href="../index.html#stempel">Stempel-Generator</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Social Media -->
+    <section class="section">
+      <div class="section-label">Social Media</div>
+      <div class="section-body">
+        <h2>Zitate teilen</h2>
+        <p>Verbreite die Kerngedanken des Manifests. Klicke auf ein Zitat, um es zu kopieren und zu teilen.</p>
+        <div class="share-buttons">
+          <button class="share-btn" data-quote="Nicht mehr Stoff. Mehr Urteil.">Nicht mehr Stoff. Mehr Urteil.</button>
+          <button class="share-btn" data-quote="Du musst dich nicht zwischen Zynismus und Fanatismus entscheiden.">Zynismus vs. Fanatismus</button>
+          <button class="share-btn" data-quote="KI ist Sparringspartner, nicht Orakel.">KI als Sparringspartner</button>
+          <button class="share-btn" data-quote="Widerspruch ist Methode.">Widerspruch ist Methode</button>
+          <button class="share-btn" data-quote="Billig wird Reproduktion. Teuer werden Urteil, Originalität, Verantwortung, Präsenz und Mut.">Urteil wird teuer</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <h2>Nicht mehr Stoff. Mehr Urteil.</h2>
+        <p>Das Manifest in allen Formaten – hören, sehen, herunterladen, teilen.</p>
+      </div>
+      <div class="footer-stamp">Extrem mittig</div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+  <script>
+    // Share button: copy quote to clipboard
+    (function () {
+      var buttons = document.querySelectorAll('.share-btn');
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var quote = btn.getAttribute('data-quote');
+          var text = '"' + quote + '" – Das Atelier der Radikalen Mitte https://github.com/Wolf-Achtung/nicht-anerkannt';
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function () {
+              var original = btn.textContent;
+              btn.textContent = 'Kopiert!';
+              setTimeout(function () { btn.textContent = original; }, 1800);
+            });
+          } else {
+            // Fallback
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            var original = btn.textContent;
+            btn.textContent = 'Kopiert!';
+            setTimeout(function () { btn.textContent = original; }, 1800);
+          }
+        });
+      });
+    }());
+  </script>
+</body>
+</html>

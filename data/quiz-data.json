@@ -1,0 +1,93 @@
+{
+  "title": "Widerspruchsquiz: Wo stehst du?",
+  "description": "Ein Selbsttest – keine Schublade, sondern ein Spiegel. Beantworte die Fragen und erfahre, wie du denkst.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "Du liest einen kontroversen Artikel. Dein erster Impuls ist:",
+      "options": [
+        {"text": "Sofort zustimmen oder ablehnen – ich weiß, wo ich stehe.", "scores": {"lager": 2, "anpassung": 0, "mitte": 0}},
+        {"text": "Prüfen, ob die Argumente halten – auch wenn mir das Ergebnis nicht gefällt.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}},
+        {"text": "Schauen, was die Mehrheit dazu sagt, bevor ich mich positioniere.", "scores": {"lager": 0, "anpassung": 2, "mitte": 0}},
+        {"text": "Den Artikel teilen, weil er provoziert – egal ob ich zustimme.", "scores": {"lager": 1, "anpassung": 0, "mitte": 1}}
+      ]
+    },
+    {
+      "id": 2,
+      "text": "In einer Gruppendiskussion vertritt jemand eine Position, die du für falsch hältst. Du:",
+      "options": [
+        {"text": "Sagst klar, warum du das anders siehst – auch wenn es unangenehm wird.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}},
+        {"text": "Schweigst, um keinen Konflikt zu provozieren.", "scores": {"lager": 0, "anpassung": 2, "mitte": 0}},
+        {"text": "Versuchst, die Person zu überzeugen – du weißt, was richtig ist.", "scores": {"lager": 2, "anpassung": 0, "mitte": 0}},
+        {"text": "Fragst nach: Was genau meinst du? Wie kommst du darauf?", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}}
+      ]
+    },
+    {
+      "id": 3,
+      "text": "KI kann inzwischen Texte, Bilder und Code erzeugen. Das bedeutet für dich:",
+      "options": [
+        {"text": "Endlich weniger Arbeit – KI soll möglichst viel übernehmen.", "scores": {"lager": 0, "anpassung": 2, "mitte": 0}},
+        {"text": "KI ist gefährlich und sollte stärker reguliert werden.", "scores": {"lager": 2, "anpassung": 0, "mitte": 0}},
+        {"text": "KI ist ein Werkzeug. Entscheidend ist, wer es wozu benutzt.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}},
+        {"text": "KI zeigt, dass menschliches Urteil wertvoller wird, nicht wertloser.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}}
+      ]
+    },
+    {
+      "id": 4,
+      "text": "Du musst eine wichtige Entscheidung treffen, hast aber nicht alle Informationen. Du:",
+      "options": [
+        {"text": "Wartest, bis du alle Fakten hast – Sicherheit geht vor.", "scores": {"lager": 0, "anpassung": 2, "mitte": 0}},
+        {"text": "Entscheidest trotzdem – mit dem besten Urteil, das du jetzt hast.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}},
+        {"text": "Fragst jemanden, dem du vertraust, und folgst seinem Rat.", "scores": {"lager": 0, "anpassung": 2, "mitte": 0}},
+        {"text": "Entscheidest schnell und klar – Zögern ist Schwäche.", "scores": {"lager": 2, "anpassung": 0, "mitte": 0}}
+      ]
+    },
+    {
+      "id": 5,
+      "text": "Was bedeutet Bildung für dich?",
+      "options": [
+        {"text": "Wissen erwerben, Prüfungen bestehen, Karriere ermöglichen.", "scores": {"lager": 0, "anpassung": 2, "mitte": 0}},
+        {"text": "Die richtigen Werte vermitteln und die Gesellschaft verändern.", "scores": {"lager": 2, "anpassung": 0, "mitte": 0}},
+        {"text": "Lernen, besser zu unterscheiden, zu urteilen und zu handeln.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}},
+        {"text": "Einen geschützten Raum zum Nachdenken und Experimentieren.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}}
+      ]
+    },
+    {
+      "id": 6,
+      "text": "Jemand sagt: \"Man muss sich entscheiden – links oder rechts.\" Du denkst:",
+      "options": [
+        {"text": "Stimmt. Neutralität ist feige.", "scores": {"lager": 2, "anpassung": 0, "mitte": 0}},
+        {"text": "Stimmt nicht. Die wichtigsten Fragen lassen sich nicht in Lager pressen.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}},
+        {"text": "Ich halte mich lieber raus aus politischen Diskussionen.", "scores": {"lager": 0, "anpassung": 2, "mitte": 0}},
+        {"text": "Kommt drauf an – manchmal muss man Position beziehen, manchmal differenzieren.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}}
+      ]
+    },
+    {
+      "id": 7,
+      "text": "Dein Lieblingswort aus dieser Liste:",
+      "options": [
+        {"text": "Sicherheit", "scores": {"lager": 0, "anpassung": 2, "mitte": 0}},
+        {"text": "Gerechtigkeit", "scores": {"lager": 2, "anpassung": 0, "mitte": 0}},
+        {"text": "Urteilskraft", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}},
+        {"text": "Widerspruch", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}}
+      ]
+    }
+  ],
+  "results": {
+    "mitte": {
+      "title": "Radikale Mitte",
+      "description": "Du denkst, bevor du reagierst. Du hältst Widerspruch aus und suchst Urteil statt Lager. Das Atelier ist genau für Menschen wie dich gedacht.",
+      "motto": "Nicht angepasst. Handlungsfähig."
+    },
+    "lager": {
+      "title": "Lagerdenker:in",
+      "description": "Du hast klare Überzeugungen und positionierst dich schnell. Das kann Stärke sein – aber auch Schließung. Das Atelier lädt dich ein, deine Positionen einem Stresstest zu unterziehen.",
+      "motto": "Widerspruch ist Methode."
+    },
+    "anpassung": {
+      "title": "Anpassungskünstler:in",
+      "description": "Du suchst Sicherheit und Konsens. Das ist verständlich – aber manchmal zu wenig. Das Atelier will dir helfen, Unsicherheit auszuhalten und trotzdem zu handeln.",
+      "motto": "Nicht mehr Stoff. Mehr Urteil."
+    }
+  }
+}
