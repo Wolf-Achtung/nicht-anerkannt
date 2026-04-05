@@ -4,10 +4,16 @@
   "description": "Das Atelier der Radikalen Mitte – Manifest und interaktive Plattform",
   "private": true,
   "scripts": {
-    "dev": "npx serve .",
-    "lint": "echo 'No linter configured yet'"
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
   },
   "keywords": ["manifest", "atelier", "radikale-mitte", "bildung"],
   "author": "Wolf-Achtung",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
 }
