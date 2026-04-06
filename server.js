@@ -10,8 +10,46 @@ app.use(express.static(path.join(__dirname), {
 }));
 
 // --- Shared: call Claude API ---
+
+function getConfiguredApiKey() {
+  return process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY || process.env.AI_API_KEY || '';
+}
+
+function pickLocalDailyChallenge(seedInput) {
+  const seed = String(seedInput || new Date().toISOString().slice(0, 10));
+  const pool = [
+    {
+      titel: 'Denkprobe des Tages',
+      impuls: 'Viele fordern klare Kante, aber klare Kante löst selten komplexe Konflikte. Gleichzeitig wirkt Abwägen oft wie Schwäche.',
+      frage: 'Welche Entscheidung von dir braucht heute mehr Ambivalenz statt mehr Härte?'
+    },
+    {
+      titel: 'Denkprobe des Tages',
+      impuls: 'Wir verwechseln oft Tempo mit Richtung: Hauptsache reagieren, egal wohin. Doch hektische Aktivität kann auch ein Ausweichen sein.',
+      frage: 'Wo tust du gerade nur so, als würdest du handeln?'
+    },
+    {
+      titel: 'Denkprobe des Tages',
+      impuls: 'In Debatten gewinnt oft, wer lauter oder schneller ist. Die bessere Frage geht dabei unter.',
+      frage: 'Welche Frage stellst du nicht, weil sie deine eigene Position gefährden könnte?'
+    },
+    {
+      titel: 'Denkprobe des Tages',
+      impuls: 'Viele Konflikte eskalieren, weil jede Seite nur ihre Verletzung sieht. Verständnis ohne Selbstaufgabe bleibt selten geübt.',
+      frage: 'Welchen berechtigten Punkt der Gegenseite hast du zuletzt zu schnell abgetan?'
+    },
+    {
+      titel: 'Denkprobe des Tages',
+      impuls: 'Wir lieben Prinzipien, bis sie uns selbst etwas kosten. Erst dann zeigt sich, ob es Haltung oder nur Pose war.',
+      frage: 'Welches deiner Prinzipien würdest du morgen noch vertreten, wenn es dir konkret schadet?'
+    }
+  ];
+
+  const hash = seed.split('').reduce((acc, char) => ((acc * 31) + char.charCodeAt(0)) >>> 0, 7);
+  return pool[hash % pool.length];
+}
 async function callClaude(systemPrompt, messages, maxTokens = 300) {
-  const apiKey = process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY || process.env.AI_API_KEY;
+  const apiKey = getConfiguredApiKey();
   if (!apiKey) {
     return { error: 'Anthropic API-Key nicht konfiguriert (ANTHROPIC_API_KEY/CLAUDE_API_KEY).', status: 500 };
   }
@@ -365,6 +403,11 @@ app.use('/api/daily', express.json());
 
 app.post('/api/daily', async (req, res) => {
   const { seed } = req.body;
+  const resolvedSeed = seed || new Date().toISOString().slice(0, 10);
+
+  if (!getConfiguredApiKey()) {
+    return res.json({ ...pickLocalDailyChallenge(resolvedSeed), source: 'local-fallback' });
+  }
 
   const systemPrompt = `Du bist der Generator der Täglichen Denkprobe des Ateliers der Radikalen Mitte.
 Erzeuge eine kurze, scharfe Denkprobe des Tages. Sie soll:
@@ -380,16 +423,23 @@ Antworte auf Deutsch im JSON-Format:
   "frage": "Die eine Frage des Tages"
 }`;
 
-  const messages = [{ role: 'user', content: `Generiere die Denkprobe des Tages. Seed: ${seed || Date.now()}` }];
+  const messages = [{ role: 'user', content: `Generiere die Denkprobe des Tages. Seed: ${resolvedSeed}` }];
   const result = await callClaude(systemPrompt, messages, 400);
-  if (result.error) return res.status(result.status).json({ error: result.error });
+  if (result.error) {
+    return res.json({ ...pickLocalDailyChallenge(resolvedSeed), source: 'local-fallback' });
+  }
 
   try {
     const jsonMatch = result.text.match(/\{[\s\S]*\}/);
-    res.json(jsonMatch ? JSON.parse(jsonMatch[0]) : { raw: result.text });
+    const parsed = jsonMatch ? JSON.parse(jsonMatch[0]) : null;
+    if (parsed && parsed.titel && parsed.frage) {
+      return res.json(parsed);
+    }
   } catch (e) {
-    res.json({ raw: result.text });
+    // Falls KI-Antwort unlesbar ist, auf lokale Denkprobe ausweichen.
   }
+
+  res.json({ ...pickLocalDailyChallenge(resolvedSeed), source: 'local-fallback' });
 });
 
 // ═══════════════════════════════════════════════════════════
