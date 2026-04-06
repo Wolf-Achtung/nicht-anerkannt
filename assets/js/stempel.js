@@ -122,7 +122,8 @@
 
     if (name) text += ' — ' + name;
     if (ort) text += ', ' + ort;
-    text += '\n\nDas Atelier der Radikalen Mitte\nNicht mehr Stoff. Mehr Urteil.';
+    text += '\n\nStaatlich NICHT anerkannt. Politisch NICHT vereinnahmbar.';
+    text += '\nDas Atelier der Radikalen Mitte\nNicht mehr Stoff. Mehr Urteil.';
 
     function acknowledge() {
       buttonEl.textContent = 'Kopiert!';
