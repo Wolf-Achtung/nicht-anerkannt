@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Workshop – The Atelier of the Radical Middle</title>
+  <meta name="description" content="AI-powered thinking tools: Contradiction Salon, Thinking Challenge Generator, Judgment Training, Wicked Problem Workshop, Text Stress Test, and Manifesto Translator.">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="site-header">
+    <div class="inner">
+      <div class="brand">
+        <span class="brand-mark">
+          <span class="brand-pre">State</span>
+          <span class="brand-main">NICHT ANERKANNT</span>
+        </span>
+        <span>The Atelier of the Radical Middle</span>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+      <nav class="header-links" id="main-nav" aria-label="Page sections">
+        <a href="../index.html#problem">Problem</a>
+        <a href="../index.html#mitte">Radical Middle</a>
+        <a href="../index.html#atelier">Atelier</a>
+        <a href="../index.html#einladung">Invitation</a>
+        <a href="../index.html#score">Thinking Profile</a>
+        <a href="salon.html">Salon</a>
+        <a href="ideen-archiv.html">Ideas Archive</a>
+        <a href="werkstatt.html" aria-current="page">AI Workshop</a>
+        <a href="medien.html">Media</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="kontakt.html">Contact</a>
+        <a href="impressum.html">Legal Notice</a>
+        <a class="lang-switch" href="../../index.html" hreflang="de" lang="de">EN / DE</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" style="min-height: auto; padding-bottom: 2rem;" aria-labelledby="page-title">
+      <div class="hero-copy" style="grid-column: 1 / -1;">
+        <p class="eyebrow">AI as Sparring Partner / Thinking Tools / Judgment Training</p>
+        <h1 id="page-title">AI Workshop</h1>
+        <p class="lede">Ten AI-powered tools that challenge your thinking – not replace it. AI here is a sparring partner, counter-voice, and stress test.</p>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 1: CONTRADICTION SALON ═══ -->
+    <section class="section" id="widerspruchssalon">
+      <div class="section-label">Contradiction</div>
+      <div class="section-body">
+        <h2>Contradiction Salon</h2>
+        <p>State a thesis – the AI generates three well-founded counter-positions from different perspectives. No straw man, but a real challenge.</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="ws-these">Your thesis</label>
+          <textarea class="werkstatt-input" id="ws-these" rows="3" placeholder="e.g. &quot;Social media should be banned for anyone under 16.&quot;" maxlength="500"></textarea>
+          <button class="button button--accent" id="ws-btn" type="button">Generate counter-positions</button>
+          <div class="werkstatt-output" id="ws-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 2: THINKING CHALLENGE GENERATOR ═══ -->
+    <section class="section" id="denkprobe">
+      <div class="section-label">Thinking Challenge</div>
+      <div class="section-body">
+        <h2>Thinking Challenge Generator</h2>
+        <p>Enter a current topic – the AI produces a structured thinking challenge in the Atelier's style: problem statement, false alternative, radical middle, open questions.</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="dp-thema">Topic</label>
+          <input class="stempel-input" type="text" id="dp-thema" placeholder="e.g. &quot;Universal basic income&quot;, &quot;AI in schools&quot;, &quot;Climate protests&quot;" maxlength="200">
+          <button class="button button--accent" id="dp-btn" type="button">Generate thinking challenge</button>
+          <div class="werkstatt-output" id="dp-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 3: JUDGMENT TRAINING ═══ -->
+    <section class="section" id="urteilstraining">
+      <div class="section-label">Judgment</div>
+      <div class="section-body">
+        <h2>Judgment Training</h2>
+        <p>A real dilemma – no right or wrong. Make your judgment, and the AI reveals your blind spots, your strengths, and pushes your thinking further.</p>
+        <div class="werkstatt-tool">
+          <div id="ut-dilemma" class="werkstatt-dilemma"></div>
+          <button class="button" id="ut-new" type="button">New dilemma</button>
+          <div id="ut-answer-area" style="display:none; margin-top: 1.2rem;">
+            <label class="stempel-label" for="ut-urteil">Your judgment</label>
+            <textarea class="werkstatt-input" id="ut-urteil" rows="4" placeholder="What is your judgment? Explain your position..." maxlength="1000"></textarea>
+            <button class="button button--accent" id="ut-judge" type="button">Have judgment reviewed</button>
+          </div>
+          <div class="werkstatt-output" id="ut-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 4: WICKED PROBLEM WORKSHOP ═══ -->
+    <section class="section" id="wicked">
+      <div class="section-label">Wicked Problem</div>
+      <div class="section-body">
+        <h2>Wicked Problem Workshop</h2>
+        <p>Choose a complex problem and work through five thinking steps: disciplines, stakeholders, contradictions, options for action, judgment. In the end, you have your personal working paper.</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="wp-problem">Wicked Problem</label>
+          <input class="stempel-input" type="text" id="wp-problem" placeholder="e.g. &quot;Climate change&quot;, &quot;Loneliness&quot;, &quot;AI regulation&quot;" maxlength="200">
+          <button class="button button--accent" id="wp-btn" type="button">Start workshop</button>
+          <div class="werkstatt-steps" id="wp-steps">
+            <div class="werkstatt-progress" id="wp-progress"></div>
+          </div>
+          <div class="werkstatt-output" id="wp-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 5: TEXT STRESS TEST ═══ -->
+    <section class="section" id="stresstest">
+      <div class="section-label">Stress Test</div>
+      <div class="section-body">
+        <h2>Text Stress Test</h2>
+        <p>Submit your own text – the AI doesn't check grammar, but thinking quality. Where is assertion without reasoning? Where is contradiction missing? Where is opinion disguised as judgment?</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="st-text">Your text (max. 5,000 characters)</label>
+          <textarea class="werkstatt-input" id="st-text" rows="8" placeholder="Paste your text here – essay, blog post, application, comment..." maxlength="5000" aria-describedby="st-counter"></textarea>
+          <div class="werkstatt-char-counter" id="st-counter"><span id="st-count">0</span> / 5,000 characters</div>
+          <button class="button button--accent" id="st-btn" type="button">Start stress test</button>
+          <div class="werkstatt-output" id="st-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 6: MANIFESTO TRANSLATOR ═══ -->
+    <section class="section" id="uebersetzer">
+      <div class="section-label">Translator</div>
+      <div class="section-body">
+        <h2>Manifesto Translator</h2>
+        <p>Not Google Translate. A cultural adaptation – how does "Radical Middle" sound in Japanese? What is the Arabic equivalent of "judgment"?</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="tr-text">Text from the manifesto</label>
+          <textarea class="werkstatt-input" id="tr-text" rows="3" maxlength="500">Not more material. More judgment. You don't need more information. You need judgment, conviction, and the capacity to act.</textarea>
+          <label class="stempel-label" for="tr-lang">Target language</label>
+          <select class="stempel-input" id="tr-lang" style="padding: 0.6rem 0.9rem;">
+            <option value="Englisch">English</option>
+            <option value="Französisch">French</option>
+            <option value="Spanisch">Spanish</option>
+            <option value="Japanisch">Japanese</option>
+            <option value="Arabisch">Arabic</option>
+            <option value="Portugiesisch">Portuguese</option>
+            <option value="Türkisch">Turkish</option>
+            <option value="Chinesisch (Mandarin)">Chinese</option>
+            <option value="Koreanisch">Korean</option>
+            <option value="Hindi">Hindi</option>
+          </select>
+          <button class="button button--accent" id="tr-btn" type="button">Translate culturally</button>
+          <div class="werkstatt-output" id="tr-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 7: PERSPECTIVE-SHIFTING MACHINE ═══ -->
+    <section class="section" id="perspektivenwechsel">
+      <div class="section-label">Perspective</div>
+      <div class="section-body">
+        <h2>Perspective-Shifting Machine</h2>
+        <p>Enter your position and choose a perspective – the AI reformulates your position empathetically and convincingly from the chosen viewpoint. No straw man, but genuine understanding.</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="pw-position">Your position</label>
+          <textarea class="werkstatt-input" id="pw-position" rows="3" placeholder="e.g. &quot;Remote work should be the rule, not the exception.&quot;" maxlength="500"></textarea>
+          <label class="stempel-label" for="pw-perspektive">Adopt perspective</label>
+          <select class="stempel-input" id="pw-perspektive" style="padding: 0.6rem 0.9rem;">
+            <option value="Konservative:r Traditionalist:in">Conservative Traditionalist</option>
+            <option value="Linke:r Aktivist:in">Left-wing Activist</option>
+            <option value="Liberale:r Unternehmer:in">Liberal Entrepreneur</option>
+            <option value="Pragmatische:r Realist:in">Pragmatic Realist</option>
+            <option value="Betroffene:r Bürger:in">Affected Citizen</option>
+            <option value="Akademiker:in / Wissenschaftler:in">Academic / Scientist</option>
+            <option value="Jugendliche:r / Gen Z">Youth / Gen Z</option>
+            <option value="Zyniker:in / Skeptiker:in">Cynic / Skeptic</option>
+            <option value="Spirituelle:r / Philosoph:in">Spiritual Thinker / Philosopher</option>
+            <option value="Technologie-Optimist:in">Technology Optimist</option>
+          </select>
+          <button class="button button--accent" id="pw-btn" type="button">Shift perspective</button>
+          <div class="werkstatt-output" id="pw-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 8: AI COUNTER-SPEECH ═══ -->
+    <section class="section" id="gegenrede">
+      <div class="section-label">Counter-speech</div>
+      <div class="section-body">
+        <h2>AI Counter-Speech on News Articles</h2>
+        <p>Paste a news article or opinion piece – the AI delivers the counter-position, the unasked question, the unspoken assumptions, and the missing voice.</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="gr-text">Paste article text (max. 8,000 characters)</label>
+          <textarea class="werkstatt-input" id="gr-text" rows="8" placeholder="Paste the text of a news article, column, or opinion piece here..." maxlength="8000" aria-describedby="gr-counter"></textarea>
+          <div class="werkstatt-char-counter" id="gr-counter"><span id="gr-count">0</span> / 8,000 characters</div>
+          <button class="button button--accent" id="gr-btn" type="button">Generate counter-speech</button>
+          <div class="werkstatt-output" id="gr-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 9: ARGUMENT MAP ═══ -->
+    <section class="section" id="argumentkarte">
+      <div class="section-label">Argument Map</div>
+      <div class="section-body">
+        <h2>Argument Map</h2>
+        <p>Enter a thesis – the AI creates a visual argument map with pro and contra branches, justifications, objections, and a synthesis.</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="ak-these">Thesis</label>
+          <input class="stempel-input" type="text" id="ak-these" placeholder="e.g. &quot;AI should be taught as a mandatory subject in schools.&quot;" maxlength="300">
+          <button class="button button--accent" id="ak-btn" type="button">Create argument map</button>
+          <div class="werkstatt-output" id="ak-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 10: SILENCE MODE ═══ -->
+    <section class="section" id="stille-modus">
+      <div class="section-label">Silence</div>
+      <div class="section-body">
+        <h2>Silence Mode: AI Only Asks Questions</h2>
+        <p>No advice, no opinion, no answers. In Silence Mode, the AI exclusively asks questions – purely Socratic. Write what's on your mind and let yourself be guided only through questions.</p>
+        <div class="werkstatt-tool">
+          <div class="stille-chat" id="stille-chat">
+            <div class="stille-messages" id="stille-messages" role="log" aria-live="polite"></div>
+            <div class="stille-input-area">
+              <label class="sr-only" for="stille-input">Your message</label>
+              <input type="text" id="stille-input" class="stille-input" placeholder="What's on your mind?" maxlength="500">
+              <button class="button button--accent" id="stille-btn" type="button">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <h2>Not more material. More judgment.</h2>
+        <p>AI is a sparring partner, not an oracle. All tools challenge your thinking – they don't replace it.</p>
+        <p class="footer-links"><a href="kontakt.html">Contact</a> · <a href="impressum.html">Legal Notice</a></p>
+      </div>
+      <div class="footer-stamp" aria-hidden="true">Extremely centrist</div>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/score.js"></script>
+  <script src="../../assets/js/werkstatt.js"></script>
+</body>
+</html>

@@ -3,15 +3,390 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Das Atelier of the Radical Middle</title>
+  <title>The Atelier of the Radical Middle</title>
+  <meta name="description" content="State-NOT accredited. Politically NOT co-optable. A thinking space for young people who don't fit into camps and still want to act.">
+  <meta property="og:title" content="State-NOT accredited. Politically NOT co-optable.">
+  <meta property="og:description" content="A thinking space for young people who don't fit into camps and still want to act.">
   <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 <body>
-  <main class="page-hero">
-    <p class="eyebrow">English Version</p>
-    <h1>English pages are in progress.</h1>
-    <p class="subtitle">Use the German live version for full functionality.</p>
-    <p><a class="button" href="../index.html">Back to DE</a></p>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+      <div class="inner">
+        <div class="brand">
+          <span class="brand-mark">
+            <span class="brand-pre">State-</span>
+            <span class="brand-main">NICHT ANERKANNT</span>
+          </span>
+          <span>The Atelier of the Radical Middle</span>
+        </div>
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+      <nav class="header-links" id="main-nav" aria-label="Page sections">
+        <a href="#problem">Problem</a>
+        <a href="#mitte">Radical Middle</a>
+        <a href="#atelier">Atelier</a>
+        <a href="#einladung">Invitation</a>
+        <a href="#score">Thinking Profile</a>
+        <a href="pages/salon.html">Salon</a>
+        <a href="pages/ideen-archiv.html">Idea Archive</a>
+        <a href="pages/werkstatt.html">AI Workshop</a>
+        <a href="pages/medien.html">Media</a>
+        <a href="pages/roadmap.html">Roadmap</a>
+        <a href="pages/kontakt.html">Contact</a>
+        <a href="pages/impressum.html">Imprint</a>
+        <a class="lang-switch" href="../index.html" hreflang="de" lang="de">EN / DE</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- HERO                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Manifesto / Website Study / Asymmetric Reading Surface</p>
+        <h1 id="hero-title">The Atelier of the <span class="shift">Radical Middle</span></h1>
+        <p class="lede">You don't need more material. You need judgment, conviction, and the power to act in a world of AI, crises, overwhelm, and too much borrowed certainty.</p>
+        <p class="hero-claim">Politically NOT co-optable.</p>
+        <div class="actions">
+          <a class="button button--accent" href="#manifest">Read the Manifesto</a>
+          <button id="shuffle" type="button">Reassemble the Manifesto</button>
+          <button id="readmode" type="button" aria-pressed="false">Reading Mode</button>
+        </div>
+      </div>
+
+      <div class="hero-stage" aria-hidden="true">
+        <div class="stamp" data-shuffle style="left: 7%; top: 7%; transform: rotate(-9deg);">State-NOT accredited</div>
+        <div class="stamp" data-shuffle style="right: 6%; top: 14%; transform: rotate(8deg);">Politically NOT co-optable</div>
+        <div class="floating-word accent" data-shuffle style="left: 13%; top: 31%; transform: rotate(-6deg);">Judgment</div>
+        <div class="floating-word" data-shuffle style="left: 54%; top: 23%; transform: rotate(12deg);">Contradiction</div>
+        <div class="floating-word" data-shuffle style="left: 20%; top: 62%; transform: rotate(7deg);">Play</div>
+        <div class="floating-word accent" data-shuffle style="left: 64%; top: 55%; transform: rotate(-10deg);">Action</div>
+        <div class="floating-word" data-shuffle style="left: 38%; top: 72%; transform: rotate(-4deg);">AI ≠ Mind</div>
+        <div class="cut-card" data-shuffle style="left: 11%; top: 43%; transform: rotate(4deg);">
+          <strong>The Premise</strong>
+          <p>Not more material. More judgment.</p>
+        </div>
+        <div class="cut-card" data-shuffle style="left: 48%; top: 66%; transform: rotate(-3deg);">
+          <strong>The School</strong>
+          <p>For people who don't fit into camps and still want to act.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- TICKER                                                     -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div class="ticker-wrap" aria-hidden="true">
+      <div class="ticker">
+        <span>not more material</span>
+        <span>more judgment</span>
+        <span>no camps</span>
+        <span>real questions</span>
+        <span>ai as sparring partner</span>
+        <span>play as method</span>
+        <span>contradiction as training</span>
+        <span>impact over posture</span>
+        <span>not more material</span>
+        <span>more judgment</span>
+        <span>no camps</span>
+        <span>real questions</span>
+        <span>ai as sparring partner</span>
+        <span>play as method</span>
+        <span>contradiction as training</span>
+        <span>impact over posture</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- LIVE-TICKER                                                -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="section" id="live-ticker">
+      <div class="section-label">Live Ticker</div>
+      <div class="section-body">
+        <h2>What's happening</h2>
+        <div class="live-ticker" id="live-ticker-container">
+          <div class="live-ticker-controls">
+            <button class="live-ticker-prev" id="ticker-prev" type="button" aria-label="Previous message">&#8592;</button>
+            <div class="live-ticker-item" id="ticker-display" aria-live="polite" aria-atomic="true">
+              <span class="live-ticker-badge live-ticker-badge--update">Update</span>
+              <span class="live-ticker-text">Loading messages...</span>
+            </div>
+            <button class="live-ticker-next" id="ticker-next" type="button" aria-label="Next message">&#8594;</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- DAILY THINKING CHALLENGE                                   -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="section" id="daily">
+      <div class="section-label">Daily Thinking Challenge</div>
+      <div class="section-body">
+        <h2>Thinking Challenge of the Day</h2>
+        <p>Every day a new question that can't be googled. Answer it in one sentence.</p>
+        <div id="daily-container" aria-live="polite"></div>
+        <div id="daily-archive-container"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- MANIFESTO                                                  -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="section" id="manifest">
+      <div class="section-label">Manifesto</div>
+      <div class="section-body">
+        <h2>For young people who don't fit into camps</h2>
+        <p class="manifest-subtitle">A thinking space for young people who don't fit into camps and still want to act.</p>
+        <p>We live in a time when everything is simultaneously available: knowledge, opinions, outrage, tutorials, ideologies, identities, AI output, life plans. Everything is there. Everything speaks. Everything demands attention. And almost nothing helps you truly discern.</p>
+        <div class="tool-actions">
+          <button class="button" data-share-target="#manifest" data-share-prefix="Manifesto excerpt from nicht-anerkannt.info:" type="button">Share Manifesto</button>
+        </div>
+        <p>Traditional forms of education often act as if the problem were still a lack of information. As if you just needed enough material, enough exams, enough certificates, enough content. But that era is over. The real problem is not that we know too little. The real problem is that we live amidst too much material and have too few places where it becomes judgment, conviction, and action.</p>
+        <p class="big-line">Reproduction becomes cheap. Judgment, originality, responsibility, presence, and courage become expensive.</p>
+        <div class="cards">
+          <article class="card">
+            <h3>Not a Material Problem</h3>
+            <p>The present does not suffer from too little information, but from too little discernment.</p>
+          </article>
+          <article class="card">
+            <h3>AI Shifts the Value</h3>
+            <p>Standardized knowledge becomes cheap. Direction, conviction, and judgment become precious.</p>
+          </article>
+          <article class="card">
+            <h3>Education Must Become Real</h3>
+            <p>No longer just repetition and testing, but friction, work, public engagement, and consequences.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- MANIFESTO REMIXER                                          -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="section" id="remixer">
+      <div class="section-label">Remixer</div>
+      <div class="section-body">
+        <h2>Rethink the Manifesto</h2>
+        <p>The manifesto is not a fixed text. It is material. Press the button and let the sentences reassemble -- cut-up as method.</p>
+        <div class="remixer-panel">
+          <blockquote class="remixer-output" id="remixer-output" aria-live="polite">
+            <p>Press "Remix" to generate a new thought.</p>
+          </blockquote>
+          <div class="tool-actions">
+            <button class="button button--accent remixer-btn" id="remixer-btn" type="button">Remix Manifesto</button>
+            <button class="button" id="remixer-share" data-share-target="#remixer-output" data-share-prefix="My manifesto remix:" type="button">Share</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- PROBLEM                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="section" id="problem">
+      <div class="section-label">The Problem</div>
+      <div class="section-body">
+        <h2>The False Alternative</h2>
+        <p>Young people today are often presented with a false choice: either conformity or tribal thinking. Either resume optimization, functional compliance, and marketable self-presentation. Or ideological overheating, reflexive enemy images, and the comfortable relief of no longer having to think for yourself.</p>
+        <p>Both are too small. Conformity makes you useful but not alive. The camp makes you passionate but not free.</p>
+        <div class="quote-block">
+          <p>You don't have to choose between cynicism and fanaticism.</p>
+          <span>The Atelier</span>
+        </div>
+        <p>Between the extremes lies not simply the lukewarm middle. There is something else: a stance that endures contradiction, takes reality seriously, and still acts.</p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- RADICAL MIDDLE                                             -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="section" id="mitte">
+      <div class="section-label">Radical Middle</div>
+      <div class="section-body">
+        <h2>Not a tepid middle. A thinking middle.</h2>
+        <p>The Radical Middle is not the dull somewhere-in-between. It is not cowardly equidistance between truth and lies. It is not the management of exhaustion. It is a stance that is radical because it must think where others merely react.</p>
+        <p>It connects without diluting. It judges without rushing to conclusions. It acts without waiting for complete certainty. It does not mediate between everything -- it distinguishes. And precisely because of that, it can connect.</p>
+        <div class="principles">
+          <div class="principle"><strong>Radically committed to the rule of law</strong>Freedom without form tips into arbitrariness.</div>
+          <div class="principle"><strong>Radically dialogical</strong>No one alone is wise enough for the present.</div>
+          <div class="principle"><strong>Radically reality-capable</strong>Ideologies are often just shelters from the real.</div>
+          <div class="principle"><strong>Radically ready to act</strong>Analysis without consequence is a stylistic device.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- ATELIER                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="section" id="atelier">
+      <div class="section-label">The Atelier</div>
+      <div class="section-body">
+        <h2>Not a school of opinion ownership. A school of judgment.</h2>
+        <p>The Atelier does not tell you what to think. It is a place where you learn to think better, question deeper, and act more decisively. It does not begin with ready-made answers. It begins with questions that no one in the room can immediately resolve.</p>
+        <p>We learn across disciplines because all real problems are interdisciplinary. Climate change is not just natural science. AI is not just technology. Democracy is not just constitutional law. Loneliness is not just psychology. The important questions of our time are <em>Wicked Problems</em>.</p>
+        <p>We work in groups because thinking is social. Not as a cozy gathering, but as friction. We work with AI, but not as an oracle. AI is a sparring partner, a counter-voice, and a stress test. Those who use AI only to produce output become replaceable. Those who use AI to think better become dangerous to every form of intellectual inertia.</p>
+        <div class="cards">
+          <article class="card">
+            <h3>Real Questions</h3>
+            <p>Not: What do I need to know to pass? But: What question is so real that it changes me?</p>
+          </article>
+          <article class="card">
+            <h3>Real Friction</h3>
+            <p>Group work as negotiation, contradiction, perspective shifts, and building together.</p>
+          </article>
+          <article class="card">
+            <h3>Real Consequences</h3>
+            <p>Public results, real audiences, consequences beyond the grade.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- STAMP GENERATOR                                            -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="section" id="stempel">
+      <div class="section-label">Stamp</div>
+      <div class="section-body">
+        <h2>Your Own Stamp</h2>
+        <p>Create your personal stamps as PNG: "State-NOT accredited" and "Extremely centrist". You can personalize both versions with your name and city.</p>
+        <p class="stempel-hint">With this stamp you show that you do not bow to any state or political co-optation.</p>
+        <small class="score-privacy-note">The data you enter is processed exclusively on your device and is not transmitted to the server.</small>
+
+        <div class="stempel-variants">
+          <article class="stempel-panel stempel-generator" data-variant="staatlich">
+            <div class="stempel-form">
+              <h3>Version 1: State-NOT accredited</h3>
+              <label class="stempel-label" for="stempel-name">Name</label>
+              <input class="stempel-input" type="text" id="stempel-name" data-stempel-name placeholder="Your name" maxlength="30">
+              <label class="stempel-label" for="stempel-ort">City</label>
+              <input class="stempel-input" type="text" id="stempel-ort" data-stempel-ort placeholder="Your city" maxlength="25">
+              <div class="stempel-actions">
+                <button class="button button--accent" data-stempel-download type="button">Download as PNG</button>
+                <button class="button" data-stempel-share type="button">Share</button>
+              </div>
+            </div>
+            <div class="stempel-preview" data-stempel-preview aria-live="polite" aria-label="Stamp preview State-NOT accredited"></div>
+          </article>
+
+          <article class="stempel-panel stempel-generator" data-variant="extrem-mittig">
+            <div class="stempel-form">
+              <h3>Version 2: Extremely centrist</h3>
+              <label class="stempel-label" for="stempel-name-extrem">Name</label>
+              <input class="stempel-input" type="text" id="stempel-name-extrem" data-stempel-name placeholder="Your name" maxlength="30">
+              <label class="stempel-label" for="stempel-ort-extrem">City</label>
+              <input class="stempel-input" type="text" id="stempel-ort-extrem" data-stempel-ort placeholder="Your city" maxlength="25">
+              <div class="stempel-actions">
+                <button class="button button--accent" data-stempel-download type="button">Download as PNG</button>
+                <button class="button" data-stempel-share type="button">Share</button>
+              </div>
+            </div>
+            <div class="stempel-preview" data-stempel-preview aria-live="polite" aria-label="Stamp preview Extremely centrist"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- CONTRADICTION QUIZ                                         -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="section" id="quiz">
+      <div class="section-label">Self-Test</div>
+      <div class="section-body">
+        <h2>Contradiction Quiz: Where Do You Stand?</h2>
+        <p>Not a pigeonhole, but a mirror. Seven questions -- no right answers, but honest reflection.</p>
+        <div class="tool-actions">
+          <button class="button" data-share-target="#quiz" data-share-prefix="My thinking profile from the Contradiction Quiz:" type="button">Share Quiz</button>
+        </div>
+        <div class="quiz-container" id="quiz-container" aria-live="polite">
+          <div class="quiz-progress" id="quiz-progress"></div>
+          <div class="quiz-question" id="quiz-question">
+            <p>Loading quiz...</p>
+          </div>
+          <div class="quiz-result" id="quiz-result" hidden>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- WHAT EMERGES                                               -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="section">
+      <div class="section-label">What Emerges</div>
+      <div class="section-body">
+        <h2>We don't train opinion carriers.</h2>
+        <p class="big-line">We train people who can think and act under uncertainty.</p>
+        <p>People who don't immediately fall into a camp when things get complicated. People who can endure contradiction without going soft. People who stay open without becoming arbitrary. People who can use technology without being used by it.</p>
+        <p>What emerges here is not mere competence. It is the power of judgment. The capacity to meet the present. Self-efficacy. Steadfastness. Collaboration. The will to give form. Responsibility.</p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- INVITATION                                                 -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="section" id="einladung">
+      <div class="section-label">Invitation</div>
+      <div class="section-body">
+        <h2>If you're only looking for security, you're in the wrong place.</h2>
+        <p>If you're only looking for accreditation, you're in the wrong place. If you're looking for ready-made answers, you're in the wrong place. If you're looking for a place where thinking is not preparation for life but a form of life itself, then it begins here.</p>
+        <p>This Atelier is a thinking space for everyone who doesn't fit into pigeonholes -- but wants to actively shape the world. If that speaks to you, you're in the right place.</p>
+        <div class="cta-panel">
+          <p><strong>The Atelier of the Radical Middle</strong><br>For people who don't fit into camps and still want to act.</p>
+          <a class="button" href="manifest-das-atelier-radikale-mitte.md" download>Download Manifesto</a>
+        </div>
+      </div>
+    </section>
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- ATELIER SCORE                                              -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="section" id="score">
+      <div class="section-label">Thinking Profile</div>
+      <div class="section-body">
+        <h2>Your Atelier Score</h2>
+        <small class="score-privacy-note">Your thinking profile is stored only in your browser. It is not transmitted to us.</small>
+        <p>Not a gamification score, but a thinking profile. Five dimensions show how you use the Atelier's tools -- not how much, but how broadly and deeply.</p>
+        <div id="atelier-score-widget" aria-live="polite"></div>
+      </div>
+    </section>
   </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <h2>State-not accredited. Politically not co-optable.</h2>
+        <p class="footer-claim">A thinking space for young people.</p>
+        <p class="footer-note">GDPR &amp; AI Act compliant: Our tools do not store personal data and serve purely for creative engagement.</p>
+        <p class="footer-links"><a href="pages/kontakt.html">Contact</a> · <a href="pages/impressum.html">Imprint</a> · <a href="pages/datenschutz.html">Privacy Policy</a> · <a href="pages/ai-governance.html">AI Governance</a></p>
+      </div>
+      <div class="footer-stamp" aria-hidden="true">Extremely centrist</div>
+    </div>
+  </footer>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "The Atelier of the Radical Middle",
+    "url": "https://nicht-anerkannt.info/en/",
+    "description": "State-NOT accredited. Politically NOT co-optable. A thinking space for young people who don't fit into camps and still want to act.",
+    "inLanguage": "en"
+  }
+  </script>
+
+  <!-- Scripts -->
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/remixer.js"></script>
+  <script src="../assets/js/stempel.js"></script>
+  <script src="../assets/js/ticker.js"></script>
+  <script src="../assets/js/chat.js"></script>
+  <script src="../assets/js/quiz.js"></script>
+  <script src="../assets/js/daily.js"></script>
+  <script src="../assets/js/sharecard.js"></script>
+  <script src="../assets/js/score.js"></script>
+  <div id="share-toast" class="share-toast" role="status" aria-live="polite" aria-hidden="true">Link copied</div>
 </body>
 </html>

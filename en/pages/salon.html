@@ -3,15 +3,101 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Contradiction Salon</title>
+  <title>Contradiction Salon – The Atelier of the Radical Middle</title>
+  <meta name="description" content="The Contradiction Salon: debate culture, perspective-shifting, and concrete questions for the Radical Middle.">
   <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
 <body>
-  <main class="page-hero">
-    <p class="eyebrow">Contradiction Salon</p>
-    <h1>Salon (EN)</h1>
-    <p class="subtitle">The English salon page is being localized.</p>
-    <p><a class="button" href="../../pages/salon.html">Read German page</a></p>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="site-header">
+    <div class="inner">
+      <div class="brand">
+        <span class="brand-mark">
+          <span class="brand-pre">State</span>
+          <span class="brand-main">NICHT ANERKANNT</span>
+        </span>
+        <span>The Atelier of the Radical Middle</span>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+      <nav class="header-links" id="main-nav" aria-label="Page sections">
+        <a href="../index.html#problem">Problem</a>
+        <a href="../index.html#mitte">Radical Middle</a>
+        <a href="../index.html#atelier">Atelier</a>
+        <a href="../index.html#einladung">Invitation</a>
+        <a href="../index.html#score">Thinking Profile</a>
+        <a href="salon.html" aria-current="page">Salon</a>
+        <a href="ideen-archiv.html">Ideas Archive</a>
+        <a href="werkstatt.html">AI Workshop</a>
+        <a href="medien.html">Media</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="kontakt.html">Contact</a>
+        <a href="impressum.html">Legal Notice</a>
+        <a class="lang-switch" href="../../index.html" hreflang="de" lang="de">EN / DE</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero" aria-labelledby="salon-title">
+      <p class="eyebrow">Debate Culture / Perspective-Shifting / Real Questions</p>
+      <h1 id="salon-title">Contradiction Salon</h1>
+      <p class="subtitle">A moderated space for controversial topics without tribal logic: clear thesis, strong counter-argument, sustainable judgment.</p>
+    </section>
+
+    <section class="section" id="salon">
+      <div class="section-label">Format</div>
+      <div class="section-body">
+        <h2>How the Salon Works</h2>
+        <ul>
+          <li>15 min: Thesis and context.</li>
+          <li>20 min: Counter-voices from at least three perspectives.</li>
+          <li>20 min: Judgment under uncertainty and next action.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Dates</div>
+      <div class="section-body">
+        <h2>Upcoming Salons</h2>
+        <p><strong>April 16, 2026:</strong> AI in Schools – Mandatory Subject or Thinking Trap?</p>
+        <p><strong>April 30, 2026:</strong> Democratic Debate Online – What Strengthens, What Divides?</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Registration</div>
+      <div class="section-body">
+        <h2>Register for the Next Salon</h2>
+        <p>Registration works without server storage, directly through your email client.</p>
+        <form action="mailto:hallo@nicht-anerkannt.info" method="post" enctype="text/plain">
+          <label class="stempel-label" for="salon-name">Name</label>
+          <input class="stempel-input" id="salon-name" name="Name" required>
+
+          <label class="stempel-label" for="salon-mail">Email</label>
+          <input class="stempel-input" id="salon-mail" name="E-Mail" type="email" required>
+
+          <label class="stempel-label" for="salon-question">Your personal question</label>
+          <textarea class="werkstatt-input" id="salon-question" name="Frage" rows="4" maxlength="500" required></textarea>
+
+          <button class="button button--accent" type="submit">Send registration</button>
+        </form>
+        <p>Or discuss in advance in the <a href="werkstatt.html#widerspruchssalon">AI Workshop</a>.</p>
+      </div>
+    </section>
   </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <h2>Not more material. More judgment.</h2>
+        <p class="footer-links"><a href="kontakt.html">Contact</a> · <a href="impressum.html">Legal Notice</a></p>
+      </div>
+      <div class="footer-stamp" aria-hidden="true">Extremely centrist</div>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/main.js"></script>
 </body>
 </html>
