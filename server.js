@@ -1,17 +1,40 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// --- CORS: restrict to known origins ---
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'https://nicht-anerkannt.info').split(',');
 
 app.use('/api', (req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  const origin = req.headers.origin;
+  if (origin && ALLOWED_ORIGINS.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.sendStatus(204);
   next();
+});
+
+// --- Rate limiting for AI endpoints ---
+const aiLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Zu viele Anfragen. Bitte warte eine Minute.' }
+});
+
+const chatLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Zu viele Nachrichten. Bitte warte eine Minute.' }
 });
 
 // --- Static files ---
@@ -83,7 +106,7 @@ async function callClaude(systemPrompt, messages, maxTokens = 300) {
     return { error: 'Anthropic API-Key nicht konfiguriert (ANTHROPIC_API_KEY/CLAUDE_API_KEY).', status: 500 };
   }
 
-  const model = process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-latest';
+  const model = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6';
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -122,11 +145,11 @@ async function callClaude(systemPrompt, messages, maxTokens = 300) {
 // ═══════════════════════════════════════════════════════════
 // 1. CHAT – KI-Sparringspartner (+ Stille-Modus)
 // ═══════════════════════════════════════════════════════════
-app.use('/api/chat', express.json());
+app.use('/api/chat', express.json({ limit: '50kb' }));
 
-app.post('/api/chat', async (req, res) => {
+app.post('/api/chat', chatLimiter, async (req, res) => {
   const { message, history, stille } = req.body;
-  if (!message) return res.status(400).json({ reply: 'Keine Nachricht erhalten.' });
+  if (!message || typeof message !== 'string') return res.status(400).json({ reply: 'Keine Nachricht erhalten.' });
 
   const normalPrompt = `Du bist der KI-Sparringspartner des Ateliers der Radikalen Mitte.
 Deine Aufgabe ist es, Nutzer:innen herauszufordern, nicht ihnen zuzustimmen.
@@ -167,9 +190,9 @@ Du antwortest auf Deutsch. Kein Smalltalk. Keine Einleitungen. Nur die Frage.`;
 // ═══════════════════════════════════════════════════════════
 app.use('/api/widerspruch', express.json());
 
-app.post('/api/widerspruch', async (req, res) => {
+app.post('/api/widerspruch', aiLimiter, async (req, res) => {
   const { these } = req.body;
-  if (!these) return res.status(400).json({ error: 'Keine These erhalten.' });
+  if (!these || typeof these !== 'string') return res.status(400).json({ error: 'Keine These erhalten.' });
 
   const systemPrompt = `Du bist der Widerspruchssalon des Ateliers der Radikalen Mitte.
 Du erhältst eine These und erzeugst genau DREI fundierte Gegenpositionen aus verschiedenen Perspektiven.
@@ -204,9 +227,9 @@ Antworte auf Deutsch im folgenden JSON-Format (nur das JSON, kein anderer Text):
 // ═══════════════════════════════════════════════════════════
 app.use('/api/translate', express.json());
 
-app.post('/api/translate', async (req, res) => {
+app.post('/api/translate', aiLimiter, async (req, res) => {
   const { text, language } = req.body;
-  if (!text || !language) return res.status(400).json({ error: 'Text und Sprache erforderlich.' });
+  if (!text || typeof text !== 'string' || !language || typeof language !== 'string') return res.status(400).json({ error: 'Text und Sprache erforderlich.' });
 
   const systemPrompt = `Du bist ein kultureller Übersetzer für das Manifest des Ateliers der Radikalen Mitte.
 Deine Aufgabe ist NICHT eine wörtliche Übersetzung, sondern eine KULTURELLE ADAPTATION.
@@ -237,9 +260,9 @@ Antworte auf Deutsch UND in der Zielsprache im folgenden JSON-Format:
 // ═══════════════════════════════════════════════════════════
 app.use('/api/denkprobe', express.json());
 
-app.post('/api/denkprobe', async (req, res) => {
+app.post('/api/denkprobe', aiLimiter, async (req, res) => {
   const { thema } = req.body;
-  if (!thema) return res.status(400).json({ error: 'Kein Thema erhalten.' });
+  if (!thema || typeof thema !== 'string') return res.status(400).json({ error: 'Kein Thema erhalten.' });
 
   const systemPrompt = `Du bist der Denkproben-Generator des Ateliers der Radikalen Mitte.
 Du erhältst ein aktuelles Thema und erzeugst eine strukturierte Denkprobe im Stil des Ateliers.
@@ -277,7 +300,7 @@ Antworte auf Deutsch im folgenden JSON-Format:
 // ═══════════════════════════════════════════════════════════
 app.use('/api/urteil', express.json());
 
-app.post('/api/urteil', async (req, res) => {
+app.post('/api/urteil', aiLimiter, async (req, res) => {
   const { action } = req.body;
 
   // Action: "new" → generiere neues Dilemma
@@ -351,9 +374,9 @@ Antworte auf Deutsch im JSON-Format:
 // ═══════════════════════════════════════════════════════════
 app.use('/api/wicked', express.json());
 
-app.post('/api/wicked', async (req, res) => {
+app.post('/api/wicked', aiLimiter, async (req, res) => {
   const { problem, step, previousAnswers } = req.body;
-  if (!problem) return res.status(400).json({ error: 'Kein Problem angegeben.' });
+  if (!problem || typeof problem !== 'string') return res.status(400).json({ error: 'Kein Problem angegeben.' });
 
   const steps = {
     1: `Beleuchte das Wicked Problem "${problem}" aus VIER verschiedenen Disziplinen (z.B. Ökonomie, Psychologie, Technologie, Ethik). Für jede Disziplin: 2 Sätze, die einen neuen Aspekt aufzeigen. JSON-Format: {"disziplinen": [{"name": "...", "perspektive": "..."}, ...]}`,
@@ -389,9 +412,9 @@ Antworte auf Deutsch ausschließlich im angegebenen JSON-Format.`;
 // ═══════════════════════════════════════════════════════════
 app.use('/api/stresstest', express.json({ limit: '50kb' }));
 
-app.post('/api/stresstest', async (req, res) => {
+app.post('/api/stresstest', aiLimiter, async (req, res) => {
   const { text } = req.body;
-  if (!text) return res.status(400).json({ error: 'Kein Text erhalten.' });
+  if (!text || typeof text !== 'string') return res.status(400).json({ error: 'Kein Text erhalten.' });
   if (text.length > 5000) return res.status(400).json({ error: 'Text zu lang (max. 5000 Zeichen).' });
 
   const systemPrompt = `Du bist der Text-Stresstest des Ateliers der Radikalen Mitte.
@@ -451,7 +474,7 @@ app.post('/api/client-log', (req, res) => {
 // ═══════════════════════════════════════════════════════════
 app.use('/api/daily', express.json());
 
-app.post('/api/daily', async (req, res) => {
+app.post('/api/daily', aiLimiter, async (req, res) => {
   const { seed } = req.body;
   const resolvedSeed = seed || new Date().toISOString().slice(0, 10);
 
@@ -498,9 +521,9 @@ Antworte auf Deutsch im JSON-Format:
 // ═══════════════════════════════════════════════════════════
 app.use('/api/perspektive', express.json());
 
-app.post('/api/perspektive', async (req, res) => {
+app.post('/api/perspektive', aiLimiter, async (req, res) => {
   const { position, perspektive } = req.body;
-  if (!position || !perspektive) return res.status(400).json({ error: 'Position und Perspektive erforderlich.' });
+  if (!position || typeof position !== 'string' || !perspektive || typeof perspektive !== 'string') return res.status(400).json({ error: 'Position und Perspektive erforderlich.' });
 
   const systemPrompt = `Du bist die Perspektivenwechsel-Maschine des Ateliers der Radikalen Mitte.
 Du erhältst eine Position/Meinung und eine gewählte Perspektive.
@@ -536,9 +559,9 @@ Antworte auf Deutsch im JSON-Format:
 // ═══════════════════════════════════════════════════════════
 app.use('/api/gegenrede', express.json({ limit: '50kb' }));
 
-app.post('/api/gegenrede', async (req, res) => {
+app.post('/api/gegenrede', aiLimiter, async (req, res) => {
   const { text } = req.body;
-  if (!text) return res.status(400).json({ error: 'Kein Artikeltext erhalten.' });
+  if (!text || typeof text !== 'string') return res.status(400).json({ error: 'Kein Artikeltext erhalten.' });
   if (text.length > 8000) return res.status(400).json({ error: 'Text zu lang (max. 8000 Zeichen).' });
 
   const systemPrompt = `Du bist die KI-Gegenrede des Ateliers der Radikalen Mitte.
@@ -576,9 +599,9 @@ Sei scharf, aber fair. Keine Polemik. Antworte auf Deutsch im JSON-Format:
 // ═══════════════════════════════════════════════════════════
 app.use('/api/argumentkarte', express.json());
 
-app.post('/api/argumentkarte', async (req, res) => {
+app.post('/api/argumentkarte', aiLimiter, async (req, res) => {
   const { these } = req.body;
-  if (!these) return res.status(400).json({ error: 'Keine These erhalten.' });
+  if (!these || typeof these !== 'string') return res.status(400).json({ error: 'Keine These erhalten.' });
 
   const systemPrompt = `Du bist die Argumentkarte des Ateliers der Radikalen Mitte.
 Du erhältst eine These und erstellst eine strukturierte Argumentkarte.
