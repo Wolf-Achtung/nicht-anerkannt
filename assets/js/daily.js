@@ -7,6 +7,23 @@
 
   var container = null;
   var loaded = false;
+  var fallbackQuestions = [
+    {
+      titel: 'Denkprobe offline',
+      impuls: 'Manchmal ist die beste Frage die, die trotz Ausfall bleibt.',
+      frage: 'Welche Überzeugung von dir wäre am schwersten zu verteidigen, wenn du nur drei Sätze hättest?'
+    },
+    {
+      titel: 'Denkprobe offline',
+      impuls: 'Auch ohne API kann Denken präzise und unbequem sein.',
+      frage: 'Welche Position deines Gegenübers wirkt auf dich falsch – und welche Angst könnte dahinterstehen?'
+    },
+    {
+      titel: 'Denkprobe offline',
+      impuls: 'Nicht jede Unterbrechung ist ein Stillstand.',
+      frage: 'Was würdest du heute anders entscheiden, wenn du nur auf Folgen in fünf Jahren schauen dürftest?'
+    }
+  ];
 
   function escapeHtml(str) {
     var div = document.createElement('div');
@@ -21,6 +38,11 @@
 
   function getStorageKey() {
     return 'atelier-daily-' + getDaySeed();
+  }
+
+  function getFallbackChallenge() {
+    var index = Math.floor(Math.random() * fallbackQuestions.length);
+    return fallbackQuestions[index];
   }
 
   function loadDaily() {
@@ -51,18 +73,20 @@
       .then(function (res) { return res.json(); })
       .then(function (data) {
         if (data.error || data.raw) {
-          container.innerHTML = '<p class="daily-fallback">Die heutige Denkprobe konnte nicht geladen werden.</p>';
+          renderChallenge(getFallbackChallenge(), true);
+          console.error('Daily API fallback:', data.error || data.raw);
           return;
         }
         try { localStorage.setItem(getStorageKey(), JSON.stringify(data)); } catch (e) {}
         renderChallenge(data);
       })
-      .catch(function () {
-        container.innerHTML = '<p class="daily-fallback">Verbindungsfehler – die Denkprobe ist gerade nicht verfügbar.</p>';
+      .catch(function (err) {
+        renderChallenge(getFallbackChallenge(), true);
+        console.error(err);
       });
   }
 
-  function renderChallenge(data) {
+  function renderChallenge(data, isFallback) {
     var savedAnswer = '';
     try {
       var stored = JSON.parse(localStorage.getItem(getStorageKey()));
@@ -70,6 +94,9 @@
     } catch (e) {}
 
     var html = '<div class="daily-card">';
+    if (isFallback) {
+      html += '<p class="daily-fallback">Heute gibt es leider keine neue Frage. Schau morgen wieder vorbei oder stöbere im Ideen-Archiv.</p>';
+    }
     html += '<div class="daily-header">';
     html += '<span class="daily-badge">Denkprobe des Tages</span>';
     html += '<span class="daily-date">' + escapeHtml(new Date().toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })) + '</span>';
