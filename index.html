@@ -28,6 +28,8 @@
         <a href="pages/werkstatt.html">KI-Werkstatt</a>
         <a href="pages/medien.html">Medien</a>
         <a href="pages/roadmap.html">Roadmap</a>
+        <a href="pages/kontakt.html">Kontakt</a>
+        <a href="pages/impressum.html">Impressum</a>
       </nav>
     </div>
   </header>
@@ -236,21 +238,38 @@
       <div class="section-label">Stempel</div>
       <div class="section-body">
         <h2>Dein eigener Stempel</h2>
-        <p>Erstelle deinen persönlichen „Staatlich NICHT anerkannt"-Stempel. Gib deinen Namen und optional deinen Ort ein – fertig ist dein Zeichen des freien Denkens.</p>
-        <div class="stempel-panel">
-          <div class="stempel-form">
-            <label class="stempel-label" for="stempel-name">Name</label>
-            <input class="stempel-input" type="text" id="stempel-name" placeholder="Dein Name" maxlength="30">
-            <label class="stempel-label" for="stempel-ort">Ort (optional)</label>
-            <input class="stempel-input" type="text" id="stempel-ort" placeholder="Dein Ort" maxlength="25">
-            <div class="stempel-actions">
-              <button class="button button--accent" id="stempel-download" type="button">Als PNG herunterladen</button>
-              <button class="button" id="stempel-share" type="button">Teilen</button>
+        <p>Erstelle deine persönlichen Stempel als PNG: „Staatlich NICHT anerkannt" und „Extrem mittig". Beide Versionen kannst du mit Name und Stadt personalisieren.</p>
+
+        <div class="stempel-variants">
+          <article class="stempel-panel stempel-generator" data-variant="staatlich">
+            <div class="stempel-form">
+              <h3>Version 1: Staatlich NICHT anerkannt</h3>
+              <label class="stempel-label" for="stempel-name">Name</label>
+              <input class="stempel-input" type="text" id="stempel-name" data-stempel-name placeholder="Dein Name" maxlength="30">
+              <label class="stempel-label" for="stempel-ort">Stadt</label>
+              <input class="stempel-input" type="text" id="stempel-ort" data-stempel-ort placeholder="Deine Stadt" maxlength="25">
+              <div class="stempel-actions">
+                <button class="button button--accent" data-stempel-download type="button">Als PNG herunterladen</button>
+                <button class="button" data-stempel-share type="button">Teilen</button>
+              </div>
             </div>
-          </div>
-          <div class="stempel-preview" id="stempel-preview" aria-live="polite" aria-label="Stempel-Vorschau">
-            <!-- SVG wird dynamisch generiert -->
-          </div>
+            <div class="stempel-preview" data-stempel-preview aria-live="polite" aria-label="Stempel-Vorschau Staatlich nicht anerkannt"></div>
+          </article>
+
+          <article class="stempel-panel stempel-generator" data-variant="extrem-mittig">
+            <div class="stempel-form">
+              <h3>Version 2: Extrem mittig</h3>
+              <label class="stempel-label" for="stempel-name-extrem">Name</label>
+              <input class="stempel-input" type="text" id="stempel-name-extrem" data-stempel-name placeholder="Dein Name" maxlength="30">
+              <label class="stempel-label" for="stempel-ort-extrem">Stadt</label>
+              <input class="stempel-input" type="text" id="stempel-ort-extrem" data-stempel-ort placeholder="Deine Stadt" maxlength="25">
+              <div class="stempel-actions">
+                <button class="button button--accent" data-stempel-download type="button">Als PNG herunterladen</button>
+                <button class="button" data-stempel-share type="button">Teilen</button>
+              </div>
+            </div>
+            <div class="stempel-preview" data-stempel-preview aria-live="polite" aria-label="Stempel-Vorschau Extrem mittig"></div>
+          </article>
         </div>
       </div>
     </section>
@@ -319,6 +338,7 @@
       <div>
         <h2>Nicht mehr Stoff. Mehr Urteil.</h2>
         <p>Experimentell in der Gestaltung, bewusst klar in der Botschaft. Die Seite ist als erste visuelle Richtung angelegt: provokant, merkfähig, asymmetrisch – aber mit Lesemodus, damit Form nicht gegen Inhalt arbeitet.</p>
+        <p class="footer-links"><a href="pages/kontakt.html">Kontakt</a> · <a href="pages/impressum.html">Impressum</a></p>
       </div>
       <div class="footer-stamp" aria-hidden="true">Extrem mittig</div>
     </div>

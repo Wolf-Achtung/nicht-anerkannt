@@ -11,10 +11,12 @@ app.use(express.static(path.join(__dirname), {
 
 // --- Shared: call Claude API ---
 async function callClaude(systemPrompt, messages, maxTokens = 300) {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY || process.env.AI_API_KEY;
   if (!apiKey) {
-    return { error: 'ANTHROPIC_API_KEY nicht konfiguriert.', status: 500 };
+    return { error: 'Anthropic API-Key nicht konfiguriert (ANTHROPIC_API_KEY/CLAUDE_API_KEY).', status: 500 };
   }
+
+  const model = process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-latest';
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -25,7 +27,7 @@ async function callClaude(systemPrompt, messages, maxTokens = 300) {
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: model,
         max_tokens: maxTokens,
         system: systemPrompt,
         messages: messages
