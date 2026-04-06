@@ -51,8 +51,27 @@
     'Wie bereit du bist, zu handeln',
     'Wie viel Komplexität du verarbeitest'
   ];
+  var storageAvailable = true;
+
+  function hasStorage() {
+    try {
+      var testKey = '__atelier_score_test__';
+      localStorage.setItem(testKey, '1');
+      localStorage.removeItem(testKey);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 
   function getScore() {
+    if (!storageAvailable) {
+      return {
+        dimensions: [0, 0, 0, 0, 0],
+        total: 0,
+        activities: []
+      };
+    }
     try {
       var stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
       if (stored && stored.dimensions) return stored;
@@ -65,6 +84,7 @@
   }
 
   function saveScore(score) {
+    if (!storageAvailable) return;
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(score)); } catch (e) {}
   }
 
@@ -93,9 +113,15 @@
     if (!widget) return;
 
     var score = getScore();
+    var warning = !storageAvailable
+      ? '<p class="score-storage-warning">Denkprofil kann nicht gespeichert werden (Privatsphäre-Einstellung).</p>'
+      : '';
     if (score.total === 0) {
       widget.innerHTML = '<div class="score-empty">' +
-        '<p class="score-empty-text">Nutze die Werkzeuge des Ateliers, um dein Denkprofil aufzubauen.</p></div>';
+        warning +
+        '<p class="score-empty-text">Nutze die Werkzeuge des Ateliers, um dein Denkprofil aufzubauen.</p>' +
+        '<button class="button score-reset-btn" id="score-reset-btn" type="button">Denkprofil zurücksetzen</button></div>';
+      bindReset();
       return;
     }
 
@@ -136,9 +162,22 @@
       }
     }
     html += '<div class="score-insight">Deine Stärke: <strong>' + escapeHtml(DIMENSION_NAMES[maxDim]) + '</strong></div>';
+    html += '<button class="button score-reset-btn" id="score-reset-btn" type="button">Denkprofil zurücksetzen</button>';
     html += '</div>';
 
     widget.innerHTML = html;
+    bindReset();
+  }
+
+  function bindReset() {
+    var resetBtn = document.getElementById('score-reset-btn');
+    if (!resetBtn) return;
+    resetBtn.addEventListener('click', function () {
+      if (storageAvailable) {
+        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+      }
+      renderWidget();
+    });
   }
 
   function escapeHtml(str) {
@@ -154,5 +193,8 @@
     render: renderWidget
   };
 
-  window.addEventListener('DOMContentLoaded', renderWidget);
+  window.addEventListener('DOMContentLoaded', function () {
+    storageAvailable = hasStorage();
+    renderWidget();
+  });
 }());

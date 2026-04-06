@@ -88,6 +88,55 @@
     });
   }
 
+  function showShareToast(message) {
+    var toast = document.getElementById('share-toast');
+    if (!toast) return;
+    toast.textContent = message || 'Link kopiert';
+    toast.classList.add('is-visible');
+    toast.setAttribute('aria-hidden', 'false');
+    setTimeout(function () {
+      toast.classList.remove('is-visible');
+      toast.setAttribute('aria-hidden', 'true');
+    }, 1800);
+  }
+
+  function initShareButtons() {
+    var buttons = document.querySelectorAll('[data-share-target]');
+    if (!buttons.length) return;
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var targetSelector = btn.getAttribute('data-share-target');
+        var prefix = btn.getAttribute('data-share-prefix') || 'nicht-anerkannt.info';
+        var target = targetSelector ? document.querySelector(targetSelector) : null;
+        var text = target ? (target.innerText || target.textContent || '').trim() : '';
+        var payload = prefix + '\n' + text.slice(0, 280) + '\n' + window.location.href;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(payload)
+            .then(function () {
+              showShareToast('Link kopiert');
+            })
+            .catch(function () {
+              showShareToast('Kopieren fehlgeschlagen');
+            });
+        } else {
+          showShareToast('Zwischenablage nicht verfügbar');
+        }
+      });
+    });
+  }
+
+  function initNavToggle() {
+    var toggle = document.getElementById('nav-toggle');
+    var nav = document.getElementById('main-nav');
+    if (!toggle || !nav) return;
+    toggle.addEventListener('click', function () {
+      var isOpen = nav.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+  }
+
   function initModules() {
     // Initialize all attached modules if they exist
     if (window.AtelierRemixer && typeof window.AtelierRemixer.init === 'function') {
@@ -115,6 +164,8 @@
     initReadMode();
     initResize();
     initSmoothScroll();
+    initShareButtons();
+    initNavToggle();
     initModules();
   });
 }());

@@ -6,7 +6,7 @@
   'use strict';
 
   var container = null;
-  var loaded = false;
+  var ARCHIVE_KEY = 'atelier-daily-archive';
   var fallbackQuestions = [
     {
       titel: 'Denkprobe offline',
@@ -45,6 +45,71 @@
     return fallbackQuestions[index];
   }
 
+  function saveToArchive(data) {
+    if (!data || !data.frage) return;
+    try {
+      var archive = JSON.parse(localStorage.getItem(ARCHIVE_KEY)) || [];
+      var today = new Date().toISOString().slice(0, 10);
+      var entry = {
+        date: today,
+        titel: data.titel || 'Denkprobe',
+        frage: data.frage
+      };
+      var deduped = archive.filter(function (item) {
+        return item.date !== today || item.frage !== entry.frage;
+      });
+      deduped.unshift(entry);
+      localStorage.setItem(ARCHIVE_KEY, JSON.stringify(deduped.slice(0, 30)));
+    } catch (e) {}
+  }
+
+  function renderArchiveLink() {
+    var archiveContainer = document.getElementById('daily-archive-container');
+    if (!archiveContainer) return;
+    archiveContainer.innerHTML =
+      '<button class="button daily-archive-btn" id="daily-archive-btn" type="button">Frühere Denkproben</button>' +
+      '<dialog class="daily-archive-modal" id="daily-archive-modal">' +
+      '<h3>Frühere Denkproben</h3>' +
+      '<div id="daily-archive-list"></div>' +
+      '<button class="button" id="daily-archive-close" type="button">Schließen</button>' +
+      '</dialog>';
+
+    var openBtn = document.getElementById('daily-archive-btn');
+    var closeBtn = document.getElementById('daily-archive-close');
+    var modal = document.getElementById('daily-archive-modal');
+    if (openBtn && modal) {
+      openBtn.addEventListener('click', function () {
+        fillArchiveList();
+        if (typeof modal.showModal === 'function') modal.showModal();
+      });
+    }
+    if (closeBtn && modal) {
+      closeBtn.addEventListener('click', function () {
+        modal.close();
+      });
+    }
+  }
+
+  function fillArchiveList() {
+    var list = document.getElementById('daily-archive-list');
+    if (!list) return;
+    try {
+      var archive = JSON.parse(localStorage.getItem(ARCHIVE_KEY)) || [];
+      if (!archive.length) {
+        list.innerHTML = '<p>Noch keine archivierten Denkproben.</p>';
+        return;
+      }
+      list.innerHTML = archive.map(function (item) {
+        return '<article class="daily-archive-item">' +
+          '<p class="daily-archive-date">' + escapeHtml(item.date) + '</p>' +
+          '<p><strong>' + escapeHtml(item.titel) + ':</strong> ' + escapeHtml(item.frage) + '</p>' +
+          '</article>';
+      }).join('');
+    } catch (e) {
+      list.innerHTML = '<p>Archiv konnte nicht geladen werden.</p>';
+    }
+  }
+
   function loadDaily() {
     container = document.getElementById('daily-container');
     if (!container) return;
@@ -78,6 +143,7 @@
           return;
         }
         try { localStorage.setItem(getStorageKey(), JSON.stringify(data)); } catch (e) {}
+        saveToArchive(data);
         renderChallenge(data);
       })
       .catch(function (err) {
@@ -149,5 +215,8 @@
     renderChallenge(data);
   }
 
-  window.addEventListener('DOMContentLoaded', loadDaily);
+  window.addEventListener('DOMContentLoaded', function () {
+    loadDaily();
+    renderArchiveLink();
+  });
 }());
