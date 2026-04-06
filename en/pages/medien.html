@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Media – The Atelier of the Radical Middle</title>
+  <meta name="description" content="Listen to, watch, and share the manifesto – audio, video, downloads, and social media.">
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="site-header">
+    <div class="inner">
+      <div class="brand">
+        <span class="brand-mark">
+          <span class="brand-pre">State</span>
+          <span class="brand-main">NICHT ANERKANNT</span>
+        </span>
+        <span>The Atelier of the Radical Middle</span>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+      <nav class="header-links" id="main-nav" aria-label="Page sections">
+        <a href="../index.html#problem">Problem</a>
+        <a href="../index.html#mitte">Radical Middle</a>
+        <a href="../index.html#atelier">Atelier</a>
+        <a href="../index.html#einladung">Invitation</a>
+        <a href="../index.html#score">Thinking Profile</a>
+        <a href="salon.html">Salon</a>
+        <a href="ideen-archiv.html">Ideas Archive</a>
+        <a href="werkstatt.html">AI Workshop</a>
+        <a href="medien.html" aria-current="page">Media</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="kontakt.html">Contact</a>
+        <a href="impressum.html">Legal Notice</a>
+        <a class="lang-switch" href="../../index.html" hreflang="de" lang="de">EN / DE</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero -->
+    <section class="page-hero" aria-labelledby="medien-title">
+      <p class="eyebrow">Audio / Video / Downloads / Share</p>
+      <h1 id="medien-title">Media</h1>
+      <p class="subtitle">Listen to, watch, and share the manifesto</p>
+    </section>
+
+    <!-- Audio Manifesto -->
+    <section class="section">
+      <div class="section-label">Audio Manifesto</div>
+      <div class="section-body">
+        <h2>The Manifesto to Listen To</h2>
+        <div class="media-player">
+          <p>The manifesto as an audio version – coming soon.</p>
+          <audio controls>
+            <!-- Audio source will be added once the recording is available -->
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+    </section>
+
+    <!-- Video -->
+    <section class="section">
+      <div class="section-label">Video</div>
+      <div class="section-body">
+        <h2>Short Film: The Atelier in 60 Seconds</h2>
+        <div class="video-container">
+          <p>Short film: The Atelier in 60 Seconds – in production.</p>
+          <video controls>
+            <!-- Video source will be added once the film is complete -->
+            Your browser does not support the video element.
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <!-- Downloads -->
+    <section class="section">
+      <div class="section-label">Downloads</div>
+      <div class="section-body">
+        <h2>Download Materials</h2>
+        <ul class="download-list">
+          <li>
+            <a href="../../manifest-das-atelier-radikale-mitte.md" download>Manifesto as PDF</a>
+          </li>
+          <li>
+            <a href="../index.html#stempel">Stamp Generator</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Social Media -->
+    <section class="section">
+      <div class="section-label">Social Media</div>
+      <div class="section-body">
+        <h2>Share Quotes</h2>
+        <p>Spread the core ideas of the manifesto. Click a quote to copy and share it.</p>
+        <div class="share-buttons" aria-live="polite">
+          <button class="share-btn" data-quote="Not more material. More judgment.">Not more material. More judgment.</button>
+          <button class="share-btn" data-quote="You don't have to choose between cynicism and fanaticism.">Cynicism vs. Fanaticism</button>
+          <button class="share-btn" data-quote="AI is a sparring partner, not an oracle.">AI as Sparring Partner</button>
+          <button class="share-btn" data-quote="Contradiction is method.">Contradiction is Method</button>
+          <button class="share-btn" data-quote="Reproduction becomes cheap. Judgment, originality, responsibility, presence, and courage become expensive.">Judgment Becomes Expensive</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <h2>Not more material. More judgment.</h2>
+        <p>The manifesto in all formats – listen, watch, download, share.</p>
+        <p class="footer-links"><a href="kontakt.html">Contact</a> · <a href="impressum.html">Legal Notice</a></p>
+      </div>
+      <div class="footer-stamp" aria-hidden="true">Extremely centrist</div>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/main.js"></script>
+  <script>
+    // Share button: copy quote to clipboard
+    (function () {
+      var buttons = document.querySelectorAll('.share-btn');
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var quote = btn.getAttribute('data-quote');
+          var text = '"' + quote + '" – The Atelier of the Radical Middle https://github.com/Wolf-Achtung/nicht-anerkannt';
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function () {
+              var original = btn.textContent;
+              btn.textContent = 'Copied!';
+              setTimeout(function () { btn.textContent = original; }, 1800);
+            });
+          } else {
+            // Fallback
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            var original = btn.textContent;
+            btn.textContent = 'Copied!';
+            setTimeout(function () { btn.textContent = original; }, 1800);
+          }
+        });
+      });
+    }());
+  </script>
+</body>
+</html>
