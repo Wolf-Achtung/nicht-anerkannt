@@ -1746,6 +1746,29 @@ body.read-mode::before {
   padding: 1rem 0;
 }
 
+.daily-privacy-note {
+  font-family: var(--sans);
+  font-size: 0.76rem;
+  color: var(--muted);
+  margin: 1rem 0 0;
+}
+
+.daily-archive-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.9rem;
+}
+
+.daily-archive-btn,
+.daily-archive-clear {
+  margin-top: 0;
+}
+
+.daily-archive-clear {
+  background: transparent;
+}
+
 /* ─── Argumentkarte ─── */
 .argmap {
   margin-top: 1rem;
@@ -2002,10 +2025,6 @@ body.read-mode::before {
   transform: translateY(0);
 }
 
-.daily-archive-btn {
-  margin-top: 0.9rem;
-}
-
 .daily-archive-modal {
   max-width: 720px;
   width: calc(100% - 2rem);
@@ -2033,6 +2052,10 @@ body.read-mode::before {
     margin-bottom: -0.4rem;
   }
   .daily-answer-area {
+    flex-direction: column;
+  }
+
+  .daily-archive-actions {
     flex-direction: column;
   }
 }

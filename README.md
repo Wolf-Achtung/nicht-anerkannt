@@ -53,6 +53,7 @@ Kein Build-Prozess noetig -- reines HTML/CSS/JS.
 6. **Medienbereich** -- Texte, Audio und Video rund um die Radikale Mitte
 7. **Widerspruchsquiz** -- Eigene Annahmen testen und blinde Flecken entdecken
 8. **Interaktive Roadmap** -- Zeitstrahl der geplanten Aktionen und Meilensteine
+9. **Denkprobe des Tages** -- Deterministische Tagesfrage via `/api/daily`, mit lokalem Archiv- und Offline-Fallback
 
 ## Designprinzipien
 
@@ -72,3 +73,19 @@ Kein Build-Prozess noetig -- reines HTML/CSS/JS.
 ## Lizenz
 
 MIT
+
+## Daily API (Kurzüberblick)
+
+`POST /api/daily` erwartet ein JSON-Objekt mit `seed` (z. B. `2026-04-06`) und liefert eine Denkprobe im Format:
+
+```json
+{
+  "titel": "...",
+  "impuls": "...",
+  "frage": "...",
+  "source": "ai|local-pool|emergency-fallback",
+  "seed": "2026-04-06"
+}
+```
+
+Wenn keine KI-Konfiguration vorhanden ist oder die KI-Antwort unbrauchbar ist, wird deterministisch aus `data/daily-questions.json` gewählt. Das Frontend zeigt nur im Fehlerfall eine explizite Offline-Hinweismeldung an.

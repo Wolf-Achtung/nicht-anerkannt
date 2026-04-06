@@ -1,8 +1,18 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+
+app.use('/api', (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.sendStatus(204);
+  next();
+});
 
 // --- Static files ---
 app.use(express.static(path.join(__dirname), {
@@ -15,39 +25,58 @@ function getConfiguredApiKey() {
   return process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY || process.env.AI_API_KEY || '';
 }
 
+const DAILY_QUESTIONS_PATH = path.join(__dirname, 'data', 'daily-questions.json');
+
+function normalizeDailyQuestion(entry) {
+  if (!entry || typeof entry !== 'object') return null;
+  if (!entry.titel || !entry.impuls || !entry.frage) return null;
+  return {
+    titel: String(entry.titel).trim(),
+    impuls: String(entry.impuls).trim(),
+    frage: String(entry.frage).trim()
+  };
+}
+
+function loadLocalDailyQuestions() {
+  try {
+    const raw = fs.readFileSync(DAILY_QUESTIONS_PATH, 'utf8');
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.map(normalizeDailyQuestion).filter(Boolean);
+  } catch (error) {
+    console.error('Daily questions could not be loaded:', error.message);
+    return [];
+  }
+}
+
+const LOCAL_DAILY_QUESTIONS = loadLocalDailyQuestions();
+
+function dailySeedToIndex(seedInput, length) {
+  const seed = String(seedInput || new Date().toISOString().slice(0, 10));
+  const hash = seed.split('').reduce((acc, char) => ((acc * 31) + char.charCodeAt(0)) >>> 0, 7);
+  return hash % length;
+}
+
 function pickLocalDailyChallenge(seedInput) {
   const seed = String(seedInput || new Date().toISOString().slice(0, 10));
-  const pool = [
-    {
+  if (!LOCAL_DAILY_QUESTIONS.length) {
+    return {
       titel: 'Denkprobe des Tages',
-      impuls: 'Viele fordern klare Kante, aber klare Kante löst selten komplexe Konflikte. Gleichzeitig wirkt Abwägen oft wie Schwäche.',
-      frage: 'Welche Entscheidung von dir braucht heute mehr Ambivalenz statt mehr Härte?'
-    },
-    {
-      titel: 'Denkprobe des Tages',
-      impuls: 'Wir verwechseln oft Tempo mit Richtung: Hauptsache reagieren, egal wohin. Doch hektische Aktivität kann auch ein Ausweichen sein.',
-      frage: 'Wo tust du gerade nur so, als würdest du handeln?'
-    },
-    {
-      titel: 'Denkprobe des Tages',
-      impuls: 'In Debatten gewinnt oft, wer lauter oder schneller ist. Die bessere Frage geht dabei unter.',
-      frage: 'Welche Frage stellst du nicht, weil sie deine eigene Position gefährden könnte?'
-    },
-    {
-      titel: 'Denkprobe des Tages',
-      impuls: 'Viele Konflikte eskalieren, weil jede Seite nur ihre Verletzung sieht. Verständnis ohne Selbstaufgabe bleibt selten geübt.',
-      frage: 'Welchen berechtigten Punkt der Gegenseite hast du zuletzt zu schnell abgetan?'
-    },
-    {
-      titel: 'Denkprobe des Tages',
-      impuls: 'Wir lieben Prinzipien, bis sie uns selbst etwas kosten. Erst dann zeigt sich, ob es Haltung oder nur Pose war.',
-      frage: 'Welches deiner Prinzipien würdest du morgen noch vertreten, wenn es dir konkret schadet?'
-    }
-  ];
+      impuls: 'Der Tagesgenerator ist gerade nicht erreichbar. Die Denkprobe läuft im Notfallmodus.',
+      frage: 'Welche Überzeugung würdest du heute überprüfen, wenn du nur eine prüfen dürftest?',
+      source: 'emergency-fallback',
+      seed
+    };
+  }
 
-  const hash = seed.split('').reduce((acc, char) => ((acc * 31) + char.charCodeAt(0)) >>> 0, 7);
-  return pool[hash % pool.length];
+  const picked = LOCAL_DAILY_QUESTIONS[dailySeedToIndex(seed, LOCAL_DAILY_QUESTIONS.length)];
+  return {
+    ...picked,
+    source: 'local-pool',
+    seed
+  };
 }
+
 async function callClaude(systemPrompt, messages, maxTokens = 300) {
   const apiKey = getConfiguredApiKey();
   if (!apiKey) {
@@ -396,6 +425,27 @@ Sei direkt und konkret. Zitiere Passagen wo möglich. Antworte auf Deutsch im JS
   }
 });
 
+app.use('/api/client-log', express.json({ limit: '10kb' }));
+
+app.post('/api/client-log', (req, res) => {
+  const level = req.body && req.body.level ? String(req.body.level) : 'error';
+  const context = req.body && req.body.context ? String(req.body.context) : 'client';
+  const message = req.body && req.body.message ? String(req.body.message) : '';
+
+  if (!message) return res.status(400).json({ error: 'Keine Log-Nachricht erhalten.' });
+
+  const shortMessage = message.replace(/\s+/g, ' ').slice(0, 280);
+  const line = `[client-log] level=${level} context=${context} message=${shortMessage}`;
+
+  if (level === 'warn') {
+    console.warn(line);
+  } else {
+    console.error(line);
+  }
+
+  return res.status(202).json({ ok: true });
+});
+
 // ═══════════════════════════════════════════════════════════
 // 8. TÄGLICHE DENKPROBE (Daily Challenge)
 // ═══════════════════════════════════════════════════════════
@@ -406,7 +456,7 @@ app.post('/api/daily', async (req, res) => {
   const resolvedSeed = seed || new Date().toISOString().slice(0, 10);
 
   if (!getConfiguredApiKey()) {
-    return res.json({ ...pickLocalDailyChallenge(resolvedSeed), source: 'local-fallback' });
+    return res.json(pickLocalDailyChallenge(resolvedSeed));
   }
 
   const systemPrompt = `Du bist der Generator der Täglichen Denkprobe des Ateliers der Radikalen Mitte.
@@ -426,20 +476,21 @@ Antworte auf Deutsch im JSON-Format:
   const messages = [{ role: 'user', content: `Generiere die Denkprobe des Tages. Seed: ${resolvedSeed}` }];
   const result = await callClaude(systemPrompt, messages, 400);
   if (result.error) {
-    return res.json({ ...pickLocalDailyChallenge(resolvedSeed), source: 'local-fallback' });
+    return res.json(pickLocalDailyChallenge(resolvedSeed));
   }
 
   try {
     const jsonMatch = result.text.match(/\{[\s\S]*\}/);
     const parsed = jsonMatch ? JSON.parse(jsonMatch[0]) : null;
-    if (parsed && parsed.titel && parsed.frage) {
-      return res.json(parsed);
+    const normalized = normalizeDailyQuestion(parsed);
+    if (normalized) {
+      return res.json({ ...normalized, source: 'ai', seed: resolvedSeed });
     }
   } catch (e) {
     // Falls KI-Antwort unlesbar ist, auf lokale Denkprobe ausweichen.
   }
 
-  res.json({ ...pickLocalDailyChallenge(resolvedSeed), source: 'local-fallback' });
+  res.json(pickLocalDailyChallenge(resolvedSeed));
 });
 
 // ═══════════════════════════════════════════════════════════
