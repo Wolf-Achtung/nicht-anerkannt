@@ -62,7 +62,7 @@
       var fontSize = subLine.length > 30 ? 13 : 16;
       svg += '<text x="' + cx + '" y="' + (cy + 56) + '" text-anchor="middle" ';
       svg += 'font-family="Arial, Helvetica, sans-serif" font-size="' + fontSize + '" ';
-      svg += 'fill="#be1e1e" letter-spacing="1" text-transform="uppercase">';
+      svg += 'fill="#111111" letter-spacing="1" text-transform="uppercase">';
       svg += subLine;
       svg += '</text>';
     }

@@ -122,6 +122,17 @@ a { color: inherit; }
   transform: rotate(-3deg);
   font-weight: 700;
   background: var(--paper);
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.brand-pre {
+  color: var(--accent);
+}
+
+.brand-main {
+  color: var(--ink);
 }
 
 .header-links {
@@ -370,6 +381,7 @@ button:focus-visible {
   padding: clamp(2.5rem, 4vw, 4.5rem) 0;
   border-bottom: 1px solid var(--line);
   position: relative;
+  scroll-margin-top: 7rem;
 }
 
 .section-label {
@@ -1220,6 +1232,10 @@ body.read-mode::before {
 }
 
 @media (max-width: 640px) {
+  .section {
+    scroll-margin-top: 9rem;
+  }
+
   .site-header .inner {
     flex-direction: column;
     align-items: flex-start;
