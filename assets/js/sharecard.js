@@ -87,9 +87,9 @@
     ctx.fill();
     ctx.restore();
 
-    // Stamp in top-right
+    // Stamp in top-left
     ctx.save();
-    ctx.translate(W - 180, 80);
+    ctx.translate(160, 80);
     ctx.rotate(-0.12);
     ctx.font = 'bold 13px Arial, Helvetica, sans-serif';
     ctx.fillStyle = '#be1e1e';
@@ -98,6 +98,19 @@
     ctx.lineWidth = 1.5;
     ctx.strokeRect(-60, -18, 120, 36);
     ctx.fillText('NICHT ANERKANNT', 0, 5);
+    ctx.restore();
+
+    // Optional claim bottom-right
+    ctx.save();
+    ctx.translate(W - 240, H - 100);
+    ctx.rotate(-0.05);
+    ctx.strokeStyle = '#111111';
+    ctx.lineWidth = 1.25;
+    ctx.strokeRect(-180, -24, 360, 48);
+    ctx.font = 'bold 16px Arial, Helvetica, sans-serif';
+    ctx.fillStyle = '#111111';
+    ctx.textAlign = 'center';
+    ctx.fillText('POLITISCH NICHT VEREINNAHMBAR', 0, 6);
     ctx.restore();
 
     // Main quote text
