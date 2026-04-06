@@ -75,7 +75,9 @@
     try {
       var stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
       if (stored && stored.dimensions) return stored;
-    } catch (e) {}
+    } catch (e) {
+      console.warn('[AtelierScore] Could not read score from localStorage:', e.message);
+    }
     return {
       dimensions: [0, 0, 0, 0, 0],
       total: 0,
@@ -85,7 +87,9 @@
 
   function saveScore(score) {
     if (!storageAvailable) return;
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(score)); } catch (e) {}
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(score)); } catch (e) {
+      console.warn('[AtelierScore] Could not save score:', e.message);
+    }
   }
 
   function track(toolName) {
@@ -174,7 +178,9 @@
     if (!resetBtn) return;
     resetBtn.addEventListener('click', function () {
       if (storageAvailable) {
-        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {
+          console.warn('[AtelierScore] Could not clear score:', e.message);
+        }
       }
       renderWidget();
     });

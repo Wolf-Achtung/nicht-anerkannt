@@ -51,24 +51,14 @@
   }
 
   function animateText(el, lines) {
-    el.style.opacity = '0';
-    el.style.transition = 'opacity 0.4s ease';
+    el.classList.remove('is-visible');
 
     setTimeout(function () {
       var remixedHtml = lines.map(function (line) {
         return '<span class="remix-line">' + escapeHtml(line) + '</span>';
       }).join('<span class="remix-separator" aria-hidden="true">•</span>');
-      el.innerHTML = '<blockquote style="' +
-        'margin:0;padding:1.2rem 1.4rem;' +
-        'border:2px solid #111;' +
-        'box-shadow:0.4rem 0.4rem 0 rgba(17,17,17,0.9);' +
-        'background:#fffaf1;' +
-        'font-size:clamp(1.05rem,1.6vw,1.22rem);' +
-        'line-height:1.6;' +
-        'transform:rotate(-0.8deg);' +
-        'font-family:Georgia,serif;' +
-        '">' + remixedHtml + '</blockquote>';
-      el.style.opacity = '1';
+      el.innerHTML = '<blockquote class="remix-blockquote">' + remixedHtml + '</blockquote>';
+      el.classList.add('is-visible');
     }, 400);
   }
 
@@ -93,6 +83,8 @@
     btnEl = document.getElementById('remixer-btn');
 
     if (!outputEl || !btnEl) return;
+
+    outputEl.classList.add('remix-fade');
 
     fetchFragments()
       .then(function () {

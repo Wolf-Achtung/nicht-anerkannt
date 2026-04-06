@@ -52,7 +52,6 @@
       var desc = document.createElement('p');
       desc.className = 'roadmap-desc';
       desc.textContent = m.description;
-      desc.style.display = 'none';
 
       content.appendChild(dateEl);
       content.appendChild(title);
@@ -66,11 +65,10 @@
       item.setAttribute('role', 'button');
       item.setAttribute('tabindex', '0');
       item.setAttribute('aria-expanded', 'false');
-      item.style.cursor = 'pointer';
 
       function toggleDesc() {
-        var isOpen = desc.style.display !== 'none';
-        desc.style.display = isOpen ? 'none' : 'block';
+        var isOpen = desc.classList.contains('is-open');
+        desc.classList.toggle('is-open');
         item.setAttribute('aria-expanded', String(!isOpen));
       }
 
@@ -102,7 +100,7 @@
         buildTimeline(container, data);
       })
       .catch(function (err) {
-        container.innerHTML = '<p style="color:#be1e1e;">Roadmap konnte nicht geladen werden.</p>';
+        container.innerHTML = '<p class="roadmap-error">Roadmap konnte nicht geladen werden.</p>';
         console.error('[AtelierRoadmap]', err);
       });
   }

@@ -19,7 +19,8 @@
         </span>
         <span>Das Atelier der Radikalen Mitte</span>
       </div>
-      <nav class="header-links" aria-label="Seitenbereiche">
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menü</button>
+      <nav class="header-links" id="main-nav" aria-label="Seitenbereiche">
         <a href="../index.html#problem">Problem</a>
         <a href="../index.html#mitte">Radikale Mitte</a>
         <a href="../index.html#atelier">Atelier</a>
@@ -27,7 +28,7 @@
         <a href="../index.html#score">Denkprofil</a>
         <a href="salon.html">Salon</a>
         <a href="ideen-archiv.html">Ideen-Archiv</a>
-        <a href="werkstatt.html">KI-Werkstatt</a>
+        <a href="werkstatt.html" aria-current="page">KI-Werkstatt</a>
         <a href="medien.html">Medien</a>
         <a href="roadmap.html">Roadmap</a>
         <a href="kontakt.html">Kontakt</a>
@@ -37,8 +38,8 @@
   </header>
 
   <main id="main-content">
-    <section class="hero" style="min-height: auto; padding-bottom: 2rem;" aria-labelledby="page-title">
-      <div class="hero-copy" style="grid-column: 1 / -1;">
+    <section class="hero hero--compact" aria-labelledby="page-title">
+      <div class="hero-copy hero-copy--full">
         <p class="eyebrow">KI als Sparringspartner / Denkwerkzeuge / Urteilstraining</p>
         <h1 id="page-title">KI-Werkstatt</h1>
         <p class="lede">Zehn KI-gestützte Werkzeuge, die dein Denken herausfordern – nicht ersetzen. KI ist hier Sparringspartner, Gegenstimme und Stresstest.</p>
@@ -120,8 +121,8 @@
         <p>Lade einen eigenen Text hoch – die KI prüft nicht Grammatik, sondern Denkqualität. Wo wird behauptet statt begründet? Wo fehlt der Widerspruch? Wo ist Meinung als Urteil verkleidet?</p>
         <div class="werkstatt-tool">
           <label class="stempel-label" for="st-text">Dein Text (max. 5000 Zeichen)</label>
-          <textarea class="werkstatt-input" id="st-text" rows="8" placeholder="Füge hier deinen Text ein – Essay, Blogpost, Bewerbung, Kommentar..." maxlength="5000"></textarea>
-          <div style="font-family: var(--sans); font-size: 0.75rem; color: var(--muted); margin-bottom: 0.6rem;"><span id="st-count">0</span> / 5000 Zeichen</div>
+          <textarea class="werkstatt-input" id="st-text" rows="8" placeholder="Füge hier deinen Text ein – Essay, Blogpost, Bewerbung, Kommentar..." maxlength="5000" aria-describedby="st-counter"></textarea>
+          <div class="werkstatt-char-counter" id="st-counter"><span id="st-count">0</span> / 5000 Zeichen</div>
           <button class="button button--accent" id="st-btn" type="button">Stresstest starten</button>
           <div class="werkstatt-output" id="st-output" aria-live="polite"></div>
         </div>
@@ -138,7 +139,7 @@
           <label class="stempel-label" for="tr-text">Text aus dem Manifest</label>
           <textarea class="werkstatt-input" id="tr-text" rows="3" maxlength="500">Nicht mehr Stoff. Mehr Urteil. Du brauchst nicht mehr Information. Du brauchst Urteil, Haltung und Handlungskraft.</textarea>
           <label class="stempel-label" for="tr-lang">Zielsprache</label>
-          <select class="stempel-input" id="tr-lang" style="padding: 0.6rem 0.9rem;">
+          <select class="stempel-input" id="tr-lang" >
             <option value="Englisch">Englisch</option>
             <option value="Französisch">Französisch</option>
             <option value="Spanisch">Spanisch</option>
@@ -166,7 +167,7 @@
           <label class="stempel-label" for="pw-position">Deine Position</label>
           <textarea class="werkstatt-input" id="pw-position" rows="3" placeholder="z.B. &quot;Homeoffice sollte die Regel sein, nicht die Ausnahme.&quot;" maxlength="500"></textarea>
           <label class="stempel-label" for="pw-perspektive">Perspektive einnehmen</label>
-          <select class="stempel-input" id="pw-perspektive" style="padding: 0.6rem 0.9rem;">
+          <select class="stempel-input" id="pw-perspektive" >
             <option value="Konservative:r Traditionalist:in">Konservative:r Traditionalist:in</option>
             <option value="Linke:r Aktivist:in">Linke:r Aktivist:in</option>
             <option value="Liberale:r Unternehmer:in">Liberale:r Unternehmer:in</option>
@@ -192,8 +193,8 @@
         <p>Kopiere einen Nachrichtenartikel oder Meinungsbeitrag – die KI liefert die Gegenposition, die ungestellte Frage, die ungesagten Annahmen und die fehlende Stimme.</p>
         <div class="werkstatt-tool">
           <label class="stempel-label" for="gr-text">Artikeltext einfügen (max. 8000 Zeichen)</label>
-          <textarea class="werkstatt-input" id="gr-text" rows="8" placeholder="Kopiere hier den Text eines Nachrichtenartikels, einer Kolumne oder eines Meinungsbeitrags..." maxlength="8000"></textarea>
-          <div style="font-family: var(--sans); font-size: 0.75rem; color: var(--muted); margin-bottom: 0.6rem;"><span id="gr-count">0</span> / 8000 Zeichen</div>
+          <textarea class="werkstatt-input" id="gr-text" rows="8" placeholder="Kopiere hier den Text eines Nachrichtenartikels, einer Kolumne oder eines Meinungsbeitrags..." maxlength="8000" aria-describedby="gr-counter"></textarea>
+          <div class="werkstatt-char-counter" id="gr-counter"><span id="gr-count">0</span> / 8000 Zeichen</div>
           <button class="button button--accent" id="gr-btn" type="button">Gegenrede generieren</button>
           <div class="werkstatt-output" id="gr-output" aria-live="polite"></div>
         </div>

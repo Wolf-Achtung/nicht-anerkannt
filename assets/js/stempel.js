@@ -45,30 +45,30 @@
     svg += '<title>' + ariaLabel + '</title>';
     svg += '<g transform="rotate(' + config.angle + ', ' + cx + ', ' + cy + ')">';
 
-    svg += '<rect x="20" y="28" width="' + (w - 40) + '" height="' + (h - 56) + '" fill="none" stroke="#be1e1e" stroke-width="4" />';
+    svg += '<rect x="20" y="28" width="' + (w - 40) + '" height="' + (h - 56) + '" fill="none" stroke="#991b1b" stroke-width="4" />';
 
     if (variant === 'extrem-mittig') {
       svg += '<text x="' + cx + '" y="' + (cy + 8) + '" text-anchor="middle" ';
       svg += 'font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="800" ';
-      svg += 'fill="#be1e1e" letter-spacing="' + config.spacing + '">';
+      svg += 'fill="#991b1b" letter-spacing="' + config.spacing + '">';
       svg += config.titleLine1;
       svg += '</text>';
     } else {
-      svg += '<rect x="28" y="36" width="' + (w - 56) + '" height="' + (h - 72) + '" fill="none" stroke="#be1e1e" stroke-width="1.6" />';
+      svg += '<rect x="28" y="36" width="' + (w - 56) + '" height="' + (h - 72) + '" fill="none" stroke="#991b1b" stroke-width="1.6" />';
 
       svg += '<text x="' + cx + '" y="' + (cy - 16) + '" text-anchor="middle" ';
       svg += 'font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="800" ';
-      svg += 'fill="#be1e1e" letter-spacing="' + config.spacing + '">';
+      svg += 'fill="#991b1b" letter-spacing="' + config.spacing + '">';
       svg += config.titleLine1;
       svg += '</text>';
 
       svg += '<text x="' + cx + '" y="' + (cy + 24) + '" text-anchor="middle" ';
       svg += 'font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="800" ';
-      svg += 'fill="#be1e1e" letter-spacing="' + config.spacing + '">';
+      svg += 'fill="#991b1b" letter-spacing="' + config.spacing + '">';
       svg += config.titleLine2;
       svg += '</text>';
 
-      svg += '<line x1="74" y1="' + (cy + 44) + '" x2="' + (w - 74) + '" y2="' + (cy + 44) + '" stroke="#be1e1e" stroke-width="1" />';
+      svg += '<line x1="74" y1="' + (cy + 44) + '" x2="' + (w - 74) + '" y2="' + (cy + 44) + '" stroke="#991b1b" stroke-width="1" />';
     }
 
     if (subLine) {
@@ -131,19 +131,11 @@
     }
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(acknowledge);
-      return;
+      navigator.clipboard.writeText(text).then(acknowledge).catch(function () {
+        buttonEl.textContent = 'Kopieren nicht möglich';
+        setTimeout(function () { buttonEl.textContent = 'Teilen'; }, 2000);
+      });
     }
-
-    var textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.style.position = 'fixed';
-    textarea.style.opacity = '0';
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textarea);
-    acknowledge();
   }
 
   function initGenerator(root) {
