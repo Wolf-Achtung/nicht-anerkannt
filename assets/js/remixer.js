@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  var fragments = null;
+  var remixLines = null;
   var outputEl = null;
   var btnEl = null;
 
@@ -16,44 +16,48 @@
   function fetchFragments() {
     var base = document.querySelector('script[src*="remixer"]');
     var prefix = base ? base.src.replace(/assets\/js\/remixer\.js.*$/, '') : '';
-    return fetch(prefix + 'data/manifest-fragments.json')
+    return fetch(prefix + 'data/remix-lines.json')
       .then(function (res) {
         if (!res.ok) throw new Error('Failed to load fragments');
         return res.json();
       })
       .then(function (data) {
-        fragments = data;
+        remixLines = data && data.lines ? data.lines : [];
         return data;
       });
   }
 
   function buildRemix() {
-    if (!fragments) return '';
-
-    var anfang = pick(fragments.anfaenge);
-
-    // Pick 1-2 kernaussagen
-    var kernCount = Math.random() > 0.5 ? 2 : 1;
-    var usedIndices = [];
-    var kerne = [];
-    while (kerne.length < kernCount && kerne.length < fragments.kernaussagen.length) {
-      var idx = Math.floor(Math.random() * fragments.kernaussagen.length);
-      if (usedIndices.indexOf(idx) === -1) {
-        usedIndices.push(idx);
-        kerne.push(fragments.kernaussagen[idx]);
-      }
+    if (!remixLines || remixLines.length === 0) return [];
+    var clusters = {};
+    remixLines.forEach(function (line) {
+      if (!line || !line.cluster || !line.text) return;
+      if (!clusters[line.cluster]) clusters[line.cluster] = [];
+      clusters[line.cluster].push(line.text);
+    });
+    var clusterNames = Object.keys(clusters).filter(function (key) {
+      return clusters[key].length > 1;
+    });
+    if (!clusterNames.length) return [];
+    var activeCluster = pick(clusterNames);
+    var candidates = clusters[activeCluster].slice();
+    var sentenceCount = Math.min(candidates.length, Math.random() > 0.5 ? 3 : 2);
+    var result = [];
+    while (result.length < sentenceCount && candidates.length) {
+      var idx = Math.floor(Math.random() * candidates.length);
+      result.push(candidates.splice(idx, 1)[0]);
     }
-
-    var schluss = pick(fragments.schlusssaetze);
-
-    return anfang + ' ' + kerne.join(' ') + ' ' + schluss;
+    return result;
   }
 
-  function animateText(el, text) {
+  function animateText(el, lines) {
     el.style.opacity = '0';
     el.style.transition = 'opacity 0.4s ease';
 
     setTimeout(function () {
+      var remixedHtml = lines.map(function (line) {
+        return '<span class="remix-line">' + escapeHtml(line) + '</span>';
+      }).join('<span class="remix-separator" aria-hidden="true">•</span>');
       el.innerHTML = '<blockquote style="' +
         'margin:0;padding:1.2rem 1.4rem;' +
         'border:2px solid #111;' +
@@ -63,7 +67,7 @@
         'line-height:1.6;' +
         'transform:rotate(-0.8deg);' +
         'font-family:Georgia,serif;' +
-        '">' + escapeHtml(text) + '</blockquote>';
+        '">' + remixedHtml + '</blockquote>';
       el.style.opacity = '1';
     }, 400);
   }
@@ -75,9 +79,13 @@
   }
 
   function remix() {
-    if (!fragments || !outputEl) return;
-    var text = buildRemix();
-    animateText(outputEl, text);
+    if (!remixLines || !outputEl) return;
+    var lines = buildRemix();
+    if (!lines.length) {
+      outputEl.innerHTML = '<p class="remix-error">Keine Remix-Linien verfügbar. Bitte später erneut versuchen.</p>';
+      return;
+    }
+    animateText(outputEl, lines);
   }
 
   function init() {
@@ -92,7 +100,7 @@
         btnEl.addEventListener('click', remix);
       })
       .catch(function (err) {
-        outputEl.textContent = 'Fragmente konnten nicht geladen werden.';
+        outputEl.innerHTML = '<p class="remix-error">Remix-Daten konnten nicht geladen werden. Bitte Seite neu laden.</p>';
         console.error('[AtelierRemixer]', err);
       });
   }

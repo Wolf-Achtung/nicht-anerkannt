@@ -40,8 +40,7 @@
     var badge = '<span style="' + badgeStyle(msg.type) + '">' +
       escapeHtml(msg.type) + '</span>';
     var text = '<span style="font-size:0.95rem;">' + escapeHtml(msg.text) + '</span>';
-    var date = msg.date ? '<span style="margin-left:0.6rem;font-size:0.75rem;color:#5d5d5d;' +
-      'font-family:Arial,sans-serif;">' + escapeHtml(msg.date) + '</span>' : '';
+    var date = msg.date ? '<span class="ticker-date">' + escapeHtml(msg.date) + '</span>' : '';
     return badge + text + date;
   }
 
@@ -105,10 +104,24 @@
       prev();
       resetInterval();
     });
+    prevBtn.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        prev();
+        resetInterval();
+      }
+    });
 
     nextBtn.addEventListener('click', function () {
       next();
       resetInterval();
+    });
+    nextBtn.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        next();
+        resetInterval();
+      }
     });
 
     container.appendChild(prevBtn);
