@@ -17,8 +17,7 @@
       '<span class="werkstatt-loading-dot"></span>' +
       '<span class="werkstatt-loading-dot"></span>' +
       '<span class="werkstatt-loading-dot"></span>' +
-      '<span style="margin-left:0.5rem;font-family:Arial,sans-serif;font-size:0.82rem;' +
-      'text-transform:uppercase;letter-spacing:0.08em;color:#5d5d5d;">KI denkt nach...</span></div>';
+      '<span class="werkstatt-loading-text">KI denkt nach...</span></div>';
   }
 
   function showError(el, msg) {
@@ -235,7 +234,7 @@
     var problem = '';
 
     function renderProgress() {
-      var html = '<div style="display:flex;gap:0.4rem;margin-bottom:1rem;">';
+      var html = '<div class="werkstatt-progress-steps">';
       for (var i = 0; i < stepNames.length; i++) {
         var state = i < currentStep ? 'done' : (i === currentStep ? 'active' : '');
         html += '<div class="werkstatt-step ' + state + '">' +
@@ -311,7 +310,7 @@
         data.optionen.forEach(function (o) {
           html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' +
             escapeHtml(o.titel) + '</div><p>' + escapeHtml(o.beschreibung) +
-            '</p><p style="color:#5d5d5d;font-size:0.9rem;"><em>Trade-off: ' +
+            '</p><p class="werkstatt-tradeoff"><em>Trade-off: ' +
             escapeHtml(o.tradeoff) + '</em></p></div>';
         });
       }
@@ -439,11 +438,11 @@
           var html = '<div class="werkstatt-translation">';
           html += '<div class="werkstatt-card werkstatt-card--accent">' +
             '<div class="werkstatt-card-label">' + escapeHtml(language) + '</div>' +
-            '<p style="font-size:1.15rem;line-height:1.5;">' + escapeHtml(data.translation) + '</p></div>';
+            '<p class="werkstatt-translation">' + escapeHtml(data.translation) + '</p></div>';
 
           if (data.notes) {
             html += '<div class="werkstatt-card"><div class="werkstatt-card-label">Kulturelle Anmerkung</div>' +
-              '<p style="font-style:italic;">' + escapeHtml(data.notes) + '</p></div>';
+              '<p class="werkstatt-note">' + escapeHtml(data.notes) + '</p></div>';
           }
 
           html += '</div>';

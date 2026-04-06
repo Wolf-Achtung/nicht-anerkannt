@@ -71,7 +71,7 @@
     ctx.strokeRect(24, 24, W - 48, H - 48);
 
     // Inner accent line
-    ctx.strokeStyle = '#be1e1e';
+    ctx.strokeStyle = '#991b1b';
     ctx.lineWidth = 2;
     ctx.strokeRect(36, 36, W - 72, H - 72);
 
@@ -92,9 +92,9 @@
     ctx.translate(160, 80);
     ctx.rotate(-0.12);
     ctx.font = 'bold 13px Arial, Helvetica, sans-serif';
-    ctx.fillStyle = '#be1e1e';
+    ctx.fillStyle = '#991b1b';
     ctx.textAlign = 'center';
-    ctx.strokeStyle = '#be1e1e';
+    ctx.strokeStyle = '#991b1b';
     ctx.lineWidth = 1.5;
     ctx.strokeRect(-60, -18, 120, 36);
     ctx.fillText('NICHT ANERKANNT', 0, 5);
@@ -151,7 +151,7 @@
     ctx.translate(W - 140, H - 52);
     ctx.rotate(0.06);
     ctx.font = 'bold 11px Arial, Helvetica, sans-serif';
-    ctx.fillStyle = '#be1e1e';
+    ctx.fillStyle = '#991b1b';
     ctx.textAlign = 'center';
     ctx.letterSpacing = '0.15em';
     ctx.fillText('EXTREM MITTIG', 0, 0);

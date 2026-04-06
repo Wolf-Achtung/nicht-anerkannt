@@ -93,7 +93,7 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-    } catch (e) {}
+    } catch (e) { /* localStorage unavailable */ }
   }
 
   function saveToArchive(data) {
@@ -112,7 +112,7 @@
       });
       deduped.unshift(entry);
       localStorage.setItem(ARCHIVE_KEY, JSON.stringify(deduped.slice(0, 30)));
-    } catch (e) {}
+    } catch (e) { /* localStorage unavailable */ }
   }
 
   function renderArchiveLink() {
@@ -153,7 +153,7 @@
         try {
           localStorage.removeItem(ARCHIVE_KEY);
           localStorage.removeItem(getStorageKey());
-        } catch (e) {}
+        } catch (e) { /* localStorage unavailable */ }
         fillArchiveList();
         loadDaily();
       });
@@ -226,8 +226,7 @@
       '<span class="werkstatt-loading-dot"></span>' +
       '<span class="werkstatt-loading-dot"></span>' +
       '<span class="werkstatt-loading-dot"></span>' +
-      '<span style="margin-left:0.5rem;font-family:Arial,sans-serif;font-size:0.82rem;' +
-      'text-transform:uppercase;letter-spacing:0.08em;color:#5d5d5d;">Denkprobe wird geladen...</span></div>';
+      '<span class="werkstatt-loading-text">Denkprobe wird geladen...</span></div>';
 
     requestDailyChallenge(seed)
       .then(function (data) {
@@ -259,7 +258,7 @@
     try {
       var stored = JSON.parse(localStorage.getItem(getStorageKey()));
       if (stored && stored.antwort) savedAnswer = stored.antwort;
-    } catch (e) {}
+    } catch (e) { /* localStorage unavailable */ }
 
     var html = '<div class="daily-card">';
     if (isFallback) {

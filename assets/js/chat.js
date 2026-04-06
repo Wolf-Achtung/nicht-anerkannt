@@ -201,18 +201,7 @@
     if (!messagesEl) return;
 
     var msg = document.createElement('div');
-    msg.style.cssText = 'max-width:82%;padding:0.7rem 0.9rem;margin-bottom:0.6rem;' +
-      'border:1px solid rgba(17,17,17,0.15);font-size:0.92rem;line-height:1.5;' +
-      'opacity:0;transition:opacity 0.3s ease;';
-
-    if (sender === 'user') {
-      msg.style.cssText += 'margin-left:auto;background:#111;color:#fff;' +
-        'border-radius:12px 12px 2px 12px;text-align:right;';
-    } else {
-      msg.style.cssText += 'margin-right:auto;background:#fffaf1;color:#111;' +
-        'border:2px solid #111;border-radius:12px 12px 12px 2px;' +
-        'box-shadow:0.2rem 0.2rem 0 rgba(17,17,17,0.85);';
-    }
+    msg.className = 'chat-message ' + (sender === 'user' ? 'chat-message--user' : 'chat-message--bot');
 
     msg.innerHTML = escapeHtml(text);
     messagesEl.appendChild(msg);
@@ -222,7 +211,7 @@
 
     // Fade in
     requestAnimationFrame(function () {
-      msg.style.opacity = '1';
+      msg.classList.add('is-visible');
     });
 
     history.push({ sender: sender, text: text });
@@ -253,7 +242,11 @@
   function toggleChat() {
     chatOpen = !chatOpen;
     if (chatEl) {
-      chatEl.style.display = chatOpen ? 'flex' : 'none';
+      if (chatOpen) {
+        chatEl.classList.add('is-open');
+      } else {
+        chatEl.classList.remove('is-open');
+      }
     }
     if (chatOpen && inputEl) {
       inputEl.focus();
@@ -267,64 +260,37 @@
     // Floating button
     var fab = document.createElement('button');
     fab.id = 'chat-fab';
+    fab.className = 'chat-fab';
     fab.setAttribute('aria-label', 'KI-Sparring öffnen');
-    fab.style.cssText = 'position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;' +
-      'border:2px solid #111;background:#be1e1e;color:#fff;' +
-      'padding:0.75rem 1.1rem;font-family:Arial,Helvetica,sans-serif;' +
-      'font-size:0.85rem;font-weight:700;text-transform:uppercase;' +
-      'letter-spacing:0.08em;cursor:pointer;' +
-      'box-shadow:0.25rem 0.25rem 0 rgba(17,17,17,0.95);' +
-      'transition:transform 120ms ease,box-shadow 120ms ease;';
     fab.textContent = 'KI-Sparring';
     fab.addEventListener('click', toggleChat);
-    fab.addEventListener('mouseenter', function () {
-      fab.style.transform = 'translate(-2px,-2px)';
-      fab.style.boxShadow = '0.38rem 0.38rem 0 rgba(17,17,17,0.95)';
-    });
-    fab.addEventListener('mouseleave', function () {
-      fab.style.transform = '';
-      fab.style.boxShadow = '0.25rem 0.25rem 0 rgba(17,17,17,0.95)';
-    });
 
     // Chat window
     chatEl = document.createElement('div');
     chatEl.id = 'chat-window';
+    chatEl.className = 'chat-window';
     chatEl.setAttribute('role', 'dialog');
     chatEl.setAttribute('aria-label', 'KI-Sparringspartner Chat');
-    chatEl.style.cssText = 'position:fixed;bottom:5rem;right:1.5rem;z-index:10000;' +
-      'width:min(400px,calc(100vw - 2rem));height:min(520px,calc(100vh - 7rem));' +
-      'display:none;flex-direction:column;' +
-      'background:#f3ecdf;border:2px solid #111;' +
-      'box-shadow:0.5rem 0.5rem 0 rgba(17,17,17,0.9);' +
-      'font-family:Georgia,serif;overflow:hidden;';
 
     // Header
     var header = document.createElement('div');
-    header.style.cssText = 'display:flex;align-items:center;justify-content:space-between;' +
-      'padding:0.7rem 0.9rem;background:#111;color:#fff;' +
-      'font-family:Arial,Helvetica,sans-serif;font-size:0.8rem;' +
-      'text-transform:uppercase;letter-spacing:0.1em;font-weight:700;';
+    header.className = 'chat-header';
 
     var title = document.createElement('span');
     title.textContent = 'KI-Sparringspartner';
 
     var headerBtns = document.createElement('div');
-    headerBtns.style.cssText = 'display:flex;gap:0.4rem;';
+    headerBtns.className = 'chat-header-buttons';
 
     var resetBtn = document.createElement('button');
     resetBtn.textContent = 'Neues Gespräch';
-    resetBtn.style.cssText = 'border:1px solid rgba(255,255,255,0.4);background:transparent;' +
-      'color:#fff;padding:0.2rem 0.5rem;font-size:0.7rem;cursor:pointer;' +
-      'font-family:Arial,sans-serif;text-transform:uppercase;letter-spacing:0.06em;' +
-      'box-shadow:none;';
+    resetBtn.className = 'chat-header-btn';
     resetBtn.addEventListener('click', resetChat);
 
     var closeBtn = document.createElement('button');
     closeBtn.textContent = '\u2715';
     closeBtn.setAttribute('aria-label', 'Chat schließen');
-    closeBtn.style.cssText = 'border:1px solid rgba(255,255,255,0.4);background:transparent;' +
-      'color:#fff;padding:0.2rem 0.5rem;font-size:0.85rem;cursor:pointer;' +
-      'font-family:Arial,sans-serif;box-shadow:none;line-height:1;';
+    closeBtn.className = 'chat-header-btn chat-header-btn--close';
     closeBtn.addEventListener('click', toggleChat);
 
     headerBtns.appendChild(resetBtn);
@@ -334,32 +300,25 @@
 
     // Messages area
     messagesEl = document.createElement('div');
+    messagesEl.className = 'chat-messages';
     messagesEl.setAttribute('role', 'log');
     messagesEl.setAttribute('aria-live', 'polite');
     messagesEl.setAttribute('aria-label', 'Chat-Nachrichten');
-    messagesEl.style.cssText = 'flex:1;overflow-y:auto;padding:0.8rem;' +
-      'display:flex;flex-direction:column;';
 
     // Input area
     var inputArea = document.createElement('div');
-    inputArea.style.cssText = 'display:flex;gap:0;border-top:2px solid #111;';
+    inputArea.className = 'chat-input-area';
 
     inputEl = document.createElement('input');
     inputEl.type = 'text';
+    inputEl.className = 'chat-input';
     inputEl.placeholder = 'Was denkst du?';
     inputEl.setAttribute('aria-label', 'Nachricht eingeben');
-    inputEl.style.cssText = 'flex:1;border:none;padding:0.75rem 0.9rem;' +
-      'font-family:Georgia,serif;font-size:0.95rem;background:#fffaf1;' +
-      'color:#111;';
 
     var sendBtn = document.createElement('button');
     sendBtn.textContent = 'Senden';
+    sendBtn.className = 'chat-send-btn';
     sendBtn.setAttribute('aria-label', 'Nachricht senden');
-    sendBtn.style.cssText = 'border:none;border-left:2px solid #111;' +
-      'background:#111;color:#fff;padding:0.75rem 1rem;' +
-      'font-family:Arial,Helvetica,sans-serif;font-size:0.8rem;' +
-      'text-transform:uppercase;letter-spacing:0.08em;font-weight:700;' +
-      'cursor:pointer;box-shadow:none;';
 
     sendBtn.addEventListener('click', handleSend);
     inputEl.addEventListener('keydown', function (e) {

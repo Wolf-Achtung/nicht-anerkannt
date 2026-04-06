@@ -1,10 +1,27 @@
 const express = require('express');
+const helmet = require('helmet');
 const path = require('path');
 const fs = require('fs');
 const rateLimit = require('express-rate-limit');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// --- Security headers ---
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "blob:"],
+      connectSrc: ["'self'"],
+      fontSrc: ["'self'"],
+      frameSrc: ["'none'"]
+    }
+  },
+  crossOriginEmbedderPolicy: false
+}));
 
 // --- CORS: restrict to known origins ---
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'https://nicht-anerkannt.info').split(',');
@@ -114,7 +131,7 @@ async function callClaude(systemPrompt, messages, maxTokens = 300) {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01'
+        'anthropic-version': '2024-10-22'
       },
       body: JSON.stringify({
         model: model,
@@ -140,6 +157,24 @@ async function callClaude(systemPrompt, messages, maxTokens = 300) {
     console.error('API call error:', err);
     return { error: 'Verbindungsfehler zur KI.', status: 500 };
   }
+}
+
+/**
+ * Parse JSON object or array from Claude's text response.
+ * @param {string} text - Raw response text
+ * @param {'object'|'array'} type - Expected JSON shape
+ * @param {*} fallback - Value returned when parsing fails
+ * @returns {*} Parsed JSON or fallback
+ */
+function parseClaudeJSON(text, type, fallback) {
+  try {
+    const pattern = type === 'array' ? /\[[\s\S]*\]/ : /\{[\s\S]*\}/;
+    const match = text.match(pattern);
+    if (match) return JSON.parse(match[0]);
+  } catch (e) {
+    // Parsing failed — return fallback
+  }
+  return fallback !== undefined ? fallback : { raw: text };
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -213,13 +248,8 @@ Antworte auf Deutsch im folgenden JSON-Format (nur das JSON, kein anderer Text):
   const result = await callClaude(systemPrompt, messages, 800);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  try {
-    const jsonMatch = result.text.match(/\[[\s\S]*\]/);
-    const gegenpositionen = jsonMatch ? JSON.parse(jsonMatch[0]) : [];
-    res.json({ these, gegenpositionen });
-  } catch (e) {
-    res.json({ these, gegenpositionen: [], raw: result.text });
-  }
+  const gegenpositionen = parseClaudeJSON(result.text, 'array', []);
+  res.json({ these, gegenpositionen: Array.isArray(gegenpositionen) ? gegenpositionen : [] });
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -246,13 +276,7 @@ Antworte auf Deutsch UND in der Zielsprache im folgenden JSON-Format:
   const result = await callClaude(systemPrompt, messages, 600);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  try {
-    const jsonMatch = result.text.match(/\{[\s\S]*\}/);
-    const parsed = jsonMatch ? JSON.parse(jsonMatch[0]) : { translation: result.text, notes: '' };
-    res.json(parsed);
-  } catch (e) {
-    res.json({ translation: result.text, notes: '' });
-  }
+  res.json(parseClaudeJSON(result.text, 'object', { translation: result.text, notes: '' }));
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -286,13 +310,7 @@ Antworte auf Deutsch im folgenden JSON-Format:
   const result = await callClaude(systemPrompt, messages, 1000);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  try {
-    const jsonMatch = result.text.match(/\{[\s\S]*\}/);
-    const parsed = jsonMatch ? JSON.parse(jsonMatch[0]) : null;
-    res.json(parsed || { raw: result.text });
-  } catch (e) {
-    res.json({ raw: result.text });
-  }
+  res.json(parseClaudeJSON(result.text, 'object'));
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -320,12 +338,7 @@ Antworte im JSON-Format:
     const result = await callClaude(systemPrompt, [{ role: 'user', content: 'Generiere ein neues Dilemma.' }], 600);
     if (result.error) return res.status(result.status).json({ error: result.error });
 
-    try {
-      const jsonMatch = result.text.match(/\{[\s\S]*\}/);
-      res.json(jsonMatch ? JSON.parse(jsonMatch[0]) : { raw: result.text });
-    } catch (e) {
-      res.json({ raw: result.text });
-    }
+    res.json(parseClaudeJSON(result.text, 'object'));
     return;
   }
 
@@ -357,12 +370,7 @@ Antworte auf Deutsch im JSON-Format:
     const result = await callClaude(systemPrompt, messages, 600);
     if (result.error) return res.status(result.status).json({ error: result.error });
 
-    try {
-      const jsonMatch = result.text.match(/\{[\s\S]*\}/);
-      res.json(jsonMatch ? JSON.parse(jsonMatch[0]) : { raw: result.text });
-    } catch (e) {
-      res.json({ raw: result.text });
-    }
+    res.json(parseClaudeJSON(result.text, 'object'));
     return;
   }
 
@@ -398,13 +406,8 @@ Antworte auf Deutsch ausschließlich im angegebenen JSON-Format.`;
   const result = await callClaude(systemPrompt, messages, 800);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  try {
-    const jsonMatch = result.text.match(/\{[\s\S]*\}/);
-    const parsed = jsonMatch ? JSON.parse(jsonMatch[0]) : { raw: result.text };
-    res.json({ step: currentStep, ...parsed });
-  } catch (e) {
-    res.json({ step: currentStep, raw: result.text });
-  }
+  const parsed = parseClaudeJSON(result.text, 'object');
+  res.json({ step: currentStep, ...parsed });
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -440,12 +443,7 @@ Sei direkt und konkret. Zitiere Passagen wo möglich. Antworte auf Deutsch im JS
   const result = await callClaude(systemPrompt, messages, 1000);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  try {
-    const jsonMatch = result.text.match(/\{[\s\S]*\}/);
-    res.json(jsonMatch ? JSON.parse(jsonMatch[0]) : { raw: result.text });
-  } catch (e) {
-    res.json({ raw: result.text });
-  }
+  res.json(parseClaudeJSON(result.text, 'object'));
 });
 
 app.use('/api/client-log', express.json({ limit: '10kb' }));
@@ -502,15 +500,10 @@ Antworte auf Deutsch im JSON-Format:
     return res.json(pickLocalDailyChallenge(resolvedSeed));
   }
 
-  try {
-    const jsonMatch = result.text.match(/\{[\s\S]*\}/);
-    const parsed = jsonMatch ? JSON.parse(jsonMatch[0]) : null;
-    const normalized = normalizeDailyQuestion(parsed);
-    if (normalized) {
-      return res.json({ ...normalized, source: 'ai', seed: resolvedSeed });
-    }
-  } catch (e) {
-    // Falls KI-Antwort unlesbar ist, auf lokale Denkprobe ausweichen.
+  const parsed = parseClaudeJSON(result.text, 'object', null);
+  const normalized = parsed ? normalizeDailyQuestion(parsed) : null;
+  if (normalized) {
+    return res.json({ ...normalized, source: 'ai', seed: resolvedSeed });
   }
 
   res.json(pickLocalDailyChallenge(resolvedSeed));
@@ -546,12 +539,7 @@ Antworte auf Deutsch im JSON-Format:
   const result = await callClaude(systemPrompt, messages, 700);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  try {
-    const jsonMatch = result.text.match(/\{[\s\S]*\}/);
-    res.json(jsonMatch ? JSON.parse(jsonMatch[0]) : { raw: result.text });
-  } catch (e) {
-    res.json({ raw: result.text });
-  }
+  res.json(parseClaudeJSON(result.text, 'object'));
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -586,12 +574,7 @@ Sei scharf, aber fair. Keine Polemik. Antworte auf Deutsch im JSON-Format:
   const result = await callClaude(systemPrompt, messages, 1000);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  try {
-    const jsonMatch = result.text.match(/\{[\s\S]*\}/);
-    res.json(jsonMatch ? JSON.parse(jsonMatch[0]) : { raw: result.text });
-  } catch (e) {
-    res.json({ raw: result.text });
-  }
+  res.json(parseClaudeJSON(result.text, 'object'));
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -628,12 +611,7 @@ Antworte auf Deutsch im JSON-Format:
   const result = await callClaude(systemPrompt, messages, 1200);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  try {
-    const jsonMatch = result.text.match(/\{[\s\S]*\}/);
-    res.json(jsonMatch ? JSON.parse(jsonMatch[0]) : { raw: result.text });
-  } catch (e) {
-    res.json({ raw: result.text });
-  }
+  res.json(parseClaudeJSON(result.text, 'object'));
 });
 
 // --- SPA fallback ---
@@ -641,6 +619,8 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Atelier server running on port ${PORT}`);
 });
+
+module.exports = server;
