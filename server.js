@@ -24,7 +24,7 @@ app.use(helmet({
 }));
 
 // --- CORS: restrict to known origins ---
-const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'https://nicht-anerkannt.info').split(',');
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'https://nicht-anerkannt.info,https://www.nicht-anerkannt.info').split(',');
 
 app.use('/api', (req, res, next) => {
   const origin = req.headers.origin;
