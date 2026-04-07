@@ -127,7 +127,7 @@
       buttons.forEach(function (btn) {
         btn.addEventListener('click', function () {
           var quote = btn.getAttribute('data-quote');
-          var text = '"' + quote + '" – Das Atelier der Radikalen Mitte https://github.com/Wolf-Achtung/nicht-anerkannt';
+          var text = '"' + quote + '" – Das Atelier der Radikalen Mitte https://nicht-anerkannt.info';
 
           if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text).then(function () {

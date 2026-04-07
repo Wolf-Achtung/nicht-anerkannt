@@ -34,7 +34,7 @@
       config.titleLine1 = 'EXTREM MITTIG';
       config.titleLine2 = '';
       config.angle = -6;
-      config.spacing = 4;
+      config.spacing = 2;
     }
 
     var ariaLabel = 'Stempel: ' + config.titleLine1 + (config.titleLine2 ? ' ' + config.titleLine2 : '') +
@@ -49,8 +49,9 @@
 
     if (variant === 'extrem-mittig') {
       svg += '<text x="' + cx + '" y="' + (cy + 8) + '" text-anchor="middle" ';
-      svg += 'font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="800" ';
-      svg += 'fill="#991b1b" letter-spacing="' + config.spacing + '">';
+      svg += 'font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" ';
+      svg += 'fill="#991b1b" letter-spacing="' + config.spacing + '" ';
+      svg += 'textLength="320" lengthAdjust="spacingAndGlyphs">';
       svg += config.titleLine1;
       svg += '</text>';
     } else {
