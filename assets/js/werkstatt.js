@@ -13,11 +13,15 @@
   }
 
   function showLoading(el) {
+    if (window.AtelierLoading && typeof window.AtelierLoading.html === 'function') {
+      el.innerHTML = window.AtelierLoading.html();
+      return;
+    }
     el.innerHTML = '<div class="werkstatt-loading">' +
       '<span class="werkstatt-loading-dot"></span>' +
       '<span class="werkstatt-loading-dot"></span>' +
       '<span class="werkstatt-loading-dot"></span>' +
-      '<span class="werkstatt-loading-text">KI denkt nach...</span></div>';
+      '<span class="werkstatt-loading-text">Silizium denkt…</span></div>';
   }
 
   function showError(el, msg) {

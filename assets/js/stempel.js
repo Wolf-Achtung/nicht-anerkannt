@@ -10,7 +10,7 @@
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  function buildSVG(variant, name, ort) {
+  function buildSVG(variant, name, ort, perspektive) {
     var w = 420;
     var h = 220;
     var cx = w / 2;
@@ -18,6 +18,7 @@
 
     var nameText = name ? escapeXml(name) : '';
     var ortText = ort ? escapeXml(ort) : '';
+    var perspText = perspektive ? escapeXml('Aus Sicht der ' + perspektive) : '';
     var subLine = nameText;
     if (ortText) {
       subLine += (nameText ? ' — ' : '') + ortText;
@@ -49,7 +50,15 @@
     svg += '<rect x="28" y="36" width="' + (w - 56) + '" height="' + (h - 72) + '" fill="none" stroke="#991b1b" stroke-width="1.6" />';
 
     if (variant === 'extrem-mittig') {
-      svg += '<text x="' + cx + '" y="' + (cy + 8) + '" text-anchor="middle" ';
+      if (perspText) {
+        svg += '<text x="' + cx + '" y="' + (cy - 32) + '" text-anchor="middle" ';
+        svg += 'font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="600" font-style="italic" ';
+        svg += 'fill="#991b1b" letter-spacing="1" ';
+        svg += 'textLength="300" lengthAdjust="spacingAndGlyphs">';
+        svg += perspText;
+        svg += '</text>';
+      }
+      svg += '<text x="' + cx + '" y="' + (cy + (perspText ? 14 : 8)) + '" text-anchor="middle" ';
       svg += 'font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" ';
       svg += 'fill="#991b1b" letter-spacing="' + config.spacing + '" ';
       svg += 'textLength="320" lengthAdjust="spacingAndGlyphs">';
@@ -142,6 +151,7 @@
     var variant = root.getAttribute('data-variant') || 'staatlich';
     var nameInput = root.querySelector('[data-stempel-name]');
     var ortInput = root.querySelector('[data-stempel-ort]');
+    var perspInput = root.querySelector('[data-stempel-perspektive]');
     var preview = root.querySelector('[data-stempel-preview]');
     var downloadBtn = root.querySelector('[data-stempel-download]');
     var shareBtn = root.querySelector('[data-stempel-share]');
@@ -151,13 +161,15 @@
     function updatePreview() {
       var name = nameInput ? nameInput.value.trim() : '';
       var ort = ortInput ? ortInput.value.trim() : '';
-      preview.innerHTML = buildSVG(variant, name, ort);
+      var persp = perspInput ? perspInput.value.trim() : '';
+      preview.innerHTML = buildSVG(variant, name, ort, persp);
     }
 
     updatePreview();
 
     if (nameInput) nameInput.addEventListener('input', updatePreview);
     if (ortInput) ortInput.addEventListener('input', updatePreview);
+    if (perspInput) perspInput.addEventListener('change', updatePreview);
 
     if (downloadBtn) {
       downloadBtn.addEventListener('click', function () {

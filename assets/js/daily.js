@@ -234,11 +234,15 @@
       return;
     }
 
-    container.innerHTML = '<div class="werkstatt-loading">' +
-      '<span class="werkstatt-loading-dot"></span>' +
-      '<span class="werkstatt-loading-dot"></span>' +
-      '<span class="werkstatt-loading-dot"></span>' +
-      '<span class="werkstatt-loading-text">Denkprobe wird geladen...</span></div>';
+    if (window.AtelierLoading && typeof window.AtelierLoading.html === 'function') {
+      container.innerHTML = window.AtelierLoading.html();
+    } else {
+      container.innerHTML = '<div class="werkstatt-loading">' +
+        '<span class="werkstatt-loading-dot"></span>' +
+        '<span class="werkstatt-loading-dot"></span>' +
+        '<span class="werkstatt-loading-dot"></span>' +
+        '<span class="werkstatt-loading-text">Silizium denkt…</span></div>';
+    }
 
     requestDailyChallenge(seed)
       .then(function (data) {

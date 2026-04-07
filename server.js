@@ -618,6 +618,34 @@ Antworte auf Deutsch im JSON-Format:
   res.json(parseClaudeJSON(result.text, 'object'));
 });
 
+// ═══════════════════════════════════════════════════════════
+// 12. BLINDER-FLECK-DETEKTOR
+// ═══════════════════════════════════════════════════════════
+app.use('/api/blindspot', express.json({ limit: '50kb' }));
+
+app.post('/api/blindspot', aiLimiter, async (req, res) => {
+  const { text } = req.body;
+  if (!text || typeof text !== 'string') return res.status(400).json({ error: 'Kein Text erhalten.' });
+  if (text.length > 5000) return res.status(400).json({ error: 'Text zu lang (max. 5000 Zeichen).' });
+
+  const systemPrompt = `Du bist der Blinder-Fleck-Detektor des Ateliers der Radikalen Mitte.
+Du erhältst einen Text und identifizierst präzise EINE Perspektive, die systematisch fehlt oder nicht zu Wort kommt.
+Nicht die naheliegendste Gegenposition, sondern eine echte blinde Stelle — eine Gruppe, ein Blickwinkel, eine Lebensrealität, die der Text übersieht.
+
+Antworte auf Deutsch im JSON-Format:
+{
+  "perspektive": "Name der fehlenden Perspektive (kurz, präzise)",
+  "begruendung": "1-2 Sätze: Warum fehlt sie und was würde sie einbringen?",
+  "frage": "Eine Frage, die diese Perspektive dem Text stellen würde (1 Satz)"
+}`;
+
+  const messages = [{ role: 'user', content: `Analysiere diesen Text auf die fehlende Perspektive:\n\n${text}` }];
+  const result = await callClaude(systemPrompt, messages, 500);
+  if (result.error) return res.status(result.status).json({ error: result.error });
+
+  res.json(parseClaudeJSON(result.text, 'object'));
+});
+
 // --- SPA fallback ---
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));

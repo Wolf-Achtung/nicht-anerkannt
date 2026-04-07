@@ -2606,3 +2606,83 @@ body.read-mode::before {
   border-radius: 12px 12px 12px 2px;
   box-shadow: 0.2rem 0.2rem 0 rgba(17, 17, 17, 0.85);
 }
+
+/* ─── Globaler Perspektiv-Switch ─── */
+.perspektive-global-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-left: 0.8rem;
+}
+.perspektive-global-btn {
+  font-size: 0.85rem;
+  padding: 0.45rem 0.9rem;
+}
+.perspektive-global-badge {
+  display: inline-block;
+  background: #991b1b;
+  color: #fffaf1;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border: 1px solid #111;
+}
+.perspektive-global-dialog {
+  max-width: 640px;
+  width: calc(100% - 2rem);
+  padding: 1.6rem;
+  border: 2px solid #111;
+  border-radius: 8px;
+  background: #fffaf1;
+}
+.perspektive-global-dialog::backdrop { background: rgba(0,0,0,0.4); }
+.perspektive-global-dialog h3 { margin-top: 0; }
+.perspektive-global-intro { font-size: 0.95rem; color: #333; }
+.perspektive-global-group {
+  border: 1px dashed #991b1b;
+  padding: 0.6rem 0.8rem;
+  margin: 0.8rem 0;
+}
+.perspektive-global-group legend { font-weight: 700; padding: 0 0.4rem; }
+.perspektive-global-option {
+  display: inline-block;
+  margin: 0.2rem 0.3rem 0.2rem 0;
+  padding: 0.3rem 0.7rem;
+  background: #fffaf1;
+  border: 1px solid #111;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.perspektive-global-option:hover { background: #991b1b; color: #fffaf1; }
+.perspektive-global-actions { text-align: right; margin-top: 1rem; }
+
+.perspektive-rewritten {
+  border-left: 3px solid #991b1b;
+  padding-left: 0.8rem;
+  font-style: italic;
+}
+.perspektive-loading { color: #991b1b; font-style: italic; }
+
+/* ─── Manifest-Remix-Controls ─── */
+.manifest-remix-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.8rem;
+  margin: 1rem 0;
+}
+.manifest-remix-status { font-size: 0.9rem; color: #555; min-height: 1.4rem; margin-top: 0.6rem; }
+
+/* ─── Blinder-Fleck ─── */
+.blindspot-box {
+  margin-top: 1.6rem;
+  padding: 1rem;
+  border-top: 1px dashed #991b1b;
+}
+.blindspot-result { margin-top: 0.8rem; }
+.blindspot-label { font-size: 0.85rem; color: #555; margin-bottom: 0.3rem; }
+.blindspot-perspektive { font-size: 1.1rem; color: #991b1b; margin: 0.2rem 0; }
+.blindspot-warum { font-size: 0.95rem; }
+.blindspot-frage { font-size: 0.95rem; color: #333; border-left: 2px solid #991b1b; padding-left: 0.6rem; }
