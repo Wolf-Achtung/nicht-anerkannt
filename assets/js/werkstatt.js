@@ -25,7 +25,8 @@
   }
 
   function postJSON(url, data) {
-    return fetch(url, {
+    var base = (typeof window !== 'undefined' && window.ATELIER_API_BASE) ? window.ATELIER_API_BASE : '';
+    return fetch(base + url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
