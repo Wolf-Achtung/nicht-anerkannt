@@ -131,7 +131,7 @@ async function callClaude(systemPrompt, messages, maxTokens = 300) {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': apiKey,
-        'anthropic-version': '2024-10-22'
+        'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
         model: model,
