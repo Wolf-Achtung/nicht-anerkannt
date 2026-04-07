@@ -118,16 +118,21 @@
           <div class="manifest-remix-bar-controls">
             <select class="stempel-input" id="manifest-remix-select" aria-label="Perspektive wählen">
               <option value="">— Originaltext —</option>
-              <option value="Konservative:r Traditionalist:in">Konservative:r Traditionalist:in</option>
-              <option value="Linke:r Aktivist:in">Linke:r Aktivist:in</option>
-              <option value="Liberale:r Unternehmer:in">Liberale:r Unternehmer:in</option>
-              <option value="Kind (10 Jahre)">Kind (10 Jahre)</option>
-              <option value="Ältere:r Mensch (80 Jahre)">Ältere:r Mensch (80 Jahre)</option>
-              <option value="Mensch in 50 Jahren (2075)">Mensch in 50 Jahren (2075)</option>
-              <option value="Mensch vor 100 Jahren (1925)">Mensch vor 100 Jahren (1925)</option>
-              <option value="Nicht-Muttersprachler:in, die Deutsch gerade lernt">Nicht-Muttersprachler:in</option>
-              <option value="Die KI selbst (als Sprecher:in)">Die KI selbst</option>
-              <option value="Ein zukünftiges Kind, das diese Entscheidung erben wird">Zukünftiges Kind (das erbt)</option>
+              <optgroup label="🕰 Aus einer anderen Zeit">
+                <option value="Ein Kind, das diese Entscheidung später erben wird">Ein Kind, das es erben wird</option>
+                <option value="Ein Mensch von 1925, der erlebt hat, wie schnell die Mitte kippen kann">Mensch von 1925</option>
+                <option value="Ein Mensch im Jahr 2075, der auf unsere Zeit zurückblickt">Mensch in 2075 (Rückblick)</option>
+              </optgroup>
+              <optgroup label="🌍 Aus einem anderen Leben">
+                <option value="Eine Person, die gerade Deutsch lernt und einfache, klare Sprache braucht">Jemand, der Deutsch lernt</option>
+                <option value="Eine alleinerziehende Pflegekraft im Schichtdienst">Alleinerziehende Pflegekraft</option>
+                <option value="Eine Person, die das Manifest komplett ablehnt und ehrlich widerspricht">Eine Person, die widerspricht</option>
+              </optgroup>
+              <optgroup label="🧠 Aus einer ungewöhnlichen Position">
+                <option value="Eine müde Lehrerin nach 30 Dienstjahren">Müde Lehrerin (30 Jahre Dienst)</option>
+                <option value="Eine KI, die sich selbst kritisch beobachtet">KI, die sich selbst beobachtet</option>
+                <option value="Eine Satirikerin, die alles ins Lächerliche zieht">Eine Satirikerin</option>
+              </optgroup>
             </select>
             <button class="button button--accent" id="manifest-remix-btn" type="button">Umformulieren</button>
             <button class="button" id="manifest-remix-reset" type="button" hidden>Original</button>
