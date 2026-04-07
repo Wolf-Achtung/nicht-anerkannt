@@ -46,6 +46,7 @@
     svg += '<g transform="rotate(' + config.angle + ', ' + cx + ', ' + cy + ')">';
 
     svg += '<rect x="20" y="28" width="' + (w - 40) + '" height="' + (h - 56) + '" fill="none" stroke="#991b1b" stroke-width="4" />';
+    svg += '<rect x="28" y="36" width="' + (w - 56) + '" height="' + (h - 72) + '" fill="none" stroke="#991b1b" stroke-width="1.6" />';
 
     if (variant === 'extrem-mittig') {
       svg += '<text x="' + cx + '" y="' + (cy + 8) + '" text-anchor="middle" ';
@@ -55,8 +56,6 @@
       svg += config.titleLine1;
       svg += '</text>';
     } else {
-      svg += '<rect x="28" y="36" width="' + (w - 56) + '" height="' + (h - 72) + '" fill="none" stroke="#991b1b" stroke-width="1.6" />';
-
       svg += '<text x="' + cx + '" y="' + (cy - 16) + '" text-anchor="middle" ';
       svg += 'font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="800" ';
       svg += 'fill="#991b1b" letter-spacing="' + config.spacing + '">';

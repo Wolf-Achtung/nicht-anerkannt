@@ -123,7 +123,7 @@ async function callClaude(systemPrompt, messages, maxTokens = 300) {
     return { error: 'Anthropic API-Key nicht konfiguriert (ANTHROPIC_API_KEY/CLAUDE_API_KEY).', status: 500 };
   }
 
-  const model = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6';
+  const model = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-5';
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -472,8 +472,9 @@ app.post('/api/client-log', (req, res) => {
 // ═══════════════════════════════════════════════════════════
 app.use('/api/daily', express.json());
 
-app.post('/api/daily', aiLimiter, async (req, res) => {
-  const { seed } = req.body;
+async function handleDaily(req, res) {
+  const body = req.body || {};
+  const seed = body.seed || (req.query && req.query.seed);
   const resolvedSeed = seed || new Date().toISOString().slice(0, 10);
 
   if (!getConfiguredApiKey()) {
@@ -507,7 +508,10 @@ Antworte auf Deutsch im JSON-Format:
   }
 
   res.json(pickLocalDailyChallenge(resolvedSeed));
-});
+}
+
+app.post('/api/daily', aiLimiter, handleDaily);
+app.get('/api/daily', aiLimiter, handleDaily);
 
 // ═══════════════════════════════════════════════════════════
 // 9. PERSPEKTIVENWECHSEL-MASCHINE
