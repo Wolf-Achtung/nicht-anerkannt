@@ -258,6 +258,6 @@
   window.addEventListener('DOMContentLoaded', function () {
     injectHeaderSwitch();
     initManifestRemix();
-    initBlindspotDetector();
+    // initBlindspotDetector(); // entfernt vom Manifest
   });
 }());
