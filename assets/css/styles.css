@@ -2687,53 +2687,51 @@ body.read-mode::before {
 .blindspot-warum { font-size: 0.95rem; }
 .blindspot-frage { font-size: 0.95rem; color: #333; border-left: 2px solid #991b1b; padding-left: 0.6rem; }
 
-/* ─── Manifest-Hervorhebung ─── */
-.section--manifest {
-  background: #fdf6e3;
-  border-top: 3px solid #991b1b;
-  border-bottom: 3px solid #991b1b;
-  position: relative;
-}
-.section--manifest::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(135deg, transparent 0 24px, rgba(153,27,27,0.03) 24px 25px);
-  pointer-events: none;
-}
+/* ─── Startseite: einheitlicher Look ───
+   Alle Blöcke teilen den Seiten-Hintergrund (warmes Creme).
+   Differenzierung nur über Typografie, Abstände und dezente rote Linien.
+*/
+
+/* Manifest — kein eigener Hintergrund mehr, nur dezente Akzente */
+.section--manifest { background: transparent; position: relative; }
+.section--manifest::before { content: none; }
 .manifest-panel {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
   position: relative;
-  background: #fffdf5;
-  border: 1px solid rgba(153,27,27,0.25);
-  padding: 2rem clamp(1.2rem, 3vw, 2.4rem);
-  box-shadow: 0 2px 0 #991b1b, 4px 6px 0 rgba(153,27,27,0.15);
 }
 .manifest-panel p[data-perspektive-rewrite] {
   font-size: 1.08rem;
   line-height: 1.65;
 }
+
+/* Perspektiven-Leiste — ruhiger, nicht mehr voll-rot */
 .manifest-remix-bar {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem 1.4rem;
   align-items: flex-end;
   justify-content: space-between;
-  margin: 0 0 1.6rem;
-  padding: 1rem 1.2rem;
-  background: #991b1b;
-  color: #fdf6e3;
-  border-left: 4px solid #000;
+  margin: 1.4rem 0 2rem;
+  padding: 1.1rem 1.2rem;
+  background: transparent;
+  color: inherit;
+  border: 1px solid rgba(153,27,27,0.3);
+  border-left: 3px solid #991b1b;
 }
 .manifest-remix-bar-label strong {
   display: block;
-  font-size: 1.05rem;
-  letter-spacing: 0.02em;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
   margin-bottom: 0.2rem;
+  color: #991b1b;
 }
 .manifest-remix-bar-label span {
   display: block;
   font-size: 0.88rem;
-  opacity: 0.85;
+  opacity: 0.75;
   max-width: 42ch;
 }
 .manifest-remix-bar-controls {
@@ -2743,28 +2741,36 @@ body.read-mode::before {
   align-items: center;
 }
 .manifest-remix-bar .stempel-input {
-  background: #fdf6e3;
+  background: #fff;
   color: #1a1a1a;
-  border: 1px solid #000;
+  border: 1px solid rgba(0,0,0,0.4);
   padding: 0.5rem 0.7rem;
 }
 .manifest-remix-status {
   flex-basis: 100%;
   font-size: 0.85rem;
   min-height: 1.1rem;
-  opacity: 0.9;
+  opacity: 0.75;
 }
 
-/* ─── Startseite vereinfacht: 4 Blöcke ─── */
-.section-lead { font-size: 1rem; opacity: 0.8; margin-bottom: 1.4rem; }
+/* Einheitliche, dezente Trennung zwischen Blöcken */
+.section--manifest,
+.section--hintergrund,
+.section--mitmachen,
+.section--einladung {
+  background: transparent;
+  border-top: 1px solid rgba(153,27,27,0.18);
+}
+.section--manifest { border-top: 2px solid #991b1b; }
 
-/* Block 2b: Hintergrund (Accordion) */
-.section--hintergrund { background: #faf6ee; }
+.section-lead { font-size: 1rem; opacity: 0.75; margin-bottom: 1.6rem; max-width: 60ch; }
+
+/* Hintergrund (Accordion) */
 .chapter {
-  border-top: 1px solid rgba(0,0,0,0.12);
+  border-top: 1px solid rgba(0,0,0,0.1);
   padding: 0.9rem 0;
 }
-.chapter:last-of-type { border-bottom: 1px solid rgba(0,0,0,0.12); }
+.chapter:last-of-type { border-bottom: 1px solid rgba(0,0,0,0.1); }
 .chapter > summary {
   cursor: pointer;
   font-size: 1.05rem;
@@ -2786,57 +2792,54 @@ body.read-mode::before {
 .chapter[open] > summary::before { content: "−"; }
 .chapter-body { padding: 0.6rem 0 0.4rem 1.6rem; }
 
-/* Block 3: Mitmachen (Tabs) */
-.section--mitmachen { background: #fff; }
+/* Mitmachen (Tabs) — auf Seiten-Hintergrund */
 .mitmachen-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 1rem 0 1.4rem;
-  border-bottom: 2px solid #000;
+  gap: 0.4rem;
+  margin: 1rem 0 1.6rem;
+  border-bottom: 1px solid rgba(153,27,27,0.25);
 }
 .mitmachen-tab {
-  background: #f3f0e8;
-  border: 1px solid #000;
-  border-bottom: none;
-  padding: 0.7rem 1.1rem;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.7rem 1rem;
   font-size: 0.95rem;
   cursor: pointer;
   font-family: inherit;
-  position: relative;
-  top: 2px;
+  color: inherit;
+  opacity: 0.6;
+  margin-bottom: -1px;
 }
+.mitmachen-tab:hover { opacity: 0.9; }
 .mitmachen-tab.is-active {
-  background: #991b1b;
-  color: #fdf6e3;
+  opacity: 1;
+  border-bottom-color: #991b1b;
+  color: #991b1b;
   font-weight: 600;
 }
-.mitmachen-panel {
-  padding: 1.2rem 0 0;
-}
+.mitmachen-panel { padding: 1.2rem 0 0; }
 .mitmachen-panel[hidden] { display: none; }
 
-/* Block 4: Einladung */
-.section--einladung {
-  background: #1a1a1a;
-  color: #fdf6e3;
-}
-.section--einladung .section-label { color: #fdf6e3; opacity: 0.7; }
-.section--einladung h2 { color: #fdf6e3; }
+/* Einladung — nicht mehr dunkel, sondern typografisch betont */
 .section--einladung .cta-panel {
-  background: rgba(253,246,227,0.08);
-  padding: 1.4rem;
+  background: transparent;
+  padding: 1.4rem 1.6rem;
+  border: 1px solid rgba(153,27,27,0.3);
   border-left: 3px solid #991b1b;
   margin: 1.4rem 0;
 }
 .cta-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
 
+/* Live-Ticker kompakt, dezent */
 .live-ticker--compact {
-  margin-top: 1.6rem;
-  opacity: 0.75;
-  font-size: 0.9rem;
+  margin-top: 2rem;
+  font-size: 0.88rem;
+  opacity: 0.7;
 }
 .live-ticker--compact .live-ticker-controls {
-  background: rgba(253,246,227,0.06);
-  padding: 0.6rem;
+  background: transparent;
+  border: 1px solid rgba(0,0,0,0.12);
+  padding: 0.5rem 0.7rem;
 }
