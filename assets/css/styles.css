@@ -2696,10 +2696,11 @@ body.read-mode::before {
 .section--manifest { background: transparent; position: relative; }
 .section--manifest::before { content: none; }
 .manifest-panel {
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  padding: 0;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 0.4rem 0.4rem 0 rgba(17,17,17,0.9);
+  padding: 1.8rem clamp(1.4rem, 3vw, 2.2rem);
+  transform: rotate(-0.25deg);
   position: relative;
 }
 .manifest-panel p[data-perspektive-rewrite] {
@@ -2759,9 +2760,16 @@ body.read-mode::before {
 .section--mitmachen,
 .section--einladung {
   background: transparent;
-  border-top: 1px solid rgba(153,27,27,0.18);
 }
-.section--manifest { border-top: 2px solid #991b1b; }
+
+/* Hintergrund-Kapitel in gleicher Karten-Optik wie Denkprobe */
+.section--hintergrund .section-body {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 0.4rem 0.4rem 0 rgba(17,17,17,0.9);
+  padding: 1.8rem clamp(1.4rem, 3vw, 2.2rem);
+  transform: rotate(0.25deg);
+}
 
 .section-lead { font-size: 1rem; opacity: 0.75; margin-bottom: 1.6rem; max-width: 60ch; }
 
