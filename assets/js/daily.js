@@ -201,7 +201,17 @@
       body: JSON.stringify({ seed: seed }),
       signal: controller.signal
     })
-      .then(function (res) { return res.json(); })
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .catch(function () {
+        return fetch('/api/daily?seed=' + encodeURIComponent(seed))
+          .then(function (res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+          });
+      })
       .finally(function () {
         window.clearTimeout(timeoutId);
       });
