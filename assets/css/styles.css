@@ -2754,3 +2754,89 @@ body.read-mode::before {
   min-height: 1.1rem;
   opacity: 0.9;
 }
+
+/* ─── Startseite vereinfacht: 4 Blöcke ─── */
+.section-lead { font-size: 1rem; opacity: 0.8; margin-bottom: 1.4rem; }
+
+/* Block 2b: Hintergrund (Accordion) */
+.section--hintergrund { background: #faf6ee; }
+.chapter {
+  border-top: 1px solid rgba(0,0,0,0.12);
+  padding: 0.9rem 0;
+}
+.chapter:last-of-type { border-bottom: 1px solid rgba(0,0,0,0.12); }
+.chapter > summary {
+  cursor: pointer;
+  font-size: 1.05rem;
+  padding: 0.4rem 0;
+  list-style: none;
+  position: relative;
+  padding-left: 1.6rem;
+}
+.chapter > summary::-webkit-details-marker { display: none; }
+.chapter > summary::before {
+  content: "+";
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+  color: #991b1b;
+  font-size: 1.3rem;
+  line-height: 1;
+}
+.chapter[open] > summary::before { content: "−"; }
+.chapter-body { padding: 0.6rem 0 0.4rem 1.6rem; }
+
+/* Block 3: Mitmachen (Tabs) */
+.section--mitmachen { background: #fff; }
+.mitmachen-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0 1.4rem;
+  border-bottom: 2px solid #000;
+}
+.mitmachen-tab {
+  background: #f3f0e8;
+  border: 1px solid #000;
+  border-bottom: none;
+  padding: 0.7rem 1.1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  font-family: inherit;
+  position: relative;
+  top: 2px;
+}
+.mitmachen-tab.is-active {
+  background: #991b1b;
+  color: #fdf6e3;
+  font-weight: 600;
+}
+.mitmachen-panel {
+  padding: 1.2rem 0 0;
+}
+.mitmachen-panel[hidden] { display: none; }
+
+/* Block 4: Einladung */
+.section--einladung {
+  background: #1a1a1a;
+  color: #fdf6e3;
+}
+.section--einladung .section-label { color: #fdf6e3; opacity: 0.7; }
+.section--einladung h2 { color: #fdf6e3; }
+.section--einladung .cta-panel {
+  background: rgba(253,246,227,0.08);
+  padding: 1.4rem;
+  border-left: 3px solid #991b1b;
+  margin: 1.4rem 0;
+}
+.cta-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
+
+.live-ticker--compact {
+  margin-top: 1.6rem;
+  opacity: 0.75;
+  font-size: 0.9rem;
+}
+.live-ticker--compact .live-ticker-controls {
+  background: rgba(253,246,227,0.06);
+  padding: 0.6rem;
+}

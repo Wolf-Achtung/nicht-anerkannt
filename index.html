@@ -23,11 +23,9 @@
         </div>
       <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menü</button>
       <nav class="header-links" id="main-nav" aria-label="Seitenbereiche">
-        <a href="#problem">Problem</a>
-        <a href="#mitte">Radikale Mitte</a>
-        <a href="#atelier">Atelier</a>
+        <a href="#manifest">Manifest</a>
+        <a href="#mitmachen">Mitmachen</a>
         <a href="#einladung">Einladung</a>
-        <a href="#score">Denkprofil</a>
         <a href="pages/salon.html">Salon</a>
         <a href="pages/ideen-archiv.html">Ideen-Archiv</a>
         <a href="pages/werkstatt.html">KI-Werkstatt</a>
@@ -101,40 +99,7 @@
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <!-- LIVE-TICKER                                                -->
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <section class="section" id="live-ticker">
-      <div class="section-label">Live-Ticker</div>
-      <div class="section-body">
-        <h2>Was passiert</h2>
-        <div class="live-ticker" id="live-ticker-container">
-          <div class="live-ticker-controls">
-            <button class="live-ticker-prev" id="ticker-prev" type="button" aria-label="Vorherige Nachricht">&#8592;</button>
-            <div class="live-ticker-item" id="ticker-display" aria-live="polite" aria-atomic="true">
-              <span class="live-ticker-badge live-ticker-badge--update">Update</span>
-              <span class="live-ticker-text">Lade Nachrichten...</span>
-            </div>
-            <button class="live-ticker-next" id="ticker-next" type="button" aria-label="Nächste Nachricht">&#8594;</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <!-- TÄGLICHE DENKPROBE                                         -->
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <section class="section" id="daily">
-      <div class="section-label">Tägliche Denkprobe</div>
-      <div class="section-body">
-        <h2>Denkprobe des Tages</h2>
-        <p>Jeden Tag eine neue Frage, die nicht gegoogelt werden kann. Beantworte sie in einem Satz.</p>
-        <div id="daily-container" aria-live="polite"></div>
-        <div id="daily-archive-container"></div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <!-- MANIFEST                                                   -->
+    <!-- BLOCK 2: MANIFEST (Herzstück)                              -->
     <!-- ═══════════════════════════════════════════════════════════ -->
     <section class="section section--manifest" id="manifest">
       <div class="section-label">Manifest</div>
@@ -191,91 +156,175 @@
     </section>
 
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <!-- MANIFEST-REMIXER                                           -->
+    <!-- BLOCK 2b: HINTERGRUND (aufklappbar)                         -->
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <section class="section" id="remixer">
-      <div class="section-label">Remixer</div>
+    <section class="section section--hintergrund" id="hintergrund">
+      <div class="section-label">Hintergrund</div>
       <div class="section-body">
-        <h2>Manifest neu denken</h2>
-        <p>Das Manifest ist kein fester Text. Es ist Material. Drücke den Button und lass die Sätze neu zusammenfinden – Cut-up als Methode.</p>
-        <div class="remixer-panel">
-          <blockquote class="remixer-output" id="remixer-output" aria-live="polite">
-            <p>Drücke „Remix", um einen neuen Gedanken zu erzeugen.</p>
-          </blockquote>
+        <h2>Mehr dazu — wenn du tiefer lesen willst</h2>
+        <p class="section-lead">Das Manifest steht für sich. Aber wenn du wissen willst, warum wir so denken, findest du hier vier kurze Kapitel.</p>
+
+        <details class="chapter">
+          <summary><strong>1. Das Problem</strong> — Die falsche Alternative</summary>
+          <div class="chapter-body">
+            <p>Jungen Menschen wird heute oft eine falsche Wahl angeboten: entweder Anpassung oder Lagerdenken. Entweder Lebenslaufoptimierung, funktionales Mitlaufen und verwertbare Selbstdarstellung. Oder ideologische Überhitzung, reflexhafte Feindbilder und die angenehme Erleichterung, nicht mehr selbst denken zu müssen.</p>
+            <p>Beides ist zu klein. Die Anpassung macht dich brauchbar, aber nicht lebendig. Das Lager macht dich leidenschaftlich, aber nicht frei.</p>
+            <div class="quote-block">
+              <p>Du musst dich nicht zwischen Zynismus und Fanatismus entscheiden.</p>
+              <span>Das Atelier</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="chapter">
+          <summary><strong>2. Radikale Mitte</strong> — Keine laue Mitte. Eine denkende Mitte.</summary>
+          <div class="chapter-body">
+            <p>Die Radikale Mitte ist nicht das matte Irgendwo-dazwischen. Sie ist keine feige Äquidistanz zwischen Wahrheit und Lüge. Sie ist eine Haltung, die radikal ist, weil sie denken muss, wo andere nur reagieren.</p>
+            <p>Sie verbindet, ohne zu verwässern. Sie urteilt, ohne vorschnell zu schließen. Sie handelt, ohne auf vollständige Sicherheit zu warten.</p>
+            <div class="principles">
+              <div class="principle"><strong>Radikal rechtsstaatlich</strong>Freiheit ohne Form kippt in Willkür.</div>
+              <div class="principle"><strong>Radikal dialogisch</strong>Niemand allein ist klug genug für die Gegenwart.</div>
+              <div class="principle"><strong>Radikal wirklichkeitsfähig</strong>Ideologien sind oft nur Schutzräume gegen das Reale.</div>
+              <div class="principle"><strong>Radikal handlungsbereit</strong>Analyse ohne Konsequenz ist ein Stilmittel.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="chapter">
+          <summary><strong>3. Das Atelier</strong> — Keine Schule des Meinungsbesitzes.</summary>
+          <div class="chapter-body">
+            <p>Das Atelier sagt dir nicht, was du denken sollst. Es ist ein Ort, an dem du lernst, besser zu denken, tiefer zu fragen und entschiedener zu handeln. Es beginnt mit Fragen, die niemand im Raum sofort auflösen kann.</p>
+            <p>Wir arbeiten mit KI, aber nicht als Orakel. KI ist Sparringspartner, Gegenstimme und Stresstest. Wer mit KI nur Output produziert, wird austauschbar. Wer mit KI besser denkt, wird gefährlich für jede Form geistiger Trägheit.</p>
+          </div>
+        </details>
+
+        <details class="chapter">
+          <summary><strong>4. Was entsteht</strong> — Urteilskraft statt Meinungsbesitz.</summary>
+          <div class="chapter-body">
+            <p class="big-line">Wir bilden Menschen aus, die unter Unsicherheit denken und handeln können.</p>
+            <p>Menschen, die nicht sofort ins Lager kippen, wenn es kompliziert wird. Menschen, die Widerspruch aushalten können, ohne weich zu werden. Menschen, die Technologie benutzen können, ohne von ihr benutzt zu werden.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- BLOCK 3: MITMACHEN (Tabs: Denkprobe / Quiz / Stempel)       -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="section section--mitmachen" id="mitmachen">
+      <div class="section-label">Mitmachen</div>
+      <div class="section-body">
+        <h2>Selbst ausprobieren</h2>
+        <p class="section-lead">Drei kleine Spiele. Jedes funktioniert für sich. Wähle, was dich reizt.</p>
+
+        <div class="mitmachen-tabs" role="tablist" aria-label="Mitmach-Werkzeuge">
+          <button class="mitmachen-tab is-active" role="tab" aria-selected="true" aria-controls="tab-denkprobe" id="tab-denkprobe-btn" data-tab="denkprobe" type="button">🧠 Denkprobe des Tages</button>
+          <button class="mitmachen-tab" role="tab" aria-selected="false" aria-controls="tab-quiz" id="tab-quiz-btn" data-tab="quiz" type="button">🪞 Widerspruchsquiz</button>
+          <button class="mitmachen-tab" role="tab" aria-selected="false" aria-controls="tab-stempel" id="tab-stempel-btn" data-tab="stempel" type="button">🔖 Dein Stempel</button>
+        </div>
+
+        <div class="mitmachen-panel is-active" role="tabpanel" id="tab-denkprobe" aria-labelledby="tab-denkprobe-btn">
+          <h3>Denkprobe des Tages</h3>
+          <p>Jeden Tag eine neue Frage, die nicht gegoogelt werden kann. Beantworte sie in einem Satz.</p>
+          <div id="daily-container" aria-live="polite"></div>
+          <div id="daily-archive-container"></div>
+        </div>
+
+        <div class="mitmachen-panel" role="tabpanel" id="tab-quiz" aria-labelledby="tab-quiz-btn" hidden>
+          <h3>Widerspruchsquiz: Wo stehst du?</h3>
+          <p>Keine Schublade, sondern ein Spiegel. Sieben Fragen – keine richtigen Antworten, aber ehrliche Reflexion.</p>
           <div class="tool-actions">
-            <button class="button button--accent remixer-btn" id="remixer-btn" type="button">Remix Manifest</button>
-            <button class="button" id="remixer-share" data-share-target="#remixer-output" data-share-prefix="Mein Manifest-Remix:" type="button">Teilen</button>
+            <button class="button" data-share-target="#tab-quiz" data-share-prefix="Mein Denkprofil aus dem Widerspruchsquiz:" type="button">Quiz teilen</button>
+          </div>
+          <div class="quiz-container" id="quiz-container" aria-live="polite">
+            <div class="quiz-progress" id="quiz-progress"></div>
+            <div class="quiz-question" id="quiz-question"><p>Lade Quiz...</p></div>
+            <div class="quiz-result" id="quiz-result" hidden></div>
+          </div>
+        </div>
+
+        <div class="mitmachen-panel" role="tabpanel" id="tab-stempel" aria-labelledby="tab-stempel-btn" hidden>
+          <h3>Dein eigener Stempel</h3>
+          <p>Erstelle deinen persönlichen Stempel als PNG. Daten werden nur lokal verarbeitet.</p>
+          <div class="stempel-variants">
+            <article class="stempel-panel stempel-generator" data-variant="staatlich">
+              <div class="stempel-form">
+                <h4>Staatlich NICHT anerkannt</h4>
+                <label class="stempel-label" for="stempel-name">Name</label>
+                <input class="stempel-input" type="text" id="stempel-name" data-stempel-name placeholder="Dein Name" maxlength="30">
+                <label class="stempel-label" for="stempel-ort">Stadt</label>
+                <input class="stempel-input" type="text" id="stempel-ort" data-stempel-ort placeholder="Deine Stadt" maxlength="25">
+                <div class="stempel-actions">
+                  <button class="button button--accent" data-stempel-download type="button">Als PNG</button>
+                  <button class="button" data-stempel-share type="button">Teilen</button>
+                </div>
+              </div>
+              <div class="stempel-preview" data-stempel-preview aria-live="polite" aria-label="Stempel-Vorschau Staatlich nicht anerkannt"></div>
+            </article>
+
+            <article class="stempel-panel stempel-generator" data-variant="extrem-mittig">
+              <div class="stempel-form">
+                <h4>Extrem mittig</h4>
+                <label class="stempel-label" for="stempel-name-extrem">Name</label>
+                <input class="stempel-input" type="text" id="stempel-name-extrem" data-stempel-name placeholder="Dein Name" maxlength="30">
+                <label class="stempel-label" for="stempel-ort-extrem">Stadt</label>
+                <input class="stempel-input" type="text" id="stempel-ort-extrem" data-stempel-ort placeholder="Deine Stadt" maxlength="25">
+                <label class="stempel-label" for="stempel-persp-extrem">Aus Sicht von…</label>
+                <select class="stempel-input" id="stempel-persp-extrem" data-stempel-perspektive>
+                  <option value="">— ohne Zuschreibung —</option>
+                  <option value="Konservative">Aus Sicht der Konservativen</option>
+                  <option value="Linken">Aus Sicht der Linken</option>
+                  <option value="Liberalen">Aus Sicht der Liberalen</option>
+                  <option value="Jugend">Aus Sicht der Jugend</option>
+                  <option value="Zukunft">Aus Sicht der Zukunft</option>
+                  <option value="KI">Aus Sicht der KI</option>
+                </select>
+                <div class="stempel-actions">
+                  <button class="button button--accent" data-stempel-download type="button">Als PNG</button>
+                  <button class="button" data-stempel-share type="button">Teilen</button>
+                </div>
+              </div>
+              <div class="stempel-preview" data-stempel-preview aria-live="polite" aria-label="Stempel-Vorschau Extrem mittig"></div>
+            </article>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <!-- PROBLEM                                                    -->
+    <!-- Placeholder removed                                        -->
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <section class="section" id="problem">
-      <div class="section-label">Das Problem</div>
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- BLOCK 4: EINLADUNG + LIVE-TICKER                            -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="section section--einladung" id="einladung">
+      <div class="section-label">Einladung</div>
       <div class="section-body">
-        <h2>Die falsche Alternative</h2>
-        <p>Jungen Menschen wird heute oft eine falsche Wahl angeboten: entweder Anpassung oder Lagerdenken. Entweder Lebenslaufoptimierung, funktionales Mitlaufen und verwertbare Selbstdarstellung. Oder ideologische Überhitzung, reflexhafte Feindbilder und die angenehme Erleichterung, nicht mehr selbst denken zu müssen.</p>
-        <p>Beides ist zu klein. Die Anpassung macht dich brauchbar, aber nicht lebendig. Das Lager macht dich leidenschaftlich, aber nicht frei.</p>
-        <div class="quote-block">
-          <p>Du musst dich nicht zwischen Zynismus und Fanatismus entscheiden.</p>
-          <span>Das Atelier</span>
+        <h2>Wenn du nur Sicherheit suchst, bist du hier falsch.</h2>
+        <p>Wenn du fertige Antworten suchst, bist du hier falsch. Wenn du einen Ort suchst, an dem Denken keine Vorbereitung auf das Leben ist, sondern eine Form des Lebens selbst, dann beginnt es hier.</p>
+        <div class="cta-panel">
+          <p><strong>Das Atelier der Radikalen Mitte</strong><br>Für Menschen, die nicht in Lager passen und trotzdem handeln wollen.</p>
+          <div class="cta-actions">
+            <a class="button button--accent" href="manifest-das-atelier-radikale-mitte.md" download>Manifest herunterladen</a>
+            <a class="button" href="pages/werkstatt.html">Zur KI-Werkstatt</a>
+          </div>
         </div>
-        <p>Zwischen den Extremen liegt nicht einfach die lauwarme Mitte. Es gibt noch etwas anderes: eine Haltung, die Widerspruch aushält, Wirklichkeit ernst nimmt und trotzdem handelt.</p>
-      </div>
-    </section>
 
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <!-- RADIKALE MITTE                                             -->
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <section class="section" id="mitte">
-      <div class="section-label">Radikale Mitte</div>
-      <div class="section-body">
-        <h2>Keine laue Mitte. Eine denkende Mitte.</h2>
-        <p>Die Radikale Mitte ist nicht das matte Irgendwo-dazwischen. Sie ist keine feige Äquidistanz zwischen Wahrheit und Lüge. Sie ist keine Verwaltung der Erschöpfung. Sie ist eine Haltung, die radikal ist, weil sie denken muss, wo andere nur reagieren.</p>
-        <p>Sie verbindet, ohne zu verwässern. Sie urteilt, ohne vorschnell zu schließen. Sie handelt, ohne auf vollständige Sicherheit zu warten. Sie vermittelt nicht zwischen allem – sie unterscheidet. Und gerade deshalb kann sie verbinden.</p>
-        <div class="principles">
-          <div class="principle"><strong>Radikal rechtsstaatlich</strong>Freiheit ohne Form kippt in Willkür.</div>
-          <div class="principle"><strong>Radikal dialogisch</strong>Niemand allein ist klug genug für die Gegenwart.</div>
-          <div class="principle"><strong>Radikal wirklichkeitsfähig</strong>Ideologien sind oft nur Schutzräume gegen das Reale.</div>
-          <div class="principle"><strong>Radikal handlungsbereit</strong>Analyse ohne Konsequenz ist ein Stilmittel.</div>
+        <div class="live-ticker live-ticker--compact" id="live-ticker-container" aria-label="Live-Ticker">
+          <div class="live-ticker-controls">
+            <button class="live-ticker-prev" id="ticker-prev" type="button" aria-label="Vorherige Nachricht">&#8592;</button>
+            <div class="live-ticker-item" id="ticker-display" aria-live="polite" aria-atomic="true">
+              <span class="live-ticker-badge live-ticker-badge--update">Update</span>
+              <span class="live-ticker-text">Lade Nachrichten...</span>
+            </div>
+            <button class="live-ticker-next" id="ticker-next" type="button" aria-label="Nächste Nachricht">&#8594;</button>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <!-- ATELIER                                                    -->
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <section class="section" id="atelier">
-      <div class="section-label">Das Atelier</div>
-      <div class="section-body">
-        <h2>Keine Schule des Meinungsbesitzes. Eine Schule des Urteils.</h2>
-        <p>Das Atelier sagt dir nicht, was du denken sollst. Es ist ein Ort, an dem du lernst, besser zu denken, tiefer zu fragen und entschiedener zu handeln. Es beginnt nicht mit fertigen Antworten. Es beginnt mit Fragen, die niemand im Raum sofort auflösen kann.</p>
-        <p>Wir lernen interdisziplinär, weil alle echten Probleme interdisziplinär sind. Klimawandel ist nicht nur Naturwissenschaft. KI ist nicht nur Technologie. Demokratie ist nicht nur Verfassungsrecht. Einsamkeit ist nicht nur Psychologie. Die wichtigen Fragen unserer Zeit sind <em>Wicked Problems</em>.</p>
-        <p>Wir arbeiten in Gruppen, weil Denken sozial ist. Nicht als Kuschelveranstaltung, sondern als Reibung. Wir arbeiten mit KI, aber nicht als Orakel. KI ist Sparringspartner, Gegenstimme und Stresstest. Wer mit KI nur Output produziert, wird austauschbar. Wer mit KI besser denkt, wird gefährlich für jede Form geistiger Trägheit.</p>
-        <div class="cards">
-          <article class="card">
-            <h3>Echte Fragen</h3>
-            <p>Nicht: Was muss ich können, um zu bestehen? Sondern: Welche Frage ist so real, dass sie mich verändert?</p>
-          </article>
-          <article class="card">
-            <h3>Echte Reibung</h3>
-            <p>Gruppenarbeit als Aushandlung, Widerspruch, Perspektivwechsel und gemeinsames Bauen.</p>
-          </article>
-          <article class="card">
-            <h3>Echte Folgen</h3>
-            <p>Öffentliche Resultate, reale Adressaten, Konsequenzen jenseits der Note.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <!-- STEMPEL-GENERATOR                                          -->
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <section class="section" id="stempel">
+    <template id="placeholder-unused">
+    <section class="section" id="stempel-old">
       <div class="section-label">Stempel</div>
       <div class="section-body">
         <h2>Dein eigener Stempel</h2>
@@ -389,6 +438,7 @@
         <div id="atelier-score-widget" aria-live="polite"></div>
       </div>
     </section>
+    </template>
   </main>
 
   <footer class="footer">
@@ -426,6 +476,27 @@
   <script src="assets/js/daily.js"></script>
   <script src="assets/js/sharecard.js"></script>
   <script src="assets/js/score.js"></script>
+  <script>
+    (function(){
+      var tabs = document.querySelectorAll('.mitmachen-tab');
+      if (!tabs.length) return;
+      tabs.forEach(function(tab){
+        tab.addEventListener('click', function(){
+          var key = tab.getAttribute('data-tab');
+          tabs.forEach(function(t){
+            var active = t === tab;
+            t.classList.toggle('is-active', active);
+            t.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          document.querySelectorAll('.mitmachen-panel').forEach(function(p){
+            var show = p.id === 'tab-' + key;
+            p.classList.toggle('is-active', show);
+            p.hidden = !show;
+          });
+        });
+      });
+    })();
+  </script>
   <div id="share-toast" class="share-toast" role="status" aria-live="polite" aria-hidden="true">Link kopiert</div>
 </body>
 </html>
