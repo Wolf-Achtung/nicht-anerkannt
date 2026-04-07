@@ -183,7 +183,7 @@
   }
 
   function findResponse(userText, callback) {
-    fetch('/api/chat', {
+    fetch(((typeof window !== 'undefined' && window.ATELIER_API_BASE) ? window.ATELIER_API_BASE : '') + '/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: userText, history: history })
