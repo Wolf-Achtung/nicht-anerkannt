@@ -2686,3 +2686,71 @@ body.read-mode::before {
 .blindspot-perspektive { font-size: 1.1rem; color: #991b1b; margin: 0.2rem 0; }
 .blindspot-warum { font-size: 0.95rem; }
 .blindspot-frage { font-size: 0.95rem; color: #333; border-left: 2px solid #991b1b; padding-left: 0.6rem; }
+
+/* ─── Manifest-Hervorhebung ─── */
+.section--manifest {
+  background: #fdf6e3;
+  border-top: 3px solid #991b1b;
+  border-bottom: 3px solid #991b1b;
+  position: relative;
+}
+.section--manifest::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(135deg, transparent 0 24px, rgba(153,27,27,0.03) 24px 25px);
+  pointer-events: none;
+}
+.manifest-panel {
+  position: relative;
+  background: #fffdf5;
+  border: 1px solid rgba(153,27,27,0.25);
+  padding: 2rem clamp(1.2rem, 3vw, 2.4rem);
+  box-shadow: 0 2px 0 #991b1b, 4px 6px 0 rgba(153,27,27,0.15);
+}
+.manifest-panel p[data-perspektive-rewrite] {
+  font-size: 1.08rem;
+  line-height: 1.65;
+}
+.manifest-remix-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.4rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin: 0 0 1.6rem;
+  padding: 1rem 1.2rem;
+  background: #991b1b;
+  color: #fdf6e3;
+  border-left: 4px solid #000;
+}
+.manifest-remix-bar-label strong {
+  display: block;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.2rem;
+}
+.manifest-remix-bar-label span {
+  display: block;
+  font-size: 0.88rem;
+  opacity: 0.85;
+  max-width: 42ch;
+}
+.manifest-remix-bar-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+.manifest-remix-bar .stempel-input {
+  background: #fdf6e3;
+  color: #1a1a1a;
+  border: 1px solid #000;
+  padding: 0.5rem 0.7rem;
+}
+.manifest-remix-status {
+  flex-basis: 100%;
+  font-size: 0.85rem;
+  min-height: 1.1rem;
+  opacity: 0.9;
+}
