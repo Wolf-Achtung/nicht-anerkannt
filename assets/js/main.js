@@ -24,15 +24,46 @@
     var pieces = Array.from(document.querySelectorAll('[data-shuffle]'));
     var width = stage.clientWidth;
     var height = stage.clientHeight;
+    var placed = [];
+
+    function overlaps(a, b) {
+      var pad = 6;
+      return !(a.left + a.w + pad < b.left ||
+               b.left + b.w + pad < a.left ||
+               a.top + a.h + pad < b.top ||
+               b.top + b.h + pad < a.top);
+    }
 
     pieces.forEach(function (piece, index) {
       var rectW = piece.offsetWidth || 180;
       var rectH = piece.offsetHeight || 60;
-      var left = random(2, Math.max(3, width - rectW - 8));
-      var top = random(2, Math.max(3, height - rectH - 8));
-      var rotate = random(-16, 16).toFixed(1);
-      piece.style.left = left + 'px';
-      piece.style.top = top + 'px';
+      var maxLeft = Math.max(3, width - rectW - 8);
+      var maxTop = Math.max(3, height - rectH - 8);
+
+      var box = null;
+      for (var tries = 0; tries < 60; tries++) {
+        var candidate = {
+          left: random(2, maxLeft),
+          top: random(2, maxTop),
+          w: rectW,
+          h: rectH
+        };
+        var conflict = false;
+        for (var i = 0; i < placed.length; i++) {
+          if (overlaps(candidate, placed[i])) { conflict = true; break; }
+        }
+        if (!conflict) { box = candidate; break; }
+      }
+      // Fallback: stapeln, wenn kein freier Platz gefunden wurde
+      if (!box) {
+        var stackTop = placed.reduce(function (acc, p) { return Math.max(acc, p.top + p.h + 6); }, 4);
+        box = { left: random(2, maxLeft), top: Math.min(stackTop, maxTop), w: rectW, h: rectH };
+      }
+      placed.push(box);
+
+      var rotate = random(-10, 10).toFixed(1);
+      piece.style.left = box.left + 'px';
+      piece.style.top = box.top + 'px';
       piece.style.transform = 'rotate(' + rotate + 'deg)';
       piece.style.zIndex = String(2 + (index % 4));
     });
@@ -43,21 +74,93 @@
     });
   }
 
+  function setReadMode(active) {
+    var btn = document.getElementById('readmode');
+    document.body.classList.toggle('read-mode', active);
+    if (btn) {
+      btn.setAttribute('aria-pressed', String(active));
+      btn.textContent = active ? 'Kompositionsmodus' : 'Lesemodus';
+    }
+  }
+
   function initReadMode() {
     var btn = document.getElementById('readmode');
     if (!btn) return;
-
     btn.addEventListener('click', function () {
-      var active = document.body.classList.toggle('read-mode');
-      btn.setAttribute('aria-pressed', String(active));
-      btn.textContent = active ? 'Kompositionsmodus' : 'Lesemodus';
+      setReadMode(!document.body.classList.contains('read-mode'));
+      pauseAutoHero(20000);
     });
   }
 
   function initShuffle() {
     var btn = document.getElementById('shuffle');
     if (!btn) return;
-    btn.addEventListener('click', shuffleStage);
+    btn.addEventListener('click', function () {
+      if (document.body.classList.contains('read-mode')) setReadMode(false);
+      shuffleStage();
+      pauseAutoHero(20000);
+    });
+  }
+
+  // ─── Auto-Hero: automatischer Wechsel zwischen Komposition und Lesemodus ───
+  var autoTimer = null;
+  var autoPausedUntil = 0;
+  var autoStepCount = 0;
+
+  function pauseAutoHero(ms) {
+    autoPausedUntil = Date.now() + (ms || 15000);
+  }
+
+  function scheduleAutoHero() {
+    if (autoTimer) clearTimeout(autoTimer);
+    var delay = Math.round(random(5500, 9500));
+    autoTimer = setTimeout(runAutoHero, delay);
+  }
+
+  function runAutoHero() {
+    var stage = document.querySelector('.hero-stage');
+    if (!stage) return;
+
+    if (Date.now() < autoPausedUntil) { scheduleAutoHero(); return; }
+    if (document.hidden) { scheduleAutoHero(); return; }
+
+    // respektiere reduced-motion
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    autoStepCount++;
+    // Jeder ~4. Schritt: kurz in den Lesemodus, dann zurück
+    if (autoStepCount % 4 === 0) {
+      setReadMode(true);
+      setTimeout(function () {
+        if (Date.now() >= autoPausedUntil) {
+          setReadMode(false);
+          shuffleStage();
+        }
+        scheduleAutoHero();
+      }, Math.round(random(4500, 6500)));
+      return;
+    }
+
+    if (!document.body.classList.contains('read-mode')) shuffleStage();
+    scheduleAutoHero();
+  }
+
+  function initAutoHero() {
+    var stage = document.querySelector('.hero-stage');
+    if (!stage) return;
+    // Pausiere bei Nutzer-Interaktion im Hero-Bereich
+    ['mouseenter', 'touchstart', 'focusin'].forEach(function (ev) {
+      stage.addEventListener(ev, function () { pauseAutoHero(25000); });
+    });
+    var hero = document.querySelector('.hero');
+    if (hero) {
+      hero.addEventListener('mouseleave', function () {
+        autoPausedUntil = Date.now() + 4000;
+      });
+    }
+    scheduleAutoHero();
   }
 
   function initResize() {
@@ -163,6 +266,7 @@
     initShuffle();
     initReadMode();
     initResize();
+    initAutoHero();
     initSmoothScroll();
     initShareButtons();
     initNavToggle();
