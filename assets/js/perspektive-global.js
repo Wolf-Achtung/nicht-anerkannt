@@ -256,7 +256,7 @@
   // Init
   // ─────────────────────────────────────────────
   window.addEventListener('DOMContentLoaded', function () {
-    injectHeaderSwitch();
+    // injectHeaderSwitch(); // entfernt — Perspektivwechsel ist nur noch beim Manifest
     initManifestRemix();
     // initBlindspotDetector(); // entfernt vom Manifest
   });
