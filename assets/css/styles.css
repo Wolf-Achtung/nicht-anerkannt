@@ -2766,10 +2766,17 @@ body.read-mode::before {
 .section--hintergrund .section-body {
   background: var(--paper);
   border: 2px solid var(--ink);
+  border-top: 6px solid #991b1b;
   box-shadow: 0.4rem 0.4rem 0 rgba(17,17,17,0.9);
   padding: 1.8rem clamp(1.4rem, 3vw, 2.2rem);
   transform: rotate(0.25deg);
 }
+.section--hintergrund .section-body > h2 { color: #991b1b; }
+.section--hintergrund .chapter { border-top-color: rgba(153,27,27,0.25); }
+.section--hintergrund .chapter:last-of-type { border-bottom-color: rgba(153,27,27,0.25); }
+.section--hintergrund .chapter > summary strong { color: #991b1b; }
+.section--hintergrund .chapter[open] > summary { background: rgba(153,27,27,0.06); }
+.section--hintergrund .chapter-body { border-left: 2px solid rgba(153,27,27,0.35); margin-left: 0.45rem; padding-left: 1.2rem; }
 
 .section-lead { font-size: 1rem; opacity: 0.75; margin-bottom: 1.6rem; max-width: 60ch; }
 
