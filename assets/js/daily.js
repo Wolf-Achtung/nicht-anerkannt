@@ -9,6 +9,8 @@
   var container = null;
   var ARCHIVE_KEY = 'atelier-daily-archive';
   var REQUEST_TIMEOUT_MS = 5000;
+  var API_BASE = (typeof window !== 'undefined' && window.ATELIER_API_BASE) ? window.ATELIER_API_BASE : '';
+  var DAILY_URL = API_BASE + '/api/daily';
   var fallbackQuestions = [
     {
       titel: 'Denkprobe Archivmodus',
@@ -183,7 +185,7 @@
 
   function requestDailyChallenge(seed) {
     if (typeof AbortController === 'undefined') {
-      return fetch('/api/daily', {
+      return fetch(DAILY_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ seed: seed })
@@ -195,7 +197,7 @@
       controller.abort();
     }, REQUEST_TIMEOUT_MS);
 
-    return fetch('/api/daily', {
+    return fetch(DAILY_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ seed: seed }),
@@ -206,7 +208,7 @@
         return res.json();
       })
       .catch(function () {
-        return fetch('/api/daily?seed=' + encodeURIComponent(seed))
+        return fetch(DAILY_URL + '?seed=' + encodeURIComponent(seed))
           .then(function (res) {
             if (!res.ok) throw new Error('HTTP ' + res.status);
             return res.json();
