@@ -72,7 +72,7 @@
     }
 
     if (subLine) {
-      var y = variant === 'extrem-mittig' ? h - 30 : cy + 66;
+      var y = cy + 66;
       var fontSize = subLine.length > 30 ? 12 : 15;
       svg += '<text x="' + cx + '" y="' + y + '" text-anchor="middle" ';
       svg += 'font-family="Arial, Helvetica, sans-serif" font-size="' + fontSize + '" ';
