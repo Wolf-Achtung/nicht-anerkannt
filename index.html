@@ -138,15 +138,15 @@
     <!-- ═══════════════════════════════════════════════════════════ -->
     <section class="section" id="manifest">
       <div class="section-label">Manifest</div>
-      <div class="section-body">
+      <div class="section-body" data-manifest-body>
         <h2>Für junge Menschen, die nicht in Lager passen</h2>
         <p class="manifest-subtitle">Ein Denkraum für junge Menschen, die nicht in Lager passen und trotzdem handeln wollen.</p>
-        <p>Wir leben in einer Zeit, in der alles gleichzeitig verfügbar ist: Wissen, Meinungen, Empörung, Tutorials, Ideologien, Identitäten, KI-Output, Lebensentwürfe. Alles ist da. Alles spricht. Alles fordert Aufmerksamkeit. Und fast nichts hilft dir dabei, wirklich zu unterscheiden.</p>
+        <p data-perspektive-rewrite>Wir leben in einer Zeit, in der alles gleichzeitig verfügbar ist: Wissen, Meinungen, Empörung, Tutorials, Ideologien, Identitäten, KI-Output, Lebensentwürfe. Alles ist da. Alles spricht. Alles fordert Aufmerksamkeit. Und fast nichts hilft dir dabei, wirklich zu unterscheiden.</p>
         <div class="tool-actions">
           <button class="button" data-share-target="#manifest" data-share-prefix="Manifest-Auszug von nicht-anerkannt.info:" type="button">Manifest teilen</button>
         </div>
-        <p>Die alten Bildungsformen tun oft so, als sei das Problem noch immer Informationsmangel. Als müsste man dir nur genug Stoff geben, genug Prüfungen, genug Zertifikate, genug Inhalte. Aber das ist vorbei. Das eigentliche Problem ist nicht, dass wir zu wenig wissen. Das eigentliche Problem ist, dass wir in zu viel Material leben und zu wenig Orte haben, an denen daraus Urteil, Haltung und Handlung werden.</p>
-        <p class="big-line">Billig wird Reproduktion. Teuer werden Urteil, Originalität, Verantwortung, Präsenz und Mut.</p>
+        <p data-perspektive-rewrite>Die alten Bildungsformen tun oft so, als sei das Problem noch immer Informationsmangel. Als müsste man dir nur genug Stoff geben, genug Prüfungen, genug Zertifikate, genug Inhalte. Aber das ist vorbei. Das eigentliche Problem ist nicht, dass wir zu wenig wissen. Das eigentliche Problem ist, dass wir in zu viel Material leben und zu wenig Orte haben, an denen daraus Urteil, Haltung und Handlung werden.</p>
+        <p class="big-line" data-perspektive-rewrite>Billig wird Reproduktion. Teuer werden Urteil, Originalität, Verantwortung, Präsenz und Mut.</p>
         <div class="cards">
           <article class="card">
             <h3>Kein Stoffproblem</h3>
@@ -161,6 +161,36 @@
             <p>Nicht mehr nur Wiederholung und Prüfung, sondern Reibung, Arbeit, Öffentlichkeit und Folgen.</p>
           </article>
         </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- MANIFEST-REMIX: Lesen mit anderen Augen                    -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="section" id="manifest-remix">
+      <div class="section-label">Perspektive</div>
+      <div class="section-body">
+        <h2>Lies das Manifest mit anderen Augen</h2>
+        <p>Wähle eine Perspektive — die KI formuliert die zentralen Sätze des Manifests in dieser Sicht neu. Kein Strohmann, sondern die bestmögliche Version. Ziel: den eigenen Text fremd sehen können.</p>
+        <div class="manifest-remix-controls">
+          <label class="stempel-label" for="manifest-remix-select">Perspektive wählen</label>
+          <select class="stempel-input" id="manifest-remix-select">
+            <option value="">— Originaltext —</option>
+            <option value="Konservative:r Traditionalist:in">Konservative:r Traditionalist:in</option>
+            <option value="Linke:r Aktivist:in">Linke:r Aktivist:in</option>
+            <option value="Liberale:r Unternehmer:in">Liberale:r Unternehmer:in</option>
+            <option value="Kind (10 Jahre)">Kind (10 Jahre)</option>
+            <option value="Ältere:r Mensch (80 Jahre)">Ältere:r Mensch (80 Jahre)</option>
+            <option value="Mensch in 50 Jahren (2075)">Mensch in 50 Jahren (2075)</option>
+            <option value="Mensch vor 100 Jahren (1925)">Mensch vor 100 Jahren (1925)</option>
+            <option value="Nicht-Muttersprachler:in, die Deutsch gerade lernt">Nicht-Muttersprachler:in</option>
+            <option value="Die KI selbst (als Sprecher:in)">Die KI selbst</option>
+            <option value="Ein zukünftiges Kind, das diese Entscheidung erben wird">Zukünftiges Kind (das erbt)</option>
+          </select>
+          <button class="button button--accent" id="manifest-remix-btn" type="button">Manifest umformulieren</button>
+          <button class="button" id="manifest-remix-reset" type="button" hidden>Original wiederherstellen</button>
+        </div>
+        <div class="manifest-remix-status" id="manifest-remix-status" aria-live="polite"></div>
       </div>
     </section>
 
@@ -280,6 +310,16 @@
               <input class="stempel-input" type="text" id="stempel-name-extrem" data-stempel-name placeholder="Dein Name" maxlength="30">
               <label class="stempel-label" for="stempel-ort-extrem">Stadt</label>
               <input class="stempel-input" type="text" id="stempel-ort-extrem" data-stempel-ort placeholder="Deine Stadt" maxlength="25">
+              <label class="stempel-label" for="stempel-persp-extrem">Aus Sicht von… (optional)</label>
+              <select class="stempel-input" id="stempel-persp-extrem" data-stempel-perspektive>
+                <option value="">— ohne Zuschreibung —</option>
+                <option value="Konservative">Aus Sicht der Konservativen</option>
+                <option value="Linken">Aus Sicht der Linken</option>
+                <option value="Liberalen">Aus Sicht der Liberalen</option>
+                <option value="Jugend">Aus Sicht der Jugend</option>
+                <option value="Zukunft">Aus Sicht der Zukunft</option>
+                <option value="KI">Aus Sicht der KI</option>
+              </select>
               <div class="stempel-actions">
                 <button class="button button--accent" data-stempel-download type="button">Als PNG herunterladen</button>
                 <button class="button" data-stempel-share type="button">Teilen</button>
@@ -379,6 +419,8 @@
   </script>
 
   <!-- Scripts -->
+  <script src="assets/js/loading-messages.js"></script>
+  <script src="assets/js/perspektive-global.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/remixer.js"></script>
   <script src="assets/js/stempel.js"></script>

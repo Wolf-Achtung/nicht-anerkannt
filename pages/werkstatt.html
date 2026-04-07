@@ -169,16 +169,37 @@
           <textarea class="werkstatt-input" id="pw-position" rows="3" placeholder="z.B. &quot;Homeoffice sollte die Regel sein, nicht die Ausnahme.&quot;" maxlength="500"></textarea>
           <label class="stempel-label" for="pw-perspektive">Perspektive einnehmen</label>
           <select class="stempel-input" id="pw-perspektive" >
-            <option value="Konservative:r Traditionalist:in">Konservative:r Traditionalist:in</option>
-            <option value="Linke:r Aktivist:in">Linke:r Aktivist:in</option>
-            <option value="Liberale:r Unternehmer:in">Liberale:r Unternehmer:in</option>
-            <option value="Pragmatische:r Realist:in">Pragmatische:r Realist:in</option>
-            <option value="Betroffene:r Bürger:in">Betroffene:r Bürger:in</option>
-            <option value="Akademiker:in / Wissenschaftler:in">Akademiker:in / Wissenschaftler:in</option>
-            <option value="Jugendliche:r / Gen Z">Jugendliche:r / Gen Z</option>
-            <option value="Zyniker:in / Skeptiker:in">Zyniker:in / Skeptiker:in</option>
-            <option value="Spirituelle:r / Philosoph:in">Spirituelle:r / Philosoph:in</option>
-            <option value="Technologie-Optimist:in">Technologie-Optimist:in</option>
+            <optgroup label="Politisch / Sozial">
+              <option value="Konservative:r Traditionalist:in">Konservative:r Traditionalist:in</option>
+              <option value="Linke:r Aktivist:in">Linke:r Aktivist:in</option>
+              <option value="Liberale:r Unternehmer:in">Liberale:r Unternehmer:in</option>
+              <option value="Pragmatische:r Realist:in">Pragmatische:r Realist:in</option>
+              <option value="Betroffene:r Bürger:in">Betroffene:r Bürger:in</option>
+              <option value="Akademiker:in / Wissenschaftler:in">Akademiker:in / Wissenschaftler:in</option>
+              <option value="Zyniker:in / Skeptiker:in">Zyniker:in / Skeptiker:in</option>
+              <option value="Spirituelle:r / Philosoph:in">Spirituelle:r / Philosoph:in</option>
+              <option value="Technologie-Optimist:in">Technologie-Optimist:in</option>
+            </optgroup>
+            <optgroup label="Alter / Generation">
+              <option value="Kind (10 Jahre)">Kind (10 Jahre)</option>
+              <option value="Jugendliche:r / Gen Z">Jugendliche:r / Gen Z</option>
+              <option value="Ältere:r Mensch (80 Jahre)">Ältere:r Mensch (80 Jahre)</option>
+            </optgroup>
+            <optgroup label="Zeit">
+              <option value="Mensch vor 100 Jahren (1925)">Mensch vor 100 Jahren (1925)</option>
+              <option value="Mensch in 50 Jahren (2075)">Mensch in 50 Jahren (2075)</option>
+              <option value="Historiker:in in 200 Jahren zurückblickend">Historiker:in in 200 Jahren zurückblickend</option>
+            </optgroup>
+            <optgroup label="Kultur / Sprache">
+              <option value="Nicht-Muttersprachler:in, die Deutsch gerade lernt">Nicht-Muttersprachler:in (Deutsch-Lernende:r)</option>
+              <option value="Mensch aus dem globalen Süden">Mensch aus dem globalen Süden</option>
+              <option value="Mensch ohne Internetzugang">Mensch ohne Internetzugang</option>
+            </optgroup>
+            <optgroup label="Radikal anders">
+              <option value="Die KI selbst (als Sprecher:in)">Die KI selbst</option>
+              <option value="Ein Baum / Ökosystem">Ein Baum / Ökosystem</option>
+              <option value="Ein zukünftiges Kind, das diese Entscheidung erben wird">Zukünftiges Kind (das erbt)</option>
+            </optgroup>
           </select>
           <button class="button button--accent" id="pw-btn" type="button">Perspektive wechseln</button>
           <div class="werkstatt-output" id="pw-output" aria-live="polite"></div>
@@ -248,6 +269,7 @@
     </div>
   </footer>
 
+  <script src="../assets/js/loading-messages.js"></script>
   <script src="../assets/js/main.js"></script>
   <script src="../assets/js/score.js"></script>
   <script src="../assets/js/werkstatt.js"></script>
