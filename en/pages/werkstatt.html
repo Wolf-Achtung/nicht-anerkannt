@@ -170,16 +170,23 @@
           <textarea class="werkstatt-input" id="pw-position" rows="3" placeholder="e.g. &quot;Remote work should be the rule, not the exception.&quot;" maxlength="500"></textarea>
           <label class="stempel-label" for="pw-perspektive">Adopt perspective</label>
           <select class="stempel-input" id="pw-perspektive" style="padding: 0.6rem 0.9rem;">
-            <option value="Konservative:r Traditionalist:in">Conservative Traditionalist</option>
-            <option value="Linke:r Aktivist:in">Left-wing Activist</option>
-            <option value="Liberale:r Unternehmer:in">Liberal Entrepreneur</option>
-            <option value="Pragmatische:r Realist:in">Pragmatic Realist</option>
-            <option value="Betroffene:r Bürger:in">Affected Citizen</option>
-            <option value="Akademiker:in / Wissenschaftler:in">Academic / Scientist</option>
-            <option value="Jugendliche:r / Gen Z">Youth / Gen Z</option>
-            <option value="Zyniker:in / Skeptiker:in">Cynic / Skeptic</option>
-            <option value="Spirituelle:r / Philosoph:in">Spiritual Thinker / Philosopher</option>
-            <option value="Technologie-Optimist:in">Technology Optimist</option>
+            <optgroup label="Political / Social">
+              <option value="Conservative tradition">Conservative tradition</option>
+              <option value="Left-wing activism">Left-wing activism</option>
+              <option value="Liberal entrepreneurship">Liberal entrepreneurship</option>
+              <option value="Pragmatic realism">Pragmatic realism</option>
+            </optgroup>
+            <optgroup label="Science / Philosophy">
+              <option value="Science and academia">Science and academia</option>
+              <option value="Spiritual-philosophical view">Spiritual-philosophical view</option>
+            </optgroup>
+            <optgroup label="Generation / Time">
+              <option value="Through the eyes of a ten-year-old child">Child (10 years)</option>
+              <option value="Looking back from the year 2075 at our present">View from 2075</option>
+            </optgroup>
+            <optgroup label="Radically other">
+              <option value="From the perspective of a tree or ecosystem">A tree / ecosystem</option>
+            </optgroup>
           </select>
           <button class="button button--accent" id="pw-btn" type="button">Shift perspective</button>
           <div class="werkstatt-output" id="pw-output" aria-live="polite"></div>
