@@ -2771,7 +2771,7 @@ body.read-mode::before {
   padding: 1.8rem clamp(1.4rem, 3vw, 2.2rem);
   transform: rotate(0.25deg);
 }
-.section--hintergrund .section-body > h2 { color: #991b1b; }
+.section--hintergrund .section-body > h2 { color: var(--ink); }
 .section--hintergrund .chapter { border-top-color: rgba(153,27,27,0.25); }
 .section--hintergrund .chapter:last-of-type { border-bottom-color: rgba(153,27,27,0.25); }
 .section--hintergrund .chapter > summary strong { color: #991b1b; }
@@ -2840,6 +2840,7 @@ body.read-mode::before {
 /* Einladung — nicht mehr dunkel, sondern typografisch betont */
 .section--einladung .cta-panel {
   background: transparent;
+  color: var(--ink);
   padding: 1.4rem 1.6rem;
   border: 1px solid rgba(153,27,27,0.3);
   border-left: 3px solid #991b1b;
