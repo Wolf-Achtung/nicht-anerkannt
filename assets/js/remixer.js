@@ -14,9 +14,8 @@
   }
 
   function fetchFragments() {
-    var base = document.querySelector('script[src*="remixer"]');
-    var prefix = base ? base.src.replace(/assets\/js\/remixer\.js.*$/, '') : '';
-    return fetch(prefix + 'data/remix-lines.json')
+    var dataPath = (window.AtelierI18n && window.AtelierI18n.dataPrefix) ? window.AtelierI18n.dataPrefix() : 'data/';
+    return fetch(dataPath + 'remix-lines.json')
       .then(function (res) {
         if (!res.ok) throw new Error('Failed to load fragments');
         return res.json();
@@ -72,7 +71,8 @@
     if (!remixLines || !outputEl) return;
     var lines = buildRemix();
     if (!lines.length) {
-      outputEl.innerHTML = '<p class="remix-error">Keine Remix-Linien verfügbar. Bitte später erneut versuchen.</p>';
+      var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+      outputEl.innerHTML = '<p class="remix-error">' + t('remixer.empty') + '</p>';
       return;
     }
     animateText(outputEl, lines);
@@ -92,7 +92,8 @@
         btnEl.addEventListener('click', remix);
       })
       .catch(function (err) {
-        outputEl.innerHTML = '<p class="remix-error">Remix-Daten konnten nicht geladen werden. Bitte Seite neu laden.</p>';
+        var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+        outputEl.innerHTML = '<p class="remix-error">' + t('remixer.error') + '</p>';
         console.error('[AtelierRemixer]', err);
       });
   }

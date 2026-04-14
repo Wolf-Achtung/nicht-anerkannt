@@ -5,13 +5,13 @@
 (function () {
   'use strict';
 
-  var slogans = [
-    'Nicht mehr Stoff. Mehr Urteil.',
-    'Keine Lager. Echte Fragen.',
-    'KI ist Sparringspartner, nicht Orakel.',
-    'Widerspruch ist Methode.',
-    'Nicht angepasst. Handlungsfähig.'
-  ];
+  function getSlogans() {
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    return [
+      t('main.slogan0'), t('main.slogan1'), t('main.slogan2'),
+      t('main.slogan3'), t('main.slogan4')
+    ];
+  }
 
   function random(min, max) {
     return Math.random() * (max - min) + min;
@@ -69,6 +69,7 @@
     });
 
     var cards = stage.querySelectorAll('.cut-card p');
+    var slogans = getSlogans();
     cards.forEach(function (card) {
       card.textContent = slogans[Math.floor(random(0, slogans.length))];
     });
@@ -78,8 +79,9 @@
     var btn = document.getElementById('readmode');
     document.body.classList.toggle('read-mode', active);
     if (btn) {
+      var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
       btn.setAttribute('aria-pressed', String(active));
-      btn.textContent = active ? 'Kompositionsmodus' : 'Lesemodus';
+      btn.textContent = active ? t('main.composeMode') : t('main.readMode');
     }
   }
 
@@ -194,7 +196,8 @@
   function showShareToast(message) {
     var toast = document.getElementById('share-toast');
     if (!toast) return;
-    toast.textContent = message || 'Link kopiert';
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    toast.textContent = message || t('main.linkCopied');
     toast.classList.add('is-visible');
     toast.setAttribute('aria-hidden', 'false');
     setTimeout(function () {
@@ -204,6 +207,7 @@
   }
 
   function initShareButtons() {
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
     var buttons = document.querySelectorAll('[data-share-target]');
     if (!buttons.length) return;
 
@@ -218,13 +222,13 @@
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(payload)
             .then(function () {
-              showShareToast('Link kopiert');
+              showShareToast(t('main.linkCopied'));
             })
             .catch(function () {
-              showShareToast('Kopieren fehlgeschlagen');
+              showShareToast(t('main.copyFailed'));
             });
         } else {
-          showShareToast('Zwischenablage nicht verfügbar');
+          showShareToast(t('main.clipboardNA'));
         }
       });
     });

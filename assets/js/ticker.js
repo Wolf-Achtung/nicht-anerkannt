@@ -11,12 +11,19 @@
   var intervalId = null;
   var INTERVAL = 5000;
 
-  var fallbackMessages = [
+  var fallbackMessages_de = [
     { type: 'update', text: 'Willkommen im Atelier der Radikalen Mitte.', date: '' },
     { type: 'zitat', text: '"Nicht mehr Stoff. Mehr Urteil."', date: '' },
     { type: 'update', text: 'Manifest online. Feedback erwuenscht.', date: '' },
     { type: 'zitat', text: '"Widerspruch ist Methode."', date: '' }
   ];
+  var fallbackMessages_en = [
+    { type: 'update', text: 'Welcome to the Atelier of the Radical Middle.', date: '' },
+    { type: 'zitat', text: '"Not more material. More judgment."', date: '' },
+    { type: 'update', text: 'Manifesto online. Feedback welcome.', date: '' },
+    { type: 'zitat', text: '"Contradiction is method."', date: '' }
+  ];
+  var fallbackMessages = (window.AtelierI18n && window.AtelierI18n.lang === 'en') ? fallbackMessages_en : fallbackMessages_de;
 
   function escapeHtml(str) {
     var div = document.createElement('div');
@@ -75,12 +82,13 @@
 
     var prevBtn = document.createElement('button');
     prevBtn.textContent = '\u25C0';
-    prevBtn.setAttribute('aria-label', 'Vorherige Nachricht');
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    prevBtn.setAttribute('aria-label', t('ticker.prev'));
     prevBtn.className = 'ticker-nav-btn';
 
     var nextBtn = document.createElement('button');
     nextBtn.textContent = '\u25B6';
-    nextBtn.setAttribute('aria-label', 'Naechste Nachricht');
+    nextBtn.setAttribute('aria-label', t('ticker.next'));
     nextBtn.className = 'ticker-nav-btn';
 
     var display = document.createElement('div');
@@ -123,9 +131,8 @@
 
     buildUI();
 
-    var base = document.querySelector('script[src*="ticker"]');
-    var prefix = base ? base.src.replace(/assets\/js\/ticker\.js.*$/, '') : '';
-    fetch(prefix + 'data/ticker-messages.json')
+    var dataPath = (window.AtelierI18n && window.AtelierI18n.dataPrefix) ? window.AtelierI18n.dataPrefix() : 'data/';
+    fetch(dataPath + 'ticker-messages.json')
       .then(function (res) {
         if (!res.ok) throw new Error('Failed to load ticker data');
         return res.json();

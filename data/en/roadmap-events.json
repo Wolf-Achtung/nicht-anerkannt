@@ -1,0 +1,79 @@
+{
+  "milestones": [
+    {
+      "id": "m1",
+      "title": "Manifesto & Website Study",
+      "description": "First publication of the manifesto and the experimental website as a visual direction.",
+      "status": "completed",
+      "date": "2026-Q1"
+    },
+    {
+      "id": "m2",
+      "title": "Interactive Platform",
+      "description": "Manifesto Remixer, Stamp Generator, and Live Ticker make the ideas tangible.",
+      "status": "active",
+      "date": "2026-Q2"
+    },
+    {
+      "id": "m3",
+      "title": "AI Sparring Partner",
+      "description": "Chat widget enables direct dialogue with AI as a thinking tool.",
+      "status": "upcoming",
+      "date": "2026-Q2"
+    },
+    {
+      "id": "m4",
+      "title": "Ideas Archive & Community",
+      "description": "Open archive for thinking challenges, Contradiction Salon topics, and pull-request contributions.",
+      "status": "upcoming",
+      "date": "2026-Q3"
+    },
+    {
+      "id": "m5",
+      "title": "First Contradiction Salon",
+      "description": "Public event: moderated dialogue on a controversial contemporary topic.",
+      "status": "upcoming",
+      "date": "2026-Q3"
+    },
+    {
+      "id": "m6",
+      "title": "Micro-Experiments & Quiz",
+      "description": "Interactive tools for self-assessment: Where do you stand? Which questions move you?",
+      "status": "upcoming",
+      "date": "2026-Q3"
+    },
+    {
+      "id": "m7",
+      "title": "Media & Audio Manifesto",
+      "description": "The manifesto as an audio version, short videos, and additional media formats.",
+      "status": "upcoming",
+      "date": "2026-Q4"
+    },
+    {
+      "id": "m8",
+      "title": "Atelier Pilot Program",
+      "description": "First cohort begins: interdisciplinary learning on real questions.",
+      "status": "upcoming",
+      "date": "2027-Q1"
+    }
+  ],
+  "events": [
+    {
+      "title": "Website Launch",
+      "date": "2026-04-05",
+      "type": "launch"
+    },
+    {
+      "title": "Contradiction Salon #1",
+      "date": "2026-07-15",
+      "type": "event",
+      "description": "Topic: Can AI judge?"
+    },
+    {
+      "title": "Contradiction Salon #2",
+      "date": "2026-09-20",
+      "type": "event",
+      "description": "Topic: What is the Radical Middle in the climate debate?"
+    }
+  ]
+}

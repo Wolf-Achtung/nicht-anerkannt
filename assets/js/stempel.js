@@ -18,27 +18,28 @@
 
     var nameText = name ? escapeXml(name) : '';
     var ortText = ort ? escapeXml(ort) : '';
-    var perspText = perspektive ? escapeXml('Aus Sicht der ' + perspektive) : '';
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    var perspText = perspektive ? escapeXml(t('stempel.perspective') + perspektive) : '';
     var subLine = nameText;
     if (ortText) {
       subLine += (nameText ? ' — ' : '') + ortText;
     }
 
     var config = {
-      titleLine1: 'STAATLICH NICHT',
-      titleLine2: 'ANERKANNT',
+      titleLine1: t('stempel.line1'),
+      titleLine2: t('stempel.line2'),
       angle: -3,
       spacing: 3
     };
 
     if (variant === 'extrem-mittig') {
-      config.titleLine1 = 'EXTREM MITTIG';
+      config.titleLine1 = t('stempel.extrem');
       config.titleLine2 = '';
       config.angle = -6;
       config.spacing = 2;
     }
 
-    var ariaLabel = 'Stempel: ' + config.titleLine1 + (config.titleLine2 ? ' ' + config.titleLine2 : '') +
+    var ariaLabel = t('stempel.ariaPrefix') + config.titleLine1 + (config.titleLine2 ? ' ' + config.titleLine2 : '') +
       (nameText ? ' — ' + nameText : '') + (ortText ? ', ' + ortText : '');
 
     var svg = '';
@@ -126,23 +127,24 @@
   }
 
   function copyShareText(variant, name, ort, buttonEl) {
-    var headline = variant === 'extrem-mittig' ? 'EXTREM MITTIG' : 'STAATLICH NICHT ANERKANNT';
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    var headline = variant === 'extrem-mittig' ? t('stempel.extrem') : t('stempel.line1') + ' ' + t('stempel.line2');
     var text = headline;
 
     if (name) text += ' — ' + name;
     if (ort) text += ', ' + ort;
-    text += '\n\nStaatlich NICHT anerkannt. Politisch NICHT vereinnahmbar.';
-    text += '\nDas Atelier der Radikalen Mitte\nNicht mehr Stoff. Mehr Urteil.';
+    text += '\n\n' + t('stempel.shareText1');
+    text += '\n' + t('stempel.shareText2') + '\n' + t('stempel.shareText3');
 
     function acknowledge() {
-      buttonEl.textContent = 'Kopiert!';
-      setTimeout(function () { buttonEl.textContent = 'Teilen'; }, 1800);
+      buttonEl.textContent = t('stempel.copied');
+      setTimeout(function () { buttonEl.textContent = t('stempel.share'); }, 1800);
     }
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(acknowledge).catch(function () {
-        buttonEl.textContent = 'Kopieren nicht möglich';
-        setTimeout(function () { buttonEl.textContent = 'Teilen'; }, 2000);
+        buttonEl.textContent = t('stempel.copyFail');
+        setTimeout(function () { buttonEl.textContent = t('stempel.share'); }, 2000);
       });
     }
   }

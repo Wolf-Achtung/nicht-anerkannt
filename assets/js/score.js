@@ -36,21 +36,18 @@
     chat:          [0.5, 0, 0.5, 0, 0]
   };
 
-  var DIMENSION_NAMES = [
-    'Widerspruchstoleranz',
-    'Perspektivbreite',
-    'Urteilstiefe',
-    'Handlungsbereitschaft',
-    'Komplexitätstoleranz'
-  ];
+  function getDimensionNames() {
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    return [t('score.dim0'), t('score.dim1'), t('score.dim2'), t('score.dim3'), t('score.dim4')];
+  }
 
-  var DIMENSION_LABELS = [
-    'Wie gut du Widersprüche aushältst',
-    'Wie viele Perspektiven du einnimmst',
-    'Wie tief du Urteile durchdenkst',
-    'Wie bereit du bist, zu handeln',
-    'Wie viel Komplexität du verarbeitest'
-  ];
+  function getDimensionLabels() {
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    return [t('score.label0'), t('score.label1'), t('score.label2'), t('score.label3'), t('score.label4')];
+  }
+
+  var DIMENSION_NAMES = null;
+  var DIMENSION_LABELS = null;
   var storageAvailable = true;
 
   function hasStorage() {
@@ -117,14 +114,17 @@
     if (!widget) return;
 
     var score = getScore();
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    DIMENSION_NAMES = getDimensionNames();
+    DIMENSION_LABELS = getDimensionLabels();
     var warning = !storageAvailable
-      ? '<p class="score-storage-warning">Denkprofil kann nicht gespeichert werden (Privatsphäre-Einstellung).</p>'
+      ? '<p class="score-storage-warning">' + t('score.noStorage') + '</p>'
       : '';
     if (score.total === 0) {
       widget.innerHTML = '<div class="score-empty">' +
         warning +
-        '<p class="score-empty-text">Nutze die Werkzeuge des Ateliers, um dein Denkprofil aufzubauen.</p>' +
-        '<button class="button score-reset-btn" id="score-reset-btn" type="button">Denkprofil zurücksetzen</button></div>';
+        '<p class="score-empty-text">' + t('score.empty') + '</p>' +
+        '<button class="button score-reset-btn" id="score-reset-btn" type="button">' + t('score.reset') + '</button></div>';
       bindReset();
       return;
     }
@@ -138,7 +138,7 @@
 
     var html = '<div class="score-profile">';
     html += '<div class="score-header">';
-    html += '<span class="score-total">' + score.total + ' Denkaktionen</span>';
+    html += '<span class="score-total">' + score.total + ' ' + t('score.actions') + '</span>';
     html += '</div>';
     html += '<div class="score-bars">';
 
@@ -165,8 +165,8 @@
         maxDimVal = score.dimensions[j];
       }
     }
-    html += '<div class="score-insight">Deine Stärke: <strong>' + escapeHtml(DIMENSION_NAMES[maxDim]) + '</strong></div>';
-    html += '<button class="button score-reset-btn" id="score-reset-btn" type="button">Denkprofil zurücksetzen</button>';
+    html += '<div class="score-insight">' + t('score.strength') + ' <strong>' + escapeHtml(DIMENSION_NAMES[maxDim]) + '</strong></div>';
+    html += '<button class="button score-reset-btn" id="score-reset-btn" type="button">' + t('score.reset') + '</button>';
     html += '</div>';
 
     widget.innerHTML = html;

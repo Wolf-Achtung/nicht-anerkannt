@@ -14,7 +14,8 @@
     var shareBtn = document.createElement('button');
     shareBtn.className = 'button sharecard-btn';
     shareBtn.type = 'button';
-    shareBtn.textContent = 'Als Share-Card herunterladen';
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    shareBtn.textContent = t('sharecard.download');
     shareBtn.style.marginLeft = '0.6rem';
     remixerBtn.parentNode.insertBefore(shareBtn, remixerBtn.nextSibling);
 
@@ -97,7 +98,8 @@
     ctx.strokeStyle = '#991b1b';
     ctx.lineWidth = 1.5;
     ctx.strokeRect(-60, -18, 120, 36);
-    ctx.fillText('NICHT ANERKANNT', 0, 5);
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    ctx.fillText(t('sharecard.stamp'), 0, 5);
     ctx.restore();
 
     // Optional claim bottom-right
@@ -110,7 +112,7 @@
     ctx.font = 'bold 16px Arial, Helvetica, sans-serif';
     ctx.fillStyle = '#111111';
     ctx.textAlign = 'center';
-    ctx.fillText('POLITISCH NICHT VEREINNAHMBAR', 0, 6);
+    ctx.fillText(t('sharecard.claim'), 0, 6);
     ctx.restore();
 
     // Main quote text
@@ -140,11 +142,11 @@
     ctx.font = 'bold 16px Arial, Helvetica, sans-serif';
     ctx.fillStyle = '#5d5d5d';
     ctx.textAlign = 'left';
-    ctx.fillText('Das Atelier der Radikalen Mitte', padding, H - 60);
+    ctx.fillText(t('sharecard.brand'), padding, H - 60);
 
     ctx.font = '13px Arial, Helvetica, sans-serif';
     ctx.fillStyle = '#888888';
-    ctx.fillText('Nicht mehr Stoff. Mehr Urteil.', padding, H - 40);
+    ctx.fillText(t('sharecard.tagline'), padding, H - 40);
 
     // "Extrem mittig" stamp bottom-right
     ctx.save();
@@ -154,7 +156,7 @@
     ctx.fillStyle = '#991b1b';
     ctx.textAlign = 'center';
     ctx.letterSpacing = '0.15em';
-    ctx.fillText('EXTREM MITTIG', 0, 0);
+    ctx.fillText(t('sharecard.extrem'), 0, 0);
     ctx.restore();
 
     // Download

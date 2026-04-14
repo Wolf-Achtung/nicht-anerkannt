@@ -1,0 +1,93 @@
+{
+  "title": "Contradiction Quiz: Where Do You Stand?",
+  "description": "A self-test – not a pigeonhole, but a mirror. Answer the questions and discover how you think.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "You read a controversial article. Your first impulse is:",
+      "options": [
+        {"text": "Immediately agree or disagree – I know where I stand.", "scores": {"lager": 2, "anpassung": 0, "mitte": 0}},
+        {"text": "Check whether the arguments hold – even if I don't like the result.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}},
+        {"text": "See what the majority thinks before I take a position.", "scores": {"lager": 0, "anpassung": 2, "mitte": 0}},
+        {"text": "Share the article because it provokes – regardless of whether I agree.", "scores": {"lager": 1, "anpassung": 0, "mitte": 1}}
+      ]
+    },
+    {
+      "id": 2,
+      "text": "In a group discussion, someone holds a position you consider wrong. You:",
+      "options": [
+        {"text": "Say clearly why you see it differently – even if it gets uncomfortable.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}},
+        {"text": "Stay silent to avoid provoking conflict.", "scores": {"lager": 0, "anpassung": 2, "mitte": 0}},
+        {"text": "Try to convince them – you know what's right.", "scores": {"lager": 2, "anpassung": 0, "mitte": 0}},
+        {"text": "Ask: What exactly do you mean? How did you arrive at that?", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}}
+      ]
+    },
+    {
+      "id": 3,
+      "text": "AI can now generate text, images, and code. For you this means:",
+      "options": [
+        {"text": "Finally less work – AI should take over as much as possible.", "scores": {"lager": 0, "anpassung": 2, "mitte": 0}},
+        {"text": "AI is dangerous and should be regulated more strictly.", "scores": {"lager": 2, "anpassung": 0, "mitte": 0}},
+        {"text": "AI is a tool. What matters is who uses it for what.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}},
+        {"text": "AI shows that human judgment becomes more valuable, not less.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}}
+      ]
+    },
+    {
+      "id": 4,
+      "text": "You have to make an important decision but don't have all the information. You:",
+      "options": [
+        {"text": "Wait until you have all the facts – safety first.", "scores": {"lager": 0, "anpassung": 2, "mitte": 0}},
+        {"text": "Decide anyway – with the best judgment you have right now.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}},
+        {"text": "Ask someone you trust and follow their advice.", "scores": {"lager": 0, "anpassung": 2, "mitte": 0}},
+        {"text": "Decide quickly and clearly – hesitation is weakness.", "scores": {"lager": 2, "anpassung": 0, "mitte": 0}}
+      ]
+    },
+    {
+      "id": 5,
+      "text": "What does education mean to you?",
+      "options": [
+        {"text": "Acquiring knowledge, passing exams, enabling a career.", "scores": {"lager": 0, "anpassung": 2, "mitte": 0}},
+        {"text": "Conveying the right values and changing society.", "scores": {"lager": 2, "anpassung": 0, "mitte": 0}},
+        {"text": "Learning to distinguish, judge, and act better.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}},
+        {"text": "A protected space for reflection and experimentation.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}}
+      ]
+    },
+    {
+      "id": 6,
+      "text": "Someone says: \"You have to choose – left or right.\" You think:",
+      "options": [
+        {"text": "True. Neutrality is cowardly.", "scores": {"lager": 2, "anpassung": 0, "mitte": 0}},
+        {"text": "Not true. The most important questions cannot be forced into camps.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}},
+        {"text": "I'd rather stay out of political discussions.", "scores": {"lager": 0, "anpassung": 2, "mitte": 0}},
+        {"text": "It depends – sometimes you need to take a stand, sometimes to differentiate.", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}}
+      ]
+    },
+    {
+      "id": 7,
+      "text": "Your favourite word from this list:",
+      "options": [
+        {"text": "Security", "scores": {"lager": 0, "anpassung": 2, "mitte": 0}},
+        {"text": "Justice", "scores": {"lager": 2, "anpassung": 0, "mitte": 0}},
+        {"text": "Judgment", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}},
+        {"text": "Contradiction", "scores": {"lager": 0, "anpassung": 0, "mitte": 2}}
+      ]
+    }
+  ],
+  "results": {
+    "mitte": {
+      "title": "Radical Middle",
+      "description": "You think before you react. You endure contradiction and seek judgment rather than a camp. The Atelier is designed exactly for people like you.",
+      "motto": "Not conforming. Capable of action."
+    },
+    "lager": {
+      "title": "Camp Thinker",
+      "description": "You have clear convictions and take positions quickly. That can be a strength – but also a closing off. The Atelier invites you to stress-test your positions.",
+      "motto": "Contradiction is method."
+    },
+    "anpassung": {
+      "title": "Conformity Artist",
+      "description": "You seek safety and consensus. That is understandable – but sometimes too little. The Atelier wants to help you endure uncertainty and still act.",
+      "motto": "Not more material. More judgment."
+    }
+  }
+}

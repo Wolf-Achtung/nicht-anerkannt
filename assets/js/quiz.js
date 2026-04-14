@@ -24,11 +24,12 @@
 
   function renderProgressBar() {
     if (!quizData) return '';
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
     var total = quizData.questions.length;
     var pct = Math.round((currentQuestion / total) * 100);
 
     return '<div class="quiz-progress-label">' +
-      '<span>Frage ' + (currentQuestion + 1) + ' von ' + total + '</span>' +
+      '<span>' + t('quiz.questionOf') + ' ' + (currentQuestion + 1) + ' ' + t('quiz.of') + ' ' + total + '</span>' +
       '<span>' + pct + '%</span>' +
       '</div>' +
       '<div class="quiz-progress-track">' +
@@ -137,7 +138,8 @@
 
     html += '<div class="quiz-result-container">';
 
-    html += '<p class="quiz-result-label">Dein Ergebnis</p>';
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    html += '<p class="quiz-result-label">' + t('quiz.result') + '</p>';
 
     html += '<h3 class="quiz-result-title">' +
       escapeHtml(result.title) + '</h3>';
@@ -149,12 +151,12 @@
 
     // Score breakdown
     html += '<div class="quiz-result-scores">';
-    html += '<span>Mitte: ' + (scores.mitte || 0) + '</span>';
-    html += '<span>Lager: ' + (scores.lager || 0) + '</span>';
-    html += '<span>Anpassung: ' + (scores.anpassung || 0) + '</span>';
+    html += '<span>' + t('quiz.mitte') + ': ' + (scores.mitte || 0) + '</span>';
+    html += '<span>' + t('quiz.lager') + ': ' + (scores.lager || 0) + '</span>';
+    html += '<span>' + t('quiz.anpassung') + ': ' + (scores.anpassung || 0) + '</span>';
     html += '</div>';
 
-    html += '<button class="quiz-restart" id="quiz-restart">Nochmal</button>';
+    html += '<button class="quiz-restart" id="quiz-restart">' + t('quiz.restart') + '</button>';
 
     html += '</div></div>';
 
@@ -181,7 +183,8 @@
     var html = '<div class="quiz-intro-wrapper">';
     html += '<h2>' + escapeHtml(quizData.title) + '</h2>';
     html += '<p>' + escapeHtml(quizData.description) + '</p>';
-    html += '<button class="quiz-start" id="quiz-start">Quiz starten</button>';
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    html += '<button class="quiz-start" id="quiz-start">' + t('quiz.start') + '</button>';
     html += '</div>';
 
     containerEl.innerHTML = html;
@@ -198,11 +201,11 @@
     containerEl = document.getElementById('quiz-container');
     if (!containerEl) return;
 
-    containerEl.innerHTML = '<p class="quiz-loading">Quiz wird geladen...</p>';
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    containerEl.innerHTML = '<p class="quiz-loading">' + t('quiz.loading') + '</p>';
 
-    var base = document.querySelector('script[src*="quiz"]');
-    var prefix = base ? base.src.replace(/assets\/js\/quiz\.js.*$/, '') : '';
-    fetch(prefix + 'data/quiz-data.json')
+    var dataPath = (window.AtelierI18n && window.AtelierI18n.dataPrefix) ? window.AtelierI18n.dataPrefix() : 'data/';
+    fetch(dataPath + 'quiz-data.json')
       .then(function (res) {
         if (!res.ok) throw new Error('Failed to load quiz data');
         return res.json();
@@ -212,7 +215,7 @@
         renderIntro();
       })
       .catch(function (err) {
-        containerEl.innerHTML = '<p class="quiz-error">Quiz konnte nicht geladen werden.</p>';
+        containerEl.innerHTML = '<p class="quiz-error">' + t('quiz.error') + '</p>';
         console.error('[AtelierQuiz]', err);
       });
   }

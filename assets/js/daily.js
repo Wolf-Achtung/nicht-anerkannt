@@ -11,7 +11,7 @@
   var REQUEST_TIMEOUT_MS = 5000;
   var API_BASE = (typeof window !== 'undefined' && window.ATELIER_API_BASE) ? window.ATELIER_API_BASE : '';
   var DAILY_URL = API_BASE + '/api/daily';
-  var fallbackQuestions = [
+  var fallbackQuestions_de = [
     {
       titel: 'Denkprobe Archivmodus',
       impuls: 'Manchmal ist die beste Frage die, die trotz Ausfall bleibt.',
@@ -53,6 +53,51 @@
       frage: 'Welche Aussage teilst du nur, weil sie anschlussfähig ist – nicht weil sie präzise ist?'
     }
   ];
+
+  var fallbackQuestions_en = [
+    {
+      titel: 'Thinking Challenge Archive Mode',
+      impuls: 'Sometimes the best question is the one that remains despite failure.',
+      frage: 'Which of your convictions would be hardest to defend if you only had three sentences?'
+    },
+    {
+      titel: 'Thinking Challenge Archive Mode',
+      impuls: 'Even without an API, thinking can be precise and uncomfortable.',
+      frage: 'Which position of your counterpart seems wrong to you – and what fear might lie behind it?'
+    },
+    {
+      titel: 'Thinking Challenge Archive Mode',
+      impuls: 'Not every interruption is a standstill.',
+      frage: 'What would you decide differently today if you could only consider consequences five years from now?'
+    },
+    {
+      titel: 'Thinking Challenge Archive Mode',
+      impuls: 'Judgment rarely shows itself in the loudest moments, but in quiet corrections.',
+      frage: 'Which opinion would you publicly qualify today if accuracy mattered more to you than impact?'
+    },
+    {
+      titel: 'Thinking Challenge Archive Mode',
+      impuls: 'Quick clarity is seductive. It saves time, but often at the expense of reality.',
+      frage: 'Which uncomfortable side-effect of your favourite solution are you currently ignoring?'
+    },
+    {
+      titel: 'Thinking Challenge Archive Mode',
+      impuls: 'Contradiction is not a defect but an indicator of complexity.',
+      frage: 'In which conflict do you notice that both sides see something right?'
+    },
+    {
+      titel: 'Thinking Challenge Archive Mode',
+      impuls: 'Conviction only becomes visible when it costs you something.',
+      frage: 'Where would you remain consistent today even though it harms you in the short term?'
+    },
+    {
+      titel: 'Thinking Challenge Archive Mode',
+      impuls: 'In the digital noise, what wins is often the unambiguous, not the true.',
+      frage: 'Which statement do you share only because it is relatable – not because it is precise?'
+    }
+  ];
+
+  var fallbackQuestions = (window.AtelierI18n && window.AtelierI18n.lang === 'en') ? fallbackQuestions_en : fallbackQuestions_de;
 
   function escapeHtml(str) {
     var div = document.createElement('div');
@@ -120,15 +165,16 @@
   function renderArchiveLink() {
     var archiveContainer = document.getElementById('daily-archive-container');
     if (!archiveContainer) return;
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
     archiveContainer.innerHTML =
       '<div class="daily-archive-actions">' +
-      '<button class="button daily-archive-btn" id="daily-archive-btn" type="button">Frühere Denkproben</button>' +
-      '<button class="button daily-archive-clear" id="daily-archive-clear" type="button">Denkprobe-Archiv löschen</button>' +
+      '<button class="button daily-archive-btn" id="daily-archive-btn" type="button">' + t('daily.archiveBtn') + '</button>' +
+      '<button class="button daily-archive-clear" id="daily-archive-clear" type="button">' + t('daily.archiveClearBtn') + '</button>' +
       '</div>' +
       '<dialog class="daily-archive-modal" id="daily-archive-modal">' +
-      '<h3>Frühere Denkproben</h3>' +
+      '<h3>' + t('daily.archiveTitle') + '</h3>' +
       '<div id="daily-archive-list"></div>' +
-      '<button class="button" id="daily-archive-close" type="button">Schließen</button>' +
+      '<button class="button" id="daily-archive-close" type="button">' + t('daily.archiveClose') + '</button>' +
       '</dialog>';
 
     var openBtn = document.getElementById('daily-archive-btn');
@@ -151,7 +197,8 @@
 
     if (clearBtn) {
       clearBtn.addEventListener('click', function () {
-        if (!window.confirm('Willst du alle lokal gespeicherten Denkproben wirklich löschen?')) return;
+        var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+        if (!window.confirm(t('daily.archiveConfirm'))) return;
         try {
           localStorage.removeItem(ARCHIVE_KEY);
           localStorage.removeItem(getStorageKey());
@@ -167,19 +214,20 @@
     if (!list) return;
     try {
       var archive = JSON.parse(localStorage.getItem(ARCHIVE_KEY)) || [];
+      var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
       if (!archive.length) {
-        list.innerHTML = '<p>Noch keine archivierten Denkproben.</p>';
+        list.innerHTML = '<p>' + t('daily.archiveEmpty') + '</p>';
         return;
       }
       list.innerHTML = archive.map(function (item) {
-        var sourceLabel = item.source === 'ai' ? 'KI-gestützt' : 'Archivfrage';
+        var sourceLabel = item.source === 'ai' ? t('daily.sourceAI') : t('daily.sourceArchive');
         return '<article class="daily-archive-item">' +
           '<p class="daily-archive-date">' + escapeHtml(item.date) + ' · ' + escapeHtml(sourceLabel) + '</p>' +
           '<p><strong>' + escapeHtml(item.titel) + ':</strong> ' + escapeHtml(item.frage) + '</p>' +
           '</article>';
       }).join('');
     } catch (e) {
-      list.innerHTML = '<p>Archiv konnte nicht geladen werden.</p>';
+      list.innerHTML = '<p>' + t('daily.archiveError') + '</p>';
     }
   }
 
@@ -237,11 +285,12 @@
     if (window.AtelierLoading && typeof window.AtelierLoading.html === 'function') {
       container.innerHTML = window.AtelierLoading.html();
     } else {
+      var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
       container.innerHTML = '<div class="werkstatt-loading">' +
         '<span class="werkstatt-loading-dot"></span>' +
         '<span class="werkstatt-loading-dot"></span>' +
         '<span class="werkstatt-loading-dot"></span>' +
-        '<span class="werkstatt-loading-text">Silizium denkt…</span></div>';
+        '<span class="werkstatt-loading-text">' + t('daily.loading') + '</span></div>';
     }
 
     requestDailyChallenge(seed)
@@ -276,29 +325,31 @@
       if (stored && stored.antwort) savedAnswer = stored.antwort;
     } catch (e) { /* localStorage unavailable */ }
 
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    var lang = (window.AtelierI18n && window.AtelierI18n.lang) || 'de';
     var html = '<div class="daily-card">';
     if (isFallback) {
-      html += '<p class="daily-fallback">Unser Tagesserver ist gerade nicht erreichbar. Hier ist stattdessen eine Ersatzfrage aus unserem Archiv.</p>';
+      html += '<p class="daily-fallback">' + t('daily.fallbackNotice') + '</p>';
     }
     html += '<div class="daily-header">';
-    html += '<span class="daily-badge">Denkprobe des Tages</span>';
-    html += '<span class="daily-date">' + escapeHtml(new Date().toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })) + '</span>';
+    html += '<span class="daily-badge">' + t('daily.badge') + '</span>';
+    html += '<span class="daily-date">' + escapeHtml(new Date().toLocaleDateString(lang === 'en' ? 'en-GB' : 'de-DE', { day: 'numeric', month: 'long', year: 'numeric' })) + '</span>';
     html += '</div>';
     html += '<h3 class="daily-titel">' + escapeHtml(data.titel) + '</h3>';
     html += '<p class="daily-impuls">' + escapeHtml(data.impuls) + '</p>';
     html += '<p class="daily-frage"><strong>' + escapeHtml(data.frage) + '</strong></p>';
 
     if (savedAnswer) {
-      html += '<div class="daily-saved"><span class="daily-saved-label">Deine Antwort:</span> ' + escapeHtml(savedAnswer) + '</div>';
+      html += '<div class="daily-saved"><span class="daily-saved-label">' + t('daily.answerLabel') + '</span> ' + escapeHtml(savedAnswer) + '</div>';
     } else {
       html += '<div class="daily-answer-area">';
-      html += '<label class="sr-only" for="daily-input">Deine Antwort in einem Satz</label>';
-      html += '<input type="text" id="daily-input" class="daily-input" placeholder="Deine Antwort in einem Satz..." maxlength="200">';
-      html += '<button class="button button--accent daily-submit" id="daily-submit" type="button">Antworten</button>';
+      html += '<label class="sr-only" for="daily-input">' + t('daily.answerPlaceholder') + '</label>';
+      html += '<input type="text" id="daily-input" class="daily-input" placeholder="' + t('daily.answerPlaceholder') + '" maxlength="200">';
+      html += '<button class="button button--accent daily-submit" id="daily-submit" type="button">' + t('daily.answerBtn') + '</button>';
       html += '</div>';
     }
 
-    html += '<p class="daily-privacy-note">Deine Antwort bleibt lokal in deinem Browser gespeichert und wird nicht an den Server übertragen.</p>';
+    html += '<p class="daily-privacy-note">' + t('daily.privacy') + '</p>';
     html += '</div>';
     container.innerHTML = html;
 
