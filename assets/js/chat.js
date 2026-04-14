@@ -232,11 +232,12 @@
   }
 
   function resetChat() {
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
     history = [];
     if (messagesEl) {
       messagesEl.innerHTML = '';
     }
-    addMessage('Willkommen im Sparring. Sag mir, was dich beschäftigt — ich werde nicht nett sein, sondern ehrlich.', 'bot');
+    addMessage(t('chat.welcome'), 'bot');
   }
 
   function toggleChat() {
@@ -261,8 +262,9 @@
     var fab = document.createElement('button');
     fab.id = 'chat-fab';
     fab.className = 'chat-fab';
-    fab.setAttribute('aria-label', 'KI-Sparring öffnen');
-    fab.textContent = 'KI-Sparring';
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    fab.setAttribute('aria-label', t('chat.fabLabel'));
+    fab.textContent = t('chat.fabText');
     fab.addEventListener('click', toggleChat);
 
     // Chat window
@@ -270,26 +272,26 @@
     chatEl.id = 'chat-window';
     chatEl.className = 'chat-window';
     chatEl.setAttribute('role', 'dialog');
-    chatEl.setAttribute('aria-label', 'KI-Sparringspartner Chat');
+    chatEl.setAttribute('aria-label', t('chat.title'));
 
     // Header
     var header = document.createElement('div');
     header.className = 'chat-header';
 
     var title = document.createElement('span');
-    title.textContent = 'KI-Sparringspartner';
+    title.textContent = t('chat.title');
 
     var headerBtns = document.createElement('div');
     headerBtns.className = 'chat-header-buttons';
 
     var resetBtn = document.createElement('button');
-    resetBtn.textContent = 'Neues Gespräch';
+    resetBtn.textContent = t('chat.newConvo');
     resetBtn.className = 'chat-header-btn';
     resetBtn.addEventListener('click', resetChat);
 
     var closeBtn = document.createElement('button');
     closeBtn.textContent = '\u2715';
-    closeBtn.setAttribute('aria-label', 'Chat schließen');
+    closeBtn.setAttribute('aria-label', t('chat.closeLabel'));
     closeBtn.className = 'chat-header-btn chat-header-btn--close';
     closeBtn.addEventListener('click', toggleChat);
 
@@ -303,7 +305,7 @@
     messagesEl.className = 'chat-messages';
     messagesEl.setAttribute('role', 'log');
     messagesEl.setAttribute('aria-live', 'polite');
-    messagesEl.setAttribute('aria-label', 'Chat-Nachrichten');
+    messagesEl.setAttribute('aria-label', t('chat.messagesLabel'));
 
     // Input area
     var inputArea = document.createElement('div');
@@ -312,13 +314,13 @@
     inputEl = document.createElement('input');
     inputEl.type = 'text';
     inputEl.className = 'chat-input';
-    inputEl.placeholder = 'Was denkst du?';
-    inputEl.setAttribute('aria-label', 'Nachricht eingeben');
+    inputEl.placeholder = t('chat.placeholder');
+    inputEl.setAttribute('aria-label', t('chat.inputLabel'));
 
     var sendBtn = document.createElement('button');
-    sendBtn.textContent = 'Senden';
+    sendBtn.textContent = t('chat.send');
     sendBtn.className = 'chat-send-btn';
-    sendBtn.setAttribute('aria-label', 'Nachricht senden');
+    sendBtn.setAttribute('aria-label', t('chat.sendLabel'));
 
     sendBtn.addEventListener('click', handleSend);
     inputEl.addEventListener('keydown', function (e) {
@@ -368,7 +370,8 @@
 
   function init() {
     buildUI();
-    addMessage('Willkommen im Sparring. Sag mir, was dich beschäftigt — ich werde nicht nett sein, sondern ehrlich.', 'bot');
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    addMessage(t('chat.welcome'), 'bot');
   }
 
   window.AtelierChat = {

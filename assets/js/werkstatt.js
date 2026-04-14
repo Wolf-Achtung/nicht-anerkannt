@@ -12,6 +12,8 @@
     return div.innerHTML;
   }
 
+  var _t = function (k) { return (window.AtelierI18n && window.AtelierI18n.t) ? window.AtelierI18n.t(k) : k; };
+
   function showLoading(el) {
     if (window.AtelierLoading && typeof window.AtelierLoading.html === 'function') {
       el.innerHTML = window.AtelierLoading.html();
@@ -21,7 +23,7 @@
       '<span class="werkstatt-loading-dot"></span>' +
       '<span class="werkstatt-loading-dot"></span>' +
       '<span class="werkstatt-loading-dot"></span>' +
-      '<span class="werkstatt-loading-text">Silizium denkt…</span></div>';
+      '<span class="werkstatt-loading-text">' + _t('ws.loading') + '</span></div>';
   }
 
   function showError(el, msg) {
@@ -57,7 +59,7 @@
         .then(function (data) {
           if (data.error) { showError(output, data.error); return; }
 
-          var html = '<h3 class="werkstatt-result-title">Gegenpositionen zu:</h3>' +
+          var html = '<h3 class="werkstatt-result-title">' + _t('ws.resultTitle') + '</h3>' +
             '<p class="werkstatt-these">' + escapeHtml(data.these) + '</p>';
 
           if (data.gegenpositionen && data.gegenpositionen.length) {
@@ -76,7 +78,7 @@
             window.AtelierScore.track('widerspruch');
           }
         })
-        .catch(function () { showError(output, 'Verbindungsfehler. Bitte erneut versuchen.'); })
+        .catch(function () { showError(output, _t('ws.connectionError')); })
         .finally(function () { btn.disabled = false; });
     });
   }
@@ -105,24 +107,24 @@
           var html = '<div class="werkstatt-denkprobe">';
           html += '<h3 class="werkstatt-result-title">' + escapeHtml(data.thema || thema) + '</h3>';
 
-          html += '<div class="werkstatt-card"><div class="werkstatt-card-label">Problemstellung</div>' +
+          html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' + _t('ws.problemstellung') + '</div>' +
             '<p>' + escapeHtml(data.problemstellung) + '</p></div>';
 
           if (data.falsche_alternative) {
             html += '<div class="werkstatt-card werkstatt-card--dual">' +
-              '<div class="werkstatt-card-label">Die falsche Alternative</div>' +
+              '<div class="werkstatt-card-label">' + _t('ws.falscheAlt') + '</div>' +
               '<div class="werkstatt-dual">' +
-              '<div class="werkstatt-dual-side"><strong>Position A:</strong> ' + escapeHtml(data.falsche_alternative.position_a) + '</div>' +
+              '<div class="werkstatt-dual-side"><strong>' + _t('ws.positionA') + '</strong> ' + escapeHtml(data.falsche_alternative.position_a) + '</div>' +
               '<div class="werkstatt-dual-vs">vs.</div>' +
-              '<div class="werkstatt-dual-side"><strong>Position B:</strong> ' + escapeHtml(data.falsche_alternative.position_b) + '</div>' +
+              '<div class="werkstatt-dual-side"><strong>' + _t('ws.positionB') + '</strong> ' + escapeHtml(data.falsche_alternative.position_b) + '</div>' +
               '</div></div>';
           }
 
-          html += '<div class="werkstatt-card werkstatt-card--accent"><div class="werkstatt-card-label">Radikale Mitte</div>' +
+          html += '<div class="werkstatt-card werkstatt-card--accent"><div class="werkstatt-card-label">' + _t('ws.radikaleMitte') + '</div>' +
             '<p>' + escapeHtml(data.radikale_mitte) + '</p></div>';
 
           if (data.offene_fragen && data.offene_fragen.length) {
-            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">Offene Fragen</div><ul>';
+            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' + _t('ws.offeneFragen') + '</div><ul>';
             data.offene_fragen.forEach(function (f) {
               html += '<li>' + escapeHtml(f) + '</li>';
             });
@@ -136,7 +138,7 @@
             window.AtelierScore.track('denkprobe');
           }
         })
-        .catch(function () { showError(output, 'Verbindungsfehler. Bitte erneut versuchen.'); })
+        .catch(function () { showError(output, _t('ws.connectionError')); })
         .finally(function () { btn.disabled = false; });
     });
   }
@@ -178,7 +180,7 @@
           answerArea.style.display = 'block';
           if (urteilInput) { urteilInput.value = ''; urteilInput.focus(); }
         })
-        .catch(function () { showError(dilemmaEl, 'Konnte kein Dilemma laden.'); })
+        .catch(function () { showError(dilemmaEl, _t('ws.dilemmaError')); })
         .finally(function () { newBtn.disabled = false; });
     }
 
@@ -200,11 +202,11 @@
             }
 
             var html = '<div class="werkstatt-feedback">';
-            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">Blinde Stelle</div>' +
+            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' + _t('ws.blindeStelle') + '</div>' +
               '<p>' + escapeHtml(data.blinde_stelle) + '</p></div>';
-            html += '<div class="werkstatt-card werkstatt-card--accent"><div class="werkstatt-card-label">Stärke</div>' +
+            html += '<div class="werkstatt-card werkstatt-card--accent"><div class="werkstatt-card-label">' + _t('ws.staerke') + '</div>' +
               '<p>' + escapeHtml(data.staerke) + '</p></div>';
-            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">Vertiefung</div>' +
+            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' + _t('ws.vertiefung') + '</div>' +
               '<p class="werkstatt-frage"><strong>' + escapeHtml(data.vertiefung) + '</strong></p></div>';
             html += '</div>';
             output.innerHTML = html;
@@ -213,7 +215,7 @@
               window.AtelierScore.track('urteil');
             }
           })
-          .catch(function () { showError(output, 'Verbindungsfehler.'); })
+          .catch(function () { showError(output, _t('ws.connectionShort')); })
           .finally(function () { judgeBtn.disabled = false; });
       });
     }
@@ -233,7 +235,7 @@
     var output = document.getElementById('wp-output');
     if (!btn || !input || !stepsEl) return;
 
-    var stepNames = ['Disziplinen', 'Stakeholder', 'Widersprüche', 'Handlungsoptionen', 'Urteilsfrage'];
+    var stepNames = [_t('ws.stepDisziplinen'), _t('ws.stepStakeholder'), _t('ws.stepWidersprueche'), _t('ws.stepHandlung'), _t('ws.stepUrteil')];
     var results = [];
     var currentStep = 0;
     var problem = '';
@@ -263,12 +265,12 @@
           var html = renderStepResult(data, step);
 
           if (step < 5) {
-            html += '<button class="button button--accent werkstatt-next-step" type="button">Weiter: ' +
+            html += '<button class="button button--accent werkstatt-next-step" type="button">' + _t('ws.nextStep') + ' ' +
               stepNames[step] + ' →</button>';
           } else {
             html += '<div class="werkstatt-card werkstatt-card--accent" style="margin-top:1rem;">' +
-              '<div class="werkstatt-card-label">Werkstatt abgeschlossen</div>' +
-              '<p>Du hast alle fünf Schritte durchlaufen. Dein Denkprozess ist dokumentiert.</p></div>';
+              '<div class="werkstatt-card-label">' + _t('ws.workshopDone') + '</div>' +
+              '<p>' + _t('ws.workshopDoneText') + '</p></div>';
           }
 
           output.innerHTML = html;
@@ -282,7 +284,7 @@
             });
           }
         })
-        .catch(function () { showError(output, 'Verbindungsfehler.'); });
+        .catch(function () { showError(output, _t('ws.connectionShort')); });
     }
 
     function renderStepResult(data, step) {
@@ -305,7 +307,7 @@
 
       if (data.widersprueche) {
         data.widersprueche.forEach(function (w) {
-          html += '<div class="werkstatt-card"><div class="werkstatt-card-label">Spannung</div>' +
+          html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' + _t('ws.spannung') + '</div>' +
             '<p><strong>' + escapeHtml(w.spannung) + '</strong><br>' +
             escapeHtml(w.warum_unlösbar || w.warum_unloesbar || '') + '</p></div>';
         });
@@ -321,9 +323,9 @@
       }
 
       if (data.zusammenfassung) {
-        html += '<div class="werkstatt-card"><div class="werkstatt-card-label">Zusammenfassung</div>' +
+        html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' + _t('ws.zusammenfassung') + '</div>' +
           '<p>' + escapeHtml(data.zusammenfassung) + '</p></div>';
-        html += '<div class="werkstatt-card werkstatt-card--accent"><div class="werkstatt-card-label">Deine Urteilsfrage</div>' +
+        html += '<div class="werkstatt-card werkstatt-card--accent"><div class="werkstatt-card-label">' + _t('ws.deineUrteilsfrage') + '</div>' +
           '<p class="werkstatt-frage"><strong>' + escapeHtml(data.urteilsfrage) + '</strong></p></div>';
       }
 
@@ -378,31 +380,31 @@
           var html = '<div class="werkstatt-stresstest">';
 
           if (data.staerken && data.staerken.length) {
-            html += '<div class="werkstatt-card werkstatt-card--accent"><div class="werkstatt-card-label">Stärken</div><ul>';
+            html += '<div class="werkstatt-card werkstatt-card--accent"><div class="werkstatt-card-label">' + _t('ws.staerken') + '</div><ul>';
             data.staerken.forEach(function (s) { html += '<li>' + escapeHtml(s) + '</li>'; });
             html += '</ul></div>';
           }
 
           if (data.behauptungen && data.behauptungen.length) {
-            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">Behauptungen ohne Begründung</div><ul>';
+            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' + _t('ws.behauptungen') + '</div><ul>';
             data.behauptungen.forEach(function (b) { html += '<li>' + escapeHtml(b) + '</li>'; });
             html += '</ul></div>';
           }
 
           if (data.fehlender_widerspruch && data.fehlender_widerspruch.length) {
-            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">Fehlender Widerspruch</div><ul>';
+            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' + _t('ws.fehlenderWid') + '</div><ul>';
             data.fehlender_widerspruch.forEach(function (f) { html += '<li>' + escapeHtml(f) + '</li>'; });
             html += '</ul></div>';
           }
 
           if (data.meinung_als_urteil && data.meinung_als_urteil.length) {
-            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">Meinung als Urteil verkleidet</div><ul>';
+            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' + _t('ws.meinungAlsUrteil') + '</div><ul>';
             data.meinung_als_urteil.forEach(function (m) { html += '<li>' + escapeHtml(m) + '</li>'; });
             html += '</ul></div>';
           }
 
           if (data.fehlende_frage) {
-            html += '<div class="werkstatt-card werkstatt-card--accent"><div class="werkstatt-card-label">Die fehlende Frage</div>' +
+            html += '<div class="werkstatt-card werkstatt-card--accent"><div class="werkstatt-card-label">' + _t('ws.fehlendeFrage') + '</div>' +
               '<p class="werkstatt-frage"><strong>' + escapeHtml(data.fehlende_frage) + '</strong></p></div>';
           }
 
@@ -413,7 +415,7 @@
             window.AtelierScore.track('stresstest');
           }
         })
-        .catch(function () { showError(output, 'Verbindungsfehler.'); })
+        .catch(function () { showError(output, _t('ws.connectionShort')); })
         .finally(function () { btn.disabled = false; });
     });
   }
@@ -442,11 +444,11 @@
 
           var html = '<div class="werkstatt-translation">';
           html += '<div class="werkstatt-card werkstatt-card--accent">' +
-            '<div class="werkstatt-card-label">' + escapeHtml(language) + '</div>' +
+            '<div class="werkstatt-card-label">' + escapeHtml(language || '') + '</div>' +
             '<p class="werkstatt-translation">' + escapeHtml(data.translation) + '</p></div>';
 
           if (data.notes) {
-            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">Kulturelle Anmerkung</div>' +
+            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' + _t('ws.kulturAnmerkung') + '</div>' +
               '<p class="werkstatt-note">' + escapeHtml(data.notes) + '</p></div>';
           }
 
@@ -457,7 +459,7 @@
             window.AtelierScore.track('translate');
           }
         })
-        .catch(function () { showError(output, 'Verbindungsfehler.'); })
+        .catch(function () { showError(output, _t('ws.connectionShort')); })
         .finally(function () { btn.disabled = false; });
     });
   }
@@ -488,18 +490,18 @@
 
           var html = '<div class="werkstatt-perspektive">';
           html += '<div class="werkstatt-card werkstatt-card--accent">' +
-            '<div class="werkstatt-card-label">Aus Sicht: ' + escapeHtml(data.perspektive) + '</div>' +
+            '<div class="werkstatt-card-label">' + _t('ws.ausSicht') + ' ' + escapeHtml(data.perspektive) + '</div>' +
             '<p>' + escapeHtml(data.reformulierung) + '</p></div>';
 
           if (data.ueberraschung) {
             html += '<div class="werkstatt-card">' +
-              '<div class="werkstatt-card-label">Was du übersehen hast</div>' +
+              '<div class="werkstatt-card-label">' + _t('ws.uebersehen') + '</div>' +
               '<p>' + escapeHtml(data.ueberraschung) + '</p></div>';
           }
 
           if (data.bruecke) {
             html += '<div class="werkstatt-card">' +
-              '<div class="werkstatt-card-label">Brücke zwischen den Perspektiven</div>' +
+              '<div class="werkstatt-card-label">' + _t('ws.bruecke') + '</div>' +
               '<p>' + escapeHtml(data.bruecke) + '</p></div>';
           }
 
@@ -510,7 +512,7 @@
             window.AtelierScore.track('perspektive');
           }
         })
-        .catch(function () { showError(output, 'Verbindungsfehler. Bitte erneut versuchen.'); })
+        .catch(function () { showError(output, _t('ws.connectionError')); })
         .finally(function () { btn.disabled = false; });
     });
   }
@@ -548,16 +550,16 @@
           var html = '<div class="werkstatt-gegenrede">';
 
           html += '<div class="werkstatt-card werkstatt-card--accent">' +
-            '<div class="werkstatt-card-label">Gegenposition</div>' +
+            '<div class="werkstatt-card-label">' + _t('ws.gegenposition') + '</div>' +
             '<p>' + escapeHtml(data.gegenposition) + '</p></div>';
 
           html += '<div class="werkstatt-card">' +
-            '<div class="werkstatt-card-label">Die ungestellte Frage</div>' +
+            '<div class="werkstatt-card-label">' + _t('ws.ungestellteFrage') + '</div>' +
             '<p class="werkstatt-frage"><strong>' + escapeHtml(data.ungestellte_frage) + '</strong></p></div>';
 
           if (data.annahmen && data.annahmen.length) {
             html += '<div class="werkstatt-card">' +
-              '<div class="werkstatt-card-label">Ungesagte Annahmen</div><ul>';
+              '<div class="werkstatt-card-label">' + _t('ws.ungesagteAnnahmen') + '</div><ul>';
             data.annahmen.forEach(function (a) {
               html += '<li>' + escapeHtml(a) + '</li>';
             });
@@ -565,7 +567,7 @@
           }
 
           html += '<div class="werkstatt-card">' +
-            '<div class="werkstatt-card-label">Fehlende Stimme</div>' +
+            '<div class="werkstatt-card-label">' + _t('ws.fehlendeStimme') + '</div>' +
             '<p>' + escapeHtml(data.fehlende_stimme) + '</p></div>';
 
           html += '</div>';
@@ -575,7 +577,7 @@
             window.AtelierScore.track('gegenrede');
           }
         })
-        .catch(function () { showError(output, 'Verbindungsfehler. Bitte erneut versuchen.'); })
+        .catch(function () { showError(output, _t('ws.connectionError')); })
         .finally(function () { btn.disabled = false; });
     });
   }
@@ -607,7 +609,7 @@
 
           // Central thesis
           html += '<div class="argmap-these">' +
-            '<div class="werkstatt-card-label">These</div>' +
+            '<div class="werkstatt-card-label">' + _t('ws.these') + '</div>' +
             '<p><strong>' + escapeHtml(data.these) + '</strong></p></div>';
 
           // Pro/Contra columns
@@ -615,26 +617,26 @@
 
           // Pro column
           html += '<div class="argmap-col argmap-col--pro">';
-          html += '<h4 class="argmap-col-title argmap-col-title--pro">Pro</h4>';
+          html += '<h4 class="argmap-col-title argmap-col-title--pro">' + _t('ws.pro') + '</h4>';
           if (data.pro && data.pro.length) {
             data.pro.forEach(function (p) {
               html += '<div class="werkstatt-card argmap-node argmap-node--pro">' +
                 '<div class="werkstatt-card-label">' + escapeHtml(p.argument) + '</div>' +
                 '<p>' + escapeHtml(p.begruendung) + '</p>' +
-                '<p class="argmap-einwand"><em>Einwand: ' + escapeHtml(p.einwand) + '</em></p></div>';
+                '<p class="argmap-einwand"><em>' + _t('ws.einwand') + ' ' + escapeHtml(p.einwand) + '</em></p></div>';
             });
           }
           html += '</div>';
 
           // Contra column
           html += '<div class="argmap-col argmap-col--contra">';
-          html += '<h4 class="argmap-col-title argmap-col-title--contra">Contra</h4>';
+          html += '<h4 class="argmap-col-title argmap-col-title--contra">' + _t('ws.contra') + '</h4>';
           if (data.contra && data.contra.length) {
             data.contra.forEach(function (c) {
               html += '<div class="werkstatt-card argmap-node argmap-node--contra">' +
                 '<div class="werkstatt-card-label">' + escapeHtml(c.argument) + '</div>' +
                 '<p>' + escapeHtml(c.begruendung) + '</p>' +
-                '<p class="argmap-einwand"><em>Einwand: ' + escapeHtml(c.einwand) + '</em></p></div>';
+                '<p class="argmap-einwand"><em>' + _t('ws.einwand') + ' ' + escapeHtml(c.einwand) + '</em></p></div>';
             });
           }
           html += '</div>';
@@ -643,7 +645,7 @@
           // Synthese
           if (data.synthese) {
             html += '<div class="werkstatt-card werkstatt-card--accent argmap-synthese">' +
-              '<div class="werkstatt-card-label">Synthese – Radikale Mitte</div>' +
+              '<div class="werkstatt-card-label">' + _t('ws.synthese') + '</div>' +
               '<p>' + escapeHtml(data.synthese) + '</p></div>';
           }
 
@@ -654,7 +656,7 @@
             window.AtelierScore.track('argumentkarte');
           }
         })
-        .catch(function () { showError(output, 'Verbindungsfehler. Bitte erneut versuchen.'); })
+        .catch(function () { showError(output, _t('ws.connectionError')); })
         .finally(function () { btn.disabled = false; });
     });
   }
@@ -699,7 +701,7 @@
       postJSON('/api/chat', { message: text, history: history, stille: true })
         .then(function (data) {
           if (typing.parentNode) typing.parentNode.removeChild(typing);
-          var reply = data.reply || data.error || 'Keine Antwort erhalten.';
+          var reply = data.reply || data.error || _t('ws.noReply');
           addMessage('ki', reply);
           history.push({ sender: 'ki', text: reply });
 
@@ -709,7 +711,7 @@
         })
         .catch(function () {
           if (typing.parentNode) typing.parentNode.removeChild(typing);
-          addMessage('ki', 'Verbindungsfehler. Bitte erneut versuchen.');
+          addMessage('ki', _t('ws.connectionError'));
         })
         .finally(function () { btn.disabled = false; input.focus(); });
     }

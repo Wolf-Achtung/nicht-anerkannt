@@ -1,0 +1,39 @@
+{
+  "messages": [
+    {
+      "type": "update",
+      "text": "Next Contradiction Salon: topic to be announced soon",
+      "date": "2026-04-05"
+    },
+    {
+      "type": "zitat",
+      "text": "\"The Radical Middle does not mediate between everything. It distinguishes.\"",
+      "date": "2026-04-01"
+    },
+    {
+      "type": "update",
+      "text": "New thinking challenge in the Ideas Archive: How does AI change our capacity for judgment?",
+      "date": "2026-03-28"
+    },
+    {
+      "type": "zitat",
+      "text": "\"Those who use AI only to produce output become replaceable.\"",
+      "date": "2026-03-25"
+    },
+    {
+      "type": "update",
+      "text": "The Atelier is looking for fellow thinkers – pull requests welcome!",
+      "date": "2026-03-20"
+    },
+    {
+      "type": "zitat",
+      "text": "\"Play is not the opposite of seriousness.\"",
+      "date": "2026-03-15"
+    },
+    {
+      "type": "update",
+      "text": "Manifesto Version 1.0 published – feedback welcome",
+      "date": "2026-03-10"
+    }
+  ]
+}
