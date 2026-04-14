@@ -1,0 +1,93 @@
+{
+  "title": "Disegno-Test: Wer bist du im KI-Zeitalter?",
+  "description": "Operator, Kurator oder Entwerfende:r? Sieben Fragen – kein Richtig oder Falsch, aber ein Spiegel deiner Haltung zur Gestaltung.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "Du beginnst ein neues Gestaltungsprojekt. Dein erster Griff geht zu:",
+      "options": [
+        {"text": "Figma, Photoshop oder ein anderes Programm – ich experimentiere direkt am Bildschirm.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}},
+        {"text": "ChatGPT oder Midjourney – ich lasse mir erstmal Varianten generieren.", "scores": {"operator": 1, "kurator": 1, "entwerfend": 0}},
+        {"text": "Stift und Papier – ich skizziere die Kernidee, bevor ich irgendein Tool öffne.", "scores": {"operator": 0, "kurator": 0, "entwerfend": 2}},
+        {"text": "Ich recherchiere den kulturellen Kontext und formuliere zuerst Kriterien.", "scores": {"operator": 0, "kurator": 1, "entwerfend": 2}}
+      ]
+    },
+    {
+      "id": 2,
+      "text": "KI generiert ein beeindruckendes Bild aus deinem Prompt. Du denkst:",
+      "options": [
+        {"text": "Perfekt, das kann ich direkt verwenden.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}},
+        {"text": "Guter Ausgangspunkt – ich verfeinere den Prompt für bessere Ergebnisse.", "scores": {"operator": 0, "kurator": 2, "entwerfend": 0}},
+        {"text": "Technisch gut, aber was war eigentlich meine ursprüngliche Absicht?", "scores": {"operator": 0, "kurator": 0, "entwerfend": 2}},
+        {"text": "Dem Ergebnis fehlt eine Haltung. Schön, aber beliebig.", "scores": {"operator": 0, "kurator": 1, "entwerfend": 2}}
+      ]
+    },
+    {
+      "id": 3,
+      "text": "Was macht für dich eine:n gute:n Gestalter:in aus?",
+      "options": [
+        {"text": "Wer die Werkzeuge perfekt beherrscht und schnell liefert.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}},
+        {"text": "Wer aus vielen Möglichkeiten die beste erkennt und auswählt.", "scores": {"operator": 0, "kurator": 2, "entwerfend": 0}},
+        {"text": "Wer sieht, was andere nicht sehen – und eine Richtung setzt.", "scores": {"operator": 0, "kurator": 0, "entwerfend": 2}},
+        {"text": "Wer Bedeutung erzeugt, nicht nur Oberflächen.", "scores": {"operator": 0, "kurator": 1, "entwerfend": 2}}
+      ]
+    },
+    {
+      "id": 4,
+      "text": "Zeichnen ist für dich:",
+      "options": [
+        {"text": "Ein nettes Hobby, aber für professionelles Design nicht nötig.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}},
+        {"text": "Ein schneller Weg, Ideen zu kommunizieren.", "scores": {"operator": 0, "kurator": 2, "entwerfend": 0}},
+        {"text": "Eine Art zu denken – ich verstehe Dinge, indem ich sie zeichne.", "scores": {"operator": 0, "kurator": 0, "entwerfend": 2}},
+        {"text": "Etwas, das KI bald besser kann als ich.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}}
+      ]
+    },
+    {
+      "id": 5,
+      "text": "Die größte Veränderung, die KI im Design bringt:",
+      "options": [
+        {"text": "Endlich weniger langweilige Produktionsarbeit.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}},
+        {"text": "Mehr Varianten, aus denen man wählen kann.", "scores": {"operator": 0, "kurator": 2, "entwerfend": 0}},
+        {"text": "Die Frage, WAS gestaltet werden soll, wird wichtiger als das WIE.", "scores": {"operator": 0, "kurator": 0, "entwerfend": 2}},
+        {"text": "Jetzt kann jeder designen – Demokratisierung pur.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}}
+      ]
+    },
+    {
+      "id": 6,
+      "text": "Ein leeres Blatt Papier ist für dich:",
+      "options": [
+        {"text": "Einschüchternd – ich brauche ein Template oder eine Referenz.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}},
+        {"text": "Ein Startpunkt – ich sammle erstmal Input und Inspiration.", "scores": {"operator": 0, "kurator": 2, "entwerfend": 0}},
+        {"text": "Ein Denkraum, auf dem Relationen sichtbar und Behauptungen formbar werden.", "scores": {"operator": 0, "kurator": 0, "entwerfend": 2}},
+        {"text": "Unnötig – ich arbeite direkt am Bildschirm.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}}
+      ]
+    },
+    {
+      "id": 7,
+      "text": "Wenn Maschinen alles ausführen können, wird die wertvollste Fähigkeit:",
+      "options": [
+        {"text": "Geschwindigkeit und Effizienz.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}},
+        {"text": "Guter Geschmack und die Fähigkeit, das Beste auszuwählen.", "scores": {"operator": 0, "kurator": 2, "entwerfend": 0}},
+        {"text": "Die Qualität der ersten Setzung – Urteil, Vision, kulturelle Tiefe.", "scores": {"operator": 0, "kurator": 0, "entwerfend": 2}},
+        {"text": "Prompt Engineering – wer die besten Anweisungen schreibt, gewinnt.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}}
+      ]
+    }
+  ],
+  "results": {
+    "entwerfend": {
+      "title": "Entwerfende:r – Designator",
+      "description": "Du denkst, bevor du ausführst. Du setzt Richtung, bevor du Werkzeuge öffnest. KI wird dein Gewerke – du gibst die Vision, die Maschine entfaltet sie. Du stehst in der Tradition des Disegno: Gestaltung als Erkenntnis, nicht als Produktion.",
+      "motto": "Erst der Strich, dann die Antwort."
+    },
+    "kurator": {
+      "title": "Kurator:in",
+      "description": "Du wählst, ordnest und verfeinerst. Du erkennst Qualität und triffst gute Entscheidungen unter Varianten. KI verstärkt deine Fähigkeit zu selektieren – aber das Atelier lädt dich ein, auch selbst zu setzen. Vom Auswählen zum Entwerfen ist nur ein Schritt.",
+      "motto": "Nicht nur das Beste wählen – das Neue setzen."
+    },
+    "operator": {
+      "title": "Operator:in",
+      "description": "Du definierst dich über Werkzeugbeherrschung und technische Perfektion. Das war jahrzehntelang der Standard – aber KI übernimmt jetzt genau diese Arbeit. Das ist kein Angriff auf dich. Es ist eine Einladung, zu entdecken, was Gestaltung jenseits der Software bedeutet.",
+      "motto": "Die Maschine übernimmt die Maschine. Was bleibt, bist du."
+    }
+  }
+}

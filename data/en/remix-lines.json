@@ -10,6 +10,12 @@
 
     { "cluster": "wicked", "text": "Real problems are interdisciplinary and contradictory." },
     { "cluster": "wicked", "text": "Contradiction is method, not disturbance." },
-    { "cluster": "wicked", "text": "AI is a sparring partner, counter-voice, and stress test." }
+    { "cluster": "wicked", "text": "AI is a sparring partner, counter-voice, and stress test." },
+
+    { "cluster": "disegno", "text": "AI does not threaten the essence of design – it ends the confusion of design with software operation." },
+    { "cluster": "disegno", "text": "When machines take over machine-like work, human judgment becomes the central resource." },
+    { "cluster": "disegno", "text": "First the stroke, then the answer. First the draft, then the algorithmic unfolding." },
+    { "cluster": "disegno", "text": "Not the abolition of Disegno, but its return." },
+    { "cluster": "disegno", "text": "More human through a more wisely guided AI." }
   ]
 }
