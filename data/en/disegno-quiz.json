@@ -1,0 +1,93 @@
+{
+  "title": "Disegno Test: Who Are You in the Age of AI?",
+  "description": "Operator, Curator, or Designer? Seven questions – no right or wrong, but a mirror of your stance toward design.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "You're starting a new design project. Your first move is:",
+      "options": [
+        {"text": "Open Figma, Photoshop, or another tool – I experiment directly on screen.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}},
+        {"text": "ChatGPT or Midjourney – I have AI generate variations first.", "scores": {"operator": 1, "kurator": 1, "entwerfend": 0}},
+        {"text": "Pen and paper – I sketch the core idea before opening any tool.", "scores": {"operator": 0, "kurator": 0, "entwerfend": 2}},
+        {"text": "I research the cultural context and formulate criteria first.", "scores": {"operator": 0, "kurator": 1, "entwerfend": 2}}
+      ]
+    },
+    {
+      "id": 2,
+      "text": "AI generates an impressive image from your prompt. You think:",
+      "options": [
+        {"text": "Perfect, I can use this directly.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}},
+        {"text": "Good starting point – I'll refine the prompt for better results.", "scores": {"operator": 0, "kurator": 2, "entwerfend": 0}},
+        {"text": "Technically good, but what was my original intention?", "scores": {"operator": 0, "kurator": 0, "entwerfend": 2}},
+        {"text": "The result lacks a point of view. Beautiful, but arbitrary.", "scores": {"operator": 0, "kurator": 1, "entwerfend": 2}}
+      ]
+    },
+    {
+      "id": 3,
+      "text": "What makes a good designer in your eyes?",
+      "options": [
+        {"text": "Someone who masters the tools perfectly and delivers fast.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}},
+        {"text": "Someone who recognizes and selects the best option from many.", "scores": {"operator": 0, "kurator": 2, "entwerfend": 0}},
+        {"text": "Someone who sees what others don't – and sets a direction.", "scores": {"operator": 0, "kurator": 0, "entwerfend": 2}},
+        {"text": "Someone who creates meaning, not just surfaces.", "scores": {"operator": 0, "kurator": 1, "entwerfend": 2}}
+      ]
+    },
+    {
+      "id": 4,
+      "text": "Drawing is for you:",
+      "options": [
+        {"text": "A nice hobby, but not necessary for professional design.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}},
+        {"text": "A quick way to communicate ideas.", "scores": {"operator": 0, "kurator": 2, "entwerfend": 0}},
+        {"text": "A way of thinking – I understand things by drawing them.", "scores": {"operator": 0, "kurator": 0, "entwerfend": 2}},
+        {"text": "Something AI will soon do better than me.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}}
+      ]
+    },
+    {
+      "id": 5,
+      "text": "The biggest change AI brings to design:",
+      "options": [
+        {"text": "Finally less boring production work.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}},
+        {"text": "More variations to choose from.", "scores": {"operator": 0, "kurator": 2, "entwerfend": 0}},
+        {"text": "The question of WHAT to create becomes more important than HOW.", "scores": {"operator": 0, "kurator": 0, "entwerfend": 2}},
+        {"text": "Now everyone can be a designer – pure democratization.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}}
+      ]
+    },
+    {
+      "id": 6,
+      "text": "An empty sheet of paper is for you:",
+      "options": [
+        {"text": "Intimidating – I need a template or reference.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}},
+        {"text": "A starting point – I gather input and inspiration first.", "scores": {"operator": 0, "kurator": 2, "entwerfend": 0}},
+        {"text": "A thinking space where relations become visible and assertions take shape.", "scores": {"operator": 0, "kurator": 0, "entwerfend": 2}},
+        {"text": "Unnecessary – I work directly on screen.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}}
+      ]
+    },
+    {
+      "id": 7,
+      "text": "When machines can execute everything, the most valuable skill becomes:",
+      "options": [
+        {"text": "Speed and efficiency.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}},
+        {"text": "Good taste and the ability to select the best.", "scores": {"operator": 0, "kurator": 2, "entwerfend": 0}},
+        {"text": "The quality of the first setting – judgment, vision, cultural depth.", "scores": {"operator": 0, "kurator": 0, "entwerfend": 2}},
+        {"text": "Prompt engineering – whoever writes the best instructions wins.", "scores": {"operator": 2, "kurator": 0, "entwerfend": 0}}
+      ]
+    }
+  ],
+  "results": {
+    "entwerfend": {
+      "title": "Designer – Designator",
+      "description": "You think before you execute. You set direction before opening tools. AI becomes your workshop – you provide the vision, the machine unfolds it. You stand in the tradition of Disegno: design as cognition, not production.",
+      "motto": "First the stroke, then the answer."
+    },
+    "kurator": {
+      "title": "Curator",
+      "description": "You select, arrange, and refine. You recognize quality and make good decisions among variants. AI amplifies your ability to curate – but the Atelier invites you to also set your own direction. From selecting to designing is just one step.",
+      "motto": "Don't just choose the best – set something new."
+    },
+    "operator": {
+      "title": "Operator",
+      "description": "You define yourself through tool mastery and technical perfection. That was the standard for decades – but AI is now taking over exactly this work. This is not an attack on you. It's an invitation to discover what design means beyond software.",
+      "motto": "The machine takes over the machine. What remains is you."
+    }
+  }
+}
