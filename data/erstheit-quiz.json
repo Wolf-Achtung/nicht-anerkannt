@@ -1,0 +1,93 @@
+{
+  "title": "Erstheits-Test: Wie offen bist du fur das Unbestimmte?",
+  "description": "Staunende:r, Schnellschließer:in oder Ambiguitäts-Athlet:in? Sieben Fragen -- kein Richtig oder Falsch, aber ein Spiegel deiner Haltung zum Noch-nicht-Bestimmten.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "Du betrittst einen Raum und etwas fällt dir auf -- du weißt aber nicht, was genau. Dein erster Impuls:",
+      "options": [
+        {"text": "Ich scanne systematisch den Raum, bis ich die Ursache identifiziert habe.", "scores": {"staunen": 0, "schliessen": 2, "verweilen": 0}},
+        {"text": "Ich bleibe einen Moment stehen und lasse das Gefühl wirken, bevor ich es benenne.", "scores": {"staunen": 2, "schliessen": 0, "verweilen": 1}},
+        {"text": "Ich frage jemanden, ob etwas anders ist als sonst.", "scores": {"staunen": 0, "schliessen": 1, "verweilen": 0}},
+        {"text": "Ich genieße die Irritation und beobachte, wie sich meine Wahrnehmung langsam schärft.", "scores": {"staunen": 1, "schliessen": 0, "verweilen": 2}}
+      ]
+    },
+    {
+      "id": 2,
+      "text": "KI liefert dir in Sekunden eine perfekte Antwort auf eine Frage, die dich schon lange beschäftigt. Dein Gefühl:",
+      "options": [
+        {"text": "Erleichterung -- endlich Klarheit. Weiter zum nächsten Problem.", "scores": {"staunen": 0, "schliessen": 2, "verweilen": 0}},
+        {"text": "Skepsis -- so schnell kann keine gute Antwort entstehen.", "scores": {"staunen": 0, "schliessen": 1, "verweilen": 1}},
+        {"text": "Trauer -- die Frage war mir wertvoller als jede Antwort.", "scores": {"staunen": 2, "schliessen": 0, "verweilen": 1}},
+        {"text": "Neugier -- ich hinterfrage die Antwort und lasse die Frage offen weiter wirken.", "scores": {"staunen": 1, "schliessen": 0, "verweilen": 2}}
+      ]
+    },
+    {
+      "id": 3,
+      "text": "Eine Diskussion wird hitzig. Beide Seiten haben starke Argumente. Du merkst, dass du keine klare Position hast. Was tust du?",
+      "options": [
+        {"text": "Ich entscheide mich für eine Seite -- Ambivalenz ist Schwäche.", "scores": {"staunen": 0, "schliessen": 2, "verweilen": 0}},
+        {"text": "Ich formuliere einen Kompromiss, der beide Seiten berücksichtigt.", "scores": {"staunen": 0, "schliessen": 1, "verweilen": 1}},
+        {"text": "Ich halte die Spannung aus und versuche, den Widerspruch tiefer zu verstehen.", "scores": {"staunen": 1, "schliessen": 0, "verweilen": 2}},
+        {"text": "Ich stelle eine Frage, die beide Seiten irritiert.", "scores": {"staunen": 2, "schliessen": 0, "verweilen": 1}}
+      ]
+    },
+    {
+      "id": 4,
+      "text": "Du stehst vor einem leeren Blatt. Kein Auftrag, keine Deadline, keine Vorgabe. Was passiert?",
+      "options": [
+        {"text": "Ich suche mir sofort eine Aufgabe oder ein Template -- Leere ist unproduktiv.", "scores": {"staunen": 0, "schliessen": 2, "verweilen": 0}},
+        {"text": "Ich frage ChatGPT nach Ideen, um den Anfang zu finden.", "scores": {"staunen": 0, "schliessen": 2, "verweilen": 0}},
+        {"text": "Ich lasse die Leere eine Weile stehen. Manchmal entsteht etwas aus dem Nichts.", "scores": {"staunen": 1, "schliessen": 0, "verweilen": 2}},
+        {"text": "Ich beginne mit einer Linie, einem Wort, einem Klang -- ohne zu wissen, wohin.", "scores": {"staunen": 2, "schliessen": 0, "verweilen": 1}}
+      ]
+    },
+    {
+      "id": 5,
+      "text": "Was bedeutet 'Lernen' für dich im Kern?",
+      "options": [
+        {"text": "Wissen erwerben und anwenden können.", "scores": {"staunen": 0, "schliessen": 2, "verweilen": 0}},
+        {"text": "Muster erkennen und übertragen.", "scores": {"staunen": 0, "schliessen": 1, "verweilen": 0}},
+        {"text": "Irritiert werden und daraus neue Fragen entwickeln.", "scores": {"staunen": 2, "schliessen": 0, "verweilen": 1}},
+        {"text": "Sich verändern, ohne vorher zu wissen, wohin.", "scores": {"staunen": 1, "schliessen": 0, "verweilen": 2}}
+      ]
+    },
+    {
+      "id": 6,
+      "text": "Ein:e Kolleg:in zeigt dir eine Arbeit, die du nicht einordnen kannst. Sie ist weder gut noch schlecht, einfach... anders. Deine Reaktion:",
+      "options": [
+        {"text": "Ich bitte um eine Erklärung -- ohne Kontext kann ich nichts bewerten.", "scores": {"staunen": 0, "schliessen": 2, "verweilen": 0}},
+        {"text": "Ich vergleiche es mit Bekanntem, um einen Bezugsrahmen zu finden.", "scores": {"staunen": 0, "schliessen": 1, "verweilen": 1}},
+        {"text": "Ich schaue es mir lange an und warte, bis etwas in mir resoniert.", "scores": {"staunen": 1, "schliessen": 0, "verweilen": 2}},
+        {"text": "Ich bin fasziniert. Genau das Uneinordbare interessiert mich.", "scores": {"staunen": 2, "schliessen": 0, "verweilen": 1}}
+      ]
+    },
+    {
+      "id": 7,
+      "text": "Die entscheidende Kompetenz der Zukunft ist für dich:",
+      "options": [
+        {"text": "Effizienz -- wer KI am besten nutzt, gewinnt.", "scores": {"staunen": 0, "schliessen": 2, "verweilen": 0}},
+        {"text": "Anpassungsfähigkeit -- flexibel auf Veränderungen reagieren.", "scores": {"staunen": 0, "schliessen": 1, "verweilen": 1}},
+        {"text": "Urteilskraft -- unterscheiden können, wo KI aufhört und Menschsein anfängt.", "scores": {"staunen": 1, "schliessen": 0, "verweilen": 1}},
+        {"text": "Staunen -- die Fähigkeit, das Unerwartete zu bemerken, bevor es benannt wird.", "scores": {"staunen": 2, "schliessen": 0, "verweilen": 2}}
+      ]
+    }
+  ],
+  "results": {
+    "staunen": {
+      "title": "Staunende:r -- Erstheit als Haltung",
+      "description": "Du lebst in der Erstheit. Du bemerkst, was andere übersehen, fragst, bevor andere antworten, und findest das Unbenannte faszinierender als das Erklärte. Im KI-Zeitalter bist du die Quelle genuiner Neuheit -- die Maschine kann vieles, aber nicht staunen.",
+      "motto": "Sehen, bevor du benennst."
+    },
+    "verweilen": {
+      "title": "Ambiguitäts-Athlet:in -- Im Unbestimmten zu Hause",
+      "description": "Du hältst Spannung aus, wo andere schnell schließen. Du bleibst im Widerspruch, lässt Leere produktiv werden und vertraust darauf, dass Erkenntnis Zeit braucht. Deine Stärke: Du widerstehst der Versuchung der schnellen Antwort.",
+      "motto": "Im Unbestimmten verweilen, ohne es vorschnell zu schließen."
+    },
+    "schliessen": {
+      "title": "Schnellschließer:in -- Drittheit als Reflex",
+      "description": "Du suchst Klarheit, Struktur, Antworten. Das ist nicht falsch -- aber im KI-Zeitalter übernimmt die Maschine genau diese Arbeit. Das Atelier lädt dich ein, langsamer zu werden: Die richtige Frage ist mehr wert als die schnelle Antwort. Erstheit wartet auf dich.",
+      "motto": "Die schnellste Antwort ist selten die tiefste."
+    }
+  }
+}

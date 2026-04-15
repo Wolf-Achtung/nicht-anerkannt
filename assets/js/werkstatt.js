@@ -723,6 +723,60 @@
   }
 
   // ═══════════════════════════════════════════════════════════
+  // 10. ERSTHEITS-LABOR
+  // ═══════════════════════════════════════════════════════════
+  function initErstheitLabor() {
+    var btn = document.getElementById('el-btn');
+    var input = document.getElementById('el-these');
+    var modus = document.getElementById('el-modus');
+    var output = document.getElementById('el-output');
+    if (!btn || !input || !output) return;
+
+    btn.addEventListener('click', function () {
+      var these = input.value.trim();
+      if (!these) { input.focus(); return; }
+
+      var modusVal = modus ? modus.value : 'paradox';
+      btn.disabled = true;
+      showLoading(output);
+
+      postJSON('/api/erstheit-labor', { these: these, modus: modusVal })
+        .then(function (data) {
+          if (data.error) { showError(output, data.error); return; }
+
+          var html = '<h3 class="werkstatt-result-title">Erstheits-Provokation</h3>';
+
+          if (data.aufgabe) {
+            html += '<div class="werkstatt-card">' +
+              '<div class="werkstatt-card-label">Aufgabenstellung</div>' +
+              '<p>' + escapeHtml(data.aufgabe) + '</p></div>';
+          }
+          if (data.irritation) {
+            html += '<div class="werkstatt-card">' +
+              '<div class="werkstatt-card-label">Irritation</div>' +
+              '<p>' + escapeHtml(data.irritation) + '</p></div>';
+          }
+          if (data.frage) {
+            html += '<div class="werkstatt-card">' +
+              '<div class="werkstatt-card-label">Offene Frage</div>' +
+              '<p>' + escapeHtml(data.frage) + '</p></div>';
+          }
+          if (data.raw) {
+            html += '<p>' + escapeHtml(data.raw) + '</p>';
+          }
+
+          output.innerHTML = html;
+
+          if (window.AtelierScore && window.AtelierScore.track) {
+            window.AtelierScore.track('erstheit');
+          }
+        })
+        .catch(function () { showError(output, _t('ws.connectionError')); })
+        .finally(function () { btn.disabled = false; });
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════
   // INIT
   // ═══════════════════════════════════════════════════════════
   window.addEventListener('DOMContentLoaded', function () {
@@ -735,6 +789,7 @@
     initPerspektive();
     initGegenrede();
     initArgumentkarte();
+    initErstheitLabor();
     initStille();
   });
 }());
