@@ -214,6 +214,35 @@
   }
 
   // ─────────────────────────────────────────────
+  // Bildung-Essay Perspektive (zukunft-der-bildung.html)
+  // ─────────────────────────────────────────────
+  function initBildungPerspektive() {
+    var btn = document.getElementById('bildung-perspektive-btn');
+    var sel = document.getElementById('bildung-perspektive-select');
+    var reset = document.getElementById('bildung-perspektive-reset');
+    var status = document.getElementById('bildung-perspektive-status');
+    if (!btn || !sel) return;
+
+    btn.addEventListener('click', function () {
+      var p = sel.value;
+      if (!p) { resetAll(); if (reset) reset.hidden = true; if (status) status.textContent = ''; return; }
+      if (status) status.innerHTML = loadingHTML();
+      applyPerspektive(p);
+      if (reset) reset.hidden = false;
+      setTimeout(function () { if (status) status.textContent = 'Essay wird gerade aus Sicht "' + p + '" gelesen.'; }, 200);
+    });
+
+    if (reset) {
+      reset.addEventListener('click', function () {
+        resetAll();
+        reset.hidden = true;
+        if (status) status.textContent = '';
+        sel.value = '';
+      });
+    }
+  }
+
+  // ─────────────────────────────────────────────
   // Blinder-Fleck-Detektor (#8)
   // ─────────────────────────────────────────────
   function initBlindspotDetector() {
@@ -258,6 +287,7 @@
   window.addEventListener('DOMContentLoaded', function () {
     // injectHeaderSwitch(); // entfernt — Perspektivwechsel ist nur noch beim Manifest
     initManifestRemix();
+    initBildungPerspektive();
     // initBlindspotDetector(); // entfernt vom Manifest
   });
 }());

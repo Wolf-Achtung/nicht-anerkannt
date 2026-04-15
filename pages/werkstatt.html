@@ -44,7 +44,7 @@
       <div class="hero-copy hero-copy--full">
         <p class="eyebrow">KI als Sparringspartner / Denkwerkzeuge / Urteilstraining</p>
         <h1 id="page-title">KI-Werkstatt</h1>
-        <p class="lede">Zehn KI-gestützte Werkzeuge, die dein Denken herausfordern – nicht ersetzen. KI ist hier Sparringspartner, Gegenstimme und Stresstest.</p>
+        <p class="lede">Elf KI-gestützte Werkzeuge, die dein Denken herausfordern – nicht ersetzen. KI ist hier Sparringspartner, Gegenstimme und Stresstest.</p>
       </div>
     </section>
 
@@ -225,7 +225,29 @@
       </div>
     </section>
 
-    <!-- ═══ TOOL 10: STILLE-MODUS ═══ -->
+    <!-- ═══ TOOL 10: ERSTHEITS-LABOR ═══ -->
+    <section class="section" id="erstheit-labor">
+      <div class="section-label">Erstheit</div>
+      <div class="section-body">
+        <h2>Erstheits-Labor</h2>
+        <p>Gib eine These oder ein Thema ein -- die KI erzeugt daraus eine paradoxe Aufgabenstellung, die deine Erstheitskompetenz herausfordert. Kein Richtig, kein Falsch -- nur Irritation als Methode.</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="el-these">These oder Thema</label>
+          <textarea class="werkstatt-input" id="el-these" rows="3" placeholder="z.B. &quot;KI macht Bildung überflüssig&quot;, &quot;Staunen kann man nicht lehren&quot;, &quot;Effizienz ist das höchste Gut&quot;" maxlength="500"></textarea>
+          <label class="stempel-label" for="el-modus">Irritations-Modus</label>
+          <select class="stempel-input" id="el-modus">
+            <option value="paradox">Paradoxe Aufgabenstellung</option>
+            <option value="wicked">Wicked Problem</option>
+            <option value="biosemiotisch">Biosemiotische Perspektive</option>
+            <option value="negentropisch">Negentropische Wendung</option>
+          </select>
+          <button class="button button--accent" id="el-btn" type="button">Erstheit provozieren</button>
+          <div class="werkstatt-output" id="el-output" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL 11: STILLE-MODUS ═══ -->
     <section class="section" id="stille-modus">
       <div class="section-label">Stille</div>
       <div class="section-body">
