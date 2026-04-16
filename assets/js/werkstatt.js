@@ -32,10 +32,12 @@
 
   function postJSON(url, data) {
     var base = (typeof window !== 'undefined' && window.ATELIER_API_BASE) ? window.ATELIER_API_BASE : '';
+    var lang = (window.AtelierI18n && window.AtelierI18n.lang) ? window.AtelierI18n.lang : 'de';
+    var body = Object.assign({ lang: lang }, data || {});
     return fetch(base + url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+      body: JSON.stringify(body)
     }).then(function (res) { return res.json(); });
   }
 
@@ -317,7 +319,7 @@
         data.optionen.forEach(function (o) {
           html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' +
             escapeHtml(o.titel) + '</div><p>' + escapeHtml(o.beschreibung) +
-            '</p><p class="werkstatt-tradeoff"><em>Trade-off: ' +
+            '</p><p class="werkstatt-tradeoff"><em>' + _t('ws.tradeoff') + ' ' +
             escapeHtml(o.tradeoff) + '</em></p></div>';
         });
       }
@@ -744,21 +746,21 @@
         .then(function (data) {
           if (data.error) { showError(output, data.error); return; }
 
-          var html = '<h3 class="werkstatt-result-title">Erstheits-Provokation</h3>';
+          var html = '<h3 class="werkstatt-result-title">' + _t('ws.erstheitTitle') + '</h3>';
 
           if (data.aufgabe) {
             html += '<div class="werkstatt-card">' +
-              '<div class="werkstatt-card-label">Aufgabenstellung</div>' +
+              '<div class="werkstatt-card-label">' + _t('ws.erstheitAufgabe') + '</div>' +
               '<p>' + escapeHtml(data.aufgabe) + '</p></div>';
           }
           if (data.irritation) {
             html += '<div class="werkstatt-card">' +
-              '<div class="werkstatt-card-label">Irritation</div>' +
+              '<div class="werkstatt-card-label">' + _t('ws.erstheitIrritation') + '</div>' +
               '<p>' + escapeHtml(data.irritation) + '</p></div>';
           }
           if (data.frage) {
             html += '<div class="werkstatt-card">' +
-              '<div class="werkstatt-card-label">Offene Frage</div>' +
+              '<div class="werkstatt-card-label">' + _t('ws.erstheitFrage') + '</div>' +
               '<p>' + escapeHtml(data.frage) + '</p></div>';
           }
           if (data.raw) {

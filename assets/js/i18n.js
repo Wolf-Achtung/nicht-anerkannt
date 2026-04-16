@@ -144,6 +144,11 @@
     'ws.einwand':          { de: 'Einwand:',             en: 'Objection:' },
     'ws.synthese':         { de: 'Synthese – Radikale Mitte', en: 'Synthesis – Radical Middle' },
     'ws.noReply':          { de: 'Keine Antwort erhalten.', en: 'No reply received.' },
+    'ws.erstheitTitle':    { de: 'Erstheits-Provokation',   en: 'Firstness Provocation' },
+    'ws.erstheitAufgabe':  { de: 'Aufgabenstellung',         en: 'Assignment' },
+    'ws.erstheitIrritation': { de: 'Irritation',              en: 'Irritation' },
+    'ws.erstheitFrage':    { de: 'Offene Frage',              en: 'Open Question' },
+    'ws.tradeoff':         { de: 'Trade-off:',                en: 'Trade-off:' },
 
     /* ── loading-messages.js ── */
     'loading.0':  { de: 'Silizium denkt…',                        en: 'Silicon is thinking…' },
@@ -191,6 +196,8 @@
     'persp.cancel':        { de: 'Abbrechen',          en: 'Cancel' },
     'persp.statusReading': { de: 'Manifest wird gerade aus Sicht "', en: 'Manifesto is currently being read from the perspective "' },
     'persp.statusSuffix':  { de: '" gelesen.',          en: '".' },
+    'persp.statusManifest':{ de: 'Manifest wird gerade aus Sicht „{p}" gelesen.', en: 'Manifesto is currently being read from the perspective of "{p}".' },
+    'persp.statusEssay':   { de: 'Essay wird gerade aus Sicht „{p}" gelesen.',    en: 'Essay is currently being read from the perspective of "{p}".' },
     'persp.analysisFail':  { de: 'Analyse gerade nicht möglich.', en: 'Analysis currently not possible.' },
     'persp.blindspotBtn':  { de: 'Welche Perspektive fehlt hier?', en: 'What perspective is missing here?' },
     'persp.blindspotLabel':{ de: 'Dieser Text spricht stark aus einer bestimmten Ecke. Eine Perspektive fehlt:', en: 'This text speaks strongly from one particular angle. A perspective is missing:' },
