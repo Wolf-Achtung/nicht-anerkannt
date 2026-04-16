@@ -11,55 +11,70 @@
   var API_BASE = (typeof window !== 'undefined' && window.ATELIER_API_BASE) ? window.ATELIER_API_BASE : '';
   var STATE_KEY = 'atelier-perspektive-global';
 
+  function currentLang() {
+    return (window.AtelierI18n && window.AtelierI18n.lang) ? window.AtelierI18n.lang : 'de';
+  }
+
+  function _t(key, fallback) {
+    if (window.AtelierI18n && window.AtelierI18n.t) return window.AtelierI18n.t(key);
+    return fallback || key;
+  }
+
+  // Perspective options with DE/EN labels; stable id used as storage key only.
   var PERSPEKTIVEN = [
-    { group: 'Politisch / Sozial', items: [
-      'Konservative:r Traditionalist:in',
-      'Linke:r Aktivist:in',
-      'Liberale:r Unternehmer:in',
-      'Pragmatische:r Realist:in',
-      'Zyniker:in / Skeptiker:in'
+    { groupKey: 'persp.grp1', items: [
+      { id: 'konservativ',  de: 'Konservative:r Traditionalist:in',        en: 'Conservative traditionalist' },
+      { id: 'aktivist',     de: 'Linke:r Aktivist:in',                     en: 'Left-wing activist' },
+      { id: 'unternehmer',  de: 'Liberale:r Unternehmer:in',               en: 'Liberal entrepreneur' },
+      { id: 'realist',      de: 'Pragmatische:r Realist:in',               en: 'Pragmatic realist' },
+      { id: 'skeptiker',    de: 'Zyniker:in / Skeptiker:in',               en: 'Cynic / sceptic' }
     ] },
-    { group: 'Alter / Generation', items: [
-      'Kind (10 Jahre)',
-      'Jugendliche:r / Gen Z',
-      'Ältere:r Mensch (80 Jahre)'
+    { groupKey: 'persp.grp2', items: [
+      { id: 'kind',         de: 'Kind (10 Jahre)',                         en: 'Child (10 years old)' },
+      { id: 'genz',         de: 'Jugendliche:r / Gen Z',                   en: 'Teenager / Gen Z' },
+      { id: 'senior',       de: 'Ältere:r Mensch (80 Jahre)',              en: 'Older person (80 years old)' }
     ] },
-    { group: 'Zeit', items: [
-      'Mensch vor 100 Jahren (1925)',
-      'Mensch in 50 Jahren (2075)',
-      'Historiker:in in 200 Jahren zurückblickend'
+    { groupKey: 'persp.grp3', items: [
+      { id: 'past1925',     de: 'Mensch vor 100 Jahren (1925)',            en: 'Person 100 years ago (1925)' },
+      { id: 'future2075',   de: 'Mensch in 50 Jahren (2075)',              en: 'Person 50 years from now (2075)' },
+      { id: 'historiker',   de: 'Historiker:in in 200 Jahren zurückblickend', en: 'Historian looking back in 200 years' }
     ] },
-    { group: 'Kultur / Sprache', items: [
-      'Nicht-Muttersprachler:in, die Deutsch gerade lernt',
-      'Mensch aus dem globalen Süden',
-      'Mensch ohne Internetzugang'
+    { groupKey: 'persp.grp4', items: [
+      { id: 'nonnative',    de: 'Nicht-Muttersprachler:in, die Deutsch gerade lernt', en: 'Non-native speaker just learning the language' },
+      { id: 'globalsouth',  de: 'Mensch aus dem globalen Süden',           en: 'Person from the Global South' },
+      { id: 'offline',      de: 'Mensch ohne Internetzugang',              en: 'Person without internet access' }
     ] },
-    { group: 'Radikal anders', items: [
-      'Die KI selbst (als Sprecher:in)',
-      'Ein Baum / Ökosystem',
-      'Ein zukünftiges Kind, das diese Entscheidung erben wird'
+    { groupKey: 'persp.grp5', items: [
+      { id: 'ai',           de: 'Die KI selbst (als Sprecher:in)',         en: 'The AI itself (as speaker)' },
+      { id: 'tree',         de: 'Ein Baum / Ökosystem',                    en: 'A tree / ecosystem' },
+      { id: 'futurechild',  de: 'Ein zukünftiges Kind, das diese Entscheidung erben wird', en: 'A future child who will inherit this decision' }
     ] }
   ];
+
+  function perspLabel(item) {
+    var lang = currentLang();
+    return item[lang] || item.de;
+  }
 
   function loadingHTML() {
     if (window.AtelierLoading && typeof window.AtelierLoading.html === 'function') {
       return window.AtelierLoading.html();
     }
-    return '<span class="werkstatt-loading-text">Silizium denkt…</span>';
+    return '<span class="werkstatt-loading-text">' + _t('loading.0', 'Silizium denkt…') + '</span>';
   }
 
   function loadingLabel() {
     if (window.AtelierLoading && typeof window.AtelierLoading.pick === 'function') {
       return window.AtelierLoading.pick();
     }
-    return 'Silizium denkt…';
+    return _t('loading.0', 'Silizium denkt…');
   }
 
   function postRewrite(position, perspektive) {
     return fetch(API_BASE + '/api/perspektive', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ position: position, perspektive: perspektive })
+      body: JSON.stringify({ position: position, perspektive: perspektive, lang: currentLang() })
     }).then(function (res) { return res.json(); });
   }
 
@@ -75,7 +90,7 @@
     wrap.className = 'perspektive-global-wrap';
     wrap.innerHTML =
       '<button class="button perspektive-global-btn" id="perspektive-global-btn" type="button" aria-haspopup="dialog">' +
-      'Perspektive wechseln</button>' +
+      _t('persp.button') + '</button>' +
       '<span class="perspektive-global-badge" id="perspektive-global-badge" hidden></span>';
     header.appendChild(wrap);
 
@@ -91,17 +106,18 @@
     dialog.className = 'perspektive-global-dialog';
     dialog.id = 'perspektive-global-dialog';
 
-    var html = '<h3>Diese Seite mit anderen Augen lesen</h3>';
-    html += '<p class="perspektive-global-intro">Wähle eine Perspektive. Die KI formuliert längere Textblöcke dieser Seite empathisch in der gewählten Sicht um. Das Original bleibt — du kannst jederzeit zurück.</p>';
+    var html = '<h3>' + _t('persp.dialogTitle') + '</h3>';
+    html += '<p class="perspektive-global-intro">' + _t('persp.dialogIntro') + '</p>';
     html += '<form method="dialog" class="perspektive-global-form">';
     PERSPEKTIVEN.forEach(function (grp) {
-      html += '<fieldset class="perspektive-global-group"><legend>' + grp.group + '</legend>';
+      html += '<fieldset class="perspektive-global-group"><legend>' + _t(grp.groupKey) + '</legend>';
       grp.items.forEach(function (p) {
-        html += '<button type="button" class="perspektive-global-option" data-perspektive="' + p.replace(/"/g, '&quot;') + '">' + p + '</button>';
+        var label = perspLabel(p);
+        html += '<button type="button" class="perspektive-global-option" data-perspektive="' + label.replace(/"/g, '&quot;') + '">' + label + '</button>';
       });
       html += '</fieldset>';
     });
-    html += '<div class="perspektive-global-actions"><button type="button" class="button" id="perspektive-global-cancel">Abbrechen</button></div>';
+    html += '<div class="perspektive-global-actions"><button type="button" class="button" id="perspektive-global-cancel">' + _t('persp.cancel') + '</button></div>';
     html += '</form>';
     dialog.innerHTML = html;
     document.body.appendChild(dialog);
@@ -128,8 +144,8 @@
       return;
     }
     badge.hidden = false;
-    badge.textContent = 'Du liest als: ' + perspektive + ' ✕';
-    badge.title = 'Klick, um zum Original zurückzukehren';
+    badge.textContent = _t('persp.reading') + ' ' + perspektive + ' ✕';
+    badge.title = _t('persp.resetTip');
   }
 
   function collectRewriteTargets() {
@@ -200,7 +216,7 @@
       if (status) status.innerHTML = loadingHTML();
       applyPerspektive(p);
       if (reset) reset.hidden = false;
-      setTimeout(function () { if (status) status.textContent = 'Manifest wird gerade aus Sicht "' + p + '" gelesen.'; }, 200);
+      setTimeout(function () { if (status) status.textContent = _t('persp.statusManifest').replace('{p}', p); }, 200);
     });
 
     if (reset) {
@@ -229,7 +245,7 @@
       if (status) status.innerHTML = loadingHTML();
       applyPerspektive(p);
       if (reset) reset.hidden = false;
-      setTimeout(function () { if (status) status.textContent = 'Essay wird gerade aus Sicht "' + p + '" gelesen.'; }, 200);
+      setTimeout(function () { if (status) status.textContent = _t('persp.statusEssay').replace('{p}', p); }, 200);
     });
 
     if (reset) {
@@ -253,7 +269,7 @@
     var box = document.createElement('div');
     box.className = 'blindspot-box';
     box.innerHTML =
-      '<button class="button" id="blindspot-btn" type="button">Welche Perspektive fehlt hier?</button>' +
+      '<button class="button" id="blindspot-btn" type="button">' + _t('persp.blindspotBtn') + '</button>' +
       '<div class="blindspot-result" id="blindspot-result" aria-live="polite"></div>';
     body.appendChild(box);
 
@@ -264,19 +280,19 @@
       fetch(API_BASE + '/api/blindspot', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: text })
+        body: JSON.stringify({ text: text, lang: currentLang() })
       }).then(function (res) { return res.json(); }).then(function (data) {
         if (!data || data.error || !data.perspektive) {
-          result.textContent = 'Analyse gerade nicht möglich.';
+          result.textContent = _t('persp.analysisFail');
           return;
         }
         result.innerHTML =
-          '<p class="blindspot-label">Dieser Text spricht stark aus einer bestimmten Ecke. Eine Perspektive fehlt:</p>' +
+          '<p class="blindspot-label">' + _t('persp.blindspotLabel') + '</p>' +
           '<p class="blindspot-perspektive"><strong>' + escapeText(data.perspektive) + '</strong></p>' +
           '<p class="blindspot-warum">' + escapeText(data.begruendung || '') + '</p>' +
           (data.frage ? '<p class="blindspot-frage"><em>' + escapeText(data.frage) + '</em></p>' : '');
       }).catch(function () {
-        result.textContent = 'Analyse gerade nicht möglich.';
+        result.textContent = _t('persp.analysisFail');
       });
     });
   }

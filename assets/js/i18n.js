@@ -1,21 +1,99 @@
 /**
- * i18n.js — Lightweight internationalisation for Das Atelier der Radikalen Mitte
+ * i18n.js — Internationalisation for Das Atelier der Radikalen Mitte
  *
- * Detects the current language from <html lang="…"> and exposes:
- *   window.AtelierI18n.lang   – 'de' | 'en'
- *   window.AtelierI18n.t(key) – translated string
- *   window.AtelierI18n.dataPath(file) – language-aware data path
+ * Architecture:
+ *   - SUPPORTED_LANGS lists every language the site can serve.
+ *     Adding a new EU language = add the code here + provide /i18n/<code>.json.
+ *   - Built-in BUILTIN strings (legacy {key:{de,en}} structure) are the
+ *     last-resort fallback so the site never shows a raw key, even if the
+ *     external catalog fails to load.
+ *   - External per-language catalogs at /i18n/<code>.json (flat key → string)
+ *     are loaded asynchronously and override BUILTIN entries.
+ *   - Lookup chain: external[lang] → external[FALLBACK_LANG] → BUILTIN[key][lang]
+ *                   → BUILTIN[key][FALLBACK_LANG] → BUILTIN[key][DEFAULT_LANG] → key
+ *
+ * DOM attributes (applied automatically on DOMContentLoaded and after async load):
+ *   <span data-i18n="some.key">…</span>           – textContent
+ *   <p   data-i18n-html="some.key">…</p>          – innerHTML (trusted only)
+ *   <a   data-i18n-attr="title:k1,aria-label:k2"> – attribute(s)
+ *
+ * Public API:
+ *   window.AtelierI18n.lang                – detected language code
+ *   window.AtelierI18n.supported           – array of language codes
+ *   window.AtelierI18n.defaultLang         – default fallback
+ *   window.AtelierI18n.t(key)              – translate single key
+ *   window.AtelierI18n.dataPrefix()        – per-language data/ prefix
+ *   window.AtelierI18n.datePath()          – relative data path
+ *   window.AtelierI18n.ready               – Promise<void>, resolves after JSON load
+ *   window.AtelierI18n.applyTranslations(root) – apply data-i18n* under root
+ *   window.AtelierI18n.setLang(code)       – switch language (navigates to /<code>/...)
  */
 (function () {
   'use strict';
 
-  var lang = (document.documentElement.lang || 'de').slice(0, 2);
-  if (lang !== 'en') lang = 'de';
+  var SUPPORTED_LANGS = ['de', 'en']; // Add EU languages here, e.g. 'fr','es','it'…
+  var DEFAULT_LANG = 'de';
+  var FALLBACK_LANG = 'en';
+  var STORAGE_KEY = 'atelier-lang';
+
+  function detectLang() {
+    // 1. URL path /xx/…
+    var pathMatch = (location.pathname || '').match(/^\/([a-z]{2})(?:\/|$)/i);
+    if (pathMatch) {
+      var fromPath = pathMatch[1].toLowerCase();
+      if (SUPPORTED_LANGS.indexOf(fromPath) !== -1) return fromPath;
+    }
+    // 2. <html lang>
+    var htmlLang = (document.documentElement.lang || '').slice(0, 2).toLowerCase();
+    if (SUPPORTED_LANGS.indexOf(htmlLang) !== -1) return htmlLang;
+    // 3. localStorage user preference
+    try {
+      var stored = localStorage.getItem(STORAGE_KEY);
+      if (stored && SUPPORTED_LANGS.indexOf(stored) !== -1) return stored;
+    } catch (e) { /* ignore */ }
+    // 4. navigator.languages
+    var navLangs = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || ''];
+    for (var i = 0; i < navLangs.length; i++) {
+      var nl = (navLangs[i] || '').slice(0, 2).toLowerCase();
+      if (SUPPORTED_LANGS.indexOf(nl) !== -1) return nl;
+    }
+    return DEFAULT_LANG;
+  }
+
+  var lang = detectLang();
+  // Ensure <html lang> reflects the detected language (helps screen readers + CSS :lang()).
+  if ((document.documentElement.lang || '').slice(0, 2).toLowerCase() !== lang) {
+    document.documentElement.lang = lang;
+  }
+
+  function getScriptBase() {
+    var tag = document.querySelector('script[src*="i18n.js"]');
+    if (!tag) return '/';
+    return tag.src.replace(/assets\/js\/i18n\.js.*$/, '');
+  }
+
+  var loaded = {}; // { de: {key: "value"}, en: {...} }
+  var inflight = {};
+
+  function loadCatalog(code) {
+    if (loaded[code]) return Promise.resolve(loaded[code]);
+    if (inflight[code]) return inflight[code];
+    var url = getScriptBase() + 'i18n/' + code + '.json';
+    inflight[code] = fetch(url, { credentials: 'same-origin' })
+      .then(function (r) { return r.ok ? r.json() : {}; })
+      .catch(function () { return {}; })
+      .then(function (data) {
+        loaded[code] = (data && typeof data === 'object') ? data : {};
+        return loaded[code];
+      });
+    return inflight[code];
+  }
 
   /* ──────────────────────────────────────────────
-   * Translation strings: { key: { de: '…', en: '…' } }
+   * BUILTIN strings (last-resort fallback). Keep in sync with /i18n/*.json.
+   * Format: { key: { de: '…', en: '…' } }
    * ────────────────────────────────────────────── */
-  var strings = {
+  var BUILTIN = {
 
     /* ── daily.js ── */
     'daily.badge':              { de: 'Denkprobe des Tages',   en: 'Thinking Challenge of the Day' },
@@ -144,6 +222,11 @@
     'ws.einwand':          { de: 'Einwand:',             en: 'Objection:' },
     'ws.synthese':         { de: 'Synthese – Radikale Mitte', en: 'Synthesis – Radical Middle' },
     'ws.noReply':          { de: 'Keine Antwort erhalten.', en: 'No reply received.' },
+    'ws.erstheitTitle':    { de: 'Erstheits-Provokation',   en: 'Firstness Provocation' },
+    'ws.erstheitAufgabe':  { de: 'Aufgabenstellung',         en: 'Assignment' },
+    'ws.erstheitIrritation': { de: 'Irritation',              en: 'Irritation' },
+    'ws.erstheitFrage':    { de: 'Offene Frage',              en: 'Open Question' },
+    'ws.tradeoff':         { de: 'Trade-off:',                en: 'Trade-off:' },
 
     /* ── loading-messages.js ── */
     'loading.0':  { de: 'Silizium denkt…',                        en: 'Silicon is thinking…' },
@@ -191,6 +274,8 @@
     'persp.cancel':        { de: 'Abbrechen',          en: 'Cancel' },
     'persp.statusReading': { de: 'Manifest wird gerade aus Sicht "', en: 'Manifesto is currently being read from the perspective "' },
     'persp.statusSuffix':  { de: '" gelesen.',          en: '".' },
+    'persp.statusManifest':{ de: 'Manifest wird gerade aus Sicht „{p}" gelesen.', en: 'Manifesto is currently being read from the perspective of "{p}".' },
+    'persp.statusEssay':   { de: 'Essay wird gerade aus Sicht „{p}" gelesen.',    en: 'Essay is currently being read from the perspective of "{p}".' },
     'persp.analysisFail':  { de: 'Analyse gerade nicht möglich.', en: 'Analysis currently not possible.' },
     'persp.blindspotBtn':  { de: 'Welche Perspektive fehlt hier?', en: 'What perspective is missing here?' },
     'persp.blindspotLabel':{ de: 'Dieser Text spricht stark aus einer bestimmten Ecke. Eine Perspektive fehlt:', en: 'This text speaks strongly from one particular angle. A perspective is missing:' },
@@ -202,29 +287,110 @@
   };
 
   function t(key) {
-    var entry = strings[key];
-    if (!entry) return key;
-    return entry[lang] || entry.de || key;
+    // 1. external catalog (primary lang)
+    var primary = loaded[lang];
+    if (primary && Object.prototype.hasOwnProperty.call(primary, key)) return primary[key];
+    // 2. external catalog (fallback lang)
+    var fb = loaded[FALLBACK_LANG];
+    if (fb && Object.prototype.hasOwnProperty.call(fb, key)) return fb[key];
+    // 3. BUILTIN (legacy nested object)
+    var entry = BUILTIN[key];
+    if (entry) return entry[lang] || entry[FALLBACK_LANG] || entry[DEFAULT_LANG] || key;
+    return key;
   }
 
   /**
-   * Returns the correct data path prefix for the current language.
-   * German loads from 'data/', English from 'data/en/'.
+   * Apply data-i18n* attributes within `root` (or document.body).
+   * Safe to call multiple times; idempotent if translations haven't changed.
+   */
+  function applyTranslations(root) {
+    var scope = root || document.body;
+    if (!scope || typeof scope.querySelectorAll !== 'function') return;
+
+    scope.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
+      var val = t(key);
+      if (val !== key) el.textContent = val;
+    });
+
+    scope.querySelectorAll('[data-i18n-html]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-html');
+      var val = t(key);
+      if (val !== key) el.innerHTML = val;
+    });
+
+    scope.querySelectorAll('[data-i18n-attr]').forEach(function (el) {
+      var spec = el.getAttribute('data-i18n-attr') || '';
+      spec.split(',').forEach(function (pair) {
+        var p = pair.split(':');
+        if (p.length !== 2) return;
+        var attr = p[0].trim();
+        var key = p[1].trim();
+        var val = t(key);
+        if (attr && val !== key) el.setAttribute(attr, val);
+      });
+    });
+  }
+
+  /**
+   * Returns the correct data/ prefix for the current language.
+   * Backward compatible: DE → 'data/', any other lang → 'data/<lang>/'.
+   * Once per-field multilingual data files land, callers will not need this.
    */
   function dataPrefix() {
-    var base = document.querySelector('script[src*="i18n"]');
-    var prefix = base ? base.src.replace(/assets\/js\/i18n\.js.*$/, '') : '';
-    return prefix + (lang === 'en' ? 'data/en/' : 'data/');
+    var prefix = getScriptBase();
+    return prefix + (lang === DEFAULT_LANG ? 'data/' : 'data/' + lang + '/');
   }
 
   function datePath() {
-    return lang === 'en' ? 'data/en/' : 'data/';
+    return lang === DEFAULT_LANG ? 'data/' : 'data/' + lang + '/';
+  }
+
+  /**
+   * Switch language by navigating to the same path under a new /xx/ prefix.
+   * Stores the choice in localStorage so direct visits to /pages/* honor it.
+   */
+  function setLang(code) {
+    if (SUPPORTED_LANGS.indexOf(code) === -1) return;
+    try { localStorage.setItem(STORAGE_KEY, code); } catch (e) { /* ignore */ }
+    if (code === lang) return;
+    var path = location.pathname || '/';
+    var m = path.match(/^\/([a-z]{2})(\/|$)/i);
+    var newPath = m && SUPPORTED_LANGS.indexOf(m[1].toLowerCase()) !== -1
+      ? path.replace(/^\/[a-z]{2}/, '/' + code)
+      : '/' + code + (path === '/' ? '/' : path);
+    location.href = newPath + (location.search || '') + (location.hash || '');
+  }
+
+  // Load primary + fallback catalogs in parallel; apply translations afterwards.
+  var ready = Promise.all([
+    loadCatalog(lang),
+    lang === FALLBACK_LANG ? Promise.resolve({}) : loadCatalog(FALLBACK_LANG)
+  ]).then(function () {
+    if (document.body) applyTranslations(document.body);
+    try {
+      document.dispatchEvent(new CustomEvent('atelier-i18n-ready', { detail: { lang: lang } }));
+    } catch (e) { /* IE — never mind */ }
+  });
+
+  // Apply BUILTIN/early translations as soon as the DOM is available, so the
+  // page doesn't flash untranslated text while the JSON catalog is fetched.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { applyTranslations(document.body); });
+  } else {
+    applyTranslations(document.body);
   }
 
   window.AtelierI18n = {
     lang: lang,
+    supported: SUPPORTED_LANGS.slice(),
+    defaultLang: DEFAULT_LANG,
+    fallbackLang: FALLBACK_LANG,
     t: t,
     dataPrefix: dataPrefix,
-    datePath: datePath
+    datePath: datePath,
+    ready: ready,
+    applyTranslations: applyTranslations,
+    setLang: setLang
   };
 }());

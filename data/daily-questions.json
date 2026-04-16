@@ -1,87 +1,240 @@
 [
   {
-    "titel": "Grenzen des Mutes",
-    "impuls": "Mut wirkt oft wie ein Ja zur Eskalation. Doch manchmal zeigt sich Haltung im begrenzten Nein.",
-    "frage": "Woran würdest du erkennen, dass Rückzug heute mutiger wäre als Angriff?"
+    "titel": {
+      "de": "Grenzen des Mutes",
+      "en": "Limits of Courage"
+    },
+    "impuls": {
+      "de": "Mut wirkt oft wie ein Ja zur Eskalation. Doch manchmal zeigt sich Haltung im begrenzten Nein.",
+      "en": "Courage often looks like a yes to escalation. But sometimes conviction shows itself in a measured no."
+    },
+    "frage": {
+      "de": "Woran würdest du erkennen, dass Rückzug heute mutiger wäre als Angriff?",
+      "en": "How would you know that retreat today would be braver than attack?"
+    }
   },
   {
-    "titel": "Tempo oder Richtung",
-    "impuls": "Schnelles Handeln beruhigt, weil es Aktivität zeigt. Trotzdem kann es den falschen Kurs nur effizienter machen.",
-    "frage": "Wo verwechselst du gerade Bewegung mit Fortschritt?"
+    "titel": {
+      "de": "Tempo oder Richtung",
+      "en": "Speed or Direction"
+    },
+    "impuls": {
+      "de": "Schnelles Handeln beruhigt, weil es Aktivität zeigt. Trotzdem kann es den falschen Kurs nur effizienter machen.",
+      "en": "Quick action is reassuring because it shows activity. Yet it can simply make the wrong course more efficient."
+    },
+    "frage": {
+      "de": "Wo verwechselst du gerade Bewegung mit Fortschritt?",
+      "en": "Where are you currently confusing movement with progress?"
+    }
   },
   {
-    "titel": "Preis der Konsistenz",
-    "impuls": "Konsequenz wirkt integer. Aber starre Konsequenz kann blind machen für neue Informationen.",
-    "frage": "Welche Position hältst du vor allem, um dir selbst treu zu erscheinen?"
+    "titel": {
+      "de": "Preis der Konsistenz",
+      "en": "The Cost of Consistency"
+    },
+    "impuls": {
+      "de": "Konsequenz wirkt integer. Aber starre Konsequenz kann blind machen für neue Informationen.",
+      "en": "Consistency looks like integrity. But rigid consistency can blind you to new information."
+    },
+    "frage": {
+      "de": "Welche Position hältst du vor allem, um dir selbst treu zu erscheinen?",
+      "en": "Which position are you mainly holding to appear true to yourself?"
+    }
   },
   {
-    "titel": "Gerechtigkeit im Alltag",
-    "impuls": "Wir fordern Fairness im Großen und handeln im Kleinen oft opportunistisch. Dort beginnt aber politische Kultur.",
-    "frage": "Welche kleine Bevorzugung würdest du heute ablehnen, wenn niemand es merkt?"
+    "titel": {
+      "de": "Gerechtigkeit im Alltag",
+      "en": "Justice in Everyday Life"
+    },
+    "impuls": {
+      "de": "Wir fordern Fairness im Großen und handeln im Kleinen oft opportunistisch. Dort beginnt aber politische Kultur.",
+      "en": "We demand fairness on a grand scale yet often act opportunistically in small things. But that is where political culture begins."
+    },
+    "frage": {
+      "de": "Welche kleine Bevorzugung würdest du heute ablehnen, wenn niemand es merkt?",
+      "en": "Which small privilege would you decline today if nobody noticed?"
+    }
   },
   {
-    "titel": "Widerspruch aushalten",
-    "impuls": "Viele Konflikte entstehen nicht aus Bosheit, sondern aus unvereinbaren Gütern. Reife beginnt beim Tragen dieser Spannung.",
-    "frage": "Welchen echten Zielkonflikt versuchst du mit einer einfachen Parole zu überdecken?"
+    "titel": {
+      "de": "Widerspruch aushalten",
+      "en": "Enduring Contradiction"
+    },
+    "impuls": {
+      "de": "Viele Konflikte entstehen nicht aus Bosheit, sondern aus unvereinbaren Gütern. Reife beginnt beim Tragen dieser Spannung.",
+      "en": "Many conflicts arise not from malice but from irreconcilable goods. Maturity begins with bearing this tension."
+    },
+    "frage": {
+      "de": "Welchen echten Zielkonflikt versuchst du mit einer einfachen Parole zu überdecken?",
+      "en": "Which real conflict of goals are you trying to cover up with a simple slogan?"
+    }
   },
   {
-    "titel": "Digitale Gewohnheiten",
-    "impuls": "Algorithmen geben dir Relevanz zurück, aber auch Wiederholung. Wiederholung fühlt sich wie Wahrheit an.",
-    "frage": "Welche deiner Überzeugungen ist eher ein Feed-Effekt als ein Urteil?"
+    "titel": {
+      "de": "Digitale Gewohnheiten",
+      "en": "Digital Habits"
+    },
+    "impuls": {
+      "de": "Algorithmen geben dir Relevanz zurück, aber auch Wiederholung. Wiederholung fühlt sich wie Wahrheit an.",
+      "en": "Algorithms give you relevance back, but also repetition. Repetition feels like truth."
+    },
+    "frage": {
+      "de": "Welche deiner Überzeugungen ist eher ein Feed-Effekt als ein Urteil?",
+      "en": "Which of your convictions is more of a feed effect than a judgment?"
+    }
   },
   {
-    "titel": "Solidarität mit Maß",
-    "impuls": "Solidarität ohne Grenzen erschöpft, Solidarität ohne Risiko bleibt Symbolik. Beides kann glaubwürdig scheitern.",
-    "frage": "Wofür würdest du konkret Aufwand tragen statt nur Zustimmung senden?"
+    "titel": {
+      "de": "Solidarität mit Maß",
+      "en": "Solidarity with Measure"
+    },
+    "impuls": {
+      "de": "Solidarität ohne Grenzen erschöpft, Solidarität ohne Risiko bleibt Symbolik. Beides kann glaubwürdig scheitern.",
+      "en": "Solidarity without limits exhausts, solidarity without risk remains symbolic. Both can fail credibly."
+    },
+    "frage": {
+      "de": "Wofür würdest du konkret Aufwand tragen statt nur Zustimmung senden?",
+      "en": "For what would you actually invest effort rather than just sending approval?"
+    }
   },
   {
-    "titel": "Sicherheit und Freiheit",
-    "impuls": "Sicherheitsversprechen gewinnen schnell Zustimmung, weil sie Angst sortieren. Der Preis zeigt sich oft später.",
-    "frage": "Welche Freiheit würdest du nur dann begrenzen, wenn dieselbe Regel auch dich trifft?"
+    "titel": {
+      "de": "Sicherheit und Freiheit",
+      "en": "Security and Freedom"
+    },
+    "impuls": {
+      "de": "Sicherheitsversprechen gewinnen schnell Zustimmung, weil sie Angst sortieren. Der Preis zeigt sich oft später.",
+      "en": "Promises of security quickly win approval because they sort fear. The cost often shows up later."
+    },
+    "frage": {
+      "de": "Welche Freiheit würdest du nur dann begrenzen, wenn dieselbe Regel auch dich trifft?",
+      "en": "Which freedom would you restrict only if the same rule also applied to you?"
+    }
   },
   {
-    "titel": "Nähe zur Wahrheit",
-    "impuls": "Im Streit suchen wir häufig den Sieg, nicht die Korrektur. Damit verlieren beide Seiten Lernchance.",
-    "frage": "Welche Gegenfrage könnte deine eigene Lieblingsposition heute verbessern?"
+    "titel": {
+      "de": "Nähe zur Wahrheit",
+      "en": "Proximity to Truth"
+    },
+    "impuls": {
+      "de": "Im Streit suchen wir häufig den Sieg, nicht die Korrektur. Damit verlieren beide Seiten Lernchance.",
+      "en": "In disputes we often seek victory, not correction. Both sides lose the chance to learn."
+    },
+    "frage": {
+      "de": "Welche Gegenfrage könnte deine eigene Lieblingsposition heute verbessern?",
+      "en": "Which counter-question could improve your own favourite position today?"
+    }
   },
   {
-    "titel": "Verantwortung statt Pose",
-    "impuls": "Öffentliche Haltung ist sichtbar, Verantwortung oft unsichtbar. Sichtbarkeit wird trotzdem häufiger belohnt.",
-    "frage": "Welche unspektakuläre Pflicht würdest du priorisieren, auch wenn niemand applaudiert?"
+    "titel": {
+      "de": "Verantwortung statt Pose",
+      "en": "Responsibility over Posture"
+    },
+    "impuls": {
+      "de": "Öffentliche Haltung ist sichtbar, Verantwortung oft unsichtbar. Sichtbarkeit wird trotzdem häufiger belohnt.",
+      "en": "Public stance is visible, responsibility often invisible. Visibility is nonetheless rewarded more often."
+    },
+    "frage": {
+      "de": "Welche unspektakuläre Pflicht würdest du priorisieren, auch wenn niemand applaudiert?",
+      "en": "Which unspectacular duty would you prioritise even if nobody applauds?"
+    }
   },
   {
-    "titel": "KI und Urteil",
-    "impuls": "KI kann Muster liefern, aber nicht die Verantwortung für Folgen tragen. Verantwortung bleibt menschliche Arbeit.",
-    "frage": "Bei welcher Entscheidung willst du bewusst nicht an ein Modell delegieren?"
+    "titel": {
+      "de": "KI und Urteil",
+      "en": "AI and Judgment"
+    },
+    "impuls": {
+      "de": "KI kann Muster liefern, aber nicht die Verantwortung für Folgen tragen. Verantwortung bleibt menschliche Arbeit.",
+      "en": "AI can deliver patterns, but it cannot bear responsibility for consequences. Responsibility remains human work."
+    },
+    "frage": {
+      "de": "Bei welcher Entscheidung willst du bewusst nicht an ein Modell delegieren?",
+      "en": "Which decision do you consciously not want to delegate to a model?"
+    }
   },
   {
-    "titel": "Klimagerechtigkeit konkret",
-    "impuls": "Klimaziele werden oft abstrakt formuliert, während Lasten ungleich verteilt sind. Gerechtigkeit entscheidet über Akzeptanz.",
-    "frage": "Welche Zumutung würdest du als fair akzeptieren, wenn sie transparent für alle gilt?"
+    "titel": {
+      "de": "Klimagerechtigkeit konkret",
+      "en": "Climate Justice in Practice"
+    },
+    "impuls": {
+      "de": "Klimaziele werden oft abstrakt formuliert, während Lasten ungleich verteilt sind. Gerechtigkeit entscheidet über Akzeptanz.",
+      "en": "Climate goals are often formulated abstractly while burdens are distributed unequally. Justice determines acceptance."
+    },
+    "frage": {
+      "de": "Welche Zumutung würdest du als fair akzeptieren, wenn sie transparent für alle gilt?",
+      "en": "Which imposition would you accept as fair if it applied transparently to everyone?"
+    }
   },
   {
-    "titel": "Erstheit und Staunen",
-    "impuls": "Staunen ist keine naive Haltung, sondern eine Kompetenz. Im KI-Zeitalter wird sie zur entscheidenden Ressource, weil Maschinen alles können -- außer staunen.",
-    "frage": "Wann hast du zuletzt etwas bemerkt, bevor du es benennen konntest?"
+    "titel": {
+      "de": "Erstheit und Staunen",
+      "en": "Firstness and Wonder"
+    },
+    "impuls": {
+      "de": "Staunen ist keine naive Haltung, sondern eine Kompetenz. Im KI-Zeitalter wird sie zur entscheidenden Ressource, weil Maschinen alles können -- außer staunen.",
+      "en": "Wonder is not a naive posture but a competence. In the age of AI it becomes a decisive resource, because machines can do everything — except wonder."
+    },
+    "frage": {
+      "de": "Wann hast du zuletzt etwas bemerkt, bevor du es benennen konntest?",
+      "en": "When did you last notice something before you could name it?"
+    }
   },
   {
-    "titel": "Prüfungen der Zukunft",
-    "impuls": "Traditionelle Prüfungen messen die Fähigkeit, Wissen zu reproduzieren. KI kann das besser. Was bleibt, wenn Reproduktion wertlos wird?",
-    "frage": "Was wäre, wenn Prüfungen nicht Antworten, sondern Fragen bewerten würden?"
+    "titel": {
+      "de": "Prüfungen der Zukunft",
+      "en": "Examinations of the Future"
+    },
+    "impuls": {
+      "de": "Traditionelle Prüfungen messen die Fähigkeit, Wissen zu reproduzieren. KI kann das besser. Was bleibt, wenn Reproduktion wertlos wird?",
+      "en": "Traditional exams measure the ability to reproduce knowledge. AI does that better. What remains when reproduction loses its value?"
+    },
+    "frage": {
+      "de": "Was wäre, wenn Prüfungen nicht Antworten, sondern Fragen bewerten würden?",
+      "en": "What if exams assessed the quality of questions rather than of answers?"
+    }
   },
   {
-    "titel": "KI und Drittheit",
-    "impuls": "KI übernimmt Strukturierung, Recherche, Verdichtung und Variantenbildung. Das ist symbolische Arbeit -- Drittheit im Sinne von Peirce. Aber wer kultiviert die Erstheit?",
-    "frage": "Wo in deinem Alltag lässt du KI die Drittheit übernehmen -- und wo solltest du es nicht?"
+    "titel": {
+      "de": "KI und Drittheit",
+      "en": "AI and Thirdness"
+    },
+    "impuls": {
+      "de": "KI übernimmt Strukturierung, Recherche, Verdichtung und Variantenbildung. Das ist symbolische Arbeit -- Drittheit im Sinne von Peirce. Aber wer kultiviert die Erstheit?",
+      "en": "AI takes over structuring, research, condensation and variation. That is symbolic work — Thirdness in Peirce's sense. But who cultivates Firstness?"
+    },
+    "frage": {
+      "de": "Wo in deinem Alltag lässt du KI die Drittheit übernehmen -- und wo solltest du es nicht?",
+      "en": "Where in your daily life do you let AI take over Thirdness — and where should you not?"
+    }
   },
   {
-    "titel": "Produktive Leere",
-    "impuls": "Ein leeres Blatt ist kein Mangel, sondern ein Möglichkeitsraum. Die Versuchung der schnellen Schließung bedroht genau diesen Raum.",
-    "frage": "Wann hast du zuletzt bewusst eine Leere ausgehalten, statt sie sofort zu füllen?"
+    "titel": {
+      "de": "Produktive Leere",
+      "en": "Productive Emptiness"
+    },
+    "impuls": {
+      "de": "Ein leeres Blatt ist kein Mangel, sondern ein Möglichkeitsraum. Die Versuchung der schnellen Schließung bedroht genau diesen Raum.",
+      "en": "A blank page is not a deficit but a space of possibility. The temptation to close it quickly is precisely what threatens that space."
+    },
+    "frage": {
+      "de": "Wann hast du zuletzt bewusst eine Leere ausgehalten, statt sie sofort zu füllen?",
+      "en": "When did you last deliberately endure an emptiness instead of filling it at once?"
+    }
   },
   {
-    "titel": "Biosemiotik des Lernens",
-    "impuls": "Lernen ist nicht das Auffüllen eines Speichers, sondern die Kultivierung von Resonanzfähigkeit. Lebendige Semiose entsteht aus Widerstand, nicht aus reibungslosem Transfer.",
-    "frage": "Welcher Widerstand hat dich zuletzt wirklich etwas gelehrt?"
+    "titel": {
+      "de": "Biosemiotik des Lernens",
+      "en": "The Biosemiotics of Learning"
+    },
+    "impuls": {
+      "de": "Lernen ist nicht das Auffüllen eines Speichers, sondern die Kultivierung von Resonanzfähigkeit. Lebendige Semiose entsteht aus Widerstand, nicht aus reibungslosem Transfer.",
+      "en": "Learning is not the filling of a container but the cultivation of resonance. Living semiosis emerges from resistance, not from frictionless transfer."
+    },
+    "frage": {
+      "de": "Welcher Widerstand hat dich zuletzt wirklich etwas gelehrt?",
+      "en": "Which resistance has most recently truly taught you something?"
+    }
   }
 ]

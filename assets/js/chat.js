@@ -186,7 +186,7 @@
     fetch(((typeof window !== 'undefined' && window.ATELIER_API_BASE) ? window.ATELIER_API_BASE : '') + '/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: userText, history: history })
+      body: JSON.stringify({ message: userText, history: history, lang: (window.AtelierI18n && window.AtelierI18n.lang) || 'de' })
     })
     .then(function (res) { return res.json(); })
     .then(function (data) {

@@ -231,12 +231,19 @@
     }
   }
 
+  function currentLang() {
+    return (window.AtelierI18n && window.AtelierI18n.lang) ? window.AtelierI18n.lang : 'de';
+  }
+
   function requestDailyChallenge(seed) {
+    var lang = currentLang();
+    var body = JSON.stringify({ seed: seed, lang: lang });
+
     if (typeof AbortController === 'undefined') {
       return fetch(DAILY_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ seed: seed })
+        body: body
       }).then(function (res) { return res.json(); });
     }
 
@@ -248,7 +255,7 @@
     return fetch(DAILY_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ seed: seed }),
+      body: body,
       signal: controller.signal
     })
       .then(function (res) {
@@ -256,7 +263,7 @@
         return res.json();
       })
       .catch(function () {
-        return fetch(DAILY_URL + '?seed=' + encodeURIComponent(seed))
+        return fetch(DAILY_URL + '?seed=' + encodeURIComponent(seed) + '&lang=' + encodeURIComponent(lang))
           .then(function (res) {
             if (!res.ok) throw new Error('HTTP ' + res.status);
             return res.json();
