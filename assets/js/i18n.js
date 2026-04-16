@@ -290,7 +290,7 @@
     'site.menu':           { de: 'Menü',                   en: 'Menu' },
     'site.sectionsLabel':  { de: 'Seitenbereiche',         en: 'Page sections' },
     'site.brandPre':       { de: 'Staatlich',              en: 'State' },
-    'site.brandMain':      { de: 'NICHT ANERKANNT',        en: 'NICHT ANERKANNT' },
+    'site.brandMain':      { de: 'NICHT ANERKANNT',        en: 'NOT ACCREDITED' },
     'site.brandTagline':   { de: 'Das Atelier der Radikalen Mitte', en: 'The Atelier of the Radical Middle' },
 
     /* ── chrome: header + footer navigation links ── */
