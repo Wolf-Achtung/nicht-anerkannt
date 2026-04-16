@@ -283,7 +283,40 @@
     'persp.grp2':          { de: 'Alter / Generation',   en: 'Age / Generation' },
     'persp.grp3':          { de: 'Zeit',                  en: 'Time' },
     'persp.grp4':          { de: 'Kultur / Sprache',      en: 'Culture / Language' },
-    'persp.grp5':          { de: 'Radikal anders',        en: 'Radically different' }
+    'persp.grp5':          { de: 'Radikal anders',        en: 'Radically different' },
+
+    /* ── chrome: skip link, header brand, nav toggle ── */
+    'site.skipToContent':  { de: 'Zum Inhalt springen',   en: 'Skip to content' },
+    'site.menu':           { de: 'Menü',                   en: 'Menu' },
+    'site.sectionsLabel':  { de: 'Seitenbereiche',         en: 'Page sections' },
+    'site.brandPre':       { de: 'Staatlich',              en: 'State' },
+    'site.brandMain':      { de: 'NICHT ANERKANNT',        en: 'NICHT ANERKANNT' },
+    'site.brandTagline':   { de: 'Das Atelier der Radikalen Mitte', en: 'The Atelier of the Radical Middle' },
+
+    /* ── chrome: header + footer navigation links ── */
+    'nav.problem':         { de: 'Problem',                en: 'Problem' },
+    'nav.radikaleMitte':   { de: 'Radikale Mitte',         en: 'Radical Middle' },
+    'nav.atelier':         { de: 'Atelier',                en: 'Atelier' },
+    'nav.einladung':       { de: 'Einladung',              en: 'Invitation' },
+    'nav.denkprofil':      { de: 'Denkprofil',             en: 'Thinking Profile' },
+    'nav.manifest':        { de: 'Manifest',               en: 'Manifesto' },
+    'nav.hintergrund':     { de: 'Hintergrund',            en: 'Background' },
+    'nav.mitmachen':       { de: 'Mitmachen',              en: 'Join' },
+    'nav.salon':           { de: 'Salon',                  en: 'Salon' },
+    'nav.ideenArchiv':     { de: 'Ideen-Archiv',           en: 'Ideas Archive' },
+    'nav.werkstatt':       { de: 'KI-Werkstatt',           en: 'AI Workshop' },
+    'nav.medien':          { de: 'Medien',                 en: 'Media' },
+    'nav.roadmap':         { de: 'Roadmap',                en: 'Roadmap' },
+    'nav.kontakt':         { de: 'Kontakt',                en: 'Contact' },
+    'nav.impressum':       { de: 'Impressum',              en: 'Legal Notice' },
+    'nav.datenschutz':     { de: 'Datenschutz',            en: 'Privacy Policy' },
+    'nav.aiGovernance':    { de: 'AI Governance',          en: 'AI Governance' },
+    'nav.kiRenaissance':   { de: 'KI-Renaissance',         en: 'AI Renaissance' },
+    'nav.zukunftBildung':  { de: 'Zukunft der Bildung',    en: 'The Future of Education' },
+
+    /* ── chrome: footer-only link labels ── */
+    'footer.home':         { de: 'Startseite',             en: 'Home' },
+    'footer.backToMedia':  { de: 'Zurück zu Medien',       en: 'Back to Media' }
   };
 
   function t(key) {

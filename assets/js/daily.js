@@ -11,93 +11,87 @@
   var REQUEST_TIMEOUT_MS = 5000;
   var API_BASE = (typeof window !== 'undefined' && window.ATELIER_API_BASE) ? window.ATELIER_API_BASE : '';
   var DAILY_URL = API_BASE + '/api/daily';
-  var fallbackQuestions_de = [
+  // Fallback pool: each entry has {titel, impuls, frage} as per-language objects.
+  // Matches the server-side /data/daily-questions.json schema.
+  var fallbackPool = [
     {
-      titel: 'Denkprobe Archivmodus',
-      impuls: 'Manchmal ist die beste Frage die, die trotz Ausfall bleibt.',
-      frage: 'Welche Überzeugung von dir wäre am schwersten zu verteidigen, wenn du nur drei Sätze hättest?'
+      titel:  { de: 'Denkprobe Archivmodus',           en: 'Thinking Challenge Archive Mode' },
+      impuls: { de: 'Manchmal ist die beste Frage die, die trotz Ausfall bleibt.',
+                en: 'Sometimes the best question is the one that remains despite failure.' },
+      frage:  { de: 'Welche Überzeugung von dir wäre am schwersten zu verteidigen, wenn du nur drei Sätze hättest?',
+                en: 'Which of your convictions would be hardest to defend if you only had three sentences?' }
     },
     {
-      titel: 'Denkprobe Archivmodus',
-      impuls: 'Auch ohne API kann Denken präzise und unbequem sein.',
-      frage: 'Welche Position deines Gegenübers wirkt auf dich falsch – und welche Angst könnte dahinterstehen?'
+      titel:  { de: 'Denkprobe Archivmodus',           en: 'Thinking Challenge Archive Mode' },
+      impuls: { de: 'Auch ohne API kann Denken präzise und unbequem sein.',
+                en: 'Even without an API, thinking can be precise and uncomfortable.' },
+      frage:  { de: 'Welche Position deines Gegenübers wirkt auf dich falsch – und welche Angst könnte dahinterstehen?',
+                en: 'Which position of your counterpart seems wrong to you – and what fear might lie behind it?' }
     },
     {
-      titel: 'Denkprobe Archivmodus',
-      impuls: 'Nicht jede Unterbrechung ist ein Stillstand.',
-      frage: 'Was würdest du heute anders entscheiden, wenn du nur auf Folgen in fünf Jahren schauen dürftest?'
+      titel:  { de: 'Denkprobe Archivmodus',           en: 'Thinking Challenge Archive Mode' },
+      impuls: { de: 'Nicht jede Unterbrechung ist ein Stillstand.',
+                en: 'Not every interruption is a standstill.' },
+      frage:  { de: 'Was würdest du heute anders entscheiden, wenn du nur auf Folgen in fünf Jahren schauen dürftest?',
+                en: 'What would you decide differently today if you could only consider consequences five years from now?' }
     },
     {
-      titel: 'Denkprobe Archivmodus',
-      impuls: 'Urteil zeigt sich selten in den lautesten Momenten, sondern in den stillen Korrekturen.',
-      frage: 'Welche Meinung würdest du heute öffentlich relativieren, wenn dir Genauigkeit wichtiger als Wirkung ist?'
+      titel:  { de: 'Denkprobe Archivmodus',           en: 'Thinking Challenge Archive Mode' },
+      impuls: { de: 'Urteil zeigt sich selten in den lautesten Momenten, sondern in den stillen Korrekturen.',
+                en: 'Judgment rarely shows itself in the loudest moments, but in quiet corrections.' },
+      frage:  { de: 'Welche Meinung würdest du heute öffentlich relativieren, wenn dir Genauigkeit wichtiger als Wirkung ist?',
+                en: 'Which opinion would you publicly qualify today if accuracy mattered more to you than impact?' }
     },
     {
-      titel: 'Denkprobe Archivmodus',
-      impuls: 'Schnelle Klarheit ist verführerisch. Sie spart Zeit, aber oft auf Kosten der Wirklichkeit.',
-      frage: 'Welche unbequeme Nebenwirkung deiner Lieblingslösung blendest du gerade aus?'
+      titel:  { de: 'Denkprobe Archivmodus',           en: 'Thinking Challenge Archive Mode' },
+      impuls: { de: 'Schnelle Klarheit ist verführerisch. Sie spart Zeit, aber oft auf Kosten der Wirklichkeit.',
+                en: 'Quick clarity is seductive. It saves time, but often at the expense of reality.' },
+      frage:  { de: 'Welche unbequeme Nebenwirkung deiner Lieblingslösung blendest du gerade aus?',
+                en: 'Which uncomfortable side-effect of your favourite solution are you currently ignoring?' }
     },
     {
-      titel: 'Denkprobe Archivmodus',
-      impuls: 'Widerspruch ist kein Defekt, sondern ein Hinweis auf Komplexität.',
-      frage: 'An welchem Konflikt merkst du, dass beide Seiten etwas Richtiges sehen?'
+      titel:  { de: 'Denkprobe Archivmodus',           en: 'Thinking Challenge Archive Mode' },
+      impuls: { de: 'Widerspruch ist kein Defekt, sondern ein Hinweis auf Komplexität.',
+                en: 'Contradiction is not a defect but an indicator of complexity.' },
+      frage:  { de: 'An welchem Konflikt merkst du, dass beide Seiten etwas Richtiges sehen?',
+                en: 'In which conflict do you notice that both sides see something right?' }
     },
     {
-      titel: 'Denkprobe Archivmodus',
-      impuls: 'Haltung wird erst sichtbar, wenn sie dich etwas kostet.',
-      frage: 'Wo würdest du heute konsequent bleiben, obwohl es dir kurzfristig schadet?'
+      titel:  { de: 'Denkprobe Archivmodus',           en: 'Thinking Challenge Archive Mode' },
+      impuls: { de: 'Haltung wird erst sichtbar, wenn sie dich etwas kostet.',
+                en: 'Conviction only becomes visible when it costs you something.' },
+      frage:  { de: 'Wo würdest du heute konsequent bleiben, obwohl es dir kurzfristig schadet?',
+                en: 'Where would you remain consistent today even though it harms you in the short term?' }
     },
     {
-      titel: 'Denkprobe Archivmodus',
-      impuls: 'Im digitalen Lärm gewinnt oft das Eindeutige, nicht das Wahre.',
-      frage: 'Welche Aussage teilst du nur, weil sie anschlussfähig ist – nicht weil sie präzise ist?'
+      titel:  { de: 'Denkprobe Archivmodus',           en: 'Thinking Challenge Archive Mode' },
+      impuls: { de: 'Im digitalen Lärm gewinnt oft das Eindeutige, nicht das Wahre.',
+                en: 'In the digital noise, what wins is often the unambiguous, not the true.' },
+      frage:  { de: 'Welche Aussage teilst du nur, weil sie anschlussfähig ist – nicht weil sie präzise ist?',
+                en: 'Which statement do you share only because it is relatable – not because it is precise?' }
     }
   ];
 
-  var fallbackQuestions_en = [
-    {
-      titel: 'Thinking Challenge Archive Mode',
-      impuls: 'Sometimes the best question is the one that remains despite failure.',
-      frage: 'Which of your convictions would be hardest to defend if you only had three sentences?'
-    },
-    {
-      titel: 'Thinking Challenge Archive Mode',
-      impuls: 'Even without an API, thinking can be precise and uncomfortable.',
-      frage: 'Which position of your counterpart seems wrong to you – and what fear might lie behind it?'
-    },
-    {
-      titel: 'Thinking Challenge Archive Mode',
-      impuls: 'Not every interruption is a standstill.',
-      frage: 'What would you decide differently today if you could only consider consequences five years from now?'
-    },
-    {
-      titel: 'Thinking Challenge Archive Mode',
-      impuls: 'Judgment rarely shows itself in the loudest moments, but in quiet corrections.',
-      frage: 'Which opinion would you publicly qualify today if accuracy mattered more to you than impact?'
-    },
-    {
-      titel: 'Thinking Challenge Archive Mode',
-      impuls: 'Quick clarity is seductive. It saves time, but often at the expense of reality.',
-      frage: 'Which uncomfortable side-effect of your favourite solution are you currently ignoring?'
-    },
-    {
-      titel: 'Thinking Challenge Archive Mode',
-      impuls: 'Contradiction is not a defect but an indicator of complexity.',
-      frage: 'In which conflict do you notice that both sides see something right?'
-    },
-    {
-      titel: 'Thinking Challenge Archive Mode',
-      impuls: 'Conviction only becomes visible when it costs you something.',
-      frage: 'Where would you remain consistent today even though it harms you in the short term?'
-    },
-    {
-      titel: 'Thinking Challenge Archive Mode',
-      impuls: 'In the digital noise, what wins is often the unambiguous, not the true.',
-      frage: 'Which statement do you share only because it is relatable – not because it is precise?'
-    }
-  ];
+  function currentLangEarly() {
+    return (window.AtelierI18n && window.AtelierI18n.lang) ? window.AtelierI18n.lang : 'de';
+  }
 
-  var fallbackQuestions = (window.AtelierI18n && window.AtelierI18n.lang === 'en') ? fallbackQuestions_en : fallbackQuestions_de;
+  function localize(field) {
+    if (typeof field === 'string') return field;
+    if (field && typeof field === 'object') {
+      var lang = currentLangEarly();
+      return field[lang] || field.en || field.de || '';
+    }
+    return '';
+  }
+
+  function resolveFallbackEntry(entry) {
+    return {
+      titel:  localize(entry.titel),
+      impuls: localize(entry.impuls),
+      frage:  localize(entry.frage)
+    };
+  }
 
   function escapeHtml(str) {
     var div = document.createElement('div');
@@ -121,8 +115,8 @@
   }
 
   function getFallbackChallenge(seed) {
-    var index = seedToIndex(seed || getDaySeed(), fallbackQuestions.length);
-    return fallbackQuestions[index];
+    var index = seedToIndex(seed || getDaySeed(), fallbackPool.length);
+    return resolveFallbackEntry(fallbackPool[index]);
   }
 
   function reportDailyError(message, level) {
