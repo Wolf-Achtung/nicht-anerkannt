@@ -111,6 +111,78 @@ function err(lang, key) {
   return (ERR[lang] && ERR[lang][key]) || ERR[DEFAULT_LANG][key] || key;
 }
 
+// --- Language routing (before static) ---
+// New canonical URL structure:
+//   /<lang>/         → <lang>-root index   (mapped from ./index.html or ./en/index.html)
+//   /<lang>/<page>   → <lang>-subpage      (mapped from ./pages/<page>.html or ./en/pages/<page>.html)
+// Legacy URLs (/index.html, /pages/*.html, /en/index.html, /en/pages/*.html)
+// are answered with a permanent redirect (301) to the canonical form.
+// Any random path falls through to the static middleware and, failing that,
+// to the language-aware SPA fallback at the bottom of this file.
+
+const LANG_URL = {
+  de: { root: path.join(__dirname, 'index.html'),       pagesDir: path.join(__dirname, 'pages') },
+  en: { root: path.join(__dirname, 'en', 'index.html'), pagesDir: path.join(__dirname, 'en', 'pages') }
+};
+
+const PAGE_NAME_RE = /^[a-z0-9][a-z0-9-]{0,63}$/i;
+
+function resolvePage(lang, name) {
+  const cfg = LANG_URL[lang];
+  if (!cfg || !PAGE_NAME_RE.test(name || '')) return null;
+  const file = path.join(cfg.pagesDir, name + '.html');
+  if (!file.startsWith(cfg.pagesDir + path.sep)) return null; // path-traversal guard
+  return fs.existsSync(file) ? file : null;
+}
+
+function detectRequestLang(req) {
+  // cookie preference wins
+  const cookieMatch = /(?:^|;\s*)atelier-lang=([a-z]{2})/i.exec(req.headers.cookie || '');
+  if (cookieMatch && SUPPORTED_LANGS.includes(cookieMatch[1].toLowerCase())) {
+    return cookieMatch[1].toLowerCase();
+  }
+  // Accept-Language parsing (simple: first supported match)
+  const header = String(req.headers['accept-language'] || '').toLowerCase();
+  const parts = header.split(',').map((s) => s.trim().slice(0, 2)).filter(Boolean);
+  for (const p of parts) {
+    if (SUPPORTED_LANGS.includes(p)) return p;
+  }
+  return DEFAULT_LANG;
+}
+
+// Language home — /de/, /en/
+SUPPORTED_LANGS.forEach((lang) => {
+  app.get(['/' + lang, '/' + lang + '/'], (req, res) => {
+    res.sendFile(LANG_URL[lang].root);
+  });
+});
+
+// Language sub-page — /de/<page>, /en/<page>
+SUPPORTED_LANGS.forEach((lang) => {
+  app.get('/' + lang + '/:page', (req, res, next) => {
+    const file = resolvePage(lang, req.params.page);
+    if (!file) return next();
+    res.sendFile(file);
+  });
+});
+
+// Legacy redirects: old /pages/* and /en/pages/* paths → new canonical form
+app.get('/index.html', (req, res) => res.redirect(301, '/' + DEFAULT_LANG + '/'));
+app.get('/en/index.html', (req, res) => res.redirect(301, '/en/'));
+app.get('/pages/:page.html', (req, res) => {
+  if (!PAGE_NAME_RE.test(req.params.page)) return res.redirect(301, '/' + DEFAULT_LANG + '/');
+  res.redirect(301, '/' + DEFAULT_LANG + '/' + req.params.page);
+});
+app.get('/en/pages/:page.html', (req, res) => {
+  if (!PAGE_NAME_RE.test(req.params.page)) return res.redirect(301, '/en/');
+  res.redirect(301, '/en/' + req.params.page);
+});
+
+// Root — detect user language, redirect to /<lang>/
+app.get('/', (req, res) => {
+  res.redirect(302, '/' + detectRequestLang(req) + '/');
+});
+
 // --- Static files ---
 app.use(express.static(path.join(__dirname), {
   extensions: ['html']
@@ -737,8 +809,14 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
 });
 
 // --- SPA fallback ---
+// For any unmatched GET, redirect to the language home so bookmarks to
+// moved/renamed routes land somewhere meaningful instead of on the raw
+// German index. /api/* is handled separately and never reaches here.
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ error: 'Not found' });
+  }
+  res.redirect(302, '/' + detectRequestLang(req) + '/');
 });
 
 const server = app.listen(PORT, () => {

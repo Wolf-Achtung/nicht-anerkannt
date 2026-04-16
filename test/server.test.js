@@ -5,14 +5,14 @@ const http = require('http');
 const PORT = 4567;
 let server;
 
-function request(method, path, body) {
+function request(method, path, body, extraHeaders) {
   return new Promise((resolve, reject) => {
     const options = {
       hostname: '127.0.0.1',
       port: PORT,
       path,
       method,
-      headers: { 'Content-Type': 'application/json' }
+      headers: Object.assign({ 'Content-Type': 'application/json' }, extraHeaders || {})
     };
 
     const req = http.request(options, (res) => {
@@ -45,15 +45,84 @@ after(() => {
   if (server && server.close) server.close();
 });
 
-describe('Static files', () => {
-  it('serves index.html on GET /', async () => {
+describe('Language routing', () => {
+  it('redirects / to the default language home (DE without Accept-Language)', async () => {
     const res = await request('GET', '/');
+    assert.strictEqual(res.status, 302);
+    assert.strictEqual(res.headers.location, '/de/');
+  });
+
+  it('honours Accept-Language when redirecting /', async () => {
+    const res = await request('GET', '/', null, { 'Accept-Language': 'en-GB,en;q=0.9' });
+    assert.strictEqual(res.status, 302);
+    assert.strictEqual(res.headers.location, '/en/');
+  });
+
+  it('honours atelier-lang cookie over Accept-Language', async () => {
+    const res = await request('GET', '/', null, {
+      'Accept-Language': 'de-DE',
+      Cookie: 'atelier-lang=en'
+    });
+    assert.strictEqual(res.status, 302);
+    assert.strictEqual(res.headers.location, '/en/');
+  });
+
+  it('serves DE index.html at /de/', async () => {
+    const res = await request('GET', '/de/');
     assert.strictEqual(res.status, 200);
     assert.ok(res.raw.includes('<!doctype html'), 'should contain HTML doctype');
+    assert.ok(res.raw.toLowerCase().includes('lang="de"'), 'should have lang="de"');
+  });
+
+  it('serves EN index.html at /en/', async () => {
+    const res = await request('GET', '/en/');
+    assert.strictEqual(res.status, 200);
+    assert.ok(res.raw.toLowerCase().includes('lang="en"'), 'should have lang="en"');
+  });
+
+  it('serves DE subpage at /de/werkstatt', async () => {
+    const res = await request('GET', '/de/werkstatt');
+    assert.strictEqual(res.status, 200);
+    assert.ok(res.raw.toLowerCase().includes('lang="de"'));
+  });
+
+  it('serves EN subpage at /en/werkstatt', async () => {
+    const res = await request('GET', '/en/werkstatt');
+    assert.strictEqual(res.status, 200);
+    assert.ok(res.raw.toLowerCase().includes('lang="en"'));
+  });
+
+  it('falls through to 302 for unknown subpage /de/does-not-exist', async () => {
+    const res = await request('GET', '/de/does-not-exist');
+    assert.strictEqual(res.status, 302);
+  });
+
+  it('redirects legacy /pages/werkstatt.html to /de/werkstatt (301)', async () => {
+    const res = await request('GET', '/pages/werkstatt.html');
+    assert.strictEqual(res.status, 301);
+    assert.strictEqual(res.headers.location, '/de/werkstatt');
+  });
+
+  it('redirects legacy /en/pages/werkstatt.html to /en/werkstatt (301)', async () => {
+    const res = await request('GET', '/en/pages/werkstatt.html');
+    assert.strictEqual(res.status, 301);
+    assert.strictEqual(res.headers.location, '/en/werkstatt');
+  });
+
+  it('redirects legacy /index.html to /de/ (301)', async () => {
+    const res = await request('GET', '/index.html');
+    assert.strictEqual(res.status, 301);
+    assert.strictEqual(res.headers.location, '/de/');
+  });
+
+  it('redirects legacy /en/index.html to /en/ (301)', async () => {
+    const res = await request('GET', '/en/index.html');
+    assert.strictEqual(res.status, 301);
+    assert.strictEqual(res.headers.location, '/en/');
   });
 
   it('has security headers (helmet)', async () => {
-    const res = await request('GET', '/');
+    const res = await request('GET', '/de/');
     assert.ok(res.headers['x-content-type-options'], 'should have X-Content-Type-Options');
     assert.ok(res.headers['x-frame-options'] || res.headers['content-security-policy'],
       'should have frame protection');
