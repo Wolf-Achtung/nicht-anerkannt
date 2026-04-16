@@ -30,8 +30,8 @@ const PAGES = [
   { slug: 'datenschutz',               de: 'pages/datenschutz.html', en: 'en/pages/datenschutz.html' },
   { slug: 'ai-governance',             de: 'pages/ai-governance.html', en: 'en/pages/ai-governance.html' },
   { slug: 'ki-renaissance',            de: 'pages/ki-renaissance.html', en: 'en/pages/ki-renaissance.html' },
-  { slug: 'ki-renaissance-analyse',    de: 'pages/ki-renaissance-analyse.html', en: null },
-  { slug: 'zukunft-der-bildung',       de: 'pages/zukunft-der-bildung.html',    en: null }
+  { slug: 'ki-renaissance-analyse',    de: 'pages/ki-renaissance-analyse.html', en: 'en/pages/ki-renaissance-analyse.html' },
+  { slug: 'zukunft-der-bildung',       de: 'pages/zukunft-der-bildung.html',    en: 'en/pages/zukunft-der-bildung.html' }
 ];
 
 const MARKER_BEGIN = '<!-- hreflang:begin -->';

@@ -24,7 +24,7 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const SUPPORTED_LANGS = ['de', 'en'];
-const DE_ONLY_PAGES = new Set(['ki-renaissance-analyse', 'zukunft-der-bildung']);
+const DE_ONLY_PAGES = new Set([]); // Every DE page currently has an EN sibling.
 
 const errors = [];
 const warnings = [];
