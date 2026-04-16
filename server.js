@@ -57,6 +57,7 @@ const chatLimiter = rateLimit({
 // --- i18n infrastructure for API responses ---
 const SUPPORTED_LANGS = ['de', 'en'];
 const DEFAULT_LANG = 'de';
+const FALLBACK_LANG = 'en';
 
 function getLang(req) {
   const candidate = (req && req.body && req.body.lang) || (req && req.query && req.query.lang) || DEFAULT_LANG;
@@ -194,38 +195,51 @@ function getConfiguredApiKey() {
   return process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY || process.env.AI_API_KEY || '';
 }
 
-const DAILY_QUESTIONS_PATHS = {
-  de: path.join(__dirname, 'data', 'daily-questions.json'),
-  en: path.join(__dirname, 'data', 'en', 'daily-questions.json')
-};
+const DAILY_QUESTIONS_PATH = path.join(__dirname, 'data', 'daily-questions.json');
 
-function normalizeDailyQuestion(entry) {
-  if (!entry || typeof entry !== 'object') return null;
-  if (!entry.titel || !entry.impuls || !entry.frage) return null;
-  return {
-    titel: String(entry.titel).trim(),
-    impuls: String(entry.impuls).trim(),
-    frage: String(entry.frage).trim()
-  };
+/**
+ * Resolve a field that is either a multilingual object ({de,en,...}) or a
+ * plain string (legacy schema) into the localized string for `lang`,
+ * falling back across FALLBACK_LANG → DEFAULT_LANG → any other language.
+ */
+function localize(value, lang) {
+  if (typeof value === 'string') return value;
+  if (value && typeof value === 'object') {
+    if (typeof value[lang] === 'string') return value[lang];
+    if (typeof value[FALLBACK_LANG] === 'string') return value[FALLBACK_LANG];
+    if (typeof value[DEFAULT_LANG] === 'string') return value[DEFAULT_LANG];
+    const any = Object.keys(value).find((k) => typeof value[k] === 'string');
+    if (any) return value[any];
+  }
+  return '';
 }
 
-function loadLocalDailyQuestionsFor(lang) {
-  const p = DAILY_QUESTIONS_PATHS[lang] || DAILY_QUESTIONS_PATHS[DEFAULT_LANG];
+/**
+ * Normalize a daily-questions entry. Accepts both the new per-field
+ * multilingual schema and the legacy flat-string schema.
+ */
+function normalizeDailyQuestion(entry, lang) {
+  if (!entry || typeof entry !== 'object') return null;
+  const titel = localize(entry.titel, lang);
+  const impuls = localize(entry.impuls, lang);
+  const frage = localize(entry.frage, lang);
+  if (!titel || !impuls || !frage) return null;
+  return { titel: titel.trim(), impuls: impuls.trim(), frage: frage.trim() };
+}
+
+function loadLocalDailyQuestions() {
   try {
-    const raw = fs.readFileSync(p, 'utf8');
+    const raw = fs.readFileSync(DAILY_QUESTIONS_PATH, 'utf8');
     const parsed = JSON.parse(raw);
-    if (!Array.isArray(parsed)) return [];
-    return parsed.map(normalizeDailyQuestion).filter(Boolean);
+    return Array.isArray(parsed) ? parsed : [];
   } catch (error) {
-    console.error(`Daily questions (${lang}) could not be loaded:`, error.message);
+    console.error('Daily questions could not be loaded:', error.message);
     return [];
   }
 }
 
-const LOCAL_DAILY_QUESTIONS_BY_LANG = {
-  de: loadLocalDailyQuestionsFor('de'),
-  en: loadLocalDailyQuestionsFor('en')
-};
+// Raw entries (language-agnostic); localization happens at pick time.
+const LOCAL_DAILY_QUESTIONS_RAW = loadLocalDailyQuestions();
 
 function dailySeedToIndex(seedInput, length) {
   const seed = String(seedInput || new Date().toISOString().slice(0, 10));
@@ -248,20 +262,18 @@ const EMERGENCY_FALLBACK = {
 
 function pickLocalDailyChallenge(seedInput, lang = DEFAULT_LANG) {
   const seed = String(seedInput || new Date().toISOString().slice(0, 10));
-  const pool = LOCAL_DAILY_QUESTIONS_BY_LANG[lang] && LOCAL_DAILY_QUESTIONS_BY_LANG[lang].length
-    ? LOCAL_DAILY_QUESTIONS_BY_LANG[lang]
-    : LOCAL_DAILY_QUESTIONS_BY_LANG[DEFAULT_LANG];
 
-  if (!pool || !pool.length) {
+  if (!LOCAL_DAILY_QUESTIONS_RAW.length) {
     return { ...(EMERGENCY_FALLBACK[lang] || EMERGENCY_FALLBACK[DEFAULT_LANG]), source: 'emergency-fallback', seed };
   }
 
-  const picked = pool[dailySeedToIndex(seed, pool.length)];
-  return {
-    ...picked,
-    source: 'local-pool',
-    seed
-  };
+  // Seed picks the same entry regardless of language; localization is per field.
+  const raw = LOCAL_DAILY_QUESTIONS_RAW[dailySeedToIndex(seed, LOCAL_DAILY_QUESTIONS_RAW.length)];
+  const picked = normalizeDailyQuestion(raw, lang);
+  if (!picked) {
+    return { ...(EMERGENCY_FALLBACK[lang] || EMERGENCY_FALLBACK[DEFAULT_LANG]), source: 'emergency-fallback', seed };
+  }
+  return { ...picked, source: 'local-pool', seed };
 }
 
 async function callClaude(systemPrompt, messages, maxTokens = 300, lang = DEFAULT_LANG) {
@@ -660,7 +672,7 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
   }
 
   const parsed = parseClaudeJSON(result.text, 'object', null);
-  const normalized = parsed ? normalizeDailyQuestion(parsed) : null;
+  const normalized = parsed ? normalizeDailyQuestion(parsed, lang) : null;
   if (normalized) {
     return res.json({ ...normalized, source: 'ai', seed: resolvedSeed });
   }
