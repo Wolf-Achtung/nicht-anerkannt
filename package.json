@@ -8,7 +8,8 @@
     "dev": "node server.js",
     "lint": "eslint assets/js/ server.js",
     "lint:fix": "eslint --fix assets/js/ server.js",
-    "test": "node --test test/server.test.js"
+    "test": "node --test test/server.test.js",
+    "i18n:extract": "node scripts/extract-i18n.js"
   },
   "dependencies": {
     "express": "^4.21.0",
