@@ -1,35 +1,18 @@
 # =====================================================================
-# Atelier — Netlify URL routing
-# Mirrors the /de/... and /en/... scheme from server.js so that the
-# statically hosted site serves the same canonical URLs that our
-# hreflang tags and internal links point to.
+# Atelier — Netlify legacy URL redirects
 #
-# Netlify matches rules top-to-bottom, first match wins.
-# Status 200 = rewrite (browser URL stays); 301/302 = redirect.
+# The new canonical URLs /de/<slug> and /en/<slug> are served directly
+# from /de/ and /en/ directories on disk — Netlify handles them natively
+# via its default pretty-URL and directory-index behaviour, so they do
+# NOT need rewrite rules here (avoids trailing-slash redirect loops).
+#
+# These rules only cover legacy URL shapes so old bookmarks keep working.
 # =====================================================================
 
-# 1) Legacy paths → new canonical URLs (301, bookmark-safe)
-/index.html                 /de/                                 301
-/en/index.html              /en/                                 301
+# Old root → sub-page structure → new flat per-language structure
 /pages/:page.html           /de/:page                            301
 /en/pages/:page.html        /en/:page                            301
 
-# 2) Normalize missing-trailing-slash on language home
-/de                         /de/                                 301
-/en                         /en/                                 301
-
-# 3) Language home pages — serve the on-disk index files (URL stays /de/ or /en/)
-/de/                        /index.html                          200
-/en/                        /en/index.html                       200
-
-# 4) Language sub-pages — rewrite to the on-disk file
-/de/:page                   /pages/:page.html                    200
-/en/:page                   /en/pages/:page.html                 200
-
-# 5) Root → default language (simple 302; Accept-Language detection
-#    would need a Netlify Edge Function)
-/                           /de/                                 302
-
-# 6) Fallback: any unknown /de/… or /en/… path → lang home (not 404)
-/de/*                       /de/                                 302
-/en/*                       /en/                                 302
+# Old explicit EN index → EN home (DE root /index.html is now the
+# language-detect stub; rewriting it would break that).
+/en/index.html              /en/                                 301

@@ -19,19 +19,19 @@ const SITE_URL = process.env.SITE_URL || 'https://nicht-anerkannt.info';
 // Page inventory:
 //   slug                              de file on disk               en file on disk (null = DE-only)
 const PAGES = [
-  { slug: '',                          de: 'index.html',             en: 'en/index.html' },
-  { slug: 'werkstatt',                 de: 'pages/werkstatt.html',   en: 'en/pages/werkstatt.html' },
-  { slug: 'salon',                     de: 'pages/salon.html',       en: 'en/pages/salon.html' },
-  { slug: 'roadmap',                   de: 'pages/roadmap.html',     en: 'en/pages/roadmap.html' },
-  { slug: 'kontakt',                   de: 'pages/kontakt.html',     en: 'en/pages/kontakt.html' },
-  { slug: 'medien',                    de: 'pages/medien.html',      en: 'en/pages/medien.html' },
-  { slug: 'ideen-archiv',              de: 'pages/ideen-archiv.html',en: 'en/pages/ideen-archiv.html' },
-  { slug: 'impressum',                 de: 'pages/impressum.html',   en: 'en/pages/impressum.html' },
-  { slug: 'datenschutz',               de: 'pages/datenschutz.html', en: 'en/pages/datenschutz.html' },
-  { slug: 'ai-governance',             de: 'pages/ai-governance.html', en: 'en/pages/ai-governance.html' },
-  { slug: 'ki-renaissance',            de: 'pages/ki-renaissance.html', en: 'en/pages/ki-renaissance.html' },
-  { slug: 'ki-renaissance-analyse',    de: 'pages/ki-renaissance-analyse.html', en: 'en/pages/ki-renaissance-analyse.html' },
-  { slug: 'zukunft-der-bildung',       de: 'pages/zukunft-der-bildung.html',    en: 'en/pages/zukunft-der-bildung.html' }
+  { slug: '',                          de: 'de/index.html',          en: 'en/index.html' },
+  { slug: 'werkstatt',                 de: 'de/werkstatt.html',      en: 'en/werkstatt.html' },
+  { slug: 'salon',                     de: 'de/salon.html',          en: 'en/salon.html' },
+  { slug: 'roadmap',                   de: 'de/roadmap.html',        en: 'en/roadmap.html' },
+  { slug: 'kontakt',                   de: 'de/kontakt.html',        en: 'en/kontakt.html' },
+  { slug: 'medien',                    de: 'de/medien.html',         en: 'en/medien.html' },
+  { slug: 'ideen-archiv',              de: 'de/ideen-archiv.html',   en: 'en/ideen-archiv.html' },
+  { slug: 'impressum',                 de: 'de/impressum.html',      en: 'en/impressum.html' },
+  { slug: 'datenschutz',               de: 'de/datenschutz.html',    en: 'en/datenschutz.html' },
+  { slug: 'ai-governance',             de: 'de/ai-governance.html',  en: 'en/ai-governance.html' },
+  { slug: 'ki-renaissance',            de: 'de/ki-renaissance.html', en: 'en/ki-renaissance.html' },
+  { slug: 'ki-renaissance-analyse',    de: 'de/ki-renaissance-analyse.html', en: 'en/ki-renaissance-analyse.html' },
+  { slug: 'zukunft-der-bildung',       de: 'de/zukunft-der-bildung.html',    en: 'en/zukunft-der-bildung.html' }
 ];
 
 const MARKER_BEGIN = '<!-- hreflang:begin -->';
