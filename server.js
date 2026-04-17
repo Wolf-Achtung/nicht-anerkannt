@@ -122,8 +122,8 @@ function err(lang, key) {
 // to the language-aware SPA fallback at the bottom of this file.
 
 const LANG_URL = {
-  de: { root: path.join(__dirname, 'index.html'),       pagesDir: path.join(__dirname, 'pages') },
-  en: { root: path.join(__dirname, 'en', 'index.html'), pagesDir: path.join(__dirname, 'en', 'pages') }
+  de: { root: path.join(__dirname, 'de', 'index.html'),  pagesDir: path.join(__dirname, 'de') },
+  en: { root: path.join(__dirname, 'en', 'index.html'),  pagesDir: path.join(__dirname, 'en') }
 };
 
 const PAGE_NAME_RE = /^[a-z0-9][a-z0-9-]{0,63}$/i;

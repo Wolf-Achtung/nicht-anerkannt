@@ -112,14 +112,20 @@ function checkDailyQuestions() {
 
 // 4: HTML page pair parity
 function checkPagePairs() {
-  const deDir = path.join(ROOT, 'pages');
-  const enDir = path.join(ROOT, 'en', 'pages');
+  const deDir = path.join(ROOT, 'de');
+  const enDir = path.join(ROOT, 'en');
   if (!fs.existsSync(deDir) || !fs.existsSync(enDir)) {
-    warnings.push('Pages directory missing (pages/ or en/pages/)');
+    warnings.push('Language directory missing (de/ or en/)');
     return;
   }
-  const de = new Set(fs.readdirSync(deDir).filter((n) => n.endsWith('.html')).map((n) => n.replace(/\.html$/, '')));
-  const en = new Set(fs.readdirSync(enDir).filter((n) => n.endsWith('.html')).map((n) => n.replace(/\.html$/, '')));
+  // Skip index.html — language home is tracked separately.
+  const listPages = (dir) => new Set(
+    fs.readdirSync(dir)
+      .filter((n) => n.endsWith('.html') && n !== 'index.html')
+      .map((n) => n.replace(/\.html$/, ''))
+  );
+  const de = listPages(deDir);
+  const en = listPages(enDir);
 
   for (const slug of de) {
     if (!en.has(slug) && !DE_ONLY_PAGES.has(slug)) {
