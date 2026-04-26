@@ -7,6 +7,18 @@ const rateLimit = require('express-rate-limit');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Trust the first proxy hop (Netlify/Render/Fly/Cloudflare etc.) so that
+// `req.ip` resolves to the real client and per-IP rate limiting works.
+// Override with TRUST_PROXY env var (e.g. "2" for two proxy hops, "false" to disable).
+const trustProxy = process.env.TRUST_PROXY;
+if (trustProxy === 'false') {
+  app.set('trust proxy', false);
+} else if (trustProxy && /^\d+$/.test(trustProxy)) {
+  app.set('trust proxy', Number(trustProxy));
+} else {
+  app.set('trust proxy', 1);
+}
+
 // --- Security headers ---
 app.use(helmet({
   contentSecurityPolicy: {
@@ -385,7 +397,7 @@ ${LANG_INSTRUCTION[lang]}`;
 // ═══════════════════════════════════════════════════════════
 // 2. WIDERSPRUCHSSALON – These → 3 Gegenpositionen
 // ═══════════════════════════════════════════════════════════
-app.use('/api/widerspruch', express.json());
+app.use('/api/widerspruch', express.json({ limit: '50kb' }));
 
 app.post('/api/widerspruch', aiLimiter, async (req, res) => {
   const { these } = req.body;
@@ -418,7 +430,7 @@ ${LANG_INSTRUCTION[lang]} Antworte im folgenden JSON-Format (nur das JSON, kein 
 // ═══════════════════════════════════════════════════════════
 // 3. MANIFEST-ÜBERSETZER – kulturelle Adaptation
 // ═══════════════════════════════════════════════════════════
-app.use('/api/translate', express.json());
+app.use('/api/translate', express.json({ limit: '50kb' }));
 
 app.post('/api/translate', aiLimiter, async (req, res) => {
   const { text, language } = req.body;
@@ -446,7 +458,7 @@ Antworte im folgenden JSON-Format. Die "translation" ist in der Zielsprache (${l
 // ═══════════════════════════════════════════════════════════
 // 4. DENKPROBEN-GENERATOR – Thema → strukturierte Denkprobe
 // ═══════════════════════════════════════════════════════════
-app.use('/api/denkprobe', express.json());
+app.use('/api/denkprobe', express.json({ limit: '50kb' }));
 
 app.post('/api/denkprobe', aiLimiter, async (req, res) => {
   const { thema } = req.body;
@@ -481,7 +493,7 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
 // ═══════════════════════════════════════════════════════════
 // 5. URTEILSTRAINING – Dilemma + Feedback
 // ═══════════════════════════════════════════════════════════
-app.use('/api/urteil', express.json());
+app.use('/api/urteil', express.json({ limit: '50kb' }));
 
 app.post('/api/urteil', aiLimiter, async (req, res) => {
   const { action } = req.body;
@@ -546,7 +558,7 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
 // ═══════════════════════════════════════════════════════════
 // 6. WICKED-PROBLEM-WERKSTATT – geführter Denkprozess
 // ═══════════════════════════════════════════════════════════
-app.use('/api/wicked', express.json());
+app.use('/api/wicked', express.json({ limit: '50kb' }));
 
 app.post('/api/wicked', aiLimiter, async (req, res) => {
   const { problem, step, previousAnswers } = req.body;
@@ -639,7 +651,7 @@ app.post('/api/client-log', (req, res) => {
 // ═══════════════════════════════════════════════════════════
 // 8. TÄGLICHE DENKPROBE (Daily Challenge)
 // ═══════════════════════════════════════════════════════════
-app.use('/api/daily', express.json());
+app.use('/api/daily', express.json({ limit: '50kb' }));
 
 async function handleDaily(req, res) {
   const body = req.body || {};
@@ -686,7 +698,7 @@ app.get('/api/daily', aiLimiter, handleDaily);
 // ═══════════════════════════════════════════════════════════
 // 9. PERSPEKTIVENWECHSEL-MASCHINE
 // ═══════════════════════════════════════════════════════════
-app.use('/api/perspektive', express.json());
+app.use('/api/perspektive', express.json({ limit: '50kb' }));
 
 app.post('/api/perspektive', aiLimiter, async (req, res) => {
   const { position, perspektive } = req.body;
@@ -756,7 +768,7 @@ Sei scharf, aber fair. Keine Polemik. ${LANG_INSTRUCTION[lang]} JSON-Schlüsseln
 // ═══════════════════════════════════════════════════════════
 // 11. ARGUMENTKARTE (Argument Mapping)
 // ═══════════════════════════════════════════════════════════
-app.use('/api/argumentkarte', express.json());
+app.use('/api/argumentkarte', express.json({ limit: '50kb' }));
 
 app.post('/api/argumentkarte', aiLimiter, async (req, res) => {
   const { these } = req.body;
