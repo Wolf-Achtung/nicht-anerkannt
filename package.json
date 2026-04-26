@@ -20,7 +20,7 @@
     "helmet": "^8.0.0"
   },
   "devDependencies": {
-    "eslint": "^9.0.0"
+    "eslint": "^10.2.1"
   },
   "keywords": ["manifest", "atelier", "radikale-mitte", "bildung"],
   "author": "Wolf-Achtung",
