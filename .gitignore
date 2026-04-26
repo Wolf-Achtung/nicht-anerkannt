@@ -1,6 +1,37 @@
+# Dependencies
 node_modules/
-.DS_Store
-.env
-*.log
+
+# Build output
 dist/
 .cache/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment / secrets
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.cer
+*.crt
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Test / coverage
+coverage/
+.nyc_output/
+
+# Audit scratch
+.audit-temp/
