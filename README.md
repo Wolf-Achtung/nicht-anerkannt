@@ -8,40 +8,54 @@ Manifest und interaktive Plattform fuer Das Atelier der Radikalen Mitte -- ein D
 
 ```
 nicht-anerkannt/
-  index.html                              - Hauptseite
+  index.html                              - Sprach-Redirect-Stub (/de/ oder /en/)
   manifest-das-atelier-radikale-mitte.md  - Das Manifest
+  server.js                               - Express-Backend (Sprachrouting + /api/*)
   assets/
     css/styles.css                        - Stylesheets
-    js/                                   - JavaScript-Module
-      main.js
-      remixer.js
-      stempel.js
-      ticker.js
-      chat.js
-      quiz.js
-      roadmap.js
+    js/                                   - JavaScript-Module (main.js, chat.js, quiz.js, roadmap.js, ...)
     media/                                - Mediendateien
-  pages/                                  - Unterseiten
-    ideen-archiv/
-    medien/
-    roadmap/
-  data/                                   - JSON-Datenquellen
+  de/, en/                                - Statische Seiten je Sprache (index, salon, werkstatt, ...)
+  data/, data/en/                         - JSON-Datenquellen je Sprache
+  i18n/                                   - UI-String-Kataloge (de.json, en.json)
 ```
+
+## Deployment
+
+Zwei getrennte Hosts:
+
+- **Netlify** liefert die statischen Seiten (`de/`, `en/`, `assets/`, `data/`) unter der Produktionsdomain aus. `_redirects` deckt nur Legacy-URLs ab.
+- **Railway** betreibt `server.js` ausschließlich als API-Backend für `/api/*` (Chat, Denkproben, Werkstatt etc.). Seiten mit KI-Features setzen dafür `window.ATELIER_API_BASE` auf die Railway-URL.
 
 ## Lokale Entwicklung
 
 ```bash
 git clone https://github.com/Wolf-Achtung/nicht-anerkannt.git
 cd nicht-anerkannt
+npm install
 ```
 
-`index.html` direkt im Browser oeffnen oder einen lokalen Server starten:
+Für die reinen statischen Seiten reicht `index.html`/`de/index.html` direkt im Browser oder:
 
 ```bash
 npx serve .
 ```
 
-Kein Build-Prozess noetig -- reines HTML/CSS/JS.
+Für die vollständige Anwendung inkl. `/api/*` (Chat, Denkproben-Generator, Werkstatt, ...) den Express-Server starten:
+
+```bash
+cp .env.example .env   # ANTHROPIC_API_KEY eintragen (oder CLAUDE_API_KEY/AI_API_KEY)
+npm start              # http://localhost:3000
+```
+
+Ohne konfigurierten API-Key laufen die KI-Endpunkte im lokalen Fallback-Modus (z. B. `data/daily-questions.json` für die tägliche Denkprobe).
+
+```bash
+npm test        # Server-Tests (node --test)
+npm run lint    # ESLint
+```
+
+Kein Build-Prozess noetig -- reines HTML/CSS/JS plus ein schlankes Express-Backend.
 
 ## Features
 
