@@ -294,7 +294,7 @@ async function callClaude(systemPrompt, messages, maxTokens = 300, lang = DEFAUL
     return { error: err(lang, 'apiKeyMissing'), status: 500 };
   }
 
-  const model = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-5';
+  const model = process.env.ANTHROPIC_MODEL || 'claude-sonnet-5';
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
