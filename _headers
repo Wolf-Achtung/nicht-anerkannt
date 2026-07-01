@@ -1,0 +1,21 @@
+# =====================================================================
+# Atelier — Netlify response headers
+#
+# Netlify serves the static /de/ and /en/ pages directly and never runs
+# server.js, so the Helmet security headers configured there (see
+# server.js's `helmet({...})` call) never reach these pages -- they only
+# apply to the Railway-hosted /api/* JSON responses. This file mirrors
+# that same header baseline for the actual HTML the browser renders.
+#
+# connect-src additionally allows the Railway API origin: several pages
+# (index, werkstatt, zukunft-der-bildung) call it directly via
+# window.ATELIER_API_BASE since there is no same-origin /api/* proxy
+# here. Keep this in sync with that hardcoded origin if it ever changes.
+# =====================================================================
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: no-referrer
+  Strict-Transport-Security: max-age=63072000; includeSubDomains
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://nicht-anerkannt-production.up.railway.app; font-src 'self'; frame-src 'none'

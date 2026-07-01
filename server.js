@@ -27,7 +27,11 @@ app.use(helmet({
       scriptSrc: ["'self'", "'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["'self'", "data:", "blob:"],
-      connectSrc: ["'self'"],
+      // Pages hardcode window.ATELIER_API_BASE to the production Railway
+      // API origin (no same-origin /api/* proxy exists), so this needs to
+      // stay in sync with that origin -- see the _headers file, which
+      // mirrors this same CSP for the Netlify-served pages.
+      connectSrc: ["'self'", "https://nicht-anerkannt-production.up.railway.app"],
       fontSrc: ["'self'"],
       frameSrc: ["'none'"]
     }

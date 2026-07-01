@@ -1,0 +1,93 @@
+{
+  "title": "Firstness Test: How Open Are You to the Undetermined?",
+  "description": "Wonderer, quick-closer, or ambiguity athlete? Seven questions – no right or wrong, but a mirror of your stance toward the not-yet-determined.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "You enter a room and something catches your attention – but you don't know exactly what. Your first impulse:",
+      "options": [
+        {"text": "I systematically scan the room until I've identified the cause.", "scores": {"staunen": 0, "schliessen": 2, "verweilen": 0}},
+        {"text": "I pause for a moment and let the feeling settle before naming it.", "scores": {"staunen": 2, "schliessen": 0, "verweilen": 1}},
+        {"text": "I ask someone whether something is different than usual.", "scores": {"staunen": 0, "schliessen": 1, "verweilen": 0}},
+        {"text": "I enjoy the irritation and watch my perception slowly sharpen.", "scores": {"staunen": 1, "schliessen": 0, "verweilen": 2}}
+      ]
+    },
+    {
+      "id": 2,
+      "text": "AI gives you a perfect answer in seconds to a question that's occupied you for a long time. Your feeling:",
+      "options": [
+        {"text": "Relief – finally clarity. On to the next problem.", "scores": {"staunen": 0, "schliessen": 2, "verweilen": 0}},
+        {"text": "Skepticism – no good answer can form that fast.", "scores": {"staunen": 0, "schliessen": 1, "verweilen": 1}},
+        {"text": "Grief – the question was more valuable to me than any answer.", "scores": {"staunen": 2, "schliessen": 0, "verweilen": 1}},
+        {"text": "Curiosity – I question the answer and let the question keep working on me.", "scores": {"staunen": 1, "schliessen": 0, "verweilen": 2}}
+      ]
+    },
+    {
+      "id": 3,
+      "text": "A discussion heats up. Both sides have strong arguments. You notice you don't have a clear position. What do you do?",
+      "options": [
+        {"text": "I pick a side – ambivalence is weakness.", "scores": {"staunen": 0, "schliessen": 2, "verweilen": 0}},
+        {"text": "I formulate a compromise that considers both sides.", "scores": {"staunen": 0, "schliessen": 1, "verweilen": 1}},
+        {"text": "I hold the tension and try to understand the contradiction more deeply.", "scores": {"staunen": 1, "schliessen": 0, "verweilen": 2}},
+        {"text": "I ask a question that unsettles both sides.", "scores": {"staunen": 2, "schliessen": 0, "verweilen": 1}}
+      ]
+    },
+    {
+      "id": 4,
+      "text": "You're facing a blank page. No brief, no deadline, no prompt. What happens?",
+      "options": [
+        {"text": "I immediately look for a task or a template – emptiness is unproductive.", "scores": {"staunen": 0, "schliessen": 2, "verweilen": 0}},
+        {"text": "I ask ChatGPT for ideas to find a starting point.", "scores": {"staunen": 0, "schliessen": 2, "verweilen": 0}},
+        {"text": "I let the emptiness sit for a while. Sometimes something emerges from nothing.", "scores": {"staunen": 1, "schliessen": 0, "verweilen": 2}},
+        {"text": "I start with a line, a word, a sound – without knowing where it leads.", "scores": {"staunen": 2, "schliessen": 0, "verweilen": 1}}
+      ]
+    },
+    {
+      "id": 5,
+      "text": "What does 'learning' mean to you at its core?",
+      "options": [
+        {"text": "Acquiring knowledge and being able to apply it.", "scores": {"staunen": 0, "schliessen": 2, "verweilen": 0}},
+        {"text": "Recognizing patterns and transferring them.", "scores": {"staunen": 0, "schliessen": 1, "verweilen": 0}},
+        {"text": "Being unsettled and developing new questions from it.", "scores": {"staunen": 2, "schliessen": 0, "verweilen": 1}},
+        {"text": "Changing, without knowing beforehand where to.", "scores": {"staunen": 1, "schliessen": 0, "verweilen": 2}}
+      ]
+    },
+    {
+      "id": 6,
+      "text": "A colleague shows you a piece of work you can't quite place. It's neither good nor bad, just... different. Your reaction:",
+      "options": [
+        {"text": "I ask for an explanation – without context I can't judge anything.", "scores": {"staunen": 0, "schliessen": 2, "verweilen": 0}},
+        {"text": "I compare it to something familiar to find a frame of reference.", "scores": {"staunen": 0, "schliessen": 1, "verweilen": 1}},
+        {"text": "I look at it for a long time and wait until something resonates in me.", "scores": {"staunen": 1, "schliessen": 0, "verweilen": 2}},
+        {"text": "I'm fascinated. It's exactly the unplaceable quality that interests me.", "scores": {"staunen": 2, "schliessen": 0, "verweilen": 1}}
+      ]
+    },
+    {
+      "id": 7,
+      "text": "The decisive skill of the future, for you, is:",
+      "options": [
+        {"text": "Efficiency – whoever uses AI best wins.", "scores": {"staunen": 0, "schliessen": 2, "verweilen": 0}},
+        {"text": "Adaptability – reacting flexibly to change.", "scores": {"staunen": 0, "schliessen": 1, "verweilen": 1}},
+        {"text": "Judgment – being able to distinguish where AI ends and being human begins.", "scores": {"staunen": 1, "schliessen": 0, "verweilen": 1}},
+        {"text": "Wonder – the ability to notice the unexpected before it's named.", "scores": {"staunen": 2, "schliessen": 0, "verweilen": 2}}
+      ]
+    }
+  ],
+  "results": {
+    "staunen": {
+      "title": "Wonderer – Firstness as a Stance",
+      "description": "You live in firstness. You notice what others overlook, ask before others answer, and find the unnamed more fascinating than the explained. In the age of AI, you're the source of genuine novelty – the machine can do many things, but it cannot wonder.",
+      "motto": "See before you name."
+    },
+    "verweilen": {
+      "title": "Ambiguity Athlete – At Home in the Undetermined",
+      "description": "You hold tension where others close quickly. You stay with contradiction, let emptiness become productive, and trust that insight takes time. Your strength: you resist the temptation of the quick answer.",
+      "motto": "Dwell in the undetermined without closing it prematurely."
+    },
+    "schliessen": {
+      "title": "Quick-Closer – Thirdness as a Reflex",
+      "description": "You seek clarity, structure, answers. That's not wrong – but in the age of AI, the machine takes over exactly this work. The Atelier invites you to slow down: the right question is worth more than the fast answer. Firstness is waiting for you.",
+      "motto": "The fastest answer is rarely the deepest."
+    }
+  }
+}
