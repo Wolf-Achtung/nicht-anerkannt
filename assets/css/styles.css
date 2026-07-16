@@ -155,6 +155,18 @@ a { color: inherit; }
   padding: 0.15rem 0.45rem;
 }
 
+/* Visually separates the "explore" cluster from the "info" cluster in the
+   header nav (Miller's Law: chunk a wide flat list into scannable groups).
+   Desktop-only: on the mobile dropdown (.header-links.is-open, column
+   layout) the items already read as one linear list, so no divider there. */
+@media (min-width: 641px) {
+  .nav-group-start {
+    margin-left: 0.6rem;
+    padding-left: 1rem;
+    border-left: 1px solid var(--line);
+  }
+}
+
 .header-links a {
   text-decoration: none;
   border-bottom: 1px solid transparent;
@@ -169,6 +181,12 @@ a { color: inherit; }
 .header-links a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+.header-links a[aria-current="page"] {
+  color: var(--accent);
+  border-color: currentColor;
+  font-weight: 700;
 }
 
 /* ─── Hero ─── */
@@ -727,6 +745,31 @@ body.read-mode::before {
   .footer-note {
     font-size: 0.85rem !important;
   }
+}
+
+/* ─── Breadcrumb ─── */
+.breadcrumb {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--muted);
+  width: min(var(--max), calc(100vw - 2.4rem));
+  margin: 1.4rem auto 0;
+}
+
+.breadcrumb a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.breadcrumb a:hover,
+.breadcrumb a:focus {
+  border-color: currentColor;
+}
+
+.breadcrumb .breadcrumb-current {
+  color: var(--ink);
+  font-weight: 600;
 }
 
 /* ─── Subpage Hero (single column) ─── */
@@ -2847,6 +2890,7 @@ body.read-mode::before {
   margin: 1.4rem 0;
 }
 .cta-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.4rem; }
 
 /* Live-Ticker kompakt, dezent */
 .live-ticker--compact {

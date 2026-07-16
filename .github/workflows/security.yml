@@ -57,3 +57,7 @@ jobs:
         run: npm run lint
       - name: Run tests
         run: npm test
+      - name: Check i18n parity
+        run: npm run i18n:check
+      - name: Check chrome (nav/footer) parity
+        run: npm run chrome:check
