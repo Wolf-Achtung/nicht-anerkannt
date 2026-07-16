@@ -12,7 +12,9 @@
     "i18n:extract": "node scripts/extract-i18n.js",
     "i18n:check": "node scripts/check-i18n.js",
     "i18n:hreflang": "node scripts/add-hreflang.js",
-    "i18n:rewrite-links": "node scripts/rewrite-links.js"
+    "i18n:rewrite-links": "node scripts/rewrite-links.js",
+    "chrome:sync": "node scripts/sync-chrome.js",
+    "chrome:check": "node scripts/check-chrome.js"
   },
   "dependencies": {
     "express": "^4.21.0",

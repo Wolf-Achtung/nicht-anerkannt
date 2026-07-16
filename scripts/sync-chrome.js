@@ -124,19 +124,27 @@ function rewriteFile(filePath, lang, slug) {
   return 0;
 }
 
-function run() {
-  let changed = 0;
-  let scanned = 0;
+function forEachSubpage(fn) {
   ['de', 'en'].forEach((lang) => {
     const dir = path.join(ROOT, lang);
     fs.readdirSync(dir).forEach((name) => {
       if (!name.endsWith('.html') || name === 'index.html') return;
       const slug = name.slice(0, -'.html'.length);
-      scanned += 1;
-      changed += rewriteFile(path.join(dir, name), lang, slug);
+      fn(path.join(dir, name), lang, slug);
     });
+  });
+}
+
+function run() {
+  let changed = 0;
+  let scanned = 0;
+  forEachSubpage((filePath, lang, slug) => {
+    scanned += 1;
+    changed += rewriteFile(filePath, lang, slug);
   });
   console.log(`sync-chrome: rewrote ${changed}/${scanned} subpage(s)`);
 }
 
-run();
+module.exports = { buildNav, buildFooterLinks, forEachSubpage };
+
+if (require.main === module) run();
