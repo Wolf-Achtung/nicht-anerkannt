@@ -21,16 +21,18 @@ const ROOT = path.join(__dirname, '..');
 
 // Order matters: rendered in this sequence. `group` marks the first item of
 // a new visual cluster (see .nav-group-start in styles.css).
+// User-facing, task-oriented labels (2026 IA rework): essay pages
+// (zukunft-der-bildung, ki-renaissance) and impressum left the top nav
+// on purpose -- essays are reachable via the "Lesen & Hören" hub page
+// (medien) and homepage links, impressum via the footer on every page.
 const NAV_PAGES = [
+  { slug: 'ki-und-lernen', key: 'nav.kiUndLernen' },
+  { slug: 'werkstatt', key: 'nav.werkstatt' },
   { slug: 'salon', key: 'nav.salon' },
   { slug: 'ideen-archiv', key: 'nav.ideenArchiv' },
-  { slug: 'werkstatt', key: 'nav.werkstatt' },
-  { slug: 'zukunft-der-bildung', key: 'nav.zukunftBildung' },
-  { slug: 'ki-renaissance', key: 'nav.kiRenaissance' },
-  { slug: 'medien', key: 'nav.medien', group: true },
-  { slug: 'roadmap', key: 'nav.roadmap' },
-  { slug: 'kontakt', key: 'nav.kontakt' },
-  { slug: 'impressum', key: 'nav.impressum' }
+  { slug: 'medien', key: 'nav.medien' },
+  { slug: 'roadmap', key: 'nav.roadmap', group: true },
+  { slug: 'kontakt', key: 'nav.kontakt' }
 ];
 
 const FOOTER_LINKS = [
@@ -43,13 +45,12 @@ const FOOTER_LINKS = [
 const LABELS = {
   de: {
     home: 'Startseite',
-    salon: 'Salon',
+    'ki-und-lernen': 'KI &amp; Lernen',
+    salon: 'Mitdiskutieren',
     'ideen-archiv': 'Ideen-Archiv',
-    werkstatt: 'KI-Werkstatt',
-    'zukunft-der-bildung': 'Zukunft der Bildung',
-    'ki-renaissance': 'KI-Renaissance',
-    medien: 'Medien',
-    roadmap: 'Roadmap',
+    werkstatt: 'Ausprobieren',
+    medien: 'Lesen &amp; Hören',
+    roadmap: 'Was kommt',
     kontakt: 'Kontakt',
     impressum: 'Impressum',
     datenschutz: 'Datenschutz',
@@ -59,13 +60,12 @@ const LABELS = {
   },
   en: {
     home: 'Home',
-    salon: 'Salon',
+    'ki-und-lernen': 'AI &amp; Learning',
+    salon: 'Join the Debate',
     'ideen-archiv': 'Ideas Archive',
-    werkstatt: 'AI Workshop',
-    'zukunft-der-bildung': 'The Future of Education',
-    'ki-renaissance': 'AI Renaissance',
-    medien: 'Media',
-    roadmap: 'Roadmap',
+    werkstatt: 'Try It',
+    medien: 'Read &amp; Listen',
+    roadmap: "What's Next",
     kontakt: 'Contact',
     impressum: 'Legal Notice',
     datenschutz: 'Privacy Policy',
