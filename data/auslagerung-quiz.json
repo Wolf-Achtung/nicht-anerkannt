@@ -1,0 +1,93 @@
+{
+  "title": "Selbsttest: Lagerst du dein Denken aus?",
+  "description": "Sieben ehrliche Fragen zu deiner KI-Nutzung. Kein Richtig oder Falsch — aber ein Spiegel, wer bei dir gerade den Prozess besitzt: du oder die Maschine.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "Du bekommst eine Schreibaufgabe zu einem Thema, das dich wenig interessiert. Was passiert?",
+      "options": [
+        {"text": "Die KI schreibt, ich gebe ab. Das Thema ist es nicht wert.", "scores": {"auslagern": 2, "sparring": 0, "abstand": 0}},
+        {"text": "Ich schreibe eine Rohfassung, dann lasse ich die KI Schwächen suchen.", "scores": {"auslagern": 0, "sparring": 2, "abstand": 0}},
+        {"text": "Ich mache alles selbst. KI fasse ich dafür nicht an.", "scores": {"auslagern": 0, "sparring": 0, "abstand": 2}},
+        {"text": "Die KI liefert eine Gliederung, den Text schreibe ich selbst.", "scores": {"auslagern": 1, "sparring": 1, "abstand": 0}}
+      ]
+    },
+    {
+      "id": 2,
+      "text": "Prüfung in zwei Wochen. Wie bereitest du dich vor?",
+      "options": [
+        {"text": "Ich lese KI-Zusammenfassungen. Das spart Zeit.", "scores": {"auslagern": 2, "sparring": 0, "abstand": 0}},
+        {"text": "Ich lasse mich von der KI abfragen und Probeklausuren erzeugen.", "scores": {"auslagern": 0, "sparring": 2, "abstand": 0}},
+        {"text": "Karteikarten von Hand, wie immer.", "scores": {"auslagern": 0, "sparring": 0, "abstand": 2}},
+        {"text": "KI erklärt mir, was ich nicht verstehe — testen tue ich mich selbst.", "scores": {"auslagern": 0, "sparring": 1, "abstand": 1}}
+      ]
+    },
+    {
+      "id": 3,
+      "text": "Der Merk-Check: Kannst du sagen, was in deinem zuletzt abgegebenen Text steht — ohne hineinzuschauen?",
+      "options": [
+        {"text": "Ehrlich? Nein.", "scores": {"auslagern": 2, "sparring": 0, "abstand": 0}},
+        {"text": "Die Argumente ja, die Formulierungen nicht.", "scores": {"auslagern": 1, "sparring": 1, "abstand": 0}},
+        {"text": "Ja — ich habe ihn ja selbst gedacht und geschrieben.", "scores": {"auslagern": 0, "sparring": 1, "abstand": 1}},
+        {"text": "Ja, sogar die Stellen, an denen ich der KI widersprochen habe.", "scores": {"auslagern": 0, "sparring": 2, "abstand": 0}}
+      ]
+    },
+    {
+      "id": 4,
+      "text": "Die KI gibt dir eine Antwort, die dir sofort einleuchtet. Was tust du?",
+      "options": [
+        {"text": "Übernehmen. Klingt gut, passt.", "scores": {"auslagern": 2, "sparring": 0, "abstand": 0}},
+        {"text": "Ich frage zurück: „Was spricht dagegen? Was übersehe ich?“", "scores": {"auslagern": 0, "sparring": 2, "abstand": 0}},
+        {"text": "Ich traue der Antwort grundsätzlich nicht und ignoriere sie.", "scores": {"auslagern": 0, "sparring": 0, "abstand": 2}},
+        {"text": "Ich prüfe eine Behauptung stichprobenartig nach.", "scores": {"auslagern": 0, "sparring": 1, "abstand": 1}}
+      ]
+    },
+    {
+      "id": 5,
+      "text": "Ein Thema verwirrt dich komplett. Deine erste Reaktion?",
+      "options": [
+        {"text": "KI um die fertige Erklärung bitten, abhaken, weiter.", "scores": {"auslagern": 2, "sparring": 0, "abstand": 0}},
+        {"text": "Erst selbst sortieren, was ich nicht verstehe — dann gezielt fragen.", "scores": {"auslagern": 0, "sparring": 2, "abstand": 0}},
+        {"text": "Lehrbuch, Bibliothek, Mensch. Die Verwirrung gehört zum Lernen.", "scores": {"auslagern": 0, "sparring": 0, "abstand": 2}},
+        {"text": "Ich bitte die KI, MIR Fragen zu stellen, bis es bei mir klick macht.", "scores": {"auslagern": 0, "sparring": 2, "abstand": 0}}
+      ]
+    },
+    {
+      "id": 6,
+      "text": "Deine Meinung zu einem Streitthema — woher kommt sie gerade wirklich?",
+      "options": [
+        {"text": "Ehrlich gesagt oft aus dem, was KI und Feeds mir liefern.", "scores": {"auslagern": 2, "sparring": 0, "abstand": 0}},
+        {"text": "Ich lasse mir absichtlich die stärksten Gegenpositionen geben, bevor ich mich festlege.", "scores": {"auslagern": 0, "sparring": 2, "abstand": 0}},
+        {"text": "Aus Gesprächen und eigener Erfahrung — ohne Technik.", "scores": {"auslagern": 0, "sparring": 0, "abstand": 2}},
+        {"text": "Ich merke gerade: So genau weiß ich das nicht.", "scores": {"auslagern": 1, "sparring": 0, "abstand": 1}}
+      ]
+    },
+    {
+      "id": 7,
+      "text": "Wenn KI morgen verschwinden würde — was wäre für dich der größte Verlust?",
+      "options": [
+        {"text": "Ich müsste plötzlich alles wieder selbst schreiben.", "scores": {"auslagern": 2, "sparring": 0, "abstand": 0}},
+        {"text": "Mein Trainingspartner wäre weg — der Widerspruch auf Knopfdruck.", "scores": {"auslagern": 0, "sparring": 2, "abstand": 0}},
+        {"text": "Kein Verlust. Eher eine Erleichterung.", "scores": {"auslagern": 0, "sparring": 0, "abstand": 2}},
+        {"text": "Recherche würde langsamer. Mein Denken bliebe gleich.", "scores": {"auslagern": 0, "sparring": 1, "abstand": 1}}
+      ]
+    }
+  ],
+  "results": {
+    "auslagern": {
+      "title": "Produkt-Lieferant:in — das Denken macht gerade jemand anders",
+      "description": "Deine Ergebnisse glänzen, aber der Prozess dahinter gehört dir immer weniger. Das ist keine Charakterfrage — es ist die bequemste Route, und die KI ist darauf gebaut, sie dir anzubieten. Nur: Wer den Prozess abgibt, gibt den Kompetenzaufbau ab. Die gute Nachricht: Das lässt sich umkehren, mit Werkzeugen, die dir widersprechen statt dich zu bedienen.",
+      "motto": "Das Produkt kannst du abgeben. Den Prozess nicht."
+    },
+    "sparring": {
+      "title": "Sparringspartner:in — du bleibst im Prozess",
+      "description": "Du nutzt KI so, wie es die wenigsten tun: als Gegenüber, nicht als Ghostwriter. Du lässt dich abfragen, forderst Widerspruch, behältst die Formulierung. Genau so entsteht Können statt nur Output. Wenn du dein Sparring verschärfen willst: Die Werkzeuge des Ateliers sind genau dafür gebaut.",
+      "motto": "Erst du, dann die KI."
+    },
+    "abstand": {
+      "title": "Auf Abstand — sicher vor Auslagerung, aber ohne Trainingspartner",
+      "description": "Du gibst dein Denken nicht ab — das ist mehr, als die meisten von sich sagen können. Aber Vermeidung hat einen Preis: Dir entgeht ein Trainingspartner, der dir auf Knopfdruck widerspricht, dich abfragt und deine blinden Stellen sucht. Probier den Stille-Modus: eine KI, die ausschließlich Fragen stellt. Kein Risiko, nur Reibung.",
+      "motto": "Reibung braucht ein Gegenüber."
+    }
+  }
+}

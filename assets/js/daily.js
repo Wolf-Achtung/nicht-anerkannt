@@ -350,9 +350,20 @@
       html += '</div>';
     }
 
+    if (window.AtelierSharecard) {
+      var shareImgLabel = lang === 'en' ? 'Share question as image' : 'Frage als Bild teilen';
+      html += '<div class="tool-actions"><button class="button daily-share-img" id="daily-share-img" type="button">' + shareImgLabel + '</button></div>';
+    }
     html += '<p class="daily-privacy-note">' + t('daily.privacy') + '</p>';
     html += '</div>';
     container.innerHTML = html;
+
+    var shareImgBtn = document.getElementById('daily-share-img');
+    if (shareImgBtn) {
+      shareImgBtn.addEventListener('click', function () {
+        window.AtelierSharecard.generate(data.frage, 'denkprobe-' + getDaySeed() + '.png');
+      });
+    }
 
     if (!savedAnswer) {
       var submitBtn = document.getElementById('daily-submit');
