@@ -155,6 +155,8 @@
     'stempel.line1':       { de: 'STAATLICH NICHT', en: 'STATE-NOT' },
     'stempel.line2':       { de: 'ANERKANNT',       en: 'ACCREDITED' },
     'stempel.extrem':      { de: 'EXTREM MITTIG',   en: 'EXTREMELY CENTRIST' },
+    'stempel.nichtsLine1': { de: 'NICHTS',          en: 'NO EASY' },
+    'stempel.nichtsLine2': { de: 'GESCHENKT',       en: 'ANSWERS' },
     'stempel.perspective':  { de: 'Aus Sicht der ',  en: 'From the perspective of ' },
     'stempel.ariaPrefix':  { de: 'Stempel: ',       en: 'Stamp: ' },
     'stempel.copied':      { de: 'Kopiert!',        en: 'Copied!' },
