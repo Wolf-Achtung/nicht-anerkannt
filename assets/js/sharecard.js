@@ -1,6 +1,9 @@
 /**
- * sharecard.js — Manifest-Remix Social-Share-Card Generator
- * Generates 1200x630 share cards in Dada style from remixed manifest text.
+ * sharecard.js — Social-Share-Card Generator
+ * Generates 1200x630 share cards in Dada style. Wired to the manifest
+ * remixer on the homepage; also exposed as window.AtelierSharecard so
+ * other modules (e.g. the daily thinking challenge) can generate cards
+ * from their own text.
  */
 (function () {
   'use strict';
@@ -35,6 +38,14 @@
     });
   }
 
+  // Public API for other modules (daily challenge, quizzes, ...).
+  window.AtelierSharecard = {
+    generate: function (text, filename) {
+      if (!text) return;
+      generateCard(String(text).trim(), filename);
+    }
+  };
+
   function wrapText(ctx, text, maxWidth) {
     var words = text.split(' ');
     var lines = [];
@@ -54,7 +65,7 @@
     return lines;
   }
 
-  function generateCard(text) {
+  function generateCard(text, filename) {
     var W = 1200;
     var H = 630;
     var canvas = document.createElement('canvas');
@@ -164,7 +175,7 @@
       var url = URL.createObjectURL(blob);
       var a = document.createElement('a');
       a.href = url;
-      a.download = 'atelier-remix-sharecard.png';
+      a.download = filename || 'atelier-remix-sharecard.png';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
