@@ -2913,3 +2913,96 @@ body.read-mode::before {
   border: 1px solid rgba(0,0,0,0.12);
   padding: 0.5rem 0.7rem;
 }
+
+/* ─── "Was alle googeln" — question deck (vote-gated answers) ─── */
+.fragen-deck {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+
+.frage-card {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.18);
+  padding: 1.1rem 1.2rem 1.2rem;
+}
+
+.frage-card:nth-child(odd) { transform: rotate(-0.5deg); }
+.frage-card:nth-child(even) { transform: rotate(0.4deg); }
+
+.frage-q {
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.7rem;
+}
+
+.frage-vote {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.frage-vote-label {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-right: 0.2rem;
+}
+
+.frage-vote button {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  padding: 0.3rem 0.7rem;
+  background: transparent;
+  border: 1px solid var(--ink);
+  cursor: pointer;
+}
+
+.frage-vote button:hover,
+.frage-vote button:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.frage-chip {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 0.15rem 0.5rem;
+  transform: rotate(-1deg);
+  margin-bottom: 0.6rem;
+}
+
+/* JS adds .fragen-enhanced to the deck; only then are answers gated. */
+.fragen-enhanced .frage-antwort { display: none; }
+.fragen-enhanced .frage-card.is-open .frage-antwort { display: block; }
+.frage-card.is-open .frage-vote { display: none; }
+
+.frage-antwort { margin-top: 0.6rem; }
+.frage-antwort p { margin: 0 0 0.6rem; }
+
+.frage-konter {
+  border-left: 3px solid var(--accent);
+  padding-left: 0.7rem;
+  font-style: italic;
+}
+
+.frage-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+}
+
+.frage-actions .button {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.8rem;
+}
