@@ -1,0 +1,93 @@
+{
+  "title": "Self-Test: Are You Offloading Your Thinking?",
+  "description": "Seven honest questions about how you use AI. No right or wrong — but a mirror of who currently owns the process: you or the machine.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "You get a writing assignment on a topic that barely interests you. What happens?",
+      "options": [
+        {"text": "The AI writes it, I hand it in. The topic isn't worth more.", "scores": {"auslagern": 2, "sparring": 0, "abstand": 0}},
+        {"text": "I write a rough draft, then have the AI hunt for weaknesses.", "scores": {"auslagern": 0, "sparring": 2, "abstand": 0}},
+        {"text": "I do everything myself. I don't touch AI for this.", "scores": {"auslagern": 0, "sparring": 0, "abstand": 2}},
+        {"text": "The AI delivers an outline, I write the text myself.", "scores": {"auslagern": 1, "sparring": 1, "abstand": 0}}
+      ]
+    },
+    {
+      "id": 2,
+      "text": "Exam in two weeks. How do you prepare?",
+      "options": [
+        {"text": "I read AI summaries. Saves time.", "scores": {"auslagern": 2, "sparring": 0, "abstand": 0}},
+        {"text": "I have the AI quiz me and generate mock exams.", "scores": {"auslagern": 0, "sparring": 2, "abstand": 0}},
+        {"text": "Flashcards by hand, like always.", "scores": {"auslagern": 0, "sparring": 0, "abstand": 2}},
+        {"text": "The AI explains what I don't understand — the testing I do myself.", "scores": {"auslagern": 0, "sparring": 1, "abstand": 1}}
+      ]
+    },
+    {
+      "id": 3,
+      "text": "The recall check: can you say what's in the last text you submitted — without looking at it?",
+      "options": [
+        {"text": "Honestly? No.", "scores": {"auslagern": 2, "sparring": 0, "abstand": 0}},
+        {"text": "The arguments yes, the wording no.", "scores": {"auslagern": 1, "sparring": 1, "abstand": 0}},
+        {"text": "Yes — I thought it and wrote it myself, after all.", "scores": {"auslagern": 0, "sparring": 1, "abstand": 1}},
+        {"text": "Yes, even the passages where I disagreed with the AI.", "scores": {"auslagern": 0, "sparring": 2, "abstand": 0}}
+      ]
+    },
+    {
+      "id": 4,
+      "text": "The AI gives you an answer that immediately makes sense to you. What do you do?",
+      "options": [
+        {"text": "Take it. Sounds good, fits.", "scores": {"auslagern": 2, "sparring": 0, "abstand": 0}},
+        {"text": "I ask back: \"What speaks against this? What am I missing?\"", "scores": {"auslagern": 0, "sparring": 2, "abstand": 0}},
+        {"text": "I fundamentally distrust the answer and ignore it.", "scores": {"auslagern": 0, "sparring": 0, "abstand": 2}},
+        {"text": "I spot-check one of its claims.", "scores": {"auslagern": 0, "sparring": 1, "abstand": 1}}
+      ]
+    },
+    {
+      "id": 5,
+      "text": "A topic completely confuses you. Your first reaction?",
+      "options": [
+        {"text": "Ask the AI for the finished explanation, tick it off, move on.", "scores": {"auslagern": 2, "sparring": 0, "abstand": 0}},
+        {"text": "First sort out myself what I don't understand — then ask precisely.", "scores": {"auslagern": 0, "sparring": 2, "abstand": 0}},
+        {"text": "Textbook, library, human. Confusion is part of learning.", "scores": {"auslagern": 0, "sparring": 0, "abstand": 2}},
+        {"text": "I ask the AI to ask ME questions until it clicks.", "scores": {"auslagern": 0, "sparring": 2, "abstand": 0}}
+      ]
+    },
+    {
+      "id": 6,
+      "text": "Your opinion on a contested issue — where does it really come from right now?",
+      "options": [
+        {"text": "Honestly, often from what AI and feeds serve me.", "scores": {"auslagern": 2, "sparring": 0, "abstand": 0}},
+        {"text": "I deliberately request the strongest counter-positions before I commit.", "scores": {"auslagern": 0, "sparring": 2, "abstand": 0}},
+        {"text": "From conversations and my own experience — no tech involved.", "scores": {"auslagern": 0, "sparring": 0, "abstand": 2}},
+        {"text": "I'm noticing right now: I don't actually know.", "scores": {"auslagern": 1, "sparring": 0, "abstand": 1}}
+      ]
+    },
+    {
+      "id": 7,
+      "text": "If AI disappeared tomorrow — what would be your biggest loss?",
+      "options": [
+        {"text": "I'd suddenly have to write everything myself again.", "scores": {"auslagern": 2, "sparring": 0, "abstand": 0}},
+        {"text": "My training partner would be gone — contradiction at the push of a button.", "scores": {"auslagern": 0, "sparring": 2, "abstand": 0}},
+        {"text": "No loss. More like a relief.", "scores": {"auslagern": 0, "sparring": 0, "abstand": 2}},
+        {"text": "Research would get slower. My thinking would stay the same.", "scores": {"auslagern": 0, "sparring": 1, "abstand": 1}}
+      ]
+    }
+  ],
+  "results": {
+    "auslagern": {
+      "title": "Product Deliverer — someone else is doing the thinking right now",
+      "description": "Your results shine, but the process behind them belongs to you less and less. That's not a character flaw — it's the most convenient route, and AI is built to offer it to you. But: whoever hands over the process hands over the skill-building. The good news: this is reversible, with tools that contradict you instead of serving you.",
+      "motto": "You can hand over the product. Not the process."
+    },
+    "sparring": {
+      "title": "Sparring Partner — you stay in the process",
+      "description": "You use AI the way few people do: as a counterpart, not a ghostwriter. You have it quiz you, demand contradiction, keep the wording your own. That's exactly how ability grows instead of mere output. If you want to sharpen your sparring: the Atelier's tools are built for precisely that.",
+      "motto": "First you, then the AI."
+    },
+    "abstand": {
+      "title": "Keeping Your Distance — safe from offloading, but without a training partner",
+      "description": "You don't hand over your thinking — which is more than most can say. But avoidance has a price: you're missing a training partner that contradicts you on demand, quizzes you, and hunts for your blind spots. Try Silent Mode: an AI that only ever asks questions. No risk, just friction.",
+      "motto": "Friction needs a counterpart."
+    }
+  }
+}

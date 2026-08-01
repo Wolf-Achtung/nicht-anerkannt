@@ -63,6 +63,21 @@
       </div>
     </section>
 
+    <!-- ═══ SELBSTTEST ═══ -->
+    <section class="section" id="selbsttest">
+      <div class="section-label">Selbsttest</div>
+      <div class="section-body">
+        <h2>Lagerst du dein Denken aus?</h2>
+        <p>Bevor du weiterliest: Finde heraus, wo du stehst. Sieben ehrliche Fragen zu deiner KI-Nutzung — kein Richtig oder Falsch, aber ein Spiegel.</p>
+        <div class="tool-actions">
+          <button class="button" data-share-target="#selbsttest" data-share-prefix="Lagerst du dein Denken aus? Der Selbsttest:" type="button">Test teilen</button>
+        </div>
+        <div class="quiz-container" id="auslagerung-quiz-container" aria-live="polite">
+          <p>Lade Test...</p>
+        </div>
+      </div>
+    </section>
+
     <!-- ═══ DIE DIAGNOSE ═══ -->
     <section class="section" id="diagnose">
       <div class="section-label">Die Diagnose</div>
@@ -150,5 +165,8 @@
 
   <script src="../assets/js/i18n.js"></script>
   <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/score.js"></script>
+  <script src="../assets/js/auslagerung-quiz.js"></script>
+  <div id="share-toast" class="share-toast" role="status" aria-live="polite" aria-hidden="true">Link kopiert</div>
 </body>
 </html>
