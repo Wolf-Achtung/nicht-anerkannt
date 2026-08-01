@@ -39,6 +39,13 @@
       config.spacing = 2;
     }
 
+    if (variant === 'nichts-geschenkt') {
+      config.titleLine1 = t('stempel.nichtsLine1');
+      config.titleLine2 = t('stempel.nichtsLine2');
+      config.angle = 4;
+      config.spacing = 3;
+    }
+
     var ariaLabel = t('stempel.ariaPrefix') + config.titleLine1 + (config.titleLine2 ? ' ' + config.titleLine2 : '') +
       (nameText ? ' — ' + nameText : '') + (ortText ? ', ' + ortText : '');
 
@@ -128,7 +135,9 @@
 
   function copyShareText(variant, name, ort, buttonEl) {
     var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
-    var headline = variant === 'extrem-mittig' ? t('stempel.extrem') : t('stempel.line1') + ' ' + t('stempel.line2');
+    var headline = t('stempel.line1') + ' ' + t('stempel.line2');
+    if (variant === 'extrem-mittig') headline = t('stempel.extrem');
+    if (variant === 'nichts-geschenkt') headline = t('stempel.nichtsLine1') + ' ' + t('stempel.nichtsLine2');
     var text = headline;
 
     if (name) text += ' — ' + name;
@@ -175,7 +184,10 @@
 
     if (downloadBtn) {
       downloadBtn.addEventListener('click', function () {
-        downloadPNG(preview, variant === 'extrem-mittig' ? 'stempel-extrem-mittig' : 'stempel-nicht-anerkannt');
+        var fileBase = 'stempel-nicht-anerkannt';
+        if (variant === 'extrem-mittig') fileBase = 'stempel-extrem-mittig';
+        if (variant === 'nichts-geschenkt') fileBase = 'stempel-nichts-geschenkt';
+        downloadPNG(preview, fileBase);
       });
     }
 

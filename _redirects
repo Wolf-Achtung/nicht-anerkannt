@@ -16,3 +16,13 @@
 # Old explicit EN index → EN home (DE root /index.html is now the
 # language-detect stub; rewriting it would break that).
 /en/index.html              /en/                                 301
+
+# Second domain nichts-geschenkt.de → main site. Takes effect once the
+# domain is added as an alias to this Netlify site (Site settings →
+# Domain management). If a future naming decision makes
+# nichts-geschenkt.de the primary domain instead, invert these rules
+# as part of the full migration (canonicals, hreflang, CORS, JSON-LD).
+https://nichts-geschenkt.de/*      https://nicht-anerkannt.info/:splat  301!
+https://www.nichts-geschenkt.de/*  https://nicht-anerkannt.info/:splat  301!
+http://nichts-geschenkt.de/*       https://nicht-anerkannt.info/:splat  301!
+http://www.nichts-geschenkt.de/*   https://nicht-anerkannt.info/:splat  301!

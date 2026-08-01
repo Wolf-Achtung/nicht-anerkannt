@@ -64,6 +64,7 @@
       <div class="hero-stage" aria-hidden="true">
         <div class="stamp" data-shuffle style="left: 7%; top: 7%; transform: rotate(-9deg);">State-NOT accredited</div>
         <div class="stamp" data-shuffle style="right: 6%; top: 14%; transform: rotate(8deg);">Politically NOT co-optable</div>
+        <div class="stamp" data-shuffle style="right: 12%; top: 74%; transform: rotate(5deg);">NO easy answers</div>
         <div class="floating-word accent" data-shuffle style="left: 13%; top: 31%; transform: rotate(-6deg);">Judgment</div>
         <div class="floating-word" data-shuffle style="left: 54%; top: 23%; transform: rotate(12deg);">Contradiction</div>
         <div class="floating-word" data-shuffle style="left: 20%; top: 62%; transform: rotate(7deg);">Play</div>
@@ -256,7 +257,7 @@
       <div class="section-label">Join</div>
       <div class="section-body">
         <h2>Try it yourself</h2>
-        <p class="section-lead">Three small games. Each works on its own. Choose what appeals to you.</p>
+        <p class="section-lead">Three small games. Each works on its own. Choose what appeals to you. <span class="nichts-badge">No easy answers — you first</span></p>
 
         <div class="mitmachen-tabs" role="tablist" aria-label="Tools to join in">
           <button class="mitmachen-tab is-active" role="tab" aria-selected="true" aria-controls="tab-denkprobe" id="tab-denkprobe-btn" data-tab="denkprobe" type="button">🧠 Daily Thinking Challenge</button>
@@ -327,6 +328,21 @@
               </div>
               <div class="stempel-preview" data-stempel-preview aria-live="polite" aria-label="Stamp preview Extremely centrist"></div>
             </article>
+
+            <article class="stempel-panel stempel-generator" data-variant="nichts-geschenkt">
+              <div class="stempel-form">
+                <h4>NO easy answers</h4>
+                <label class="stempel-label" for="stempel-name-nichts">Name</label>
+                <input class="stempel-input" type="text" id="stempel-name-nichts" data-stempel-name placeholder="Your name" maxlength="30">
+                <label class="stempel-label" for="stempel-ort-nichts">City</label>
+                <input class="stempel-input" type="text" id="stempel-ort-nichts" data-stempel-ort placeholder="Your city" maxlength="25">
+                <div class="stempel-actions">
+                  <button class="button button--accent" data-stempel-download type="button">Download PNG</button>
+                  <button class="button" data-stempel-share type="button">Share</button>
+                </div>
+              </div>
+              <div class="stempel-preview" data-stempel-preview aria-live="polite" aria-label="Stamp preview No easy answers"></div>
+            </article>
           </div>
         </div>
       </div>
@@ -342,6 +358,7 @@
         <p>If you're looking for ready-made answers, you're in the wrong place. If you're looking for a place where thinking is not preparation for life but a form of life itself, then it begins here.</p>
         <div class="cta-panel">
           <p><strong>The Atelier of the Radical Middle</strong><br>For people who don't fit into camps and still want to act.</p>
+          <p>Everything here is free of charge. Nothing here is free of effort.</p>
           <div class="cta-actions">
             <a class="button button--accent" href="../manifest-das-atelier-radikale-mitte.md" download>Download Manifesto</a>
             <a class="button" href="/en/werkstatt">To the AI Workshop</a>
@@ -423,6 +440,7 @@
   <script src="../assets/js/quiz.js"></script>
   <script src="../assets/js/daily.js"></script>
   <script src="../assets/js/sharecard.js"></script>
+  <script src="../assets/js/denkzoll.js"></script>
   <script src="../assets/js/score.js"></script>
   <script>
     (function(){
