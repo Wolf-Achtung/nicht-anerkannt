@@ -3006,3 +3006,46 @@ body.read-mode::before {
   font-size: 0.85rem;
   padding: 0.35rem 0.8rem;
 }
+
+/* ─── "Nichts geschenkt" badge + Denk-Zoll ─── */
+.nichts-badge {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+  padding: 0.18rem 0.55rem;
+  transform: rotate(-1.5deg);
+  margin-left: 0.5rem;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.denkzoll {
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.18);
+  padding: 1rem 1.1rem;
+  margin-top: 0.8rem;
+  transform: rotate(-0.4deg);
+  max-width: 34rem;
+}
+
+.denkzoll p { margin: 0 0 0.6rem; }
+
+.denkzoll-note {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.denkzoll input {
+  width: 100%;
+  font: inherit;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--ink);
+  background: #fff;
+  margin-bottom: 0.6rem;
+}
