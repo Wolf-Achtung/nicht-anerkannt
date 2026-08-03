@@ -477,7 +477,7 @@ Du erhältst ein aktuelles Thema und erzeugst eine strukturierte Denkprobe im St
 Eine Denkprobe hat folgende Struktur:
 1. PROBLEMSTELLUNG: Was ist die Kernspannung dieses Themas? (2-3 Sätze)
 2. DIE FALSCHE ALTERNATIVE: Welche zwei Extrempositionen werden typischerweise angeboten? (je 1-2 Sätze pro Position)
-3. RADIKALE MITTE: Was wäre eine Position, die beide Seiten ernst nimmt, Widerspruch aushält und trotzdem handelt? (2-3 Sätze)
+3. DENKENDE MITTE: Was wäre eine Position, die beide Seiten ernst nimmt, Widerspruch aushält und trotzdem handelt? (2-3 Sätze)
 4. OFFENE FRAGEN: Drei Fragen, die niemand sofort beantworten kann und die zum Weiterdenken einladen.
 
 ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die Werte in der Zielsprache:

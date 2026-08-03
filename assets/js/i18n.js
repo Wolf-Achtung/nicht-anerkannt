@@ -154,7 +154,7 @@
     /* ── stempel.js ── */
     'stempel.line1':       { de: 'STAATLICH NICHT', en: 'STATE-NOT' },
     'stempel.line2':       { de: 'ANERKANNT',       en: 'ACCREDITED' },
-    'stempel.extrem':      { de: 'EXTREM MITTIG',   en: 'EXTREMELY CENTRIST' },
+    'stempel.extrem':      { de: 'ERST DU, DANN DIE KI', en: 'FIRST YOU, THEN THE AI' },
     'stempel.nichtsLine1': { de: 'NICHTS',          en: 'NO EASY' },
     'stempel.nichtsLine2': { de: 'GESCHENKT',       en: 'ANSWERS' },
     'stempel.perspective':  { de: 'Aus Sicht der ',  en: 'From the perspective of ' },
@@ -188,7 +188,7 @@
     'ws.falscheAlt':       { de: 'Die falsche Alternative', en: 'The False Alternative' },
     'ws.positionA':        { de: 'Position A:',         en: 'Position A:' },
     'ws.positionB':        { de: 'Position B:',         en: 'Position B:' },
-    'ws.radikaleMitte':    { de: 'Radikale Mitte',      en: 'Radical Middle' },
+    'ws.radikaleMitte':    { de: 'Denkende Mitte',      en: 'Thinking Middle' },
     'ws.offeneFragen':     { de: 'Offene Fragen',       en: 'Open Questions' },
     'ws.dilemmaError':     { de: 'Konnte kein Dilemma laden.', en: 'Could not load dilemma.' },
     'ws.blindeStelle':     { de: 'Blinde Stelle',       en: 'Blind Spot' },
@@ -222,7 +222,7 @@
     'ws.pro':              { de: 'Pro',                  en: 'Pro' },
     'ws.contra':           { de: 'Contra',               en: 'Contra' },
     'ws.einwand':          { de: 'Einwand:',             en: 'Objection:' },
-    'ws.synthese':         { de: 'Synthese – Radikale Mitte', en: 'Synthesis – Radical Middle' },
+    'ws.synthese':         { de: 'Synthese – Denkende Mitte', en: 'Synthesis – Thinking Middle' },
     'ws.noReply':          { de: 'Keine Antwort erhalten.', en: 'No reply received.' },
     'ws.erstheitTitle':    { de: 'Erstheits-Provokation',   en: 'Firstness Provocation' },
     'ws.erstheitAufgabe':  { de: 'Aufgabenstellung',         en: 'Assignment' },
@@ -265,7 +265,7 @@
     'sharecard.tagline':   { de: 'Nicht mehr Stoff. Mehr Urteil.', en: 'Not more material. More judgment.' },
     'sharecard.stamp':     { de: 'NICHT ANERKANNT',    en: 'NOT ACCREDITED' },
     'sharecard.claim':     { de: 'POLITISCH NICHT VEREINNAHMBAR', en: 'POLITICALLY NOT CO-OPTABLE' },
-    'sharecard.extrem':    { de: 'EXTREM MITTIG',      en: 'EXTREMELY CENTRIST' },
+    'sharecard.extrem':    { de: 'ERST DU, DANN DIE KI', en: 'FIRST YOU, THEN THE AI' },
 
     /* ── perspektive-global.js ── */
     'persp.button':        { de: 'Perspektive wechseln', en: 'Change perspective' },
@@ -297,7 +297,7 @@
 
     /* ── chrome: header + footer navigation links ── */
     'nav.problem':         { de: 'Problem',                en: 'Problem' },
-    'nav.radikaleMitte':   { de: 'Radikale Mitte',         en: 'Radical Middle' },
+    'nav.radikaleMitte':   { de: 'Denkende Mitte',         en: 'Thinking Middle' },
     'nav.atelier':         { de: 'Atelier',                en: 'Atelier' },
     'nav.einladung':       { de: 'Einladung',              en: 'Invitation' },
     'nav.denkprofil':      { de: 'Denkprofil',             en: 'Thinking Profile' },

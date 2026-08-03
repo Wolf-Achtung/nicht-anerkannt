@@ -185,7 +185,7 @@
     if (downloadBtn) {
       downloadBtn.addEventListener('click', function () {
         var fileBase = 'stempel-nicht-anerkannt';
-        if (variant === 'extrem-mittig') fileBase = 'stempel-extrem-mittig';
+        if (variant === 'extrem-mittig') fileBase = 'stempel-erst-du-dann-die-ki';
         if (variant === 'nichts-geschenkt') fileBase = 'stempel-nichts-geschenkt';
         downloadPNG(preview, fileBase);
       });

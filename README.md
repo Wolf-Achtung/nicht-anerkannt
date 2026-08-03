@@ -2,7 +2,7 @@
 
 **Staatlich NICHT anerkannt. Politisch NICHT vereinnahmbar.**
 
-Manifest und interaktive Plattform fuer Nichts geschenkt — Das Denkatelier -- ein Denkraum fuer junge Menschen, die nicht in Lager passen und trotzdem handeln wollen.
+Manifest und interaktive Plattform fuer Nichts geschenkt — Das Denkatelier -- ein Denkraum fuer Menschen, die nicht in Lager passen und trotzdem handeln wollen.
 
 ## Projektstruktur
 
@@ -64,7 +64,7 @@ Kein Build-Prozess noetig -- reines HTML/CSS/JS plus ein schlankes Express-Backe
 3. **Live-Ticker** -- Laufende Kurznachrichten und Impulse in Echtzeit
 4. **KI-Sparringspartner** -- Chat-Widget, das Positionen hinterfragt statt bestaetigt
 5. **Ideen-Archiv** -- Gesammelte Vorschlaege und Denkanstoesse der Community
-6. **Medienbereich** -- Texte, Audio und Video rund um die Radikale Mitte
+6. **Medienbereich** -- Texte, Audio und Video rund um das Denkatelier
 7. **Widerspruchsquiz** -- Eigene Annahmen testen und blinde Flecken entdecken
 8. **Interaktive Roadmap** -- Zeitstrahl der geplanten Aktionen und Meilensteine
 9. **Denkprobe des Tages** -- Deterministische Tagesfrage via `/api/daily`, mit lokalem Archiv- und Offline-Fallback
