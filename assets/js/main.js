@@ -214,7 +214,7 @@
     buttons.forEach(function (btn) {
       btn.addEventListener('click', function () {
         var targetSelector = btn.getAttribute('data-share-target');
-        var prefix = btn.getAttribute('data-share-prefix') || 'nicht-anerkannt.info';
+        var prefix = btn.getAttribute('data-share-prefix') || 'nichts-geschenkt.de';
         var target = targetSelector ? document.querySelector(targetSelector) : null;
         var text = target ? (target.innerText || target.textContent || '').trim() : '';
         var payload = prefix + '\n' + text.slice(0, 280) + '\n' + window.location.href;
