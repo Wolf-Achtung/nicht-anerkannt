@@ -1,5 +1,5 @@
 /**
- * stempel.js — Stempel (Stamp) Generator for Das Atelier der Radikalen Mitte
+ * stempel.js — Stempel (Stamp) Generator for Nichts geschenkt — Das Denkatelier
  * Generates two SVG stamps with user name/location.
  */
 (function () {

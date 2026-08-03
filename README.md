@@ -1,8 +1,8 @@
-# Das Atelier der Radikalen Mitte
+# Nichts geschenkt — Das Denkatelier
 
 **Staatlich NICHT anerkannt. Politisch NICHT vereinnahmbar.**
 
-Manifest und interaktive Plattform fuer Das Atelier der Radikalen Mitte -- ein Denkraum fuer junge Menschen, die nicht in Lager passen und trotzdem handeln wollen.
+Manifest und interaktive Plattform fuer Nichts geschenkt — Das Denkatelier -- ein Denkraum fuer junge Menschen, die nicht in Lager passen und trotzdem handeln wollen.
 
 ## Projektstruktur
 

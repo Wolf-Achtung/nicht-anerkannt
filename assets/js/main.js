@@ -1,5 +1,5 @@
 /**
- * main.js — Core functionality for Das Atelier der Radikalen Mitte
+ * main.js — Core functionality for Nichts geschenkt — Das Denkatelier
  * Shuffle, Read Mode, Cut-card randomization, nav scroll, module init.
  */
 (function () {

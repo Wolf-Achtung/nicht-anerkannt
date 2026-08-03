@@ -1,6 +1,6 @@
 /**
  * chat.js — KI-Sparringspartner Chat Widget
- * Das Atelier der Radikalen Mitte
+ * Nichts geschenkt — Das Denkatelier
  * Local fallback with Socratic counter-questions. Placeholder for future API.
  */
 (function () {

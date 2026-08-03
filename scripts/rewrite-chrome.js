@@ -143,7 +143,7 @@ function rewriteFile(filePath) {
     '<span class="brand-main" data-i18n="site.brandMain">$1</span>'
   );
   html = html.replace(
-    /<span>(Das Atelier der Radikalen Mitte|The Atelier of the Radical Middle)<\/span>/g,
+    /<span>(Nichts geschenkt — Das Denkatelier|Nichts geschenkt — The Thinking Atelier)<\/span>/g,
     '<span data-i18n="site.brandTagline">$1</span>'
   );
 

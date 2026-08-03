@@ -1,5 +1,5 @@
 /**
- * i18n.js — Internationalisation for Das Atelier der Radikalen Mitte
+ * i18n.js — Internationalisation for Nichts geschenkt — Das Denkatelier
  *
  * Architecture:
  *   - SUPPORTED_LANGS lists every language the site can serve.
@@ -163,7 +163,7 @@
     'stempel.share':       { de: 'Teilen',           en: 'Share' },
     'stempel.copyFail':    { de: 'Kopieren nicht möglich', en: 'Unable to copy' },
     'stempel.shareText1':  { de: 'Staatlich NICHT anerkannt. Politisch NICHT vereinnahmbar.', en: 'State-NOT accredited. Politically NOT co-optable.' },
-    'stempel.shareText2':  { de: 'Das Atelier der Radikalen Mitte', en: 'The Atelier of the Radical Middle' },
+    'stempel.shareText2':  { de: 'Nichts geschenkt — Das Denkatelier', en: 'Nichts geschenkt — The Thinking Atelier' },
     'stempel.shareText3':  { de: 'Nicht mehr Stoff. Mehr Urteil.', en: 'Not more material. More judgment.' },
 
     /* ── chat.js ── */
@@ -261,7 +261,7 @@
 
     /* ── sharecard.js ── */
     'sharecard.download':  { de: 'Als Share-Card herunterladen', en: 'Download as share card' },
-    'sharecard.brand':     { de: 'Das Atelier der Radikalen Mitte', en: 'The Atelier of the Radical Middle' },
+    'sharecard.brand':     { de: 'Nichts geschenkt — Das Denkatelier', en: 'Nichts geschenkt — The Thinking Atelier' },
     'sharecard.tagline':   { de: 'Nicht mehr Stoff. Mehr Urteil.', en: 'Not more material. More judgment.' },
     'sharecard.stamp':     { de: 'NICHT ANERKANNT',    en: 'NOT ACCREDITED' },
     'sharecard.claim':     { de: 'POLITISCH NICHT VEREINNAHMBAR', en: 'POLITICALLY NOT CO-OPTABLE' },
@@ -293,7 +293,7 @@
     'site.sectionsLabel':  { de: 'Seitenbereiche',         en: 'Page sections' },
     'site.brandPre':       { de: 'Staatlich',              en: 'State' },
     'site.brandMain':      { de: 'NICHT ANERKANNT',        en: 'NOT ACCREDITED' },
-    'site.brandTagline':   { de: 'Das Atelier der Radikalen Mitte', en: 'The Atelier of the Radical Middle' },
+    'site.brandTagline':   { de: 'Nichts geschenkt — Das Denkatelier', en: 'Nichts geschenkt — The Thinking Atelier' },
 
     /* ── chrome: header + footer navigation links ── */
     'nav.problem':         { de: 'Problem',                en: 'Problem' },
