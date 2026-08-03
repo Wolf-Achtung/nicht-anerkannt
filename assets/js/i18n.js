@@ -291,9 +291,9 @@
     'site.skipToContent':  { de: 'Zum Inhalt springen',   en: 'Skip to content' },
     'site.menu':           { de: 'Menü',                   en: 'Menu' },
     'site.sectionsLabel':  { de: 'Seitenbereiche',         en: 'Page sections' },
-    'site.brandPre':       { de: 'Staatlich',              en: 'State' },
-    'site.brandMain':      { de: 'NICHT ANERKANNT',        en: 'NOT ACCREDITED' },
-    'site.brandTagline':   { de: 'Nichts geschenkt — Das Denkatelier. Erst du, dann die KI.', en: 'Nichts geschenkt — The Thinking Atelier. First you, then the AI.' },
+    'site.brandPre':       { de: 'Nichts',                 en: 'Nichts' },
+    'site.brandMain':      { de: 'GESCHENKT',              en: 'GESCHENKT' },
+    'site.brandTagline':   { de: 'Das Denkatelier. Erst du, dann die KI.', en: 'The Thinking Atelier. First you, then the AI.' },
 
     /* ── chrome: header + footer navigation links ── */
     'nav.problem':         { de: 'Problem',                en: 'Problem' },
