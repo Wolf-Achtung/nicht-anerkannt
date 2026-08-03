@@ -261,7 +261,7 @@
 
     /* ── sharecard.js ── */
     'sharecard.download':  { de: 'Als Share-Card herunterladen', en: 'Download as share card' },
-    'sharecard.brand':     { de: 'Nichts geschenkt — Das Denkatelier', en: 'Nichts geschenkt — The Thinking Atelier' },
+    'sharecard.brand':     { de: 'Nichts geschenkt — Das Denkatelier. Erst du, dann die KI.', en: 'Nichts geschenkt — The Thinking Atelier. First you, then the AI.' },
     'sharecard.tagline':   { de: 'Nicht mehr Stoff. Mehr Urteil.', en: 'Not more material. More judgment.' },
     'sharecard.stamp':     { de: 'NICHT ANERKANNT',    en: 'NOT ACCREDITED' },
     'sharecard.claim':     { de: 'POLITISCH NICHT VEREINNAHMBAR', en: 'POLITICALLY NOT CO-OPTABLE' },
@@ -293,7 +293,7 @@
     'site.sectionsLabel':  { de: 'Seitenbereiche',         en: 'Page sections' },
     'site.brandPre':       { de: 'Staatlich',              en: 'State' },
     'site.brandMain':      { de: 'NICHT ANERKANNT',        en: 'NOT ACCREDITED' },
-    'site.brandTagline':   { de: 'Nichts geschenkt — Das Denkatelier', en: 'Nichts geschenkt — The Thinking Atelier' },
+    'site.brandTagline':   { de: 'Nichts geschenkt — Das Denkatelier. Erst du, dann die KI.', en: 'Nichts geschenkt — The Thinking Atelier. First you, then the AI.' },
 
     /* ── chrome: header + footer navigation links ── */
     'nav.problem':         { de: 'Problem',                en: 'Problem' },
