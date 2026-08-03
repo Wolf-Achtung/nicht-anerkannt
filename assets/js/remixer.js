@@ -1,5 +1,5 @@
 /**
- * remixer.js — Manifest Remixer for Das Atelier der Radikalen Mitte
+ * remixer.js — Manifest Remixer for Nichts geschenkt — Das Denkatelier
  * Fetches manifest fragments and combines them into fresh remixes.
  */
 (function () {

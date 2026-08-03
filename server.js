@@ -40,7 +40,9 @@ app.use(helmet({
 }));
 
 // --- CORS: restrict to known origins ---
-const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'https://nicht-anerkannt.info,https://www.nicht-anerkannt.info').split(',');
+// Primary domain plus the legacy domain, which keeps serving (redirected)
+// traffic and cached pages during the migration period.
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'https://nichts-geschenkt.de,https://www.nichts-geschenkt.de,https://nicht-anerkannt.info,https://www.nicht-anerkannt.info').split(',');
 
 app.use('/api', (req, res, next) => {
   const origin = req.headers.origin;
@@ -362,7 +364,7 @@ app.post('/api/chat', chatLimiter, async (req, res) => {
   const lang = getLang(req);
   if (!message || typeof message !== 'string') return res.status(400).json({ reply: err(lang, 'noMessage') });
 
-  const normalPrompt = `Du bist der KI-Sparringspartner des Ateliers der Radikalen Mitte.
+  const normalPrompt = `Du bist der KI-Sparringspartner des Denkateliers „Nichts geschenkt“.
 Deine Aufgabe ist es, Nutzer:innen herauszufordern, nicht ihnen zuzustimmen.
 Du stellst sokratische Gegenfragen, deckst Widersprüche auf und forderst präziseres Denken.
 Du bist nicht nett, aber respektvoll. Du bist nicht neutral, sondern provokant im Dienst der Klarheit.
@@ -371,7 +373,7 @@ Du orientierst dich am Manifest: Urteil statt Meinung, Handlung statt Pose, Wide
 Vermeide Floskeln. Sei konkret. Fordere heraus.
 ${LANG_INSTRUCTION[lang]}`;
 
-  const stillePrompt = `Du bist der Stille-Modus des Ateliers der Radikalen Mitte.
+  const stillePrompt = `Du bist der Stille-Modus des Denkateliers „Nichts geschenkt“.
 WICHTIGSTE REGEL: Du stellst NUR Fragen. Du gibst NIEMALS Antworten, Meinungen, Erklärungen oder Aussagen.
 Du bist ein rein sokratischer Gesprächspartner.
 Jede deiner Antworten besteht aus GENAU EINER Frage – kurz, präzise, bohrend.
@@ -408,7 +410,7 @@ app.post('/api/widerspruch', aiLimiter, async (req, res) => {
   const lang = getLang(req);
   if (!these || typeof these !== 'string') return res.status(400).json({ error: err(lang, 'noThese') });
 
-  const systemPrompt = `Du bist der Widerspruchssalon des Ateliers der Radikalen Mitte.
+  const systemPrompt = `Du bist der Widerspruchssalon des Denkateliers „Nichts geschenkt“.
 Du erhältst eine These und erzeugst genau DREI fundierte Gegenpositionen aus verschiedenen Perspektiven.
 Jede Gegenposition soll:
 - Aus einer klar benannten Perspektive argumentieren (z.B. libertär, kommunitaristisch, pragmatisch, technologisch, historisch, ökologisch etc.)
@@ -441,7 +443,7 @@ app.post('/api/translate', aiLimiter, async (req, res) => {
   const lang = getLang(req);
   if (!text || typeof text !== 'string' || !language || typeof language !== 'string') return res.status(400).json({ error: err(lang, 'noLangText') });
 
-  const systemPrompt = `Du bist ein kultureller Übersetzer für das Manifest des Ateliers der Radikalen Mitte.
+  const systemPrompt = `Du bist ein kultureller Übersetzer für das Manifest des Denkateliers „Nichts geschenkt“.
 Deine Aufgabe ist NICHT eine wörtliche Übersetzung, sondern eine KULTURELLE ADAPTATION.
 Du übersetzt den Sinn und findest kulturell passende Äquivalente in der Zielsprache.
 Wo nötig, erklärst du in einer kurzen Anmerkung, warum du ein bestimmtes Äquivalent gewählt hast.
@@ -469,7 +471,7 @@ app.post('/api/denkprobe', aiLimiter, async (req, res) => {
   const lang = getLang(req);
   if (!thema || typeof thema !== 'string') return res.status(400).json({ error: err(lang, 'noThema') });
 
-  const systemPrompt = `Du bist der Denkproben-Generator des Ateliers der Radikalen Mitte.
+  const systemPrompt = `Du bist der Denkproben-Generator des Denkateliers „Nichts geschenkt“.
 Du erhältst ein aktuelles Thema und erzeugst eine strukturierte Denkprobe im Stil des Ateliers.
 
 Eine Denkprobe hat folgende Struktur:
@@ -505,7 +507,7 @@ app.post('/api/urteil', aiLimiter, async (req, res) => {
 
   // Action: "new" → generiere neues Dilemma
   if (action === 'new') {
-    const systemPrompt = `Du bist das Urteilstraining des Ateliers der Radikalen Mitte.
+    const systemPrompt = `Du bist das Urteilstraining des Denkateliers „Nichts geschenkt“.
 Erzeuge ein komplexes, aktuelles ethisches Dilemma, das kein eindeutiges Richtig oder Falsch hat.
 Das Dilemma soll real und relevant sein (Politik, Technologie, Gesellschaft, Bildung, Umwelt).
 Es soll verschiedene berechtigte Perspektiven ermöglichen.
@@ -529,7 +531,7 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
     const { dilemma, urteil } = req.body;
     if (!dilemma || !urteil) return res.status(400).json({ error: err(lang, 'dilemmaRequired') });
 
-    const systemPrompt = `Du bist das Urteilstraining des Ateliers der Radikalen Mitte.
+    const systemPrompt = `Du bist das Urteilstraining des Denkateliers „Nichts geschenkt“.
 Du bewertest NICHT ob ein Urteil richtig oder falsch ist.
 Stattdessen prüfst du die QUALITÄT des Denkens:
 
@@ -580,7 +582,7 @@ app.post('/api/wicked', aiLimiter, async (req, res) => {
   const currentStep = step || 1;
   if (!steps[currentStep]) return res.status(400).json({ error: err(lang, 'invalidStep') });
 
-  const systemPrompt = `Du bist die Wicked-Problem-Werkstatt des Ateliers der Radikalen Mitte.
+  const systemPrompt = `Du bist die Wicked-Problem-Werkstatt des Denkateliers „Nichts geschenkt“.
 Du führst Nutzer:innen durch einen strukturierten Denkprozess zu komplexen Problemen.
 Sei konkret, differenziert und vermeide Plattitüden.
 ${LANG_INSTRUCTION[lang]} Antworte ausschließlich im angegebenen JSON-Format. JSON-Schlüsselnamen bleiben wie angegeben, nur die Werte in der Zielsprache.`;
@@ -604,7 +606,7 @@ app.post('/api/stresstest', aiLimiter, async (req, res) => {
   if (!text || typeof text !== 'string') return res.status(400).json({ error: err(lang, 'noText') });
   if (text.length > 5000) return res.status(400).json({ error: err(lang, 'textTooLong5k') });
 
-  const systemPrompt = `Du bist der Text-Stresstest des Ateliers der Radikalen Mitte.
+  const systemPrompt = `Du bist der Text-Stresstest des Denkateliers „Nichts geschenkt“.
 Du prüfst Texte NICHT auf Grammatik oder Stil, sondern auf DENKQUALITÄT.
 
 Analysiere den Text und gib Feedback in diesen Kategorien:
@@ -667,7 +669,7 @@ async function handleDaily(req, res) {
     return res.json(pickLocalDailyChallenge(resolvedSeed, lang));
   }
 
-  const systemPrompt = `Du bist der Generator der Täglichen Denkprobe des Ateliers der Radikalen Mitte.
+  const systemPrompt = `Du bist der Generator der Täglichen Denkprobe des Denkateliers „Nichts geschenkt“.
 Erzeuge eine kurze, scharfe Denkprobe des Tages. Sie soll:
 - Ein aktuelles oder zeitloses Thema aufgreifen
 - In 2-3 Sätzen eine Spannung formulieren
@@ -709,7 +711,7 @@ app.post('/api/perspektive', aiLimiter, async (req, res) => {
   const lang = getLang(req);
   if (!position || typeof position !== 'string' || !perspektive || typeof perspektive !== 'string') return res.status(400).json({ error: err(lang, 'noPosition') });
 
-  const systemPrompt = `Du bist die Perspektivenwechsel-Maschine des Ateliers der Radikalen Mitte.
+  const systemPrompt = `Du bist die Perspektivenwechsel-Maschine des Denkateliers „Nichts geschenkt“.
 Du erhältst eine Position/Meinung und eine gewählte Perspektive.
 Deine Aufgabe: Formuliere die Position EMPATHISCH und ÜBERZEUGEND aus der gewählten Perspektive um.
 Nicht als Karikatur, nicht als Strohmann – sondern als bestmögliche Version dieser Perspektive.
@@ -744,7 +746,7 @@ app.post('/api/gegenrede', aiLimiter, async (req, res) => {
   if (!text || typeof text !== 'string') return res.status(400).json({ error: err(lang, 'noText') });
   if (text.length > 8000) return res.status(400).json({ error: err(lang, 'textTooLong8k') });
 
-  const systemPrompt = `Du bist die KI-Gegenrede des Ateliers der Radikalen Mitte.
+  const systemPrompt = `Du bist die KI-Gegenrede des Denkateliers „Nichts geschenkt“.
 Du erhältst den Text eines Nachrichtenartikels oder Meinungsbeitrags.
 Deine Aufgabe ist es, den Text kritisch zu durchleuchten – nicht parteiisch, sondern im Dienst besseren Denkens.
 
@@ -779,7 +781,7 @@ app.post('/api/argumentkarte', aiLimiter, async (req, res) => {
   const lang = getLang(req);
   if (!these || typeof these !== 'string') return res.status(400).json({ error: err(lang, 'noThese') });
 
-  const systemPrompt = `Du bist die Argumentkarte des Ateliers der Radikalen Mitte.
+  const systemPrompt = `Du bist die Argumentkarte des Denkateliers „Nichts geschenkt“.
 Du erhältst eine These und erstellst eine strukturierte Argumentkarte.
 Die Karte hat die These im Zentrum, mit Pro- und Contra-Ästen.
 Jeder Ast hat Unterargumente und mögliche Einwände.
@@ -818,7 +820,7 @@ app.post('/api/blindspot', aiLimiter, async (req, res) => {
   if (!text || typeof text !== 'string') return res.status(400).json({ error: err(lang, 'noText') });
   if (text.length > 5000) return res.status(400).json({ error: err(lang, 'textTooLong5k') });
 
-  const systemPrompt = `Du bist der Blinder-Fleck-Detektor des Ateliers der Radikalen Mitte.
+  const systemPrompt = `Du bist der Blinder-Fleck-Detektor des Denkateliers „Nichts geschenkt“.
 Du erhältst einen Text und identifizierst präzise EINE Perspektive, die systematisch fehlt oder nicht zu Wort kommt.
 Nicht die naheliegendste Gegenposition, sondern eine echte blinde Stelle — eine Gruppe, ein Blickwinkel, eine Lebensrealität, die der Text übersieht.
 

@@ -1,7 +1,7 @@
 {
   "name": "nicht-anerkannt",
   "version": "1.1.0",
-  "description": "Das Atelier der Radikalen Mitte – Manifest und interaktive Plattform",
+  "description": "Nichts geschenkt — Das Denkatelier – Manifest und interaktive Plattform",
   "private": true,
   "scripts": {
     "start": "node server.js",

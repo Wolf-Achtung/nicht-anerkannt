@@ -14,25 +14,22 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const SITE_URL = process.env.SITE_URL || 'https://nicht-anerkannt.info';
+const SITE_URL = process.env.SITE_URL || 'https://nichts-geschenkt.de';
 
-// Page inventory:
-//   slug                              de file on disk               en file on disk (null = DE-only)
-const PAGES = [
-  { slug: '',                          de: 'de/index.html',          en: 'en/index.html' },
-  { slug: 'werkstatt',                 de: 'de/werkstatt.html',      en: 'en/werkstatt.html' },
-  { slug: 'salon',                     de: 'de/salon.html',          en: 'en/salon.html' },
-  { slug: 'roadmap',                   de: 'de/roadmap.html',        en: 'en/roadmap.html' },
-  { slug: 'kontakt',                   de: 'de/kontakt.html',        en: 'en/kontakt.html' },
-  { slug: 'medien',                    de: 'de/medien.html',         en: 'en/medien.html' },
-  { slug: 'ideen-archiv',              de: 'de/ideen-archiv.html',   en: 'en/ideen-archiv.html' },
-  { slug: 'impressum',                 de: 'de/impressum.html',      en: 'en/impressum.html' },
-  { slug: 'datenschutz',               de: 'de/datenschutz.html',    en: 'en/datenschutz.html' },
-  { slug: 'ai-governance',             de: 'de/ai-governance.html',  en: 'en/ai-governance.html' },
-  { slug: 'ki-renaissance',            de: 'de/ki-renaissance.html', en: 'en/ki-renaissance.html' },
-  { slug: 'ki-renaissance-analyse',    de: 'de/ki-renaissance-analyse.html', en: 'en/ki-renaissance-analyse.html' },
-  { slug: 'zukunft-der-bildung',       de: 'de/zukunft-der-bildung.html',    en: 'en/zukunft-der-bildung.html' }
-];
+// Page inventory is discovered from the de/ directory (slug = filename,
+// index.html = language home) so newly added pages are covered
+// automatically; the EN sibling is included when it exists on disk.
+const PAGES = fs.readdirSync(path.join(ROOT, 'de'))
+  .filter((n) => n.endsWith('.html'))
+  .map((n) => {
+    const slug = n === 'index.html' ? '' : n.replace(/\.html$/, '');
+    const enFile = 'en/' + n;
+    return {
+      slug: slug,
+      de: 'de/' + n,
+      en: fs.existsSync(path.join(ROOT, enFile)) ? enFile : null
+    };
+  });
 
 const MARKER_BEGIN = '<!-- hreflang:begin -->';
 const MARKER_END   = '<!-- hreflang:end -->';

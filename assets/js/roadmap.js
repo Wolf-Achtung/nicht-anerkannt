@@ -1,5 +1,5 @@
 /**
- * roadmap.js — Interactive Timeline for Das Atelier der Radikalen Mitte
+ * roadmap.js — Interactive Timeline for Nichts geschenkt — Das Denkatelier
  * Fetches roadmap-events.json and renders an expandable vertical timeline.
  */
 (function () {

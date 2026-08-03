@@ -1,5 +1,5 @@
 /**
- * werkstatt.js — KI-Werkstatt Tools for Das Atelier der Radikalen Mitte
+ * werkstatt.js — KI-Werkstatt Tools for Nichts geschenkt — Das Denkatelier
  * Widerspruchssalon, Denkproben-Generator, Urteilstraining,
  * Wicked-Problem-Werkstatt, Text-Stresstest, Manifest-Übersetzer
  */

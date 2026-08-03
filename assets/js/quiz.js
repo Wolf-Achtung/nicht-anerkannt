@@ -1,5 +1,5 @@
 /**
- * quiz.js — Widerspruchsquiz for Das Atelier der Radikalen Mitte
+ * quiz.js — Widerspruchsquiz for Nichts geschenkt — Das Denkatelier
  * Fetches quiz data, shows questions one at a time, tracks scores, shows result.
  */
 (function () {

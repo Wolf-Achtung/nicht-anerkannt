@@ -1,5 +1,5 @@
 /**
- * ticker.js — Live Ticker for Das Atelier der Radikalen Mitte
+ * ticker.js — Live Ticker for Nichts geschenkt — Das Denkatelier
  * Fetches ticker messages and rotates them with fade transitions.
  */
 (function () {
@@ -12,13 +12,13 @@
   var INTERVAL = 5000;
 
   var fallbackMessages_de = [
-    { type: 'update', text: 'Willkommen im Atelier der Radikalen Mitte.', date: '' },
+    { type: 'update', text: 'Willkommen im Denkatelier „Nichts geschenkt“.', date: '' },
     { type: 'zitat', text: '"Nicht mehr Stoff. Mehr Urteil."', date: '' },
     { type: 'update', text: 'Manifest online. Feedback erwuenscht.', date: '' },
     { type: 'zitat', text: '"Widerspruch ist Methode."', date: '' }
   ];
   var fallbackMessages_en = [
-    { type: 'update', text: 'Welcome to the Atelier of the Radical Middle.', date: '' },
+    { type: 'update', text: 'Welcome to Nichts geschenkt — The Thinking Atelier.', date: '' },
     { type: 'zitat', text: '"Not more material. More judgment."', date: '' },
     { type: 'update', text: 'Manifesto online. Feedback welcome.', date: '' },
     { type: 'zitat', text: '"Contradiction is method."', date: '' }
