@@ -159,7 +159,7 @@
     ctx.fillStyle = '#888888';
     ctx.fillText(t('sharecard.tagline'), padding, H - 40);
 
-    // "Extrem mittig" stamp bottom-right
+    // Principle stamp bottom-right
     ctx.save();
     ctx.translate(W - 140, H - 52);
     ctx.rotate(0.06);

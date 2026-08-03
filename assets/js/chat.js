@@ -34,7 +34,7 @@
     {
       trigger: /\bmitte\b|mittig|zentrum|zentrist/i,
       responses: [
-        'Mitte klingt bequem. Aber die Radikale Mitte ist unbequem — sie muss denken, wo andere nur reagieren.',
+        'Mitte klingt bequem. Aber eine denkende Mitte ist unbequem — sie muss denken, wo andere nur reagieren.',
         'Welche Mitte meinst du? Die laue Äquidistanz oder die denkende Position?',
         'Die Mitte ist kein Ort. Sie ist eine Praxis. Was tust du konkret, um dort zu stehen?',
         'Wenn alle von Mitte reden, warum fühlt sich dann niemand vertreten?'
