@@ -95,12 +95,30 @@
   }
 
   function renderIntro() {
+    var steps = [
+      [L('Du bekommst eine Frage und beantwortest sie allein.', 'You get a question and answer it on your own.'),
+       L('Kein Nachschlagen, keine KI. 2–5 Sätze.', 'No looking things up, no AI. 2–5 sentences.')],
+      [L('Die KI widerspricht deiner Antwort.', 'The AI pushes back on your answer.'),
+       L('Sie sagt dir nicht, was richtig ist — sie zeigt, was du übersehen hast.', 'It doesn\'t tell you what is right — it shows you what you overlooked.')],
+      [L('Du entscheidest, was du änderst.', 'You decide what to change.'),
+       L('Danach stehen beide Fassungen und der Einwand untereinander. Du siehst, was von dir kam und was von der Maschine.', 'Afterwards both versions and the objection sit one below the other. You see what came from you and what came from the machine.')]
+    ];
+
     var html = '<div class="quiz-intro-wrapper">';
-    html += '<p>' + L(
-      'Runde 1: Du antwortest ganz ohne Hilfe. Runde 2: Die KI fordert dich heraus — und du entscheidest, was du änderst. Am Ende siehst du beide Fassungen nebeneinander. Deine Antworten bleiben in deinem Browser und werden nicht gespeichert.',
-      'Round 1: you answer entirely without help. Round 2: the AI challenges you — and you decide what to change. At the end you see both versions side by side. Your answers stay in your browser and are not stored.'
+    html += '<p class="exp-lead">' + L(
+      'Dauert etwa fünf Minuten. So läuft es ab:',
+      'Takes about five minutes. Here is how it works:'
     ) + '</p>';
+    html += '<ol class="exp-steps">';
+    steps.forEach(function (step) {
+      html += '<li><strong>' + step[0] + '</strong><span>' + step[1] + '</span></li>';
+    });
+    html += '</ol>';
     html += '<button class="quiz-start" id="exp-start" type="button">' + L('Experiment starten', 'Start the experiment') + '</button>';
+    html += '<p class="exp-privacy">' + L(
+      'Alles bleibt in deinem Browser. Nichts wird gespeichert.',
+      'Everything stays in your browser. Nothing is stored.'
+    ) + '</p>';
     html += '</div>';
     container.innerHTML = html;
     document.getElementById('exp-start').addEventListener('click', startExperiment);
@@ -116,15 +134,16 @@
   }
 
   function renderPhase1() {
-    var html = '<div class="werkstatt-dilemma">';
-    html += '<p class="quiz-result-label">' + L('Runde 1 von 2 — ohne KI', 'Round 1 of 2 — without AI') + '</p>';
+    var html = '<p class="quiz-result-label">' + L('Schritt 1 von 3 — nur du', 'Step 1 of 3 — you alone') + '</p>';
+    html += '<div class="werkstatt-dilemma">';
     html += '<h3>' + escapeHtml(state.frage.titel) + '</h3>';
     html += '<p><strong>' + escapeHtml(state.frage.frage) + '</strong></p>';
     html += '</div>';
-    html += '<label class="sr-only" for="exp-input-v1">' + L('Deine Antwort ohne KI', 'Your answer without AI') + '</label>';
+    html += '<label class="exp-label" for="exp-input-v1">' +
+      L('Deine Antwort — ohne KI, ohne Nachschlagen', 'Your answer — no AI, no looking things up') + '</label>';
     html += '<textarea class="werkstatt-input" id="exp-input-v1" rows="5" maxlength="1000" placeholder="' +
-      L('Deine Antwort — nur dein Kopf, kein Werkzeug. 2–5 Sätze reichen.', 'Your answer — just your head, no tools. 2–5 sentences are enough.') + '"></textarea>';
-    html += '<button class="button button--accent" id="exp-to-ai" type="button">' + L('Fertig — jetzt soll die KI widersprechen', 'Done — now let the AI push back') + '</button>';
+      L('2–5 Sätze reichen.', '2–5 sentences are enough.') + '"></textarea>';
+    html += '<button class="button button--accent" id="exp-to-ai" type="button">' + L('Weiter — die KI soll widersprechen', 'Next — let the AI push back') + '</button>';
     container.innerHTML = html;
 
     document.getElementById('exp-to-ai').addEventListener('click', function () {
@@ -162,32 +181,41 @@
       });
   }
 
+  function feedbackHtml() {
+    var html = '';
+    if (state.feedback.blinde_stelle) {
+      html += '<p><strong>' + L('Was du übersehen hast', 'What you overlooked') + ':</strong> ' + escapeHtml(state.feedback.blinde_stelle) + '</p>';
+    }
+    if (state.feedback.staerke) {
+      html += '<p><strong>' + L('Was stark war', 'What was strong') + ':</strong> ' + escapeHtml(state.feedback.staerke) + '</p>';
+    }
+    if (state.feedback.vertiefung) {
+      html += '<p><strong>' + L('Frage zum Weiterdenken', 'Question to take further') + ':</strong> ' + escapeHtml(state.feedback.vertiefung) + '</p>';
+    }
+    return html;
+  }
+
   function renderPhase2() {
-    var html = '<p class="quiz-result-label">' + L('Runde 2 von 2 — mit KI', 'Round 2 of 2 — with AI') + '</p>';
+    var html = '<p class="quiz-result-label">' + L('Schritt 2 von 3 — die KI widerspricht', 'Step 2 of 3 — the AI pushes back') + '</p>';
 
     if (state.feedback) {
-      html += '<div class="werkstatt-output">';
-      if (state.feedback.blinde_stelle) {
-        html += '<p><strong>' + L('Blinde Stelle', 'Blind spot') + ':</strong> ' + escapeHtml(state.feedback.blinde_stelle) + '</p>';
-      }
-      if (state.feedback.staerke) {
-        html += '<p><strong>' + L('Stärke', 'Strength') + ':</strong> ' + escapeHtml(state.feedback.staerke) + '</p>';
-      }
-      if (state.feedback.vertiefung) {
-        html += '<p><strong>' + L('Weiterdenken', 'Think further') + ':</strong> ' + escapeHtml(state.feedback.vertiefung) + '</p>';
-      }
-      html += '</div>';
+      html += '<div class="werkstatt-output">' + feedbackHtml() + '</div>';
     } else {
       html += '<div class="werkstatt-output"><p>' + L(
-        'Die KI ist gerade nicht erreichbar. Zweite Runde ohne Sparring: Lies deine Antwort noch einmal wie eine fremde — was würdest du ihr entgegnen?',
-        'The AI is unreachable right now. Second round without sparring: reread your answer as if it were a stranger’s — what would you say against it?'
+        'Die KI ist gerade nicht erreichbar. Übernimm den Widerspruch selbst: Lies deine Antwort noch einmal wie die einer fremden Person — was würdest du ihr entgegnen?',
+        'The AI is unreachable right now. Take over the objection yourself: reread your answer as if a stranger had written it — what would you say against it?'
       ) + '</p></div>';
     }
 
-    html += '<label class="sr-only" for="exp-input-v2">' + L('Deine überarbeitete Antwort', 'Your revised answer') + '</label>';
+    html += '<label class="exp-label" for="exp-input-v2">' + L(
+      'Unten steht deine Antwort von eben. Ändere, was du ändern willst — oder lass sie so.',
+      'Below is the answer you just wrote. Change what you want to change — or leave it as it is.'
+    ) + '</label>';
     html += '<textarea class="werkstatt-input" id="exp-input-v2" rows="5" maxlength="1000"></textarea>';
-    html += '<button class="button button--accent" id="exp-compare" type="button">' + L('Zum Vergleich', 'Compare versions') + '</button> ';
-    html += '<button class="button" id="exp-keep" type="button">' + L('Nichts ändern — direkt vergleichen', 'Change nothing — compare directly') + '</button>';
+    html += '<div class="exp-actions">';
+    html += '<button class="button button--accent" id="exp-compare" type="button">' + L('Fertig — Ergebnis zeigen', 'Done — show the result') + '</button>';
+    html += '<button class="button" id="exp-keep" type="button">' + L('Ich bleibe dabei', 'I stand by my answer') + '</button>';
+    html += '</div>';
     container.innerHTML = html;
 
     var v2El = document.getElementById('exp-input-v2');
@@ -205,30 +233,54 @@
 
   function renderPhase3() {
     var unchanged = state.v1 === state.v2;
-    var html = '<p class="quiz-result-label">' + L('Der Vergleich', 'The Comparison') + '</p>';
+    var html = '<p class="quiz-result-label">' + L('Schritt 3 von 3 — dein Ergebnis', 'Step 3 of 3 — your result') + '</p>';
     html += '<div class="werkstatt-dilemma"><p><strong>' + escapeHtml(state.frage.frage) + '</strong></p></div>';
 
-    html += '<div class="cards">';
-    html += '<article class="card"><h3>' + L('Ohne KI', 'Without AI') + '</h3><p>' + escapeHtml(state.v1) + '</p></article>';
-    html += '<article class="card"><h3>' + L('Nach dem Sparring', 'After the sparring') + '</h3><p>' + escapeHtml(state.v2) + '</p></article>';
-    html += '</div>';
+    // Vertical flow, in the order it happened: the objection stays visible
+    // between the two versions — otherwise the cause of the change is lost
+    // exactly where it should be judged.
+    html += '<ol class="exp-flow">';
+    html += '<li class="exp-flow-step"><span class="exp-flow-label">' +
+      L('Deine Antwort — allein gedacht', 'Your answer — thought alone') + '</span>' +
+      '<p>' + escapeHtml(state.v1) + '</p></li>';
+
+    html += '<li class="exp-flow-step exp-flow-step--ai"><span class="exp-flow-label">' +
+      L('Was die KI dagegen hielt', 'What the AI held against it') + '</span>';
+    if (state.feedback) {
+      html += feedbackHtml();
+    } else {
+      html += '<p>' + L('Die KI war nicht erreichbar — den Widerspruch hast du selbst übernommen.',
+        'The AI was unreachable — you took over the objection yourself.') + '</p>';
+    }
+    html += '</li>';
+
+    html += '<li class="exp-flow-step"><span class="exp-flow-label">' +
+      (unchanged
+        ? L('Deine Antwort danach — unverändert', 'Your answer afterwards — unchanged')
+        : L('Deine Antwort danach — überarbeitet', 'Your answer afterwards — revised')) + '</span>' +
+      '<p>' + escapeHtml(state.v2) + '</p></li>';
+    html += '</ol>';
 
     html += '<div class="werkstatt-output">';
+    html += '<p class="exp-question-label">' + L('Eine Frage zum Schluss — nur für dich:', 'One closing question — for you alone:') + '</p>';
     if (unchanged) {
-      html += '<p>' + L(
-        'Du hast nichts geändert. Das kann Standfestigkeit sein — oder eine verpasste Chance. Woran erkennst du den Unterschied?',
-        'You changed nothing. That can be steadfastness — or a missed opportunity. How would you tell the difference?'
+      html += '<p class="big-line">' + L(
+        'Du bist bei deiner Antwort geblieben. War das Standfestigkeit — oder hast du dem Einwand nur ausweichen wollen?',
+        'You stood by your answer. Was that steadfastness — or did you just want to dodge the objection?'
       ) + '</p>';
     } else {
-      html += '<p>' + L(
-        'Drei Fragen zum Schluss — nur für dich: Was hat sich verändert, und warum? Welcher Gedanke in Fassung 2 ist wirklich deiner, welcher kam von der Maschine? Und der Merk-Check: Kannst du deine zweite Fassung sinngemäß wiedergeben, ohne hinzuschauen?',
-        'Three closing questions — for you alone: What changed, and why? Which thought in version 2 is truly yours, which came from the machine? And the recall check: can you restate your second version without looking?'
+      html += '<p class="big-line">' + L(
+        'Welcher Gedanke in deiner zweiten Antwort ist wirklich deiner — und welcher gehört der Maschine?',
+        'Which thought in your second answer is truly yours — and which one belongs to the machine?'
       ) + '</p>';
     }
-    html += '<p><strong>' + L('Das war das Prinzip: Erst du, dann die KI.', 'That was the principle: first you, then the AI.') + '</strong></p>';
+    html += '<p>' + L(
+      'Genau das ist der Unterschied, um den es hier geht. Die KI hat dir nichts abgenommen — sie hat dich gezwungen, noch einmal hinzusehen. Erst du, dann die KI.',
+      'That is exactly the difference this place is about. The AI did not do the work for you — it forced you to look again. First you, then the AI.'
+    ) + '</p>';
     html += '</div>';
 
-    html += '<button class="button button--accent" id="exp-again" type="button">' + L('Neues Experiment', 'New experiment') + '</button>';
+    html += '<button class="button button--accent" id="exp-again" type="button">' + L('Noch ein Experiment', 'Another experiment') + '</button>';
     container.innerHTML = html;
 
     document.getElementById('exp-again').addEventListener('click', startExperiment);
