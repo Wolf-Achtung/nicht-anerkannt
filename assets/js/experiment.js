@@ -44,6 +44,22 @@
     }
   ];
 
+  // Set once the person interacts: the very first render happens on page load
+  // and must never move the page.
+  var interactive = false;
+
+  // Each phase replaces the whole container, so its height changes abruptly
+  // (a tall intro becomes a small spinner). Without this the page appears to
+  // jump downwards, because the scroll offset stays while the content shrinks.
+  function keepInView() {
+    if (!interactive || !container) return;
+    var section = container.closest ? container.closest('section') : null;
+    var target = section || container;
+    if (!target.scrollIntoView) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  }
+
   function lang() {
     return (window.AtelierI18n && window.AtelierI18n.lang) || 'de';
   }
@@ -125,8 +141,10 @@
   }
 
   function startExperiment() {
+    interactive = true;
     state = { frage: null, v1: '', v2: '', feedback: null };
     container.innerHTML = loadingHtml();
+    keepInView();
     fetchQuestion().then(function (q) {
       state.frage = q;
       renderPhase1();
@@ -145,6 +163,7 @@
       L('2–5 Sätze reichen.', '2–5 sentences are enough.') + '"></textarea>';
     html += '<button class="button button--accent" id="exp-to-ai" type="button">' + L('Weiter — die KI soll widersprechen', 'Next — let the AI push back') + '</button>';
     container.innerHTML = html;
+    keepInView();
 
     document.getElementById('exp-to-ai').addEventListener('click', function () {
       var v1 = document.getElementById('exp-input-v1').value.trim();
@@ -156,6 +175,7 @@
 
   function requestFeedback() {
     container.innerHTML = loadingHtml();
+    keepInView();
     fetch(API_BASE + '/api/urteil', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -217,6 +237,7 @@
     html += '<button class="button" id="exp-keep" type="button">' + L('Ich bleibe dabei', 'I stand by my answer') + '</button>';
     html += '</div>';
     container.innerHTML = html;
+    keepInView();
 
     var v2El = document.getElementById('exp-input-v2');
     v2El.value = state.v1;
@@ -282,6 +303,7 @@
 
     html += '<button class="button button--accent" id="exp-again" type="button">' + L('Noch ein Experiment', 'Another experiment') + '</button>';
     container.innerHTML = html;
+    keepInView();
 
     document.getElementById('exp-again').addEventListener('click', startExperiment);
 

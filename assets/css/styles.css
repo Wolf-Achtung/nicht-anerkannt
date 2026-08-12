@@ -3298,3 +3298,9 @@ body.read-mode::before {
   color: var(--muted);
   margin: 0 0 0.5rem;
 }
+
+/* Keeps the page from lurching when a tall phase is replaced by a small
+   one (e.g. the intro turning into a loading indicator). */
+#experiment-container {
+  min-height: 16rem;
+}
