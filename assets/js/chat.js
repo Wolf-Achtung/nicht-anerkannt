@@ -14,138 +14,228 @@
 
   var triggers = [
     {
-      trigger: /\bki\b|k\.i\.|künstliche.?intelligenz|artificial/i,
+      trigger: /\bki\b|k\.i\.|künstliche.?intelligenz|artificial|\bai\b|\ba\.i\.\b/i,
       responses: [
         'Wenn KI alles beantworten kann — was ist dann noch deine Frage wert?',
         'Du sagst KI. Aber meinst du Werkzeug oder Ersatz? Das ist nicht dasselbe.',
         'KI produziert Output. Wer produziert das Urteil darüber?',
         'Interessant, dass du KI erwähnst. Hast du heute schon etwas gedacht, das keine Maschine denken könnte?'
+      ],
+      responsesEn: [
+        'If AI can answer everything — what is your question still worth?',
+        'You say AI. But do you mean a tool or a replacement? Those are not the same thing.',
+        'AI produces output. Who produces the judgment about it?',
+        'Interesting that you mention AI. Have you thought anything today that no machine could think?'
       ]
     },
     {
-      trigger: /\bbildung\b|lernen|schule|universit|studier/i,
+      trigger: /\bbildung\b|lernen|schule|universit|studier|education|learn|school|study/i,
       responses: [
         'Bildung gegen was? Gegen Unwissenheit oder gegen Urteilslosigkeit? Das sind verschiedene Kämpfe.',
         'Was wäre, wenn Bildung nicht mehr heißt: Stoff aufnehmen — sondern: unterscheiden lernen?',
         'Du sprichst von Bildung. Aber wann hat dich zuletzt etwas Gelerntes wirklich verändert?',
         'Prüfungen messen Reproduktion. Was misst Urteilskraft?'
+      ],
+      responsesEn: [
+        'Education against what? Against ignorance or against the inability to judge? Those are different battles.',
+        'What if education no longer meant absorbing material — but learning to distinguish?',
+        'You speak of education. But when did something you learned last truly change you?',
+        'Exams measure reproduction. What measures judgment?'
       ]
     },
     {
-      trigger: /\bmitte\b|mittig|zentrum|zentrist/i,
+      trigger: /\bmitte\b|mittig|zentrum|zentrist|middle|centre|center/i,
       responses: [
         'Mitte klingt bequem. Aber eine denkende Mitte ist unbequem — sie muss denken, wo andere nur reagieren.',
         'Welche Mitte meinst du? Die laue Äquidistanz oder die denkende Position?',
         'Die Mitte ist kein Ort. Sie ist eine Praxis. Was tust du konkret, um dort zu stehen?',
         'Wenn alle von Mitte reden, warum fühlt sich dann niemand vertreten?'
+      ],
+      responsesEn: [
+        'The middle sounds comfortable. But a thinking middle is uncomfortable — it has to think where others merely react.',
+        'Which middle do you mean? The tepid equidistance or the thinking position?',
+        'The middle is not a place. It is a practice. What do you actually do to stand there?',
+        'If everyone talks about the middle, why does nobody feel represented?'
       ]
     },
     {
-      trigger: /\bwiderspruch\b|widersprüch|kontrover|debatt/i,
+      trigger: /\bwiderspruch\b|widersprüch|kontrover|debatt|contradict|controver|debate|disagree/i,
       responses: [
         'Widerspruch ist keine Störung. Er ist Methode. Aber hältst du ihn auch aus, wenn er dich selbst trifft?',
         'Wem hast du zuletzt wirklich widersprochen — nicht im Netz, sondern im Raum?',
         'Interessant. Widerspruch erfordert Zuhören. Wie gut hörst du zu, bevor du antwortest?',
         'Widerspruch ohne Respekt ist Provokation. Widerspruch mit Respekt ist Denken.'
+      ],
+      responsesEn: [
+        'Contradiction is not a disturbance. It is a method. But can you bear it when it hits you?',
+        'Who did you last truly contradict — not online, but in the room?',
+        'Interesting. Contradiction requires listening. How well do you listen before you answer?',
+        'Contradiction without respect is provocation. Contradiction with respect is thinking.'
       ]
     },
     {
-      trigger: /\bpolitik\b|politisch|partei|regierung|staat/i,
+      trigger: /\bpolitik\b|politisch|partei|regierung|staat|politic|government|\bparty\b|\bstate\b/i,
       responses: [
         'Politik beginnt nicht im Parlament. Sie beginnt in dem Moment, wo du entscheidest, nicht gleichgültig zu sein.',
         'Du sagst Politik. Aber meinst du Machtspiel oder Gemeinwesen? Das ändert alles.',
         'Was wäre, wenn politisches Denken nicht heißt: Partei wählen — sondern: Urteil fällen?',
         'Die falsche Alternative: Anpassung oder Lager. Was wäre eine dritte Option?'
+      ],
+      responsesEn: [
+        'Politics does not begin in parliament. It begins the moment you decide not to be indifferent.',
+        'You say politics. But do you mean power games or the common good? That changes everything.',
+        'What if political thinking did not mean picking a party — but forming a judgment?',
+        'The false alternative: conformity or camp. What would a third option be?'
       ]
     },
     {
-      trigger: /\bmeinung\b|meinungs|standpunkt|position/i,
+      trigger: /\bmeinung\b|meinungs|standpunkt|position|opinion|viewpoint|stance/i,
       responses: [
         'Eine Meinung haben ist billig. Eine Meinung begründen können ist teuer. Was kostet deine?',
         'Meinungen sind wie Reflexe — schnell da. Urteile brauchen Zeit. Hast du dir die genommen?',
         'Wann hast du zuletzt eine Meinung geändert, weil ein Argument besser war als deins?',
         'Meinungsfreiheit heißt nicht, dass jede Meinung gleich viel wert ist. Was unterscheidet sie?'
+      ],
+      responsesEn: [
+        'Having an opinion is cheap. Being able to justify one is expensive. What does yours cost?',
+        'Opinions are like reflexes — instantly there. Judgments take time. Did you take it?',
+        'When did you last change your mind because an argument was better than yours?',
+        'Freedom of opinion does not mean every opinion is worth the same. What distinguishes them?'
       ]
     },
     {
-      trigger: /\bfreiheit\b|frei\b|befreiung|autonom/i,
+      trigger: /\bfreiheit\b|frei\b|befreiung|autonom|freedom|liberty|\bfree\b/i,
       responses: [
         'Freiheit ohne Form kippt in Willkür. Was gibt deiner Freiheit Struktur?',
         'Frei wovon? Frei wozu? Das sind zwei verschiedene Fragen.',
         'Echte Freiheit erfordert Urteil. Sonst ist sie nur Reaktion auf den letzten Reiz.',
         'Wenn du frei bist, alles zu tun — warum tust du dann meistens dasselbe wie alle anderen?'
+      ],
+      responsesEn: [
+        'Freedom without form tips into arbitrariness. What gives your freedom structure?',
+        'Free from what? Free for what? Those are two different questions.',
+        'Real freedom requires judgment. Otherwise it is just a reaction to the latest stimulus.',
+        'If you are free to do anything — why do you mostly do the same as everyone else?'
       ]
     },
     {
-      trigger: /\burteil\b|urteils|bewert|einschätz/i,
+      trigger: /\burteil\b|urteils|bewert|einschätz|judgment|judgement|assess|evaluat/i,
       responses: [
         'Urteilskraft ist das Teuerste, was es gibt. Was investierst du in deine?',
         'Ein Urteil ist nicht dasselbe wie eine Meinung. Was ist der Unterschied für dich?',
         'Urteilen heißt: unterscheiden. Was hast du heute unterschieden?',
         'Billig wird Reproduktion. Teuer werden Urteil, Originalität und Mut. Wo stehst du?'
+      ],
+      responsesEn: [
+        'Judgment is the most expensive thing there is. What do you invest in yours?',
+        'A judgment is not the same as an opinion. What is the difference for you?',
+        'To judge means to distinguish. What did you distinguish today?',
+        'Reproduction becomes cheap. Judgment, originality and courage become expensive. Where do you stand?'
       ]
     },
     {
-      trigger: /\bhandl|handlung|tun\b|aktion|aktiv/i,
+      trigger: /\bhandl|handlung|tun\b|aktion|aktiv|\bact\b|action|\bdoing\b/i,
       responses: [
         'Analyse ohne Konsequenz ist ein Stilmittel. Was folgt aus deinem Denken?',
         'Handeln unter Unsicherheit — das ist die eigentliche Prüfung. Bestehst du sie?',
         'Du sprichst vom Handeln. Aber handelst du aus Überzeugung oder aus Gewohnheit?',
         'Wirksamkeit statt Pose. Was war deine letzte wirksame Handlung?'
+      ],
+      responsesEn: [
+        'Analysis without consequence is a stylistic device. What follows from your thinking?',
+        'Acting under uncertainty — that is the real test. Do you pass it?',
+        'You speak of acting. But do you act out of conviction or out of habit?',
+        'Impact over posture. What was your last effective action?'
       ]
     },
     {
-      trigger: /\bgesellschaft\b|sozial|zusammen|gemeinschaft/i,
+      trigger: /\bgesellschaft\b|sozial|zusammen|gemeinschaft|society|social|communit/i,
       responses: [
         'Gesellschaft entsteht nicht durch Konsens, sondern durch produktiven Dissens. Wo ist deiner?',
         'Niemand allein ist klug genug für die Gegenwart. Mit wem denkst du?',
         'Zusammenleben heißt: Widerspruch aushalten. Nicht: alle denken dasselbe.',
         'Was wäre, wenn Gesellschaft kein Problem ist, das man löst, sondern eine Spannung, die man aushält?'
+      ],
+      responsesEn: [
+        'Society does not arise from consensus but from productive dissent. Where is yours?',
+        'No one alone is wise enough for the present. Who do you think with?',
+        'Living together means enduring contradiction. Not: everyone thinking the same.',
+        'What if society is not a problem to be solved but a tension to be endured?'
       ]
     },
     {
-      trigger: /\bwahrheit\b|wahr\b|richtig|fakten|objektiv/i,
+      trigger: /\bwahrheit\b|wahr\b|richtig|fakten|objektiv|truth|\btrue\b|facts|objective/i,
       responses: [
         'Wahrheit ist kein Besitz. Sie ist ein Prozess. Wie sieht dein Prozess aus?',
         'Fakten sind der Boden. Urteil ist das Gebäude. Was baust du darauf?',
         'Wer sagt: Ich habe die Wahrheit — hat aufgehört zu denken. Denkst du noch?',
         'Zwischen Wahrheit und Lüge gibt es nicht die laue Mitte. Es gibt die Prüfung.'
+      ],
+      responsesEn: [
+        'Truth is not a possession. It is a process. What does your process look like?',
+        'Facts are the ground. Judgment is the building. What are you building on it?',
+        'Whoever says \'I have the truth\' has stopped thinking. Are you still thinking?',
+        'Between truth and lie there is no tepid middle. There is examination.'
       ]
     },
     {
-      trigger: /\bangst\b|furcht|sorge|unsicher/i,
+      trigger: /\bangst\b|furcht|sorge|unsicher|fear|afraid|worry|anxious|uncertain/i,
       responses: [
         'Unsicherheit ist kein Fehler. Sie ist der Normalzustand. Die Frage ist: Handelst du trotzdem?',
         'Angst vor Komplexität führt in Lager. Angst aushalten führt zu Urteil. Wo bist du?',
         'Sicherheit ist eine Illusion. Was bleibt, wenn du sie loslässt?',
         'Die Gegenwart ist überfordernd. Aber Überforderung kann der Anfang von Denken sein.'
+      ],
+      responsesEn: [
+        'Uncertainty is not a flaw. It is the normal state. The question is: do you act anyway?',
+        'Fear of complexity leads into camps. Enduring fear leads to judgment. Where are you?',
+        'Security is an illusion. What remains when you let go of it?',
+        'The present is overwhelming. But being overwhelmed can be the beginning of thinking.'
       ]
     },
     {
-      trigger: /\bident|identität|wer bin ich|selbst/i,
+      trigger: /\bident|identität|wer bin ich|selbst|who am i|myself/i,
       responses: [
         'Identität ist kein Fundament. Sie ist ein Werk. Woran arbeitest du?',
         'Wer bist du, wenn du nicht in ein Lager passt? Vielleicht: endlich frei.',
         'Identität durch Abgrenzung ist billig. Identität durch Urteil ist schwer. Was wählst du?',
         'Nicht angepasst. Nicht im Lager. Handlungsfähig. Reicht dir das als Identität?'
+      ],
+      responsesEn: [
+        'Identity is not a foundation. It is a work. What are you working on?',
+        'Who are you if you don\'t fit into a camp? Perhaps: finally free.',
+        'Identity through demarcation is cheap. Identity through judgment is hard. Which do you choose?',
+        'Not conforming. Not in a camp. Capable of action. Is that enough of an identity for you?'
       ]
     },
     {
-      trigger: /\bdemokr|demokratie|wahl|wählen|abstimm/i,
+      trigger: /\bdemokr|demokratie|wahl|wählen|abstimm|democra|\bvote\b|voting|election/i,
       responses: [
         'Demokratie ist nicht nur Verfassungsrecht. Sie ist tägliche Übung im Dissens. Übst du?',
         'Wählen ist der Anfang. Urteilen ist die Arbeit dazwischen. Was tust du zwischen den Wahlen?',
         'Demokratie braucht Menschen, die Widerspruch aushalten. Wie viel hältst du aus?',
         'Demokratie stirbt nicht an Extremen. Sie stirbt an Gleichgültigkeit.'
+      ],
+      responsesEn: [
+        'Democracy is not just constitutional law. It is daily practice in dissent. Do you practise?',
+        'Voting is the beginning. Judging is the work in between. What do you do between elections?',
+        'Democracy needs people who can endure contradiction. How much can you endure?',
+        'Democracy does not die from extremes. It dies from indifference.'
       ]
     },
     {
-      trigger: /\bkunst\b|kreativ|künstler|atelier/i,
+      trigger: /\bkunst\b|kreativ|künstler|atelier|\bart\b|artist|creativ/i,
       responses: [
         'Das Atelier ist kein Elfenbeinturm. Es ist eine Werkstatt für Urteil. Was baust du?',
         'Kreativität ohne Urteil ist Dekoration. Was unterscheidet dein Schaffen vom Dekorieren?',
         'Kunst stellt Fragen, die niemand bestellt hat. Welche Frage stellst du?',
         'Im Atelier geht es nicht um Selbstverwirklichung. Es geht um Wirksamkeit.'
+      ],
+      responsesEn: [
+        'The Atelier is not an ivory tower. It is a workshop for judgment. What are you building?',
+        'Creativity without judgment is decoration. What distinguishes your work from decorating?',
+        'Art asks questions nobody ordered. Which question are you asking?',
+        'The Atelier is not about self-realisation. It is about effectiveness.'
       ]
     }
   ];
@@ -163,6 +253,23 @@
     'Mut wäre jetzt: den Gedanken zu Ende denken, auch wenn es unbequem wird.'
   ];
 
+  var genericResponsesEn = [
+    'Interesting. But what exactly do you mean? Say it more precisely.',
+    'That sounds like a position. But have you examined it or only felt it?',
+    'And what follows from it? Thinking without consequence is a luxury.',
+    'Intriguing. Now turn the thought around. What would the opposite be?',
+    'Who convinced you of that? And why do you believe that person?',
+    'Too simple. Reality is more complicated. Where is the contradiction in your argument?',
+    'Not more material. More judgment. What is your judgment — not your opinion?',
+    'Imagine you had to defend the opposite. Could you?',
+    'That is a start. But a start is not enough. What comes after the first impulse?',
+    'Courage now would be: thinking the thought through to the end, even where it gets uncomfortable.'
+  ];
+
+  function isEn() {
+    return ((window.AtelierI18n && window.AtelierI18n.lang) || 'de') === 'en';
+  }
+
   function pick(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
   }
@@ -176,10 +283,10 @@
   function localFallback(userText) {
     for (var i = 0; i < triggers.length; i++) {
       if (triggers[i].trigger.test(userText)) {
-        return pick(triggers[i].responses);
+        return pick(isEn() ? triggers[i].responsesEn : triggers[i].responses);
       }
     }
-    return pick(genericResponses);
+    return pick(isEn() ? genericResponsesEn : genericResponses);
   }
 
   function findResponse(userText, callback) {
