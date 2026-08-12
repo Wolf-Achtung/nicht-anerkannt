@@ -88,10 +88,12 @@
     var container = document.getElementById('roadmap-container');
     if (!container) return;
 
-    var base = document.querySelector('script[src*="roadmap"]');
-    var prefix = base ? base.src.replace(/assets\/js\/roadmap\.js.*$/, '') : '';
+    // Language-aware data path (data/ or data/en/), like the other modules.
+    var prefix = (window.AtelierI18n && window.AtelierI18n.dataPrefix)
+      ? window.AtelierI18n.dataPrefix()
+      : 'data/';
 
-    fetch(prefix + 'data/roadmap-events.json')
+    fetch(prefix + 'roadmap-events.json')
       .then(function (res) {
         if (!res.ok) throw new Error('Failed to load roadmap');
         return res.json();
@@ -100,7 +102,9 @@
         buildTimeline(container, data);
       })
       .catch(function (err) {
-        container.innerHTML = '<p class="roadmap-error">Roadmap konnte nicht geladen werden.</p>';
+        var isEn = ((window.AtelierI18n && window.AtelierI18n.lang) || 'de') === 'en';
+        container.innerHTML = '<p class="roadmap-error">' +
+          (isEn ? 'Roadmap could not be loaded.' : 'Roadmap konnte nicht geladen werden.') + '</p>';
         console.error('[AtelierRoadmap]', err);
       });
   }
