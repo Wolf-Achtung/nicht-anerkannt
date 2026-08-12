@@ -29,6 +29,7 @@
   "daily.answer1Label": "Deine erste Antwort:",
   "daily.answer2Label": "Deine geschärfte Antwort:",
   "daily.konterError": "Die Gegenrede ist gerade nicht erreichbar. Deine Antwort bleibt gespeichert — der Widerspruch kommt beim nächsten Versuch.",
+  "daily.konterRetry": "Widerspruch anfordern",
   "daily.done": "Zwei Runden. Nichts geschenkt.",
   "quiz.questionOf": "Frage",
   "quiz.of": "von",

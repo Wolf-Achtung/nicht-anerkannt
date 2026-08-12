@@ -126,6 +126,7 @@
     'daily.answer1Label':       { de: 'Deine erste Antwort:',  en: 'Your first answer:' },
     'daily.answer2Label':       { de: 'Deine geschärfte Antwort:', en: 'Your sharpened answer:' },
     'daily.konterError':        { de: 'Die Gegenrede ist gerade nicht erreichbar. Deine Antwort bleibt gespeichert — der Widerspruch kommt beim nächsten Versuch.', en: 'The counter-voice is currently unavailable. Your answer is saved — the objection will come next time.' },
+    'daily.konterRetry':        { de: 'Widerspruch anfordern', en: 'Request the objection' },
     'daily.done':               { de: 'Zwei Runden. Nichts geschenkt.', en: 'Two rounds. Nothing for free.' },
 
     /* ── quiz.js ── */

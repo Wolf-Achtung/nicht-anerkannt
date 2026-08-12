@@ -29,6 +29,7 @@
   "daily.answer1Label": "Your first answer:",
   "daily.answer2Label": "Your sharpened answer:",
   "daily.konterError": "The counter-voice is currently unavailable. Your answer is saved — the objection will come next time.",
+  "daily.konterRetry": "Request the objection",
   "daily.done": "Two rounds. Nothing for free.",
   "quiz.questionOf": "Question",
   "quiz.of": "of",

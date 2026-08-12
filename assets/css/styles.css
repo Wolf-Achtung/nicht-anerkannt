@@ -3147,3 +3147,13 @@ body.read-mode::before {
   color: var(--accent);
   margin: 1.1rem 0 0;
 }
+
+.daily-konter-retry {
+  margin-top: 1rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px dashed var(--line);
+}
+
+.daily-konter-retry .daily-fallback {
+  padding: 0 0 0.7rem;
+}
