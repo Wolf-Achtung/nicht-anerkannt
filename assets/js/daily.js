@@ -129,12 +129,14 @@
     if (!payload.message) return;
 
     try {
-      fetch('/api/client-log', {
+      // Must go to the API origin: the pages are served statically (Netlify),
+      // where a relative /api/* path never reaches the logging endpoint.
+      fetch(API_BASE + '/api/client-log', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      });
-    } catch (e) { /* localStorage unavailable */ }
+      }).catch(function () { /* logging must never break the page */ });
+    } catch (e) { /* fetch unavailable */ }
   }
 
   function saveToArchive(data) {
@@ -279,9 +281,11 @@
     try { cached = JSON.parse(localStorage.getItem(getStorageKey())); } catch (e) {}
 
     if (cached && cached.titel && cached.frage) {
-      // A request interrupted by a reload must not leave a spinner behind.
-      if (cached.konterPending) { cached.konterPending = false; cached.konterError = true; }
-      if (cached.konter2Pending) { cached.konter2Pending = false; }
+      // Stale flags from older versions / interrupted requests: drop them so a
+      // missing counter-voice renders as "retry", never as a spinner or dead end.
+      delete cached.konterPending;
+      delete cached.konter2Pending;
+      delete cached.konterError;
       renderChallenge(cached, cached.source && cached.source.indexOf('fallback') !== -1);
       return;
     }
@@ -323,7 +327,21 @@
   }
 
   function persist(data) {
-    try { localStorage.setItem(getStorageKey(), JSON.stringify(data)); } catch (e) { /* localStorage unavailable */ }
+    // Pending flags are runtime state, never content: persisting them would
+    // resurrect a spinner (or a dead end) on the next page load.
+    var copy = {};
+    Object.keys(data).forEach(function (key) {
+      if (key !== 'konterPending' && key !== 'konter2Pending') copy[key] = data[key];
+    });
+    try { localStorage.setItem(getStorageKey(), JSON.stringify(copy)); } catch (e) { /* localStorage unavailable */ }
+  }
+
+  function retryBlock(id) {
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    return '<div class="daily-konter-retry">' +
+      '<p class="daily-fallback">' + t('daily.konterError') + '</p>' +
+      '<button class="button" id="' + id + '" type="button">' + t('daily.konterRetry') + '</button>' +
+      '</div>';
   }
 
   function konterBlock(konter, label) {
@@ -384,9 +402,11 @@
 
       if (data.konterPending) {
         html += loadingBlock(t('daily.konterLoading'));
-      } else if (data.konterError) {
-        html += '<p class="daily-fallback">' + t('daily.konterError') + '</p>';
-      } else if (data.konter) {
+      } else if (!data.konter) {
+        // Answer exists but no counter-voice: always offer another attempt
+        // instead of stranding the person in a dead end.
+        html += retryBlock('daily-konter-retry');
+      } else {
         html += konterBlock(data.konter, t('daily.kiKontert'));
 
         if (!data.antwort2) {
@@ -402,7 +422,9 @@
 
           if (data.konter2Pending) {
             html += loadingBlock(t('daily.konterLoading'));
-          } else if (data.konter2) {
+          } else if (!data.konter2) {
+            html += retryBlock('daily-konter-retry-2');
+          } else {
             html += konterBlock(data.konter2, t('daily.kiKontert2'));
             html += '<p class="daily-done">' + t('daily.done') + '</p>';
           }
@@ -427,6 +449,20 @@
 
     wireAnswerInput(data, 'daily-submit', 'daily-input', 1);
     wireAnswerInput(data, 'daily-submit-2', 'daily-input-2', 2);
+    wireRetry(data, 'daily-konter-retry', 1);
+    wireRetry(data, 'daily-konter-retry-2', 2);
+  }
+
+  function wireRetry(data, btnId, runde) {
+    var btn = document.getElementById(btnId);
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var answer = runde === 2 ? data.antwort2 : data.antwort;
+      if (!answer) return;
+      if (runde === 2) { data.konter2Pending = true; } else { data.konterPending = true; }
+      renderChallenge(data, false);
+      requestKonter(data, answer, runde);
+    });
   }
 
   function wireAnswerInput(data, btnId, inputId, runde) {
@@ -453,7 +489,6 @@
     } else {
       data.antwort = answer;
       data.konterPending = true;
-      data.konterError = false;
     }
     persist(data);
 
@@ -497,7 +532,6 @@
           data.konter2Pending = false;
         } else {
           data.konterPending = false;
-          data.konterError = true;
         }
         persist(data);
         renderChallenge(data, false);
