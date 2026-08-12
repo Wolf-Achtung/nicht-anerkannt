@@ -100,6 +100,7 @@ const ERR = {
     noProblem: 'Kein Problem angegeben.',
     noLangText: 'Text und Sprache erforderlich.',
     dilemmaRequired: 'Dilemma und Urteil erforderlich.',
+    frageAntwortRequired: 'Frage und Antwort erforderlich.',
     unknownAction: 'Unbekannte Aktion. Verwende "new" oder "judge".',
     invalidStep: 'Ungültiger Schritt (1-5).',
     textTooLong5k: 'Text zu lang (max. 5000 Zeichen).',
@@ -118,6 +119,7 @@ const ERR = {
     noProblem: 'No problem specified.',
     noLangText: 'Text and language required.',
     dilemmaRequired: 'Dilemma and judgment required.',
+    frageAntwortRequired: 'Question and answer required.',
     unknownAction: 'Unknown action. Use "new" or "judge".',
     invalidStep: 'Invalid step (1-5).',
     textTooLong5k: 'Text too long (max. 5000 characters).',
@@ -700,6 +702,56 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
 
 app.post('/api/daily', aiLimiter, handleDaily);
 app.get('/api/daily', aiLimiter, handleDaily);
+
+// ── 8b. GEGENREDE ZUR DENKPROBE ──────────────────────────────
+// "Erst du, dann die KI": läuft ausschliesslich NACHDEM die Person
+// selbst geantwortet hat. Bewertet nicht, sondern widerspricht.
+app.use('/api/denkprobe-konter', express.json({ limit: '50kb' }));
+
+app.post('/api/denkprobe-konter', aiLimiter, async (req, res) => {
+  const { frage, antwort, runde } = req.body;
+  const lang = getLang(req);
+  if (!frage || typeof frage !== 'string' || !antwort || typeof antwort !== 'string') {
+    return res.status(400).json({ error: err(lang, 'frageAntwortRequired') });
+  }
+  if (antwort.length > 1000 || frage.length > 1000) {
+    return res.status(400).json({ error: err(lang, 'textTooLong5k') });
+  }
+
+  const zweiteRunde = runde === 2 || runde === '2';
+
+  const systemPrompt = `Du bist die Gegenrede zur Täglichen Denkprobe des Denkateliers „Nichts geschenkt“.
+Eine Person hat gerade in einem Satz auf die Frage des Tages geantwortet. Du kommst danach — nie davor.
+
+Du bewertest NICHT, ob die Antwort richtig ist. Es gibt kein Richtig.
+Du lieferst auch KEINE bessere Antwort. Du machst die Antwort der Person nicht überflüssig, sondern unruhig.
+
+${zweiteRunde
+    ? `Das ist die ZWEITE Runde: Die Person hat ihre Antwort nach deinem ersten Widerspruch geschärft. Erkenne präzise an, was sich bewegt hat, und setze genau dort an, wo es immer noch zu bequem bleibt. Sei kürzer als beim ersten Mal.`
+    : `Das ist die ERSTE Runde.`}
+
+Antworte in drei Teilen:
+1. WIDERSPRUCH: Der stärkste ernstzunehmende Einwand gegen diese Antwort. Kein Strohmann, kein Rhetorik-Trick — der Einwand, den die Person selbst am schwersten wegwischen kann. 2-3 Sätze, direkte Anrede („du“).
+2. BLINDE STELLE: Was die Antwort nicht sieht — eine Perspektive, eine Folge, eine Person, die darin nicht vorkommt. 1-2 Sätze.
+3. GEGENFRAGE: Eine einzige Frage, die weitertreibt statt abzuschliessen. Ein Satz.
+
+Sei direkt, respektvoll und fordernd. Keine Floskeln, kein Lob als Einleitung, keine Zusammenfassung der Antwort.
+${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die Werte in der Zielsprache:
+{
+  "widerspruch": "...",
+  "blinde_stelle": "...",
+  "gegenfrage": "..."
+}`;
+
+  const messages = [{
+    role: 'user',
+    content: `Frage des Tages: ${frage}\n\nAntwort der Person: "${antwort}"`
+  }];
+  const result = await callClaude(systemPrompt, messages, 600, lang);
+  if (result.error) return res.status(result.status).json({ error: result.error });
+
+  res.json(parseClaudeJSON(result.text, 'object'));
+});
 
 // ═══════════════════════════════════════════════════════════
 // 9. PERSPEKTIVENWECHSEL-MASCHINE
