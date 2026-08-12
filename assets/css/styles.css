@@ -3049,3 +3049,101 @@ body.read-mode::before {
   background: #fff;
   margin-bottom: 0.6rem;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   DENKPROBE — GEGENREDE ("Erst du, dann die KI")
+   Erscheint erst, nachdem selbst geantwortet wurde.
+   ═══════════════════════════════════════════════════════════ */
+.daily-then-ai {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin: 0.6rem 0 0;
+}
+
+.daily-konter {
+  margin-top: 1.25rem;
+  padding: 1.1rem 1.2rem;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.daily-konter--loading {
+  box-shadow: none;
+  border-style: dashed;
+  border-color: var(--line);
+}
+
+.daily-konter-label {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin: 0 0 0.85rem;
+}
+
+.daily-konter-part {
+  margin-bottom: 0.9rem;
+}
+
+.daily-konter-part:last-child {
+  margin-bottom: 0;
+}
+
+.daily-konter-part-label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+
+.daily-konter-part p {
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.daily-konter-part--frage {
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+}
+
+.daily-answer-area--round2 {
+  margin-top: 1.1rem;
+}
+
+.daily-round2-label {
+  display: block;
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.daily-saved--round2 {
+  margin-top: 1.1rem;
+}
+
+.daily-done {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin: 1.1rem 0 0;
+}

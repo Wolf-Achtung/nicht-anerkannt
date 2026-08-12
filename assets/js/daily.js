@@ -279,6 +279,9 @@
     try { cached = JSON.parse(localStorage.getItem(getStorageKey())); } catch (e) {}
 
     if (cached && cached.titel && cached.frage) {
+      // A request interrupted by a reload must not leave a spinner behind.
+      if (cached.konterPending) { cached.konterPending = false; cached.konterError = true; }
+      if (cached.konter2Pending) { cached.konter2Pending = false; }
       renderChallenge(cached, cached.source && cached.source.indexOf('fallback') !== -1);
       return;
     }
@@ -319,13 +322,39 @@
       });
   }
 
-  function renderChallenge(data, isFallback) {
-    var savedAnswer = '';
-    try {
-      var stored = JSON.parse(localStorage.getItem(getStorageKey()));
-      if (stored && stored.antwort) savedAnswer = stored.antwort;
-    } catch (e) { /* localStorage unavailable */ }
+  function persist(data) {
+    try { localStorage.setItem(getStorageKey(), JSON.stringify(data)); } catch (e) { /* localStorage unavailable */ }
+  }
 
+  function konterBlock(konter, label) {
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+    var html = '<div class="daily-konter">';
+    html += '<p class="daily-konter-label">' + escapeHtml(label) + '</p>';
+    if (konter.widerspruch) {
+      html += '<div class="daily-konter-part"><span class="daily-konter-part-label">' + t('daily.widerspruch') + '</span>' +
+        '<p>' + escapeHtml(konter.widerspruch) + '</p></div>';
+    }
+    if (konter.blinde_stelle) {
+      html += '<div class="daily-konter-part"><span class="daily-konter-part-label">' + t('daily.blindeStelle') + '</span>' +
+        '<p>' + escapeHtml(konter.blinde_stelle) + '</p></div>';
+    }
+    if (konter.gegenfrage) {
+      html += '<div class="daily-konter-part daily-konter-part--frage"><span class="daily-konter-part-label">' + t('daily.gegenfrage') + '</span>' +
+        '<p><strong>' + escapeHtml(konter.gegenfrage) + '</strong></p></div>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function loadingBlock(text) {
+    return '<div class="daily-konter daily-konter--loading"><div class="werkstatt-loading">' +
+      '<span class="werkstatt-loading-dot"></span>' +
+      '<span class="werkstatt-loading-dot"></span>' +
+      '<span class="werkstatt-loading-dot"></span>' +
+      '<span class="werkstatt-loading-text">' + escapeHtml(text) + '</span></div></div>';
+  }
+
+  function renderChallenge(data, isFallback) {
     var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
     var lang = (window.AtelierI18n && window.AtelierI18n.lang) || 'de';
     var html = '<div class="daily-card">';
@@ -340,14 +369,45 @@
     html += '<p class="daily-impuls">' + escapeHtml(data.impuls) + '</p>';
     html += '<p class="daily-frage"><strong>' + escapeHtml(data.frage) + '</strong></p>';
 
-    if (savedAnswer) {
-      html += '<div class="daily-saved"><span class="daily-saved-label">' + t('daily.answerLabel') + '</span> ' + escapeHtml(savedAnswer) + '</div>';
-    } else {
+    if (!data.antwort) {
+      // Runde 1: erst du.
       html += '<div class="daily-answer-area">';
       html += '<label class="sr-only" for="daily-input">' + t('daily.answerPlaceholder') + '</label>';
       html += '<input type="text" id="daily-input" class="daily-input" placeholder="' + t('daily.answerPlaceholder') + '" maxlength="200">';
       html += '<button class="button button--accent daily-submit" id="daily-submit" type="button">' + t('daily.answerBtn') + '</button>';
       html += '</div>';
+      html += '<p class="daily-then-ai">' + t('daily.thenAI') + '</p>';
+    } else {
+      html += '<div class="daily-saved"><span class="daily-saved-label">' +
+        (data.antwort2 ? t('daily.answer1Label') : t('daily.answerLabel')) + '</span> ' +
+        escapeHtml(data.antwort) + '</div>';
+
+      if (data.konterPending) {
+        html += loadingBlock(t('daily.konterLoading'));
+      } else if (data.konterError) {
+        html += '<p class="daily-fallback">' + t('daily.konterError') + '</p>';
+      } else if (data.konter) {
+        html += konterBlock(data.konter, t('daily.kiKontert'));
+
+        if (!data.antwort2) {
+          // Runde 2: schärfen.
+          html += '<div class="daily-answer-area daily-answer-area--round2">';
+          html += '<label class="daily-round2-label" for="daily-input-2">' + t('daily.round2Label') + '</label>';
+          html += '<input type="text" id="daily-input-2" class="daily-input" placeholder="' + t('daily.round2Placeholder') + '" maxlength="200">';
+          html += '<button class="button button--accent daily-submit" id="daily-submit-2" type="button">' + t('daily.round2Btn') + '</button>';
+          html += '</div>';
+        } else {
+          html += '<div class="daily-saved daily-saved--round2"><span class="daily-saved-label">' + t('daily.answer2Label') + '</span> ' +
+            escapeHtml(data.antwort2) + '</div>';
+
+          if (data.konter2Pending) {
+            html += loadingBlock(t('daily.konterLoading'));
+          } else if (data.konter2) {
+            html += konterBlock(data.konter2, t('daily.kiKontert2'));
+            html += '<p class="daily-done">' + t('daily.done') + '</p>';
+          }
+        }
+      }
     }
 
     if (window.AtelierSharecard) {
@@ -365,28 +425,37 @@
       });
     }
 
-    if (!savedAnswer) {
-      var submitBtn = document.getElementById('daily-submit');
-      var inputEl = document.getElementById('daily-input');
-      if (submitBtn && inputEl) {
-        submitBtn.addEventListener('click', function () {
-          var answer = inputEl.value.trim();
-          if (!answer) { inputEl.focus(); return; }
-          saveAnswer(data, answer);
-        });
-        inputEl.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter') {
-            var answer = inputEl.value.trim();
-            if (answer) saveAnswer(data, answer);
-          }
-        });
-      }
-    }
+    wireAnswerInput(data, 'daily-submit', 'daily-input', 1);
+    wireAnswerInput(data, 'daily-submit-2', 'daily-input-2', 2);
   }
 
-  function saveAnswer(data, answer) {
-    data.antwort = answer;
-    try { localStorage.setItem(getStorageKey(), JSON.stringify(data)); } catch (e) {}
+  function wireAnswerInput(data, btnId, inputId, runde) {
+    var submitBtn = document.getElementById(btnId);
+    var inputEl = document.getElementById(inputId);
+    if (!submitBtn || !inputEl) return;
+
+    function submit() {
+      var answer = inputEl.value.trim();
+      if (!answer) { inputEl.focus(); return; }
+      saveAnswer(data, answer, runde);
+    }
+
+    submitBtn.addEventListener('click', submit);
+    inputEl.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') submit();
+    });
+  }
+
+  function saveAnswer(data, answer, runde) {
+    if (runde === 2) {
+      data.antwort2 = answer;
+      data.konter2Pending = true;
+    } else {
+      data.antwort = answer;
+      data.konterPending = true;
+      data.konterError = false;
+    }
+    persist(data);
 
     // Update Atelier-Score if available
     if (window.AtelierScore && window.AtelierScore.track) {
@@ -394,6 +463,46 @@
     }
 
     renderChallenge(data, false);
+    requestKonter(data, answer, runde);
+  }
+
+  // "Erst du, dann die KI": wird ausschliesslich nach einer eigenen Antwort aufgerufen.
+  function requestKonter(data, answer, runde) {
+    var lang = currentLang();
+    fetch(API_BASE + '/api/denkprobe-konter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ frage: data.frage, antwort: answer, runde: runde, lang: lang })
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function (konter) {
+        if (!konter || konter.error || (!konter.widerspruch && !konter.gegenfrage)) {
+          throw new Error(konter && konter.error ? konter.error : 'Empty konter response');
+        }
+        if (runde === 2) {
+          data.konter2 = konter;
+          data.konter2Pending = false;
+        } else {
+          data.konter = konter;
+          data.konterPending = false;
+        }
+        persist(data);
+        renderChallenge(data, false);
+      })
+      .catch(function (e) {
+        if (runde === 2) {
+          data.konter2Pending = false;
+        } else {
+          data.konterPending = false;
+          data.konterError = true;
+        }
+        persist(data);
+        renderChallenge(data, false);
+        reportDailyError(e && e.message ? e.message : 'Unknown /api/denkprobe-konter failure', 'warn');
+      });
   }
 
   window.addEventListener('DOMContentLoaded', function () {
