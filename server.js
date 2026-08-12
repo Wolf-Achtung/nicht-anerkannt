@@ -838,6 +838,44 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
   res.json(parseClaudeJSON(result.text, 'object'));
 });
 
+// ═══════════════════════════════════════════════════════════
+// 13. ERSTHEITS-LABOR
+// ═══════════════════════════════════════════════════════════
+app.use('/api/erstheit-labor', express.json({ limit: '50kb' }));
+
+app.post('/api/erstheit-labor', aiLimiter, async (req, res) => {
+  const { these, modus } = req.body;
+  const lang = getLang(req);
+  if (!these || typeof these !== 'string') return res.status(400).json({ error: err(lang, 'noThese') });
+  if (these.length > 1000) return res.status(400).json({ error: err(lang, 'textTooLong5k') });
+
+  const MODI = {
+    paradox: 'Formuliere eine PARADOXE Aufgabenstellung: eine Aufgabe, die sich selbst zu widersprechen scheint und nur durch einen Perspektivwechsel lösbar wird.',
+    wicked: 'Verwandle das Thema in ein WICKED PROBLEM: eine Aufgabenstellung ohne eindeutige Problemdefinition, bei der jede Lösung neue Probleme erzeugt.',
+    biosemiotisch: 'Nimm eine BIOSEMIOTISCHE Perspektive ein: Wie würde ein nicht-menschliches Zeichensystem (Zelle, Wald, Oktopus) dieses Thema "lesen"? Baue daraus eine Aufgabe.',
+    negentropisch: 'Gib dem Thema eine NEGENTROPISCHE Wendung: Wo entsteht gegen den Strom des Wahrscheinlichen neue Ordnung, neue Form, neuer Sinn? Baue daraus eine Aufgabe.'
+  };
+  const modusInstruction = MODI[modus] || MODI.paradox;
+
+  const systemPrompt = `Du bist das Erstheits-Labor des Denkateliers „Nichts geschenkt“.
+Du erhältst eine These oder ein Thema und erzeugst daraus eine Denkaufgabe, die Erstheit provoziert: Staunen, Irritation, prä-propositionales Wahrnehmen — den Moment VOR dem fertigen Urteil.
+${modusInstruction}
+Kein Richtig, kein Falsch. Die Aufgabe darf nicht durch Recherche oder KI-Abfrage lösbar sein — nur durch eigenes Wahrnehmen und Denken.
+
+${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die Werte in der Zielsprache:
+{
+  "aufgabe": "Die Aufgabenstellung (2-4 Sätze, direkt an die Person gerichtet)",
+  "irritation": "Was an dieser Aufgabe irritieren soll und warum genau das produktiv ist (1-2 Sätze)",
+  "frage": "Eine einzelne Frage zum Mitnehmen, die offen bleibt (1 Satz)"
+}`;
+
+  const messages = [{ role: 'user', content: `These/Thema: "${these}"` }];
+  const result = await callClaude(systemPrompt, messages, 600, lang);
+  if (result.error) return res.status(result.status).json({ error: result.error });
+
+  res.json(parseClaudeJSON(result.text, 'object'));
+});
+
 // --- SPA fallback ---
 // For any unmatched GET, redirect to the language home so bookmarks to
 // moved/renamed routes land somewhere meaningful instead of on the raw
