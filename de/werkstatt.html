@@ -50,6 +50,31 @@
       </div>
     </section>
 
+    <!-- ═══ WERKZEUGFINDER ═══ -->
+    <section class="section" id="werkzeugfinder">
+      <div class="section-label">Überblick</div>
+      <div class="section-body">
+        <h2>Wähl dein Werkzeug</h2>
+        <p class="section-lead">Ein Satz pro Werkzeug — tippe eine Karte an, du landest direkt dort.</p>
+        <nav class="tool-index" aria-label="Werkzeuge dieser Seite">
+          <a href="#experiment"><span class="tool-index-emoji" aria-hidden="true">🧪</span><span class="tool-index-name">Das Experiment</span><span class="tool-index-benefit">Antworte erst allein — dann widerspricht die KI.</span></a>
+          <a href="#denkpraxis"><span class="tool-index-emoji" aria-hidden="true">🌱</span><span class="tool-index-name">Deine Denkpraxis</span><span class="tool-index-benefit">Zwei Fragen, ein persönlicher Übungsplan.</span></a>
+          <a href="#widerspruchssalon"><span class="tool-index-emoji" aria-hidden="true">🥊</span><span class="tool-index-name">Widerspruchssalon</span><span class="tool-index-benefit">Deine These bekommt Gegenwind.</span></a>
+          <a href="#denkprobe"><span class="tool-index-emoji" aria-hidden="true">🎲</span><span class="tool-index-name">Denkproben-Generator</span><span class="tool-index-benefit">Macht aus jedem Thema eine Denkaufgabe.</span></a>
+          <a href="#urteilstraining"><span class="tool-index-emoji" aria-hidden="true">⚖️</span><span class="tool-index-name">Urteilstraining</span><span class="tool-index-benefit">Ein Dilemma, dein Urteil, ehrliches Feedback.</span></a>
+          <a href="#wicked"><span class="tool-index-emoji" aria-hidden="true">🧩</span><span class="tool-index-name">Wicked-Problem-Werkstatt</span><span class="tool-index-benefit">Ein unlösbares Problem, fünf Denkschritte.</span></a>
+          <a href="#stresstest"><span class="tool-index-emoji" aria-hidden="true">🔬</span><span class="tool-index-name">Text-Stresstest</span><span class="tool-index-benefit">Prüft dein Referat oder deinen Aufsatz auf Denkqualität — nicht auf Rechtschreibung.</span></a>
+          <a href="#uebersetzer"><span class="tool-index-emoji" aria-hidden="true">🌍</span><span class="tool-index-name">Manifest-Übersetzer</span><span class="tool-index-benefit">Wie klingt ein Gedanke in einer anderen Kultur?</span></a>
+          <a href="#perspektivenwechsel"><span class="tool-index-emoji" aria-hidden="true">👓</span><span class="tool-index-name">Perspektivenwechsel</span><span class="tool-index-benefit">Deine Meinung aus fremden Augen.</span></a>
+          <a href="#gegenrede"><span class="tool-index-emoji" aria-hidden="true">📰</span><span class="tool-index-name">KI-Gegenrede</span><span class="tool-index-benefit">Was ein Nachrichtenartikel verschweigt.</span></a>
+          <a href="#argumentkarte"><span class="tool-index-emoji" aria-hidden="true">🗺️</span><span class="tool-index-name">Argumentkarte</span><span class="tool-index-benefit">Pro, Contra und Einwände auf einen Blick.</span></a>
+          <a href="#erstheit-labor"><span class="tool-index-emoji" aria-hidden="true">💥</span><span class="tool-index-name">Erstheits-Labor</span><span class="tool-index-benefit">Eine Aufgabe, die dich absichtlich irritiert.</span></a>
+          <a href="#stille-modus"><span class="tool-index-emoji" aria-hidden="true">🤫</span><span class="tool-index-name">Stille-Modus</span><span class="tool-index-benefit">Die KI antwortet nicht. Sie fragt nur.</span></a>
+          <a href="/de/ki-und-lernen#selbsttest" class="tool-index-cross"><span class="tool-index-emoji" aria-hidden="true">🪞</span><span class="tool-index-name">Selbsttest</span><span class="tool-index-benefit">Lagerst du dein Denken aus? Sieben Fragen.</span></a>
+        </nav>
+      </div>
+    </section>
+
     <!-- ═══ DAS EXPERIMENT: MIT KI / OHNE KI ═══ -->
     <section class="section" id="experiment">
       <div class="section-label">Experiment</div>
@@ -67,14 +92,14 @@
         <h2>Deine Denkpraxis</h2>
         <p>Ein Werkzeug einmal benutzen ist ein Anfang. Eine Praxis ist mehr: klein, regelmäßig, deine. Zwei Fragen — daraus entwirft die KI einen persönlichen Übungsplan mit den Werkzeugen des Ateliers. Kein Produktivitätssystem: Es geht nicht um mehr Output, sondern um besseres Urteil.</p>
         <div class="werkstatt-tool">
-          <label class="stempel-label" for="dp-ziel">Frage 1 von 2: Wo willst du selbstständiger denken und urteilen?</label>
-          <textarea class="werkstatt-input" id="dp-ziel" rows="3" maxlength="500" placeholder="z.B. &quot;Bei Nachrichten nicht mehr nur Überschriften glauben&quot; oder &quot;Im Job entscheiden, ohne mich hinter der KI zu verstecken&quot;"></textarea>
-          <div id="dp-step2" hidden>
-            <label class="stempel-label" for="dp-hindernis">Frage 2 von 2: Was steht dir dabei am meisten im Weg?</label>
-            <textarea class="werkstatt-input" id="dp-hindernis" rows="3" maxlength="500" placeholder="z.B. &quot;Bequemlichkeit — die KI ist schneller als ich&quot;, &quot;keine Zeit&quot;, &quot;ich traue meinem Urteil nicht&quot;"></textarea>
+          <label class="stempel-label" for="dpx-ziel">Frage 1 von 2: Wo willst du selbstständiger denken und urteilen?</label>
+          <textarea class="werkstatt-input" id="dpx-ziel" rows="3" maxlength="500" placeholder="z.B. &quot;Bei Nachrichten nicht mehr nur Überschriften glauben&quot; oder &quot;Im Job entscheiden, ohne mich hinter der KI zu verstecken&quot;"></textarea>
+          <div id="dpx-step2" hidden>
+            <label class="stempel-label" for="dpx-hindernis">Frage 2 von 2: Was steht dir dabei am meisten im Weg?</label>
+            <textarea class="werkstatt-input" id="dpx-hindernis" rows="3" maxlength="500" placeholder="z.B. &quot;Bequemlichkeit — die KI ist schneller als ich&quot;, &quot;keine Zeit&quot;, &quot;ich traue meinem Urteil nicht&quot;"></textarea>
           </div>
-          <button class="button button--accent" id="dp-btn" type="button">Weiter</button>
-          <div class="werkstatt-output" id="dp-output" aria-live="polite"></div>
+          <button class="button button--accent" id="dpx-btn" type="button">Weiter</button>
+          <div class="werkstatt-output" id="dpx-output" aria-live="polite"></div>
         </div>
       </div>
     </section>

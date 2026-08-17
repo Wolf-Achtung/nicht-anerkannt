@@ -728,11 +728,11 @@
   // DENKPRAXIS — persönlicher Übungsplan (zwei Fragen, ein Plan)
   // ═══════════════════════════════════════════════════════════
   function initDenkpraxis() {
-    var btn = document.getElementById('dp-btn');
-    var zielEl = document.getElementById('dp-ziel');
-    var hindernisEl = document.getElementById('dp-hindernis');
-    var step2 = document.getElementById('dp-step2');
-    var output = document.getElementById('dp-output');
+    var btn = document.getElementById('dpx-btn');
+    var zielEl = document.getElementById('dpx-ziel');
+    var hindernisEl = document.getElementById('dpx-hindernis');
+    var step2 = document.getElementById('dpx-step2');
+    var output = document.getElementById('dpx-output');
     if (!btn || !zielEl || !hindernisEl || !step2 || !output) return;
 
     // One question at a time: the second question appears only after the
@@ -793,11 +793,11 @@
           if (data.raw) {
             html += '<p>' + escapeHtml(data.raw) + '</p>';
           }
-          html += '<div class="tool-actions"><button class="button" id="dp-copy" type="button">' + _t('ws.dpKopieren') + '</button></div>';
+          html += '<div class="tool-actions"><button class="button" id="dpx-copy" type="button">' + _t('ws.dpKopieren') + '</button></div>';
 
           output.innerHTML = html;
 
-          var copyBtn = document.getElementById('dp-copy');
+          var copyBtn = document.getElementById('dpx-copy');
           if (copyBtn) {
             copyBtn.addEventListener('click', function () {
               var lines = [];
