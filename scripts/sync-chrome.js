@@ -37,6 +37,7 @@ const NAV_PAGES = [
 
 const FOOTER_LINKS = [
   { slug: 'lehrkraefte', key: 'nav.lehrkraefte' },
+  { slug: 'schueler', key: 'nav.schueler' },
   { slug: 'kontakt', key: 'nav.kontakt' },
   { slug: 'impressum', key: 'nav.impressum' },
   { slug: 'datenschutz', key: 'nav.datenschutz' },
@@ -53,6 +54,7 @@ const LABELS = {
     medien: 'Lesen &amp; Hören',
     roadmap: 'Was kommt',
     lehrkraefte: 'Für Lehrkräfte',
+    schueler: 'Für Schüler:innen',
     kontakt: 'Kontakt',
     impressum: 'Impressum',
     datenschutz: 'Datenschutz',
@@ -69,6 +71,7 @@ const LABELS = {
     medien: 'Read &amp; Listen',
     roadmap: "What's Next",
     lehrkraefte: 'For Teachers',
+    schueler: 'For Students',
     kontakt: 'Contact',
     impressum: 'Legal Notice',
     datenschutz: 'Privacy Policy',
