@@ -725,6 +725,107 @@
   }
 
   // ═══════════════════════════════════════════════════════════
+  // DENKPRAXIS — persönlicher Übungsplan (zwei Fragen, ein Plan)
+  // ═══════════════════════════════════════════════════════════
+  function initDenkpraxis() {
+    var btn = document.getElementById('dp-btn');
+    var zielEl = document.getElementById('dp-ziel');
+    var hindernisEl = document.getElementById('dp-hindernis');
+    var step2 = document.getElementById('dp-step2');
+    var output = document.getElementById('dp-output');
+    if (!btn || !zielEl || !hindernisEl || !step2 || !output) return;
+
+    // One question at a time: the second question appears only after the
+    // first has an answer.
+    var stage = 1;
+
+    btn.addEventListener('click', function () {
+      if (stage === 1) {
+        if (!zielEl.value.trim()) { zielEl.focus(); return; }
+        step2.hidden = false;
+        btn.textContent = _t('ws.dpEntwerfen');
+        stage = 2;
+        hindernisEl.focus();
+        return;
+      }
+
+      var ziel = zielEl.value.trim();
+      var hindernis = hindernisEl.value.trim();
+      if (!ziel) { zielEl.focus(); return; }
+      if (!hindernis) { hindernisEl.focus(); return; }
+
+      btn.disabled = true;
+      showLoading(output);
+
+      postJSON('/api/denkpraxis', { ziel: ziel, hindernis: hindernis })
+        .then(function (data) {
+          if (data.error) { showError(output, data.error); return; }
+
+          var html = '<h3 class="werkstatt-result-title">' + _t('ws.dpTitle') + '</h3>';
+          if (data.spiegel) {
+            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' + _t('ws.dpSpiegel') + '</div>' +
+              '<p>' + escapeHtml(data.spiegel) + '</p></div>';
+          }
+          if (data.leitsatz) {
+            html += '<div class="werkstatt-card werkstatt-card--accent"><div class="werkstatt-card-label">' + _t('ws.dpLeitsatz') + '</div>' +
+              '<p><strong>' + escapeHtml(data.leitsatz) + '</strong></p></div>';
+          }
+          if (data.heute) {
+            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' + _t('ws.dpHeute') + '</div>' +
+              '<p>' + escapeHtml(data.heute) + '</p></div>';
+          }
+          if (data.taeglich) {
+            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' + _t('ws.dpTaeglich') + '</div>' +
+              '<p>' + escapeHtml(data.taeglich) + '</p></div>';
+          }
+          if (data.woechentlich) {
+            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' + _t('ws.dpWoechentlich') + '</div>' +
+              '<p>' + escapeHtml(data.woechentlich) + '</p></div>';
+          }
+          if (data.fallstrick) {
+            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' + _t('ws.dpFallstrick') + '</div>' +
+              '<p>' + escapeHtml(data.fallstrick) + '</p></div>';
+          }
+          if (data.pruefung) {
+            html += '<div class="werkstatt-card"><div class="werkstatt-card-label">' + _t('ws.dpPruefung') + '</div>' +
+              '<p>' + escapeHtml(data.pruefung) + '</p></div>';
+          }
+          if (data.raw) {
+            html += '<p>' + escapeHtml(data.raw) + '</p>';
+          }
+          html += '<div class="tool-actions"><button class="button" id="dp-copy" type="button">' + _t('ws.dpKopieren') + '</button></div>';
+
+          output.innerHTML = html;
+
+          var copyBtn = document.getElementById('dp-copy');
+          if (copyBtn) {
+            copyBtn.addEventListener('click', function () {
+              var lines = [];
+              [['dpLeitsatz', 'leitsatz'], ['dpHeute', 'heute'], ['dpTaeglich', 'taeglich'],
+               ['dpWoechentlich', 'woechentlich'], ['dpFallstrick', 'fallstrick'], ['dpPruefung', 'pruefung']]
+                .forEach(function (pair) {
+                  if (data[pair[1]]) lines.push(_t('ws.' + pair[0]) + ': ' + data[pair[1]]);
+                });
+              lines.push('— nichts-geschenkt.de');
+              if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(lines.join('\n\n')).then(function () {
+                  copyBtn.textContent = _t('stempel.copied');
+                  setTimeout(function () { copyBtn.textContent = _t('ws.dpKopieren'); }, 1800);
+                });
+              }
+            });
+          }
+
+          if (window.AtelierScore && window.AtelierScore.track) {
+            window.AtelierScore.track('urteil');
+          }
+        })
+        .catch(function () { showError(output, _t('ws.connectionError')); })
+        .finally(function () { btn.disabled = false; });
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════
   // 10. ERSTHEITS-LABOR
   // ═══════════════════════════════════════════════════════════
   function initErstheitLabor() {
@@ -782,6 +883,7 @@
   // INIT
   // ═══════════════════════════════════════════════════════════
   window.addEventListener('DOMContentLoaded', function () {
+    initDenkpraxis();
     initWiderspruch();
     initDenkprobe();
     initUrteil();
