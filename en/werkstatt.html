@@ -46,7 +46,7 @@
       <div class="hero-copy" style="grid-column: 1 / -1;">
         <p class="eyebrow">AI as Sparring Partner / Thinking Tools / Judgment Training</p>
         <h1 id="page-title">AI Workshop</h1>
-        <p class="lede">Ten AI-powered tools that challenge your thinking – not replace it. AI here is a sparring partner, counter-voice, and stress test. <span class="nichts-badge">No easy answers — you first</span></p>
+        <p class="lede">Thirteen tools that challenge your thinking – not replace it. AI here is a sparring partner, counter-voice, and stress test. <span class="nichts-badge">No easy answers — you first</span></p>
       </div>
     </section>
 
@@ -57,6 +57,25 @@
         <h2>The Experiment: with AI / without AI</h2>
         <p>What does an AI change about your thinking? Here you see it in yourself: you answer a question alone first, then the AI pushes back, then you decide what to change. At the end your own path of thought lies in front of you — along with the question of which thought was really yours.</p>
         <div id="experiment-container" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL: THINKING PRACTICE ═══ -->
+    <section class="section" id="denkpraxis">
+      <div class="section-label">Practice</div>
+      <div class="section-body">
+        <h2>Your Thinking Practice</h2>
+        <p>Using a tool once is a start. A practice is more: small, regular, yours. Two questions — from them the AI designs a personal exercise plan built on the Atelier's tools. Not a productivity system: it is not about more output, but about better judgment.</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="dp-ziel">Question 1 of 2: Where do you want to think and judge more independently?</label>
+          <textarea class="werkstatt-input" id="dp-ziel" rows="3" maxlength="500" placeholder="e.g. &quot;Stop believing headlines without reading&quot; or &quot;Decide at work without hiding behind the AI&quot;"></textarea>
+          <div id="dp-step2" hidden>
+            <label class="stempel-label" for="dp-hindernis">Question 2 of 2: What stands in your way the most?</label>
+            <textarea class="werkstatt-input" id="dp-hindernis" rows="3" maxlength="500" placeholder="e.g. &quot;Convenience — the AI is faster than me&quot;, &quot;no time&quot;, &quot;I don't trust my own judgment&quot;"></textarea>
+          </div>
+          <button class="button button--accent" id="dp-btn" type="button">Next</button>
+          <div class="werkstatt-output" id="dp-output" aria-live="polite"></div>
+        </div>
       </div>
     </section>
 

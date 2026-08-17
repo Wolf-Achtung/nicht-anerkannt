@@ -46,7 +46,7 @@
       <div class="hero-copy hero-copy--full">
         <p class="eyebrow">KI als Sparringspartner / Denkwerkzeuge / Urteilstraining</p>
         <h1 id="page-title">KI-Werkstatt</h1>
-        <p class="lede">Elf KI-gestützte Werkzeuge, die dein Denken herausfordern – nicht ersetzen. KI ist hier Sparringspartner, Gegenstimme und Stresstest. <span class="nichts-badge">Nichts geschenkt — erst du</span></p>
+        <p class="lede">Dreizehn Werkzeuge, die dein Denken herausfordern – nicht ersetzen. KI ist hier Sparringspartner, Gegenstimme und Stresstest. <span class="nichts-badge">Nichts geschenkt — erst du</span></p>
       </div>
     </section>
 
@@ -57,6 +57,25 @@
         <h2>Das Experiment: mit KI / ohne KI</h2>
         <p>Was verändert eine KI an deinem Denken? Hier siehst du es an dir selbst: Du beantwortest eine Frage zuerst allein, dann widerspricht dir die KI, dann entscheidest du, was du änderst. Am Ende steht dein eigener Denkweg vor dir — und die Frage, welcher Gedanke am Ende wirklich deiner war.</p>
         <div id="experiment-container" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ═══ TOOL: DENKPRAXIS ═══ -->
+    <section class="section" id="denkpraxis">
+      <div class="section-label">Praxis</div>
+      <div class="section-body">
+        <h2>Deine Denkpraxis</h2>
+        <p>Ein Werkzeug einmal benutzen ist ein Anfang. Eine Praxis ist mehr: klein, regelmäßig, deine. Zwei Fragen — daraus entwirft die KI einen persönlichen Übungsplan mit den Werkzeugen des Ateliers. Kein Produktivitätssystem: Es geht nicht um mehr Output, sondern um besseres Urteil.</p>
+        <div class="werkstatt-tool">
+          <label class="stempel-label" for="dp-ziel">Frage 1 von 2: Wo willst du selbstständiger denken und urteilen?</label>
+          <textarea class="werkstatt-input" id="dp-ziel" rows="3" maxlength="500" placeholder="z.B. &quot;Bei Nachrichten nicht mehr nur Überschriften glauben&quot; oder &quot;Im Job entscheiden, ohne mich hinter der KI zu verstecken&quot;"></textarea>
+          <div id="dp-step2" hidden>
+            <label class="stempel-label" for="dp-hindernis">Frage 2 von 2: Was steht dir dabei am meisten im Weg?</label>
+            <textarea class="werkstatt-input" id="dp-hindernis" rows="3" maxlength="500" placeholder="z.B. &quot;Bequemlichkeit — die KI ist schneller als ich&quot;, &quot;keine Zeit&quot;, &quot;ich traue meinem Urteil nicht&quot;"></textarea>
+          </div>
+          <button class="button button--accent" id="dp-btn" type="button">Weiter</button>
+          <div class="werkstatt-output" id="dp-output" aria-live="polite"></div>
+        </div>
       </div>
     </section>
 

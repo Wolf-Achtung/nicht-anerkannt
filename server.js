@@ -101,6 +101,7 @@ const ERR = {
     noLangText: 'Text und Sprache erforderlich.',
     dilemmaRequired: 'Dilemma und Urteil erforderlich.',
     frageAntwortRequired: 'Frage und Antwort erforderlich.',
+    zielHindernisRequired: 'Bitte beide Fragen beantworten.',
     unknownAction: 'Unbekannte Aktion. Verwende "new" oder "judge".',
     invalidStep: 'Ungültiger Schritt (1-5).',
     textTooLong5k: 'Text zu lang (max. 5000 Zeichen).',
@@ -120,6 +121,7 @@ const ERR = {
     noLangText: 'Text and language required.',
     dilemmaRequired: 'Dilemma and judgment required.',
     frageAntwortRequired: 'Question and answer required.',
+    zielHindernisRequired: 'Please answer both questions.',
     unknownAction: 'Unknown action. Use "new" or "judge".',
     invalidStep: 'Invalid step (1-5).',
     textTooLong5k: 'Text too long (max. 5000 characters).',
@@ -923,6 +925,61 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
 
   const messages = [{ role: 'user', content: `These/Thema: "${these}"` }];
   const result = await callClaude(systemPrompt, messages, 600, lang);
+  if (result.error) return res.status(result.status).json({ error: result.error });
+
+  res.json(parseClaudeJSON(result.text, 'object'));
+});
+
+// ═══════════════════════════════════════════════════════════
+// 14. DENKPRAXIS — persönlicher Übungsplan
+// ═══════════════════════════════════════════════════════════
+app.use('/api/denkpraxis', express.json({ limit: '50kb' }));
+
+app.post('/api/denkpraxis', aiLimiter, async (req, res) => {
+  const { ziel, hindernis } = req.body;
+  const lang = getLang(req);
+  if (!ziel || typeof ziel !== 'string' || !hindernis || typeof hindernis !== 'string') {
+    return res.status(400).json({ error: err(lang, 'zielHindernisRequired') });
+  }
+  if (ziel.length > 1000 || hindernis.length > 1000) {
+    return res.status(400).json({ error: err(lang, 'textTooLong5k') });
+  }
+
+  const systemPrompt = `Du bist der Denkpraxis-Entwerfer des Denkateliers „Nichts geschenkt“.
+Eine Person hat dir gesagt, wo sie selbstständiger denken und urteilen will — und was ihr dabei im Weg steht.
+Du entwirfst daraus eine persönliche Denkpraxis: klein, konkret, durchhaltbar.
+
+WICHTIG — das ist KEIN Produktivitätssystem:
+- Kein Selbstoptimierungs-Jargon (keine "Routinen-Stacks", "Deep Work", "Performance", "Effizienz", "Ziele erreichen").
+- Es geht nicht um mehr Output, sondern um besseres Urteil: unterscheiden, widersprechen, aushalten, selbst denken.
+- Die Praxis folgt dem Prinzip des Hauses: Erst du, dann die KI. KI kommt nur als Gegenstimme vor, nie als Abkürzung.
+
+Baue die tägliche und wöchentliche Praxis, wo es passt, auf die Werkzeuge des Ateliers:
+- Denkprobe des Tages (eine Frage, eigene Antwort in einem Satz, danach widerspricht die KI) — auf der Startseite
+- Das Experiment mit KI / ohne KI (eigene Antwort, KI-Einwand, Überarbeitung) — in der Werkstatt
+- Text-Stresstest (eigenen Text auf Denkqualität prüfen lassen) — in der Werkstatt
+- Stille-Modus (KI stellt nur Fragen) — in der Werkstatt
+- Widerspruchssalon (Gegenpositionen zur eigenen These) — in der Werkstatt
+- Atelier-Score (lokales Denkprofil über fünf Dimensionen) — auf der Startseite
+Nenne höchstens zwei Werkzeuge; eine Praxis darf auch ganz ohne Bildschirm stattfinden.
+
+Sei direkt und konkret, duze die Person. Keine Floskeln, kein Coaching-Ton.
+${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die Werte in der Zielsprache:
+{
+  "spiegel": "Was du gehört hast: Urteilsziel und Haupthindernis in 2 Sätzen, neutral gespiegelt",
+  "leitsatz": "Ein persönlicher Leitsatz für diese Praxis (max. 12 Wörter, kein Kalenderspruch)",
+  "heute": "EINE konkrete Handlung für heute, unter 10 Minuten",
+  "taeglich": "Eine tägliche Mikro-Praxis, max. 5 Minuten, präzise beschrieben",
+  "woechentlich": "Ein wöchentliches Ritual, max. 20 Minuten, präzise beschrieben",
+  "fallstrick": "Der wahrscheinlichste Fallstrick dieser Person — und die Auffangregel: was tun, wenn die Praxis reißt (kein Neustart-Pathos, eine kleine Wiedereinstiegshandlung)",
+  "pruefung": "Woran die Person in vier Wochen erkennt, ob die Praxis wirkt — beobachtbar, nicht messbar im Produktivitätssinn"
+}`;
+
+  const messages = [{
+    role: 'user',
+    content: `Wo ich selbstständiger urteilen will: "${ziel}"\n\nWas mir im Weg steht: "${hindernis}"`
+  }];
+  const result = await callClaude(systemPrompt, messages, 900, lang);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
   res.json(parseClaudeJSON(result.text, 'object'));

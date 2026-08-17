@@ -244,6 +244,16 @@
     'ws.erstheitIrritation': { de: 'Irritation',              en: 'Irritation' },
     'ws.erstheitFrage':    { de: 'Offene Frage',              en: 'Open Question' },
     'ws.tradeoff':         { de: 'Trade-off:',                en: 'Trade-off:' },
+    'ws.dpTitle':          { de: 'Deine Denkpraxis',          en: 'Your Thinking Practice' },
+    'ws.dpEntwerfen':      { de: 'Denkpraxis entwerfen',      en: 'Design my practice' },
+    'ws.dpSpiegel':        { de: 'Was du gesagt hast',        en: 'What you said' },
+    'ws.dpLeitsatz':       { de: 'Dein Leitsatz',             en: 'Your guiding sentence' },
+    'ws.dpHeute':          { de: 'Heute',                     en: 'Today' },
+    'ws.dpTaeglich':       { de: 'Täglich — 5 Minuten',       en: 'Daily — 5 minutes' },
+    'ws.dpWoechentlich':   { de: 'Wöchentlich',               en: 'Weekly' },
+    'ws.dpFallstrick':     { de: 'Wenn es reißt',             en: 'When it snaps' },
+    'ws.dpPruefung':       { de: 'In vier Wochen',            en: 'In four weeks' },
+    'ws.dpKopieren':       { de: 'Plan kopieren',             en: 'Copy plan' },
 
     /* ── loading-messages.js ── */
     'loading.0':  { de: 'Silizium denkt…',                        en: 'Silicon is thinking…' },
