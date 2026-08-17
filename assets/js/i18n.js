@@ -337,6 +337,7 @@
     'nav.roadmap':         { de: 'Was kommt',              en: "What's Next" },
     'nav.kontakt':         { de: 'Kontakt',                en: 'Contact' },
     'nav.lehrkraefte':     { de: 'Für Lehrkräfte',         en: 'For Teachers' },
+    'nav.schueler':        { de: 'Für Schüler:innen',       en: 'For Students' },
     'nav.impressum':       { de: 'Impressum',              en: 'Legal Notice' },
     'nav.datenschutz':     { de: 'Datenschutz',            en: 'Privacy Policy' },
     'nav.aiGovernance':    { de: 'AI Governance',          en: 'AI Governance' },

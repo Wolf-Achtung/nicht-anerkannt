@@ -3365,3 +3365,28 @@ body.read-mode::before {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* Collapsible tool detail line under the one-sentence intros */
+.tool-more {
+  margin: -0.4rem 0 1rem;
+}
+
+.tool-more summary {
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.tool-more summary:hover {
+  color: var(--accent);
+}
+
+.tool-more p {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin: 0.4rem 0 0;
+}
