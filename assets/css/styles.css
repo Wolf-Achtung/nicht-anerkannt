@@ -3304,3 +3304,64 @@ body.read-mode::before {
 #experiment-container {
   min-height: 16rem;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   WERKZEUGFINDER — kompakter Überblick über alle Werkstatt-Tools
+   ═══════════════════════════════════════════════════════════ */
+.tool-index {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr));
+  gap: 0.65rem;
+}
+
+.tool-index a {
+  display: block;
+  padding: 0.85rem 0.95rem;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  text-decoration: none;
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.tool-index a:hover,
+.tool-index a:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--accent);
+  outline: none;
+}
+
+.tool-index-emoji {
+  display: block;
+  font-size: 1.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.tool-index-name {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.25rem;
+}
+
+.tool-index-benefit {
+  display: block;
+  font-family: var(--serif);
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.tool-index-cross {
+  border-style: dashed !important;
+}
+
+@media (max-width: 640px) {
+  .tool-index {
+    grid-template-columns: 1fr 1fr;
+  }
+}
