@@ -2571,6 +2571,22 @@ button:focus-visible {
   transition: opacity 0.3s ease;
 }
 
+/* Hinweiszeile über einer Antwort aus dem lokalen Hausvorrat —
+   dezent, aber erkennbar: eine Störung soll nicht wie ein
+   denkendes Gegenüber aussehen. */
+.chat-message-note {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  line-height: 1.35;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b6b6b;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.14);
+  padding-bottom: 0.35rem;
+  margin-bottom: 0.45rem;
+}
+
 .chat-message.is-visible {
   opacity: 1;
 }

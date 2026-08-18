@@ -60,6 +60,7 @@
   "remixer.error": "Remix-Daten konnten nicht geladen werden. Bitte Seite neu laden.",
   "stempel.copied": "Kopiert!",
   "chat.welcome": "Willkommen im Sparring. Sag mir, was dich beschäftigt — ich werde nicht nett sein, sondern ehrlich.",
+  "chat.offlineNote": "Verbindung zur KI unterbrochen — eine Frage aus dem Hausvorrat.",
   "chat.fabLabel": "KI-Sparring öffnen",
   "chat.fabText": "KI-Sparring",
   "chat.title": "KI-Sparringspartner",

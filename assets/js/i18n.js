@@ -168,6 +168,7 @@
 
     /* ── chat.js ── */
     'chat.welcome':        { de: 'Willkommen im Sparring. Sag mir, was dich beschäftigt — ich werde nicht nett sein, sondern ehrlich.', en: 'Welcome to the sparring ring. Tell me what\'s on your mind — I won\'t be nice, but I\'ll be honest.' },
+    'chat.offlineNote':    { de: 'Verbindung zur KI unterbrochen — eine Frage aus dem Hausvorrat.', en: 'Connection to the AI interrupted — a question from the house stock.' },
     'chat.fabLabel':       { de: 'KI-Sparring öffnen', en: 'Open AI Sparring' },
     'chat.fabText':        { de: 'KI-Sparring',        en: 'AI Sparring' },
     'chat.title':          { de: 'KI-Sparringspartner', en: 'AI Sparring Partner' },
