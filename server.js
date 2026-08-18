@@ -252,12 +252,29 @@ const ANTHROPIC_BASE_URL = (process.env.ANTHROPIC_BASE_URL || 'https://api.anthr
 // generously, because thinking will claim part of it, and consider
 // AI_EFFORT=low to keep that share small.
 const THINKING_MODE = process.env.AI_THINKING || 'disabled';
-const THINKING_CONFIG = THINKING_MODE === 'adaptive'
-  ? Object.assign(
-    { thinking: { type: 'adaptive' } },
-    process.env.AI_EFFORT ? { output_config: { effort: process.env.AI_EFFORT } } : {}
-  )
+const THINKING_ON = THINKING_MODE === 'adaptive';
+// Short, fully specified JSON needs no deep reasoning; low effort keeps the
+// thinking share small. Override with AI_EFFORT if the answers feel flat.
+const THINKING_EFFORT = process.env.AI_EFFORT || 'low';
+const THINKING_CONFIG = THINKING_ON
+  ? { thinking: { type: 'adaptive' }, output_config: { effort: THINKING_EFFORT } }
   : { thinking: { type: 'disabled' } };
+
+// The per-endpoint max_tokens below say how long the *answer* may be. With
+// thinking on, reasoning is charged against that same budget, so the number
+// no longer covers what it promises — that is exactly how the workshop tools
+// broke. Rather than making every call site depend on a switch that lives
+// somewhere else, give the reasoning its own headroom here.
+// The ceiling keeps non-streaming requests clear of HTTP timeouts.
+const THINKING_HEADROOM_FACTOR = Number(process.env.AI_THINKING_HEADROOM || 4);
+const THINKING_MIN_BUDGET = Number(process.env.AI_THINKING_MIN_TOKENS || 6000);
+const THINKING_MAX_BUDGET = Number(process.env.AI_THINKING_MAX_TOKENS || 16000);
+
+function budgetFor(answerTokens) {
+  if (!THINKING_ON) return answerTokens;
+  const withHeadroom = Math.max(answerTokens * THINKING_HEADROOM_FACTOR, THINKING_MIN_BUDGET);
+  return Math.min(withHeadroom, THINKING_MAX_BUDGET);
+}
 
 const DAILY_QUESTIONS_PATH = path.join(__dirname, 'data', 'daily-questions.json');
 
@@ -394,7 +411,7 @@ async function callClaude(systemPrompt, messages, maxTokens = 300, lang = DEFAUL
         },
         body: JSON.stringify(Object.assign({
           model: model,
-          max_tokens: maxTokens,
+          max_tokens: budgetFor(maxTokens),
           system: systemPrompt,
           messages: messages
         }, THINKING_CONFIG))
@@ -436,7 +453,7 @@ async function callClaude(systemPrompt, messages, maxTokens = 300, lang = DEFAUL
 
       if (data.stop_reason === 'max_tokens') {
         // Truncated output is the classic cause of unparseable JSON.
-        console.warn('Anthropic response hit max_tokens (' + maxTokens + ') — output may be truncated.');
+        console.warn('Anthropic response hit max_tokens (' + budgetFor(maxTokens) + ', thinking ' + THINKING_MODE + ') — output may be truncated.');
       }
 
       return { text };
