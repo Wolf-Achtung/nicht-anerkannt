@@ -258,13 +258,6 @@
     'loading.14': { de: 'Ich prüfe drei Mal, bevor ich rede…',     en: 'Checking three times before I speak…' },
 
     /* ── main.js ── */
-    'main.slogan0':        { de: 'Nicht mehr Stoff. Mehr Urteil.',            en: 'Not more material. More judgment.' },
-    'main.slogan1':        { de: 'Keine Lager. Echte Fragen.',                en: 'No camps. Real questions.' },
-    'main.slogan2':        { de: 'KI ist Sparringspartner, nicht Orakel.',    en: 'AI is a sparring partner, not an oracle.' },
-    'main.slogan3':        { de: 'Widerspruch ist Methode.',                  en: 'Contradiction is method.' },
-    'main.slogan4':        { de: 'Nicht angepasst. Handlungsfähig.',          en: 'Not conforming. Capable of action.' },
-    'main.readMode':       { de: 'Lesemodus',          en: 'Reading Mode' },
-    'main.composeMode':    { de: 'Kompositionsmodus',  en: 'Composition Mode' },
     'main.linkCopied':     { de: 'Link kopiert',       en: 'Link copied' },
     'main.copyFailed':     { de: 'Kopieren fehlgeschlagen', en: 'Copy failed' },
     'main.clipboardNA':    { de: 'Zwischenablage nicht verfügbar', en: 'Clipboard not available' },
