@@ -129,6 +129,20 @@ describe('Language routing', () => {
   });
 });
 
+describe('GET /api/health', () => {
+  it('reports service state without exposing the key', async () => {
+    const res = await request('GET', '/api/health');
+    assert.strictEqual(res.status, 200);
+    assert.strictEqual(res.body.ok, true);
+    // Suite runs without a key configured
+    assert.strictEqual(res.body.apiKeyConfigured, false);
+    assert.strictEqual(typeof res.body.model, 'string');
+    assert.ok(res.body.model.length > 0, 'model should be reported');
+    assert.strictEqual(typeof res.body.uptimeSeconds, 'number');
+    assert.ok(!res.raw.includes('sk-'), 'must never leak a key');
+  });
+});
+
 describe('CORS', () => {
   it('does not set Access-Control-Allow-Origin for unknown origins', async () => {
     const res = await request('POST', '/api/chat', { message: 'test' });
