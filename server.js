@@ -362,9 +362,24 @@ async function callClaude(systemPrompt, messages, maxTokens = 300, lang = DEFAUL
       }
 
       const data = await response.json();
-      const text = data.content && data.content[0] && data.content[0].text
-        ? data.content[0].text
+      // Collect every text block: a response may lead with a non-text block,
+      // and taking only content[0].text would silently yield an empty string.
+      const text = Array.isArray(data.content)
+        ? data.content.filter((b) => b && b.type === 'text' && typeof b.text === 'string')
+          .map((b) => b.text).join('\n').trim()
         : '';
+
+      if (!text) {
+        console.error('Anthropic returned no text block. stop_reason=' + data.stop_reason +
+          ' content types=' + (Array.isArray(data.content) ? data.content.map((b) => b && b.type).join(',') : typeof data.content));
+        lastFailure = { error: err(lang, 'aiUnavailable'), status: 502 };
+        continue;
+      }
+
+      if (data.stop_reason === 'max_tokens') {
+        // Truncated output is the classic cause of unparseable JSON.
+        console.warn('Anthropic response hit max_tokens (' + maxTokens + ') — output may be truncated.');
+      }
 
       return { text };
     } catch (e) {
@@ -385,14 +400,109 @@ async function callClaude(systemPrompt, messages, maxTokens = 300, lang = DEFAUL
  * @returns {*} Parsed JSON or fallback
  */
 function parseClaudeJSON(text, type, fallback) {
-  try {
-    const pattern = type === 'array' ? /\[[\s\S]*\]/ : /\{[\s\S]*\}/;
-    const match = text.match(pattern);
-    if (match) return JSON.parse(match[0]);
-  } catch (e) {
-    // Parsing failed — return fallback
-  }
+  const parsed = extractJSON(text, type);
+  if (parsed !== undefined) return parsed;
+  // Silence here is what made a broken tool look like an outage: log enough
+  // of the raw answer to diagnose it, never the whole thing.
+  console.error('parseClaudeJSON failed (' + type + '). Raw answer starts: ' +
+    JSON.stringify(String(text).slice(0, 400)));
   return fallback !== undefined ? fallback : { raw: text };
+}
+
+/**
+ * Pull the first complete JSON value out of a model answer.
+ * Returns undefined when nothing usable is in there.
+ */
+function extractJSON(text, type) {
+  if (typeof text !== 'string' || !text) return undefined;
+
+  // Models like wrapping JSON in markdown fences.
+  const unfenced = text.replace(/```(?:json)?/gi, '');
+  const open = type === 'array' ? '[' : '{';
+  const close = type === 'array' ? ']' : '}';
+  const candidate = balancedSlice(unfenced, open, close);
+  if (!candidate) return undefined;
+
+  const attempts = [
+    candidate,
+    // Trailing commas before a closing brace/bracket.
+    candidate.replace(/,\s*([}\]])/g, '$1'),
+    // Literal newlines and tabs inside string values are invalid JSON.
+    escapeControlCharsInStrings(candidate)
+  ];
+
+  for (const attempt of attempts) {
+    try {
+      return JSON.parse(attempt);
+    } catch (e) {
+      // Try the next repair.
+    }
+  }
+  return undefined;
+}
+
+/** Slice from the first `open` to its matching `close`, ignoring braces inside strings. */
+function balancedSlice(text, open, close) {
+  const start = text.indexOf(open);
+  if (start === -1) return null;
+
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+
+  for (let i = start; i < text.length; i++) {
+    const ch = text[i];
+    if (escaped) { escaped = false; continue; }
+    if (ch === '\\') { escaped = true; continue; }
+    if (ch === '"') { inString = !inString; continue; }
+    if (inString) continue;
+    if (ch === open) depth++;
+    else if (ch === close) {
+      depth--;
+      if (depth === 0) return text.slice(start, i + 1);
+    }
+  }
+  return null;
+}
+
+/** Escape raw control characters that appear inside JSON string literals. */
+function escapeControlCharsInStrings(text) {
+  let out = '';
+  let inString = false;
+  let escaped = false;
+
+  for (const ch of text) {
+    if (escaped) { out += ch; escaped = false; continue; }
+    if (ch === '\\') { out += ch; escaped = true; continue; }
+    if (ch === '"') { inString = !inString; out += ch; continue; }
+    if (inString && ch === '\n') { out += '\\n'; continue; }
+    if (inString && ch === '\r') { out += '\\r'; continue; }
+    if (inString && ch === '\t') { out += '\\t'; continue; }
+    out += ch;
+  }
+  return out;
+}
+
+/**
+ * Send a parsed model answer, or an honest error when it is unusable.
+ * Returning HTTP 200 with a shape the page cannot render is what made a
+ * broken tool look like an unreachable service.
+ */
+function sendParsed(res, text, requiredKeys, lang, label) {
+  const parsed = extractJSON(text, 'object');
+  const missing = parsed
+    ? requiredKeys.filter((k) => !parsed[k] || typeof parsed[k] !== 'string' || !parsed[k].trim())
+    : requiredKeys;
+
+  if (!parsed || missing.length === requiredKeys.length) {
+    console.error('[' + label + '] unusable AI answer. missing=' + missing.join(',') +
+      ' raw starts: ' + JSON.stringify(String(text).slice(0, 400)));
+    return res.status(502).json({ error: err(lang, 'aiUnavailable') });
+  }
+  if (missing.length) {
+    console.warn('[' + label + '] partial AI answer, missing: ' + missing.join(','));
+  }
+  return res.json(parsed);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -786,10 +896,12 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
     role: 'user',
     content: `Frage des Tages: ${frage}\n\nAntwort der Person: "${antwort}"`
   }];
-  const result = await callClaude(systemPrompt, messages, 600, lang);
+  // 900 statt 600: Drei deutsche Absätze plus JSON-Gerüst kamen der alten
+  // Grenze nahe — abgeschnittene Ausgabe ist unparsebares JSON.
+  const result = await callClaude(systemPrompt, messages, 900, lang);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  res.json(parseClaudeJSON(result.text, 'object'));
+  sendParsed(res, result.text, ['widerspruch', 'gegenfrage'], lang, 'denkprobe-konter');
 });
 
 // ═══════════════════════════════════════════════════════════
