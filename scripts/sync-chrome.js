@@ -28,10 +28,15 @@ const ROOT = path.join(__dirname, '..');
 // werkstatt and kontakt also left the top nav (2026 declutter): the
 // Werkstatt is reached through the homepage orientation, KI & Lernen and
 // the Schüler:innen page; kontakt lives in the footer on every page.
-// 2026 radical declutter (owner decision): the top nav carries only the
-// two pages every visitor needs; everything else lives in the merged
-// footer menu (see FOOTER_LINKS) and in on-page links.
+// 2026 radical declutter (owner decision): the top nav carries the three
+// audience pages plus KI & Lernen; everything else lives in the merged
+// footer menu (see FOOTER_LINKS) and in on-page links. The audience pages
+// moved up here (owner decision, Aug 2026): burying the "who is this for"
+// entry points in the footer made the site hard to navigate.
 const NAV_PAGES = [
+  { slug: 'fuer-dich', key: 'nav.fuerDich', label: 'fuerDich' },
+  { slug: 'schueler', key: 'nav.schueler' },
+  { slug: 'lehrkraefte', key: 'nav.lehrkraefte' },
   { slug: 'ki-und-lernen', key: 'nav.kiUndLernen' }
 ];
 
@@ -100,7 +105,7 @@ function buildNav(lang, currentSlug) {
   NAV_PAGES.forEach((p) => {
     const active = p.slug === currentSlug ? ' aria-current="page"' : '';
     const cls = p.group ? ' class="nav-group-start"' : '';
-    links.push(`<a href="/${lang}/${p.slug}"${cls}${active} data-i18n="${p.key}">${l[p.slug]}</a>`);
+    links.push(`<a href="/${lang}/${p.slug}"${cls}${active} data-i18n="${p.key}">${l[p.label || p.slug]}</a>`);
   });
   links.push(
     `<a class="lang-switch" href="/${otherLang}/${currentSlug}" hreflang="${otherLang}" lang="${otherLang}">${l.langSwitchText}</a>`
