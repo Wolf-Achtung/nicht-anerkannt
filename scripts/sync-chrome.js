@@ -25,14 +25,15 @@ const ROOT = path.join(__dirname, '..');
 // (zukunft-der-bildung, ki-renaissance) and impressum left the top nav
 // on purpose -- essays are reachable via the "Lesen & Hören" hub page
 // (medien) and homepage links, impressum via the footer on every page.
+// werkstatt and kontakt also left the top nav (2026 declutter): the
+// Werkstatt is reached through the homepage orientation, KI & Lernen and
+// the Schüler:innen page; kontakt lives in the footer on every page.
 const NAV_PAGES = [
   { slug: 'ki-und-lernen', key: 'nav.kiUndLernen' },
-  { slug: 'werkstatt', key: 'nav.werkstatt' },
   { slug: 'salon', key: 'nav.salon' },
   { slug: 'ideen-archiv', key: 'nav.ideenArchiv' },
   { slug: 'medien', key: 'nav.medien' },
-  { slug: 'roadmap', key: 'nav.roadmap', group: true },
-  { slug: 'kontakt', key: 'nav.kontakt' }
+  { slug: 'roadmap', key: 'nav.roadmap', group: true }
 ];
 
 const FOOTER_LINKS = [
