@@ -60,6 +60,7 @@
   "remixer.error": "Remix data could not be loaded. Please reload the page.",
   "stempel.copied": "Copied!",
   "chat.welcome": "Welcome to the sparring ring. Tell me what's on your mind — I won't be nice, but I'll be honest.",
+  "chat.offlineNote": "Connection to the AI interrupted — a question from the house stock.",
   "chat.fabLabel": "Open AI Sparring",
   "chat.fabText": "AI Sparring",
   "chat.title": "AI Sparring Partner",

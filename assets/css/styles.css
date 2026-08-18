@@ -1623,6 +1623,13 @@ button:focus-visible {
     text-align: center;
   }
 
+  /* Der Chat-Button ist fixed positioniert — die generische
+     Vollbreiten-Regel oben würde ihn zum Balken über die ganze
+     Unterkante strecken. */
+  .chat-fab {
+    width: auto;
+  }
+
   .header-links {
     gap: 0.7rem;
     display: none;
@@ -2564,6 +2571,22 @@ button:focus-visible {
   transition: opacity 0.3s ease;
 }
 
+/* Hinweiszeile über einer Antwort aus dem lokalen Hausvorrat —
+   dezent, aber erkennbar: eine Störung soll nicht wie ein
+   denkendes Gegenüber aussehen. */
+.chat-message-note {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  line-height: 1.35;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b6b6b;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.14);
+  padding-bottom: 0.35rem;
+  margin-bottom: 0.45rem;
+}
+
 .chat-message.is-visible {
   opacity: 1;
 }
@@ -3334,4 +3357,69 @@ button:focus-visible {
   letter-spacing: 0.12em;
   color: var(--accent);
   margin-bottom: 0.35rem;
+}
+
+/* ─── Mobile-Fixes ───
+   Steht bewusst am Dateiende, damit diese Regeln gegen gleich
+   spezifische Basisregeln weiter oben gewinnen. */
+
+/* Grid-Blowout-Schutz: Grid-Items schrumpfen sonst nicht unter ihre
+   min-content-Breite (z. B. das Perspektiven-<select> im Manifest)
+   und drücken die Spalte über den Viewport hinaus. */
+.section > .section-body {
+  min-width: 0;
+}
+
+.manifest-remix-bar-controls {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.manifest-remix-bar .stempel-input {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Textfelder in Flex-Zeilen (z. B. Stille-Chat) schrumpfen sonst
+   nicht unter ihre Browser-Standardbreite von ~20 Zeichen. */
+.stille-input {
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  /* Die dekorative Rotation lässt die hohen Panels auf schmalen
+     Screens seitlich aus dem Viewport ragen (horizontales Scrollen). */
+  .manifest-panel,
+  .section--hintergrund .section-body {
+    transform: none;
+  }
+
+  /* Der Senden-Button sitzt in einer Flex-Zeile neben dem Eingabefeld —
+     die generische Vollbreiten-Regel für Buttons sprengt die Zeile. */
+  .stille-input-area .button {
+    width: auto;
+    flex-shrink: 0;
+  }
+}
+
+/* Ein <video> ohne Quelle ist intrinsisch 300px breit und sprengt
+   sonst sehr schmale Viewports. */
+video {
+  max-width: 100%;
+}
+
+@media (max-width: 420px) {
+  /* Zwei Spalten sind unter ~420px zu eng für die Werkzeugkarten. */
+  .tool-index {
+    grid-template-columns: 1fr;
+  }
+
+  /* Lange deutsche Komposita („Widerspruchssalon") passen sonst
+     nicht in eine Zeile und erzeugen horizontales Scrollen. */
+  h1,
+  h2,
+  h3 {
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
 }
