@@ -239,6 +239,26 @@ const DEFAULT_MODEL = 'claude-sonnet-5';
 // the whole endpoint surface can be exercised without spending tokens.
 const ANTHROPIC_BASE_URL = (process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com').replace(/\/+$/, '');
 
+// Current models think by default, and those thinking tokens are charged
+// against the same max_tokens budget as the answer. Sending no `thinking`
+// therefore let the reasoning eat the budget: responses arrived truncated
+// or as a thinking block with no text at all, which is what broke half
+// the workshop tools in August 2026.
+//
+// Every endpoint here asks for a short, fully specified JSON object — a
+// generation task, not a reasoning problem — so thinking is switched off
+// explicitly. That makes the budgets predictable and the answers faster.
+// Set AI_THINKING=adaptive to turn it back on; then raise max_tokens
+// generously, because thinking will claim part of it, and consider
+// AI_EFFORT=low to keep that share small.
+const THINKING_MODE = process.env.AI_THINKING || 'disabled';
+const THINKING_CONFIG = THINKING_MODE === 'adaptive'
+  ? Object.assign(
+    { thinking: { type: 'adaptive' } },
+    process.env.AI_EFFORT ? { output_config: { effort: process.env.AI_EFFORT } } : {}
+  )
+  : { thinking: { type: 'disabled' } };
+
 const DAILY_QUESTIONS_PATH = path.join(__dirname, 'data', 'daily-questions.json');
 
 /**
@@ -372,12 +392,12 @@ async function callClaude(systemPrompt, messages, maxTokens = 300, lang = DEFAUL
           'x-api-key': apiKey,
           'anthropic-version': '2023-06-01'
         },
-        body: JSON.stringify({
+        body: JSON.stringify(Object.assign({
           model: model,
           max_tokens: maxTokens,
           system: systemPrompt,
           messages: messages
-        })
+        }, THINKING_CONFIG))
       });
 
       if (!response.ok) {
@@ -783,7 +803,7 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
     const result = await callClaude(systemPrompt, [{ role: 'user', content: 'Generiere ein neues Dilemma.' }], 600, lang);
     if (result.error) return res.status(result.status).json({ error: result.error });
 
-    sendParsed(res, result.text, ['situation', 'titel', 'frage', 'staerke', 'blinde_stelle', 'vertiefung'], lang, 'urteil');
+    sendParsed(res, result.text, ['situation', 'titel', 'frage'], lang, 'urteil/new');
     return;
   }
 
@@ -815,7 +835,7 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
     const result = await callClaude(systemPrompt, messages, 600, lang);
     if (result.error) return res.status(result.status).json({ error: result.error });
 
-    sendParsed(res, result.text, ['situation', 'titel', 'frage', 'staerke', 'blinde_stelle', 'vertiefung'], lang, 'urteil');
+    sendParsed(res, result.text, ['staerke', 'blinde_stelle', 'vertiefung'], lang, 'urteil/judge');
     return;
   }
 
