@@ -233,6 +233,10 @@ function getConfiguredApiKey() {
 // Overridable via ANTHROPIC_MODEL so a model change needs no deploy.
 const DEFAULT_MODEL = 'claude-sonnet-5';
 
+// Only overridden by the smoke test, which points it at a local stub so
+// the whole endpoint surface can be exercised without spending tokens.
+const ANTHROPIC_BASE_URL = (process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com').replace(/\/+$/, '');
+
 const DAILY_QUESTIONS_PATH = path.join(__dirname, 'data', 'daily-questions.json');
 
 /**
@@ -338,7 +342,7 @@ async function callClaude(systemPrompt, messages, maxTokens = 300, lang = DEFAUL
     if (attempt > 1) await sleep(RETRY_BASE_MS * Math.pow(2, attempt - 2));
 
     try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
+      const response = await fetch(ANTHROPIC_BASE_URL + '/v1/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -483,6 +487,14 @@ function escapeControlCharsInStrings(text) {
   return out;
 }
 
+/** A field counts as filled if it carries text, list items or object content. */
+function hasContent(value) {
+  if (typeof value === 'string') return value.trim().length > 0;
+  if (Array.isArray(value)) return value.length > 0;
+  if (value && typeof value === 'object') return Object.keys(value).length > 0;
+  return false;
+}
+
 /**
  * Send a parsed model answer, or an honest error when it is unusable.
  * Returning HTTP 200 with a shape the page cannot render is what made a
@@ -491,7 +503,7 @@ function escapeControlCharsInStrings(text) {
 function sendParsed(res, text, requiredKeys, lang, label) {
   const parsed = extractJSON(text, 'object');
   const missing = parsed
-    ? requiredKeys.filter((k) => !parsed[k] || typeof parsed[k] !== 'string' || !parsed[k].trim())
+    ? requiredKeys.filter((k) => !hasContent(parsed[k]))
     : requiredKeys;
 
   if (!parsed || missing.length === requiredKeys.length) {
@@ -644,7 +656,7 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
   const result = await callClaude(systemPrompt, messages, 1000, lang);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  res.json(parseClaudeJSON(result.text, 'object'));
+  sendParsed(res, result.text, ['thema', 'problemstellung', 'falsche_alternative', 'radikale_mitte'], lang, 'denkprobe');
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -673,7 +685,7 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
     const result = await callClaude(systemPrompt, [{ role: 'user', content: 'Generiere ein neues Dilemma.' }], 600, lang);
     if (result.error) return res.status(result.status).json({ error: result.error });
 
-    res.json(parseClaudeJSON(result.text, 'object'));
+    sendParsed(res, result.text, ['situation', 'titel', 'frage', 'staerke', 'blinde_stelle', 'vertiefung'], lang, 'urteil');
     return;
   }
 
@@ -705,7 +717,7 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
     const result = await callClaude(systemPrompt, messages, 600, lang);
     if (result.error) return res.status(result.status).json({ error: result.error });
 
-    res.json(parseClaudeJSON(result.text, 'object'));
+    sendParsed(res, result.text, ['situation', 'titel', 'frage', 'staerke', 'blinde_stelle', 'vertiefung'], lang, 'urteil');
     return;
   }
 
@@ -742,7 +754,19 @@ ${LANG_INSTRUCTION[lang]} Antworte ausschließlich im angegebenen JSON-Format. J
   const result = await callClaude(systemPrompt, messages, 800, lang);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  const parsed = parseClaudeJSON(result.text, 'object');
+  // Jeder Schritt liefert ein eigenes Feld; fehlt es, ist die Antwort für
+  // die Seite unbrauchbar — dann lieber ein ehrlicher Fehler als ein 200
+  // mit Rohtext (derselbe Fehler, der die Gegenrede lahmgelegt hat).
+  const STEP_KEYS = {
+    1: 'disziplinen', 2: 'stakeholder', 3: 'widersprueche', 4: 'optionen', 5: 'zusammenfassung'
+  };
+  const parsed = extractJSON(result.text, 'object');
+  const expected = STEP_KEYS[currentStep];
+  if (!parsed || parsed[expected] === undefined) {
+    console.error('[wicked step ' + currentStep + '] unusable AI answer, missing "' + expected +
+      '". Raw starts: ' + JSON.stringify(String(result.text).slice(0, 400)));
+    return res.status(502).json({ error: err(lang, 'aiUnavailable') });
+  }
   res.json({ step: currentStep, ...parsed });
 });
 
@@ -780,7 +804,7 @@ Sei direkt und konkret. Zitiere Passagen wo möglich. ${LANG_INSTRUCTION[lang]} 
   const result = await callClaude(systemPrompt, messages, 1000, lang);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  res.json(parseClaudeJSON(result.text, 'object'));
+  sendParsed(res, result.text, ['behauptungen', 'meinung_als_urteil', 'fehlender_widerspruch', 'fehlende_frage', 'staerken'], lang, 'stresstest');
 });
 
 app.use('/api/client-log', express.json({ limit: '10kb' }));
@@ -935,7 +959,7 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
   const result = await callClaude(systemPrompt, messages, 700, lang);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  res.json(parseClaudeJSON(result.text, 'object'));
+  sendParsed(res, result.text, ['perspektive', 'reformulierung', 'bruecke', 'ueberraschung'], lang, 'perspektive');
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -971,7 +995,7 @@ Sei scharf, aber fair. Keine Polemik. ${LANG_INSTRUCTION[lang]} JSON-Schlüsseln
   const result = await callClaude(systemPrompt, messages, 1000, lang);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  res.json(parseClaudeJSON(result.text, 'object'));
+  sendParsed(res, result.text, ['gegenposition', 'annahmen', 'ungestellte_frage', 'fehlende_stimme'], lang, 'gegenrede');
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -1009,7 +1033,7 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
   const result = await callClaude(systemPrompt, messages, 1200, lang);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  res.json(parseClaudeJSON(result.text, 'object'));
+  sendParsed(res, result.text, ['these', 'pro', 'contra', 'synthese'], lang, 'argumentkarte');
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -1038,7 +1062,7 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
   const result = await callClaude(systemPrompt, messages, 500, lang);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  res.json(parseClaudeJSON(result.text, 'object'));
+  sendParsed(res, result.text, ['perspektive', 'begruendung', 'frage'], lang, 'blindspot');
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -1076,7 +1100,7 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
   const result = await callClaude(systemPrompt, messages, 600, lang);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  res.json(parseClaudeJSON(result.text, 'object'));
+  sendParsed(res, result.text, ['irritation', 'aufgabe', 'frage'], lang, 'erstheit-labor');
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -1131,7 +1155,7 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
   const result = await callClaude(systemPrompt, messages, 900, lang);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  res.json(parseClaudeJSON(result.text, 'object'));
+  sendParsed(res, result.text, ['spiegel', 'leitsatz', 'heute', 'taeglich', 'woechentlich', 'fallstrick', 'pruefung'], lang, 'denkpraxis');
 });
 
 // --- SPA fallback ---

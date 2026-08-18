@@ -14,7 +14,8 @@
     "i18n:hreflang": "node scripts/add-hreflang.js",
     "i18n:rewrite-links": "node scripts/rewrite-links.js",
     "chrome:sync": "node scripts/sync-chrome.js",
-    "chrome:check": "node scripts/check-chrome.js"
+    "chrome:check": "node scripts/check-chrome.js",
+    "smoke": "node scripts/smoke-test.js"
   },
   "dependencies": {
     "express": "^4.21.0",
@@ -24,7 +25,12 @@
   "devDependencies": {
     "eslint": "^9.0.0"
   },
-  "keywords": ["manifest", "atelier", "radikale-mitte", "bildung"],
+  "keywords": [
+    "manifest",
+    "atelier",
+    "radikale-mitte",
+    "bildung"
+  ],
   "author": "Wolf-Achtung",
   "license": "MIT",
   "engines": {
