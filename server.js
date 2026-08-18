@@ -459,25 +459,88 @@ function extractJSON(text, type) {
   const unfenced = text.replace(/```(?:json)?/gi, '');
   const open = type === 'array' ? '[' : '{';
   const close = type === 'array' ? ']' : '}';
-  const candidate = balancedSlice(unfenced, open, close);
-  if (!candidate) return undefined;
+  let candidate = balancedSlice(unfenced, open, close);
+  let repaired = false;
+
+  if (!candidate) {
+    repaired = true;
+    // Nothing balanced: either there is no JSON at all, or the answer was
+    // cut off. Try to rescue the part that did arrive.
+    const start = unfenced.indexOf(open);
+    if (start === -1) return undefined;
+    candidate = repairTruncated(unfenced.slice(start));
+    if (!candidate) return undefined;
+    console.warn('extractJSON: repaired a truncated answer.');
+  }
 
   const attempts = [
     candidate,
     // Trailing commas before a closing brace/bracket.
     candidate.replace(/,\s*([}\]])/g, '$1'),
+    // Some prompts show "..." as a placeholder for further list items and
+    // the model echoes it back — a bare ... is not valid JSON.
+    dropEllipsisItems(candidate),
     // Literal newlines and tabs inside string values are invalid JSON.
-    escapeControlCharsInStrings(candidate)
+    escapeControlCharsInStrings(candidate),
+    escapeControlCharsInStrings(dropEllipsisItems(candidate))
   ];
 
   for (const attempt of attempts) {
     try {
-      return JSON.parse(attempt);
+      const parsed = JSON.parse(attempt);
+      // A rescue that yields nothing is not a rescue: an answer cut off
+      // before its first field must count as unusable, not as empty.
+      if (repaired && isEmptyValue(parsed)) return undefined;
+      return parsed;
     } catch (e) {
       // Try the next repair.
     }
   }
   return undefined;
+}
+
+function isEmptyValue(value) {
+  if (Array.isArray(value)) return value.length === 0;
+  if (value && typeof value === 'object') return Object.keys(value).length === 0;
+  return true;
+}
+
+/** Remove bare `...` placeholder entries a model copied from the template. */
+function dropEllipsisItems(text) {
+  return text
+    .replace(/,\s*\.\.\.\s*(?=[}\]])/g, '')
+    .replace(/\[\s*\.\.\.\s*,/g, '[')
+    .replace(/,\s*\.\.\.\s*,/g, ',');
+}
+
+/**
+ * Close what a cut-off answer left open.
+ * A response that stops at max_tokens ends mid-string or mid-list; the
+ * fields that did complete are still worth having, so terminate the open
+ * string and brackets and drop the unfinished tail.
+ */
+function repairTruncated(text) {
+  const stack = [];
+  let inString = false;
+  let escaped = false;
+
+  for (const ch of text) {
+    if (escaped) { escaped = false; continue; }
+    if (ch === '\\') { escaped = true; continue; }
+    if (ch === '"') { inString = !inString; continue; }
+    if (inString) continue;
+    if (ch === '{' || ch === '[') stack.push(ch);
+    else if (ch === '}' || ch === ']') stack.pop();
+  }
+  if (!stack.length && !inString) return null; // nothing was left open
+
+  let out = text;
+  if (inString) out += '"';
+  // Drop a dangling key without a value, then any trailing comma.
+  out = out.replace(/,\s*"[^"]*"\s*:\s*$/, '');
+  out = out.replace(/[,\s]+$/, '');
+  for (let i = stack.length - 1; i >= 0; i--) out += stack[i] === '{' ? '}' : ']';
+  return out;
 }
 
 /** Slice from the first `open` to its matching `close`, ignoring braces inside strings. */
@@ -786,7 +849,7 @@ Sei konkret, differenziert und vermeide Plattitüden.
 ${LANG_INSTRUCTION[lang]} Antworte ausschließlich im angegebenen JSON-Format. JSON-Schlüsselnamen bleiben wie angegeben, nur die Werte in der Zielsprache.`;
 
   const messages = [{ role: 'user', content: steps[currentStep] }];
-  const result = await callClaude(systemPrompt, messages, 800, lang);
+  const result = await callClaude(systemPrompt, messages, 2200, lang);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
   // Jeder Schritt liefert ein eigenes Feld; fehlt es, ist die Antwort für
@@ -836,7 +899,7 @@ Sei direkt und konkret. Zitiere Passagen wo möglich. ${LANG_INSTRUCTION[lang]} 
 }`;
 
   const messages = [{ role: 'user', content: `Prüfe diesen Text:\n\n${text}` }];
-  const result = await callClaude(systemPrompt, messages, 1000, lang);
+  const result = await callClaude(systemPrompt, messages, 2200, lang);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
   sendParsed(res, result.text, ['behauptungen', 'meinung_als_urteil', 'fehlender_widerspruch', 'fehlende_frage', 'staerken'], lang, 'stresstest');
@@ -1065,7 +1128,7 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
 }`;
 
   const messages = [{ role: 'user', content: `These: "${these}"` }];
-  const result = await callClaude(systemPrompt, messages, 1200, lang);
+  const result = await callClaude(systemPrompt, messages, 3000, lang);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
   sendParsed(res, result.text, ['these', 'pro', 'contra', 'synthese'], lang, 'argumentkarte');
