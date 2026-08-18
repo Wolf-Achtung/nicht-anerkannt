@@ -25,19 +25,27 @@ const ROOT = path.join(__dirname, '..');
 // (zukunft-der-bildung, ki-renaissance) and impressum left the top nav
 // on purpose -- essays are reachable via the "Lesen & Hören" hub page
 // (medien) and homepage links, impressum via the footer on every page.
+// werkstatt and kontakt also left the top nav (2026 declutter): the
+// Werkstatt is reached through the homepage orientation, KI & Lernen and
+// the Schüler:innen page; kontakt lives in the footer on every page.
+// 2026 radical declutter (owner decision): the top nav carries only the
+// two pages every visitor needs; everything else lives in the merged
+// footer menu (see FOOTER_LINKS) and in on-page links.
 const NAV_PAGES = [
-  { slug: 'ki-und-lernen', key: 'nav.kiUndLernen' },
-  { slug: 'werkstatt', key: 'nav.werkstatt' },
+  { slug: 'ki-und-lernen', key: 'nav.kiUndLernen' }
+];
+
+// Merged secondary menu, present on every page: the three audience
+// entries first ("Für dich und mich" = the Werkstatt for everyone),
+// then the former top-nav destinations, then the legal pages.
+const FOOTER_LINKS = [
+  { slug: 'fuer-dich', key: 'nav.fuerDich', label: 'fuerDich' },
+  { slug: 'schueler', key: 'nav.schueler' },
+  { slug: 'lehrkraefte', key: 'nav.lehrkraefte' },
   { slug: 'salon', key: 'nav.salon' },
   { slug: 'ideen-archiv', key: 'nav.ideenArchiv' },
   { slug: 'medien', key: 'nav.medien' },
-  { slug: 'roadmap', key: 'nav.roadmap', group: true },
-  { slug: 'kontakt', key: 'nav.kontakt' }
-];
-
-const FOOTER_LINKS = [
-  { slug: 'lehrkraefte', key: 'nav.lehrkraefte' },
-  { slug: 'schueler', key: 'nav.schueler' },
+  { slug: 'roadmap', key: 'nav.roadmap' },
   { slug: 'kontakt', key: 'nav.kontakt' },
   { slug: 'impressum', key: 'nav.impressum' },
   { slug: 'datenschutz', key: 'nav.datenschutz' },
@@ -55,12 +63,13 @@ const LABELS = {
     roadmap: 'Was kommt',
     lehrkraefte: 'Für Lehrkräfte',
     schueler: 'Für Schüler:innen',
+    fuerDich: 'Für dich und mich',
     kontakt: 'Kontakt',
     impressum: 'Impressum',
     datenschutz: 'Datenschutz',
     'ai-governance': 'AI-Governance',
     ariaLabel: 'Seitenbereiche',
-    langSwitchText: 'DE / EN'
+    langSwitchText: 'EN'
   },
   en: {
     home: 'Home',
@@ -72,12 +81,13 @@ const LABELS = {
     roadmap: "What's Next",
     lehrkraefte: 'For Teachers',
     schueler: 'For Students',
+    fuerDich: 'For You and Me',
     kontakt: 'Contact',
     impressum: 'Legal Notice',
     datenschutz: 'Privacy Policy',
     'ai-governance': 'AI Governance',
     ariaLabel: 'Page sections',
-    langSwitchText: 'EN / DE'
+    langSwitchText: 'DE'
   }
 };
 
@@ -105,7 +115,7 @@ function buildNav(lang, currentSlug) {
 function buildFooterLinks(lang) {
   const l = LABELS[lang];
   const links = FOOTER_LINKS.map(
-    (f) => `<a href="/${lang}/${f.slug}" data-i18n="${f.key}">${l[f.slug]}</a>`
+    (f) => `<a href="/${lang}/${f.slug}" data-i18n="${f.key}">${l[f.label || f.slug]}</a>`
   );
   return `<p class="footer-links">${links.join(' · ')}</p>`;
 }

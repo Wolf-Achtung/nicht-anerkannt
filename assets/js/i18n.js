@@ -141,9 +141,6 @@
     'quiz.loading':        { de: 'Quiz wird geladen...', en: 'Loading quiz...' },
     'quiz.error':          { de: 'Quiz konnte nicht geladen werden.', en: 'Quiz could not be loaded.' },
 
-    /* ── ticker.js ── */
-    'ticker.prev':         { de: 'Vorherige Nachricht', en: 'Previous message' },
-    'ticker.next':         { de: 'Nächste Nachricht',   en: 'Next message' },
 
     /* ── score.js ── */
     'score.dim0':          { de: 'Widerspruchstoleranz',  en: 'Tolerance of Contradiction' },
@@ -167,19 +164,7 @@
     'remixer.error':       { de: 'Remix-Daten konnten nicht geladen werden. Bitte Seite neu laden.', en: 'Remix data could not be loaded. Please reload the page.' },
 
     /* ── stempel.js ── */
-    'stempel.line1':       { de: 'STAATLICH NICHT', en: 'STATE-NOT' },
-    'stempel.line2':       { de: 'ANERKANNT',       en: 'ACCREDITED' },
-    'stempel.extrem':      { de: 'ERST DU, DANN DIE KI', en: 'FIRST YOU, THEN THE AI' },
-    'stempel.nichtsLine1': { de: 'NICHTS',          en: 'NO EASY' },
-    'stempel.nichtsLine2': { de: 'GESCHENKT',       en: 'ANSWERS' },
-    'stempel.perspective':  { de: 'Aus Sicht der ',  en: 'From the perspective of ' },
-    'stempel.ariaPrefix':  { de: 'Stempel: ',       en: 'Stamp: ' },
     'stempel.copied':      { de: 'Kopiert!',        en: 'Copied!' },
-    'stempel.share':       { de: 'Teilen',           en: 'Share' },
-    'stempel.copyFail':    { de: 'Kopieren nicht möglich', en: 'Unable to copy' },
-    'stempel.shareText1':  { de: 'Staatlich NICHT anerkannt. Politisch NICHT vereinnahmbar.', en: 'State-NOT accredited. Politically NOT co-optable.' },
-    'stempel.shareText2':  { de: 'Nichts geschenkt — Das Denkatelier', en: 'Nichts geschenkt — The Thinking Atelier' },
-    'stempel.shareText3':  { de: 'Nicht mehr Stoff. Mehr Urteil.', en: 'Not more material. More judgment.' },
 
     /* ── chat.js ── */
     'chat.welcome':        { de: 'Willkommen im Sparring. Sag mir, was dich beschäftigt — ich werde nicht nett sein, sondern ehrlich.', en: 'Welcome to the sparring ring. Tell me what\'s on your mind — I won\'t be nice, but I\'ll be honest.' },
@@ -288,9 +273,6 @@
     'sharecard.download':  { de: 'Als Share-Card herunterladen', en: 'Download as share card' },
     'sharecard.brand':     { de: 'Nichts geschenkt — Das Denkatelier. Erst du, dann die KI.', en: 'Nichts geschenkt — The Thinking Atelier. First you, then the AI.' },
     'sharecard.tagline':   { de: 'Nicht mehr Stoff. Mehr Urteil.', en: 'Not more material. More judgment.' },
-    'sharecard.stamp':     { de: 'NICHT ANERKANNT',    en: 'NOT ACCREDITED' },
-    'sharecard.claim':     { de: 'POLITISCH NICHT VEREINNAHMBAR', en: 'POLITICALLY NOT CO-OPTABLE' },
-    'sharecard.extrem':    { de: 'ERST DU, DANN DIE KI', en: 'FIRST YOU, THEN THE AI' },
 
     /* ── perspektive-global.js ── */
     'persp.button':        { de: 'Perspektive wechseln', en: 'Change perspective' },
@@ -306,7 +288,7 @@
     'persp.analysisFail':  { de: 'Analyse gerade nicht möglich.', en: 'Analysis currently not possible.' },
     'persp.blindspotBtn':  { de: 'Welche Perspektive fehlt hier?', en: 'What perspective is missing here?' },
     'persp.blindspotLabel':{ de: 'Dieser Text spricht stark aus einer bestimmten Ecke. Eine Perspektive fehlt:', en: 'This text speaks strongly from one particular angle. A perspective is missing:' },
-    'persp.grp1':          { de: 'Politisch / Sozial',  en: 'Political / Social' },
+    'persp.grp1':          { de: 'Gesellschaft / Soziales',  en: 'Society / Social' },
     'persp.grp2':          { de: 'Alter / Generation',   en: 'Age / Generation' },
     'persp.grp3':          { de: 'Zeit',                  en: 'Time' },
     'persp.grp4':          { de: 'Kultur / Sprache',      en: 'Culture / Language' },
@@ -337,6 +319,7 @@
     'nav.roadmap':         { de: 'Was kommt',              en: "What's Next" },
     'nav.kontakt':         { de: 'Kontakt',                en: 'Contact' },
     'nav.lehrkraefte':     { de: 'Für Lehrkräfte',         en: 'For Teachers' },
+    'nav.fuerDich':        { de: 'Für dich und mich',       en: 'For You and Me' },
     'nav.schueler':        { de: 'Für Schüler:innen',       en: 'For Students' },
     'nav.impressum':       { de: 'Impressum',              en: 'Legal Notice' },
     'nav.datenschutz':     { de: 'Datenschutz',            en: 'Privacy Policy' },

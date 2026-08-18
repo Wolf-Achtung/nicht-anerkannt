@@ -99,33 +99,6 @@
     ctx.fill();
     ctx.restore();
 
-    // Stamp in top-left
-    ctx.save();
-    ctx.translate(160, 80);
-    ctx.rotate(-0.12);
-    ctx.font = 'bold 13px Arial, Helvetica, sans-serif';
-    ctx.fillStyle = '#991b1b';
-    ctx.textAlign = 'center';
-    ctx.strokeStyle = '#991b1b';
-    ctx.lineWidth = 1.5;
-    ctx.strokeRect(-60, -18, 120, 36);
-    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
-    ctx.fillText(t('sharecard.stamp'), 0, 5);
-    ctx.restore();
-
-    // Optional claim bottom-right
-    ctx.save();
-    ctx.translate(W - 240, H - 100);
-    ctx.rotate(-0.05);
-    ctx.strokeStyle = '#111111';
-    ctx.lineWidth = 1.25;
-    ctx.strokeRect(-180, -24, 360, 48);
-    ctx.font = 'bold 16px Arial, Helvetica, sans-serif';
-    ctx.fillStyle = '#111111';
-    ctx.textAlign = 'center';
-    ctx.fillText(t('sharecard.claim'), 0, 6);
-    ctx.restore();
-
     // Main quote text
     ctx.font = 'italic 32px Georgia, "Times New Roman", serif';
     ctx.fillStyle = '#111111';
@@ -149,6 +122,8 @@
       ctx.fillText(lines[i], padding, startY + i * lineHeight);
     }
 
+    var t = window.AtelierI18n ? window.AtelierI18n.t : function (k) { return k; };
+
     // Footer: brand
     ctx.font = 'bold 16px Arial, Helvetica, sans-serif';
     ctx.fillStyle = '#5d5d5d';
@@ -158,17 +133,6 @@
     ctx.font = '13px Arial, Helvetica, sans-serif';
     ctx.fillStyle = '#888888';
     ctx.fillText(t('sharecard.tagline'), padding, H - 40);
-
-    // Principle stamp bottom-right
-    ctx.save();
-    ctx.translate(W - 140, H - 52);
-    ctx.rotate(0.06);
-    ctx.font = 'bold 11px Arial, Helvetica, sans-serif';
-    ctx.fillStyle = '#991b1b';
-    ctx.textAlign = 'center';
-    ctx.letterSpacing = '0.15em';
-    ctx.fillText(t('sharecard.extrem'), 0, 0);
-    ctx.restore();
 
     // Download
     canvas.toBlob(function (blob) {
