@@ -79,6 +79,22 @@ den Grund (fehlendes Feld, HTTP-Status, Zeitueberschreitung). Ein voller Lauf
 macht rund 17 KI-Anfragen; fuer eine schnelle Kontrolle ohne Kosten genuegt
 `--no-ai`.
 
+**Ohne Terminal:** Unter *Actions → "Rundum-Test (live)" → "Run workflow"*
+laeuft derselbe Test in der Cloud, mit dem Ergebnis als Zusammenfassung im
+Browser. Zugangsdaten braucht er keine, weil er nur oeffentliche Adressen
+aufruft. Zusaetzlich laeuft er montags automatisch.
+
+**Zwei Bremsen, die kein Defekt sind.** Der Test unterscheidet sie:
+
+- `HTTP 503` — Mengenbegrenzung des KI-Anbieters (Token pro Minute).
+- `HTTP 429` — der eigene Anfrageschutz des Servers (20 pro Minute und IP).
+
+Beides tritt auf, wenn viele KI-Aufrufe dicht aufeinander folgen. Deshalb
+pausiert der Test zwischen den KI-Aufrufen (Standard 4 Sekunden); bei Bedarf
+groesser waehlen: `npm run smoke -- --pace 8000`. Zwei volle Laeufe direkt
+hintereinander laufen zwangslaeufig in den Anfrageschutz — dazwischen eine
+Minute warten.
+
 ## Features
 
 1. **Manifest-Remixer** -- Manifest-Fragmente neu zusammenwuerfeln und eigene Versionen erzeugen

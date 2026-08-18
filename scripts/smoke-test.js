@@ -35,7 +35,11 @@ const OPTS = {
   siteOnly: args.includes('--site-only'),
   apiOnly: args.includes('--api-only'),
   json: args.includes('--json'),
-  timeout: Number(flagValue('timeout', process.env.SMOKE_TIMEOUT || 60000))
+  timeout: Number(flagValue('timeout', process.env.SMOKE_TIMEOUT || 90000)),
+  // Pause zwischen KI-Aufrufen. Ohne sie feuert der Test 17 Anfragen in
+  // wenigen Minuten und läuft selbst in die Mengenbegrenzung des Anbieters
+  // — der Test würde dann seinen eigenen Fehlalarm erzeugen.
+  pace: Number(flagValue('pace', process.env.SMOKE_PACE || 4000))
 };
 
 // ─── Seiten, die erreichbar sein müssen ────────────────────────────────
@@ -155,6 +159,7 @@ const API_CHECKS = [
 
 // ─── Ausführung ────────────────────────────────────────────────────────
 const results = [];
+let rateLimited = 0;
 
 function record(group, name, ok, detail, ms) {
   results.push({ group, name, ok, detail: detail || '', ms });
@@ -235,10 +240,15 @@ async function checkApi() {
   if (!OPTS.json) {
     process.stdout.write('\nAPI (' + OPTS.api + ')' + (OPTS.noAi ? '  — KI-Aufrufe übersprungen' : '') + '\n');
   }
+  let firstAiCall = true;
   for (const check of API_CHECKS) {
     if (check.ai && OPTS.noAi) {
       record('API', check.name, true, 'übersprungen (--no-ai)');
       continue;
+    }
+    if (check.ai && OPTS.pace > 0) {
+      if (!firstAiCall) await new Promise((r) => setTimeout(r, OPTS.pace));
+      firstAiCall = false;
     }
     try {
       const { res, ms } = await timedFetch(OPTS.api + check.path, {
@@ -252,7 +262,19 @@ async function checkApi() {
       const allowed = check.expectStatus || [200];
       if (!allowed.includes(res.status)) {
         const hint = body && body.error ? String(body.error).slice(0, 90) : '';
-        record('API', check.name, false, 'HTTP ' + res.status + ' (erwartet ' + allowed.join('/') + ')' + (hint ? ' — ' + hint : ''), ms);
+        // Zwei verschiedene Bremsen, beide kein Defekt:
+        // 503 = Mengenbegrenzung des KI-Anbieters (Anthropic),
+        // 429 = eigener Schutz des Servers (20 Anfragen pro Minute und IP).
+        let label;
+        if (res.status === 503) {
+          label = 'Mengenbegrenzung des KI-Anbieters — kein Defekt (HTTP 503)';
+        } else if (res.status === 429) {
+          label = 'Eigener Anfrageschutz des Servers — kein Defekt (HTTP 429)';
+        } else {
+          label = 'HTTP ' + res.status + ' (erwartet ' + allowed.join('/') + ')' + (hint ? ' — ' + hint : '');
+        }
+        record('API', check.name, false, label, ms);
+        if (res.status === 503 || res.status === 429) rateLimited++;
         continue;
       }
       const problem = verifyKeys(body, check);
@@ -272,12 +294,17 @@ async function checkApi() {
 
   const failed = results.filter((r) => !r.ok);
   if (OPTS.json) {
-    process.stdout.write(JSON.stringify({ ok: failed.length === 0, total: results.length, failed: failed.length, results }, null, 2) + '\n');
+    process.stdout.write(JSON.stringify({ ok: failed.length === 0, total: results.length, failed: failed.length, rateLimited, results }, null, 2) + '\n');
   } else {
     process.stdout.write('\n' + (failed.length === 0
       ? '[32m' + results.length + ' Prüfungen, alle grün.[0m\n'
       : '[31m' + failed.length + ' von ' + results.length + ' fehlgeschlagen:[0m\n' +
         failed.map((f) => '  • ' + f.name + ' — ' + f.detail).join('\n') + '\n'));
+  }
+  if (rateLimited > 0 && !OPTS.json) {
+    process.stdout.write('\nHinweis: ' + rateLimited + ' Fehlschlag/Fehlschlaege stammen von der ' +
+      'Mengenbegrenzung des KI-Anbieters,\nnicht von einem Defekt. Mit groesserem Abstand erneut ' +
+      'versuchen:\n  npm run smoke -- --pace 8000\n');
   }
   process.exit(failed.length === 0 ? 0 : 1);
 })();

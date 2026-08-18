@@ -91,6 +91,7 @@ const ERR = {
   de: {
     apiKeyMissing: 'Anthropic API-Key nicht konfiguriert (ANTHROPIC_API_KEY/CLAUDE_API_KEY).',
     aiUnavailable: 'KI ist gerade nicht verfügbar.',
+    rateLimited: 'Gerade sind zu viele Anfragen unterwegs. Versuch es in einer Minute noch einmal.',
     connection: 'Verbindungsfehler zur KI.',
     noMessage: 'Keine Nachricht erhalten.',
     noThese: 'Keine These erhalten.',
@@ -111,6 +112,7 @@ const ERR = {
   en: {
     apiKeyMissing: 'Anthropic API key not configured (ANTHROPIC_API_KEY/CLAUDE_API_KEY).',
     aiUnavailable: 'AI is currently unavailable.',
+    rateLimited: 'Too many requests right now. Please try again in a minute.',
     connection: 'Connection error to the AI.',
     noMessage: 'No message received.',
     noThese: 'No thesis received.',
@@ -324,9 +326,29 @@ function pickLocalDailyChallenge(seedInput, lang = DEFAULT_LANG) {
 const RETRYABLE_STATUS = new Set([408, 409, 429, 500, 502, 503, 504, 529]);
 const MAX_ATTEMPTS = 3;
 const RETRY_BASE_MS = Number(process.env.AI_RETRY_BASE_MS || 700);
+// A rate limit is measured in minutes, not milliseconds. Backing off by
+// under two seconds — as the first version did — burns all three attempts
+// inside the same blocked window and is worth nothing.
+const RATE_LIMIT_WAIT_MS = Number(process.env.AI_RATE_LIMIT_WAIT_MS || 12000);
+const RATE_LIMIT_WAIT_MAX_MS = Number(process.env.AI_RATE_LIMIT_WAIT_MAX_MS || 30000);
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/**
+ * How long to wait before the next attempt.
+ * Rate limits get the Retry-After the API asks for (capped), everything
+ * else gets the usual exponential backoff.
+ */
+function retryDelayMs(status, headers, attempt) {
+  if (status === 429 || status === 529) {
+    const header = headers && typeof headers.get === 'function' ? headers.get('retry-after') : null;
+    const asked = header ? Number(header) * 1000 : NaN;
+    const wait = Number.isFinite(asked) && asked > 0 ? asked : RATE_LIMIT_WAIT_MS * attempt;
+    return Math.min(wait, RATE_LIMIT_WAIT_MAX_MS);
+  }
+  return RETRY_BASE_MS * Math.pow(2, attempt - 1);
 }
 
 async function callClaude(systemPrompt, messages, maxTokens = 300, lang = DEFAULT_LANG) {
@@ -337,9 +359,10 @@ async function callClaude(systemPrompt, messages, maxTokens = 300, lang = DEFAUL
 
   const model = process.env.ANTHROPIC_MODEL || DEFAULT_MODEL;
   let lastFailure = { error: err(lang, 'connection'), status: 500 };
+  let nextDelay = 0;
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-    if (attempt > 1) await sleep(RETRY_BASE_MS * Math.pow(2, attempt - 2));
+    if (nextDelay > 0) await sleep(nextDelay);
 
     try {
       const response = await fetch(ANTHROPIC_BASE_URL + '/v1/messages', {
@@ -360,8 +383,18 @@ async function callClaude(systemPrompt, messages, maxTokens = 300, lang = DEFAUL
       if (!response.ok) {
         const errBody = await response.text();
         console.error('Anthropic API error (attempt ' + attempt + '/' + MAX_ATTEMPTS + '):', response.status, errBody);
-        lastFailure = { error: err(lang, 'aiUnavailable'), status: 502 };
-        if (RETRYABLE_STATUS.has(response.status)) continue;
+        // A rate limit is not "the AI is broken" — it is "too many requests
+        // right now". Saying so lets the page offer the right advice.
+        lastFailure = response.status === 429
+          ? { error: err(lang, 'rateLimited'), status: 503 }
+          : { error: err(lang, 'aiUnavailable'), status: 502 };
+        if (RETRYABLE_STATUS.has(response.status)) {
+          nextDelay = retryDelayMs(response.status, response.headers, attempt);
+          if (attempt < MAX_ATTEMPTS) {
+            console.warn('Retrying in ' + nextDelay + ' ms (status ' + response.status + ').');
+          }
+          continue;
+        }
         return lastFailure;
       }
 
@@ -377,6 +410,7 @@ async function callClaude(systemPrompt, messages, maxTokens = 300, lang = DEFAUL
         console.error('Anthropic returned no text block. stop_reason=' + data.stop_reason +
           ' content types=' + (Array.isArray(data.content) ? data.content.map((b) => b && b.type).join(',') : typeof data.content));
         lastFailure = { error: err(lang, 'aiUnavailable'), status: 502 };
+        nextDelay = RETRY_BASE_MS * Math.pow(2, attempt - 1);
         continue;
       }
 
@@ -390,6 +424,7 @@ async function callClaude(systemPrompt, messages, maxTokens = 300, lang = DEFAUL
       // Network-level failure (DNS, socket, TLS) — always worth retrying.
       console.error('API call error (attempt ' + attempt + '/' + MAX_ATTEMPTS + '):', e);
       lastFailure = { error: err(lang, 'connection'), status: 500 };
+      nextDelay = RETRY_BASE_MS * Math.pow(2, attempt - 1);
     }
   }
 

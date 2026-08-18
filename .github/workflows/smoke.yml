@@ -1,0 +1,86 @@
+name: Rundum-Test (live)
+
+# Prüft die laufende Seite und die laufende API — nicht den Code im Repo.
+# Start über "Actions" → "Rundum-Test (live)" → "Run workflow".
+# Es werden keine Zugangsdaten gebraucht: Der Test ruft nur öffentliche
+# Adressen auf; der KI-Schlüssel liegt bei Railway.
+on:
+  workflow_dispatch:
+    inputs:
+      umfang:
+        description: 'Was soll geprüft werden?'
+        type: choice
+        required: true
+        default: 'alles'
+        options:
+          - alles
+          - ohne KI-Aufrufe (kostenlos)
+          - nur Seiten
+      pace:
+        description: 'Pause zwischen KI-Aufrufen in Millisekunden (höher = schonender für die Mengenbegrenzung)'
+        required: false
+        default: '6000'
+  schedule:
+    # Montags um 6:17 UTC. Die krumme Minute vermeidet die volle Stunde,
+    # zu der halbe Welt ihre Jobs startet.
+    - cron: '17 6 * * 1'
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: Seiten und API prüfen
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Rundum-Test ausführen
+        id: smoke
+        run: |
+          case "${{ github.event.inputs.umfang }}" in
+            "nur Seiten")            FLAGS="--site-only" ;;
+            "ohne KI-Aufrufe (kostenlos)") FLAGS="--no-ai" ;;
+            *)                       FLAGS="" ;;
+          esac
+          # Der geplante Wochenlauf nimmt einen grosszuegigen Abstand.
+          PACE="${{ github.event.inputs.pace }}"
+          if [ -z "$PACE" ]; then PACE=8000; fi
+          echo "Aufruf: npm run smoke -- $FLAGS --pace $PACE"
+          npm run smoke -- $FLAGS --pace "$PACE" 2>&1 | tee smoke-output.txt
+
+      - name: Ergebnis in die Zusammenfassung schreiben
+        if: always()
+        run: |
+          {
+            echo "## Rundum-Test"
+            echo ""
+            if [ "${{ steps.smoke.outcome }}" = "success" ]; then
+              echo "Alles grün."
+            else
+              echo "Mindestens eine Prüfung ist fehlgeschlagen — Einzelheiten unten."
+            fi
+            echo ""
+            echo '```'
+            sed 's/\x1b\[[0-9;]*m//g' smoke-output.txt || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Protokoll als Datei anhängen
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rundum-test-protokoll
+          path: smoke-output.txt
+          retention-days: 30
