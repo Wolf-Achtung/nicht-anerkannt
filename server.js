@@ -201,6 +201,19 @@ app.get('/en/pages/:page.html', (req, res) => {
   res.redirect(301, '/en/' + req.params.page);
 });
 
+// --- Health check ---
+// Answers the question "is it the container or the key?" without exposing
+// the key itself. Also a cheap target for an uptime ping that keeps the
+// service from going cold.
+app.get('/api/health', (req, res) => {
+  res.json({
+    ok: true,
+    apiKeyConfigured: Boolean(getConfiguredApiKey()),
+    model: process.env.ANTHROPIC_MODEL || DEFAULT_MODEL,
+    uptimeSeconds: Math.round(process.uptime())
+  });
+});
+
 // Root — detect user language, redirect to /<lang>/
 app.get('/', (req, res) => {
   res.redirect(302, '/' + detectRequestLang(req) + '/');
@@ -216,6 +229,9 @@ app.use(express.static(path.join(__dirname), {
 function getConfiguredApiKey() {
   return process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY || process.env.AI_API_KEY || '';
 }
+
+// Overridable via ANTHROPIC_MODEL so a model change needs no deploy.
+const DEFAULT_MODEL = 'claude-sonnet-5';
 
 const DAILY_QUESTIONS_PATH = path.join(__dirname, 'data', 'daily-questions.json');
 
@@ -298,46 +314,67 @@ function pickLocalDailyChallenge(seedInput, lang = DEFAULT_LANG) {
   return { ...picked, source: 'local-pool', seed };
 }
 
+// Transient upstream conditions worth a second attempt: rate limiting,
+// overload and the 5xx family. A 400/401/403 is a real defect — retrying
+// it only burns time.
+const RETRYABLE_STATUS = new Set([408, 409, 429, 500, 502, 503, 504, 529]);
+const MAX_ATTEMPTS = 3;
+const RETRY_BASE_MS = Number(process.env.AI_RETRY_BASE_MS || 700);
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function callClaude(systemPrompt, messages, maxTokens = 300, lang = DEFAULT_LANG) {
   const apiKey = getConfiguredApiKey();
   if (!apiKey) {
     return { error: err(lang, 'apiKeyMissing'), status: 500 };
   }
 
-  const model = process.env.ANTHROPIC_MODEL || 'claude-sonnet-5';
+  const model = process.env.ANTHROPIC_MODEL || DEFAULT_MODEL;
+  let lastFailure = { error: err(lang, 'connection'), status: 500 };
 
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01'
-      },
-      body: JSON.stringify({
-        model: model,
-        max_tokens: maxTokens,
-        system: systemPrompt,
-        messages: messages
-      })
-    });
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    if (attempt > 1) await sleep(RETRY_BASE_MS * Math.pow(2, attempt - 2));
 
-    if (!response.ok) {
-      const errBody = await response.text();
-      console.error('Anthropic API error:', response.status, errBody);
-      return { error: err(lang, 'aiUnavailable'), status: 502 };
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01'
+        },
+        body: JSON.stringify({
+          model: model,
+          max_tokens: maxTokens,
+          system: systemPrompt,
+          messages: messages
+        })
+      });
+
+      if (!response.ok) {
+        const errBody = await response.text();
+        console.error('Anthropic API error (attempt ' + attempt + '/' + MAX_ATTEMPTS + '):', response.status, errBody);
+        lastFailure = { error: err(lang, 'aiUnavailable'), status: 502 };
+        if (RETRYABLE_STATUS.has(response.status)) continue;
+        return lastFailure;
+      }
+
+      const data = await response.json();
+      const text = data.content && data.content[0] && data.content[0].text
+        ? data.content[0].text
+        : '';
+
+      return { text };
+    } catch (e) {
+      // Network-level failure (DNS, socket, TLS) — always worth retrying.
+      console.error('API call error (attempt ' + attempt + '/' + MAX_ATTEMPTS + '):', e);
+      lastFailure = { error: err(lang, 'connection'), status: 500 };
     }
-
-    const data = await response.json();
-    const text = data.content && data.content[0] && data.content[0].text
-      ? data.content[0].text
-      : '';
-
-    return { text };
-  } catch (e) {
-    console.error('API call error:', e);
-    return { error: err(lang, 'connection'), status: 500 };
   }
+
+  return lastFailure;
 }
 
 /**

@@ -501,18 +501,51 @@
     requestKonter(data, answer, runde);
   }
 
-  // "Erst du, dann die KI": wird ausschliesslich nach einer eigenen Antwort aufgerufen.
-  function requestKonter(data, answer, runde) {
-    var lang = currentLang();
-    fetch(API_BASE + '/api/denkprobe-konter', {
+  // Ein schlafender Container braucht seinen ersten Aufruf, um aufzuwachen.
+  // Ohne Wiederholung sieht dieser Aufwachvorgang wie ein Ausfall aus.
+  var KONTER_ATTEMPTS = 3;
+  var KONTER_RETRY_MS = 2500;
+  var KONTER_TIMEOUT_MS = 25000;
+
+  function postKonter(data, answer, runde, lang) {
+    var options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ frage: data.frage, antwort: answer, runde: runde, lang: lang })
-    })
+    };
+
+    var timeoutId = null;
+    if (typeof AbortController !== 'undefined') {
+      var controller = new AbortController();
+      options.signal = controller.signal;
+      timeoutId = window.setTimeout(function () { controller.abort(); }, KONTER_TIMEOUT_MS);
+    }
+
+    return fetch(API_BASE + '/api/denkprobe-konter', options)
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return res.json();
       })
+      .finally(function () {
+        if (timeoutId !== null) window.clearTimeout(timeoutId);
+      });
+  }
+
+  function fetchKonterWithRetry(data, answer, runde, lang, attempt) {
+    return postKonter(data, answer, runde, lang).catch(function (e) {
+      if (attempt >= KONTER_ATTEMPTS) throw e;
+      return new Promise(function (resolve) {
+        window.setTimeout(resolve, KONTER_RETRY_MS * attempt);
+      }).then(function () {
+        return fetchKonterWithRetry(data, answer, runde, lang, attempt + 1);
+      });
+    });
+  }
+
+  // "Erst du, dann die KI": wird ausschliesslich nach einer eigenen Antwort aufgerufen.
+  function requestKonter(data, answer, runde) {
+    var lang = currentLang();
+    fetchKonterWithRetry(data, answer, runde, lang, 1)
       .then(function (konter) {
         if (!konter || konter.error || (!konter.widerspruch && !konter.gegenfrage)) {
           throw new Error(konter && konter.error ? konter.error : 'Empty konter response');
