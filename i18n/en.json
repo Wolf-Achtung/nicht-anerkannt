@@ -41,8 +41,6 @@
   "quiz.start": "Start Quiz",
   "quiz.loading": "Loading quiz...",
   "quiz.error": "Quiz could not be loaded.",
-  "ticker.prev": "Previous message",
-  "ticker.next": "Next message",
   "score.dim0": "Tolerance of Contradiction",
   "score.dim1": "Breadth of Perspective",
   "score.dim2": "Depth of Judgment",

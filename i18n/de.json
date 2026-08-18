@@ -41,8 +41,6 @@
   "quiz.start": "Quiz starten",
   "quiz.loading": "Quiz wird geladen...",
   "quiz.error": "Quiz konnte nicht geladen werden.",
-  "ticker.prev": "Vorherige Nachricht",
-  "ticker.next": "Nächste Nachricht",
   "score.dim0": "Widerspruchstoleranz",
   "score.dim1": "Perspektivbreite",
   "score.dim2": "Urteilstiefe",

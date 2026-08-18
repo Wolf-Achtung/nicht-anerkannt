@@ -141,9 +141,6 @@
     'quiz.loading':        { de: 'Quiz wird geladen...', en: 'Loading quiz...' },
     'quiz.error':          { de: 'Quiz konnte nicht geladen werden.', en: 'Quiz could not be loaded.' },
 
-    /* ── ticker.js ── */
-    'ticker.prev':         { de: 'Vorherige Nachricht', en: 'Previous message' },
-    'ticker.next':         { de: 'Nächste Nachricht',   en: 'Next message' },
 
     /* ── score.js ── */
     'score.dim0':          { de: 'Widerspruchstoleranz',  en: 'Tolerance of Contradiction' },

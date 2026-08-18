@@ -32,20 +32,20 @@ const ROOT = path.join(__dirname, '..');
 // two pages every visitor needs; everything else lives in the merged
 // footer menu (see FOOTER_LINKS) and in on-page links.
 const NAV_PAGES = [
-  { slug: 'ki-und-lernen', key: 'nav.kiUndLernen' },
-  { slug: 'roadmap', key: 'nav.roadmap', group: true }
+  { slug: 'ki-und-lernen', key: 'nav.kiUndLernen' }
 ];
 
 // Merged secondary menu, present on every page: the three audience
 // entries first ("Für dich und mich" = the Werkstatt for everyone),
 // then the former top-nav destinations, then the legal pages.
 const FOOTER_LINKS = [
-  { slug: 'werkstatt', key: 'nav.fuerDich', label: 'fuerDich' },
+  { slug: 'fuer-dich', key: 'nav.fuerDich', label: 'fuerDich' },
   { slug: 'schueler', key: 'nav.schueler' },
   { slug: 'lehrkraefte', key: 'nav.lehrkraefte' },
   { slug: 'salon', key: 'nav.salon' },
   { slug: 'ideen-archiv', key: 'nav.ideenArchiv' },
   { slug: 'medien', key: 'nav.medien' },
+  { slug: 'roadmap', key: 'nav.roadmap' },
   { slug: 'kontakt', key: 'nav.kontakt' },
   { slug: 'impressum', key: 'nav.impressum' },
   { slug: 'datenschutz', key: 'nav.datenschutz' },
@@ -69,7 +69,7 @@ const LABELS = {
     datenschutz: 'Datenschutz',
     'ai-governance': 'AI-Governance',
     ariaLabel: 'Seitenbereiche',
-    langSwitchText: 'DE / EN'
+    langSwitchText: 'EN'
   },
   en: {
     home: 'Home',
@@ -87,7 +87,7 @@ const LABELS = {
     datenschutz: 'Privacy Policy',
     'ai-governance': 'AI Governance',
     ariaLabel: 'Page sections',
-    langSwitchText: 'EN / DE'
+    langSwitchText: 'DE'
   }
 };
 
