@@ -57,6 +57,28 @@ npm run lint    # ESLint
 
 Kein Build-Prozess noetig -- reines HTML/CSS/JS plus ein schlankes Express-Backend.
 
+### Rundum-Test: funktioniert alles live?
+
+`npm run smoke` ruft jeden Bestandteil einmal wirklich auf -- alle 34 Seiten,
+die zentralen Dateien und jeden `/api/*`-Endpunkt -- und prueft dabei nicht nur
+"antwortet es?", sondern "enthaelt die Antwort die Felder, die die Seite
+anzeigt?". Genau diese Pruefung fehlte, als die Gegenrede der Denkprobe
+wochenlang mit HTTP 200 und unbrauchbarem Inhalt antwortete.
+
+```bash
+npm run smoke                  # Produktion: Seiten + API (KI-Aufrufe kosten Tokens)
+npm run smoke -- --no-ai       # nur Seiten und kostenlose Endpunkte
+npm run smoke -- --site-only   # nur die statischen Seiten
+npm run smoke -- --api-only    # nur die API
+npm run smoke -- --json        # maschinenlesbar, fuer CI
+npm run smoke -- --api http://localhost:3000 --site http://localhost:3000
+```
+
+Exit-Code 0 heisst: alles gruen. Jede Zeile nennt Dauer und, im Fehlerfall,
+den Grund (fehlendes Feld, HTTP-Status, Zeitueberschreitung). Ein voller Lauf
+macht rund 17 KI-Anfragen; fuer eine schnelle Kontrolle ohne Kosten genuegt
+`--no-ai`.
+
 ## Features
 
 1. **Manifest-Remixer** -- Manifest-Fragmente neu zusammenwuerfeln und eigene Versionen erzeugen
