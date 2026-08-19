@@ -212,6 +212,13 @@ app.get('/api/health', (req, res) => {
     ok: true,
     apiKeyConfigured: Boolean(getConfiguredApiKey()),
     model: process.env.ANTHROPIC_MODEL || DEFAULT_MODEL,
+    // Which Node actually runs, not what package.json asks for: engines
+    // states a lower bound, and the platform picks from it.
+    node: process.version,
+    // Thinking silently claimed the answer budget once. Now it is readable
+    // from outside instead of only from the deploy platform's settings.
+    thinking: THINKING_MODE,
+    effort: THINKING_ON ? THINKING_EFFORT : null,
     uptimeSeconds: Math.round(process.uptime())
   });
 });

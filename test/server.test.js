@@ -139,6 +139,11 @@ describe('GET /api/health', () => {
     assert.strictEqual(typeof res.body.model, 'string');
     assert.ok(res.body.model.length > 0, 'model should be reported');
     assert.strictEqual(typeof res.body.uptimeSeconds, 'number');
+    // Answers "which runtime and which thinking mode actually run" without
+    // needing access to the deploy platform's settings.
+    assert.match(res.body.node, /^v\d+\./, 'should report the running Node version');
+    assert.strictEqual(res.body.thinking, 'disabled');
+    assert.strictEqual(res.body.effort, null, 'effort only applies when thinking is on');
     assert.ok(!res.raw.includes('sk-'), 'must never leak a key');
   });
 });
