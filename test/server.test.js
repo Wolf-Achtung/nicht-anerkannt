@@ -242,3 +242,98 @@ describe('POST /api/client-log', () => {
     assert.strictEqual(res.status, 400);
   });
 });
+
+// The daily challenge is the same for everyone on a given day, so it must be
+// generated once and reused. Without this, every visitor triggered a fresh AI
+// call — the project's largest avoidable cost. This test spawns a real server
+// against a counting stub because the suite above runs without an API key and
+// therefore never reaches the caching path.
+describe('GET/POST /api/daily — one AI call per day and language', () => {
+  const { spawn } = require('child_process');
+  const path = require('path');
+  let stub, child, stubCalls = 0, stubPort, appPort;
+
+  function post(port, body) {
+    return new Promise((resolve, reject) => {
+      const data = JSON.stringify(body);
+      const req = http.request(
+        { hostname: '127.0.0.1', port, path: '/api/daily', method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(data) } },
+        (res) => { let b = ''; res.on('data', (c) => { b += c; }); res.on('end', () => resolve(JSON.parse(b))); }
+      );
+      req.on('error', reject);
+      req.write(data);
+      req.end();
+    });
+  }
+
+  function waitForReady(port, tries = 60) {
+    return new Promise((resolve, reject) => {
+      const attempt = (left) => {
+        const req = http.get({ hostname: '127.0.0.1', port, path: '/api/health' }, (res) => {
+          res.resume();
+          res.statusCode === 200 ? resolve() : retry(left);
+        });
+        req.on('error', () => retry(left));
+      };
+      const retry = (left) => {
+        if (left <= 0) return reject(new Error('server did not start'));
+        setTimeout(() => attempt(left - 1), 100);
+      };
+      attempt(tries);
+    });
+  }
+
+  before(async () => {
+    stub = http.createServer((req, res) => {
+      stubCalls++;
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        content: [{ type: 'text', text: JSON.stringify({ titel: 'T' + stubCalls, impuls: 'I', frage: 'F' + stubCalls }) }],
+        stop_reason: 'end_turn'
+      }));
+    });
+    await new Promise((r) => stub.listen(0, '127.0.0.1', r));
+    stubPort = stub.address().port;
+    appPort = stubPort + 1;
+
+    child = spawn(process.execPath, [path.join(__dirname, '..', 'server.js')], {
+      env: Object.assign({}, process.env, {
+        PORT: String(appPort),
+        ANTHROPIC_API_KEY: 'test-key',
+        ANTHROPIC_BASE_URL: 'http://127.0.0.1:' + stubPort
+      }),
+      stdio: 'ignore'
+    });
+    await waitForReady(appPort);
+  });
+
+  after(() => {
+    if (child) child.kill();
+    if (stub) stub.close();
+  });
+
+  it('serves repeat visitors from memory instead of calling the AI again', async () => {
+    const first = await post(appPort, { lang: 'de', seed: '2026-01-01' });
+    const second = await post(appPort, { lang: 'de', seed: '2026-01-01' });
+    const third = await post(appPort, { lang: 'de', seed: '2026-01-01' });
+
+    assert.strictEqual(stubCalls, 1, 'three visitors must cost exactly one AI call');
+    assert.strictEqual(second.frage, first.frage, 'everyone sees the same question of the day');
+    assert.strictEqual(third.cached, true, 'repeat answers are marked as served from memory');
+  });
+
+  it('generates separately per language', async () => {
+    const before = stubCalls;
+    await post(appPort, { lang: 'en', seed: '2026-01-01' });
+    assert.strictEqual(stubCalls, before + 1, 'English needs its own question');
+    await post(appPort, { lang: 'en', seed: '2026-01-01' });
+    assert.strictEqual(stubCalls, before + 1, 'and is cached too');
+  });
+
+  it('bundles simultaneous visitors into a single call', async () => {
+    const before = stubCalls;
+    await Promise.all(Array.from({ length: 6 }, () => post(appPort, { lang: 'de', seed: '2026-02-02' })));
+    assert.strictEqual(stubCalls, before + 1, 'six at once must not trigger six calls');
+  });
+});
