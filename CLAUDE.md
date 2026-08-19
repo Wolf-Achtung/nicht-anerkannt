@@ -17,12 +17,13 @@ Datenbank; alles, was Nutzer:innen eingeben, bleibt in ihrem Browser.
 ## Laufzeit
 
 - **Vorgabe:** `package.json` → `engines.node: ">=22"` (Untergrenze, keine Festlegung)
-- **Tatsächlich:** über `GET /api/health` → Feld `node` ablesbar. Beim
-  Durchgang lokal `v22.22.2`.
+- **In Railway tatsächlich:** `v22.23.2`, abgelesen am 19.08.2026 über
+  `GET /api/health` → Feld `node`. Lokal beim Durchgang `v22.22.2`.
 - **Keine** Pin-Datei (`.nvmrc`, `railway.json`, `Dockerfile`) — die Plattform
-  wählt aus der Untergrenze. Node 22 ist LTS.
-- **Offen:** Die in Railway laufende Version wurde beim Durchgang nicht
-  abgelesen. `/api/health` beantwortet das ab sofort ohne Plattformzugang.
+  wählt aus der Untergrenze. Node 22 ist LTS, Wartung bis April 2027.
+- Die laufende Konfiguration ist ohne Plattformzugang über `/api/health`
+  ablesbar: Modell, Node-Version, Denk-Einstellung, Laufzeit seit Start.
+  Am 19.08.2026 stand dort `thinking: adaptive`, `effort: low`.
 
 ## KI-Anbindung
 
@@ -36,6 +37,8 @@ Datenbank; alles, was Nutzer:innen eingeben, bleibt in ihrem Browser.
   Budget wie die Antwort — das hat im August 2026 mehrere Werkzeuge stumm
   lahmgelegt. Mit `AI_THINKING=adaptive` bekommt das Denken automatisch
   eigenes Budget (Antwort × 4, mindestens 6000, höchstens 16000 Token).
+  **In Railway steht `adaptive` mit `effort: low`** (Stand 19.08.2026) — der
+  Code-Standard `disabled` gilt dort also nicht.
 - **Preisstichtag:** Für `claude-sonnet-5` gilt laut der im Projekt
   gebündelten, auf **24.06.2026** datierten API-Referenz ein Einführungspreis
   von 2,00 $ / 10,00 $ je Million Token **bis 31.08.2026**; danach 3,00 $ /
@@ -111,4 +114,4 @@ Stand 19.08.2026 — reine Aufräumarbeiten, kein Fehlverhalten:
 | Datum | Befund in einem Satz |
 |---|---|
 | 18.08.2026 | Erster Durchgang: eine Dev-Abhängigkeit mit Advisory behoben, zwei Endpunkte melden Fehler weiterhin als Erfolg, vier tote Datendateien. |
-| 19.08.2026 | Nachlauf: beide Fehler-als-Erfolg-Stellen behoben; Denkprobe des Tages wird je Tag einmal statt je Besuch erzeugt. |
+| 19.08.2026 | Nachlauf: beide Fehler-als-Erfolg-Stellen behoben; Denkprobe des Tages wird je Tag einmal statt je Besuch erzeugt; Railway-Laufzeit `v22.23.2` abgelesen — damit kein offener Punkt aus dem Durchgang mehr. |
