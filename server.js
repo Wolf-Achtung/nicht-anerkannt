@@ -734,8 +734,18 @@ ${LANG_INSTRUCTION[lang]} Antworte im folgenden JSON-Format (nur das JSON, kein 
   const result = await callClaude(systemPrompt, messages, 800, lang);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  const gegenpositionen = parseClaudeJSON(result.text, 'array', []);
-  res.json({ these, gegenpositionen: Array.isArray(gegenpositionen) ? gegenpositionen : [] });
+  // An empty list rendered as HTTP 200: the salon showed the thesis and
+  // nothing under it, with no error and the score still counting the try.
+  const gegenpositionen = extractJSON(result.text, 'array');
+  const usable = Array.isArray(gegenpositionen)
+    ? gegenpositionen.filter((g) => g && (g.argument || g.perspektive))
+    : [];
+  if (!usable.length) {
+    console.error('[widerspruch] unusable AI answer. Raw starts: ' +
+      JSON.stringify(String(result.text).slice(0, 400)));
+    return res.status(502).json({ error: err(lang, 'aiUnavailable') });
+  }
+  res.json({ these, gegenpositionen: usable });
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -763,7 +773,10 @@ Antworte im folgenden JSON-Format. Die "translation" ist in der Zielsprache (${l
   const result = await callClaude(systemPrompt, messages, 600, lang);
   if (result.error) return res.status(result.status).json({ error: result.error });
 
-  res.json(parseClaudeJSON(result.text, 'object', { translation: result.text, notes: '' }));
+  // The old fallback handed the model's raw text back as the translation,
+  // so a refusal ("Ich kann das gerade nicht beantworten.") appeared in the
+  // result card as if it were the English version.
+  sendParsed(res, result.text, ['translation'], lang, 'translate');
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -976,16 +989,25 @@ app.post('/api/client-log', (req, res) => {
 // ═══════════════════════════════════════════════════════════
 app.use('/api/daily', express.json({ limit: '50kb' }));
 
-async function handleDaily(req, res) {
-  const body = req.body || {};
-  const seed = body.seed || (req.query && req.query.seed);
-  const resolvedSeed = seed || new Date().toISOString().slice(0, 10);
-  const lang = getLang(req);
+// Die Denkprobe des Tages ist ihrem Namen nach für alle dieselbe: gleicher
+// Tag, gleiche Sprache, gleiche Frage — sonst ergibt auch "Frage als Bild
+// teilen" keinen Sinn. Ohne Zwischenspeicher erzeugte jedoch jeder einzelne
+// Besuch eine neue Frage per KI: teuer, langsam, und jede Person sah eine
+// andere. Gespeichert wird nur im Arbeitsspeicher; ein Neustart kostet
+// höchstens einen weiteren Aufruf.
+const dailyCache = new Map();
+const dailyInFlight = new Map();
+const DAILY_CACHE_MAX = Number(process.env.DAILY_CACHE_MAX || 40);
 
-  if (!getConfiguredApiKey()) {
-    return res.json(pickLocalDailyChallenge(resolvedSeed, lang));
+function rememberDaily(key, challenge) {
+  // Map behält die Einfügereihenfolge: der älteste Eintrag fliegt zuerst.
+  if (dailyCache.size >= DAILY_CACHE_MAX) {
+    dailyCache.delete(dailyCache.keys().next().value);
   }
+  dailyCache.set(key, challenge);
+}
 
+async function generateDailyChallenge(resolvedSeed, lang) {
   const systemPrompt = `Du bist der Generator der Täglichen Denkprobe des Denkateliers „Nichts geschenkt“.
 Erzeuge eine kurze, scharfe Denkprobe des Tages. Sie soll:
 - Ein aktuelles oder zeitloses Thema aufgreifen
@@ -1002,14 +1024,43 @@ ${LANG_INSTRUCTION[lang]} JSON-Schlüsselnamen bleiben wie angegeben, nur die We
 
   const messages = [{ role: 'user', content: `Generiere die Denkprobe des Tages. Seed: ${resolvedSeed}` }];
   const result = await callClaude(systemPrompt, messages, 400, lang);
-  if (result.error) {
-    return res.json(pickLocalDailyChallenge(resolvedSeed, lang));
-  }
+  if (result.error) return null;
 
   const parsed = parseClaudeJSON(result.text, 'object', null);
   const normalized = parsed ? normalizeDailyQuestion(parsed, lang) : null;
-  if (normalized) {
-    return res.json({ ...normalized, source: 'ai', seed: resolvedSeed });
+  return normalized ? { ...normalized, source: 'ai', seed: resolvedSeed } : null;
+}
+
+async function handleDaily(req, res) {
+  const body = req.body || {};
+  const seed = body.seed || (req.query && req.query.seed);
+  const resolvedSeed = seed || new Date().toISOString().slice(0, 10);
+  const lang = getLang(req);
+  const key = resolvedSeed + ':' + lang;
+
+  const cached = dailyCache.get(key);
+  if (cached) return res.json({ ...cached, cached: true });
+
+  if (!getConfiguredApiKey()) {
+    return res.json(pickLocalDailyChallenge(resolvedSeed, lang));
+  }
+
+  // Treffen mehrere Anfragen gleichzeitig auf einen leeren Speicher, warten
+  // sie auf denselben Aufruf, statt jede einen eigenen auszulösen.
+  let pending = dailyInFlight.get(key);
+  if (!pending) {
+    pending = generateDailyChallenge(resolvedSeed, lang)
+      .catch((e) => { console.error('[daily] generation failed:', e); return null; })
+      .finally(() => dailyInFlight.delete(key));
+    dailyInFlight.set(key, pending);
+  }
+
+  const generated = await pending;
+  if (generated) {
+    // Nur gelungene KI-Antworten merken: ein vorübergehender Ausfall soll
+    // die Notfall-Frage nicht für den Rest des Tages festschreiben.
+    rememberDaily(key, generated);
+    return res.json(generated);
   }
 
   res.json(pickLocalDailyChallenge(resolvedSeed, lang));

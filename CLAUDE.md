@@ -45,6 +45,19 @@ Datenbank; alles, was Nutzer:innen eingeben, bleibt in ihrem Browser.
   Grundlage ist die gebündelte Referenz. Beim nächsten Durchgang gegen
   `docs.anthropic.com` gegenprüfen.
 
+## Kosten
+
+- **Denkprobe des Tages:** wird je Tag und Sprache **einmal** erzeugt und im
+  Arbeitsspeicher gehalten (`DAILY_CACHE_MAX`, Standard 40 Einträge).
+  Vorher entstand pro Besuch ein KI-Aufruf. Gleichzeitige Anfragen auf einen
+  leeren Speicher werden zu einem Aufruf gebündelt; ein Ausfall wird nicht
+  gespeichert. Der Test in `test/server.test.js` sichert das ab.
+- **Prompt-Caching lohnt nicht:** Die System-Prompts sind 115–707 Token groß,
+  die Mindestgröße für zwischenspeicherbare Präfixe liegt bei ~1024.
+- **Größter verbleibender Regler ist das Denken.** Denk-Token werden zum
+  Ausgabepreis abgerechnet. `AI_THINKING=disabled` senkt die Kosten je Aufruf
+  spürbar und beschleunigt die Antworten, auf Kosten der Tiefe.
+
 ## ENV-Vertrag
 
 Alles außer dem Schlüssel hat einen brauchbaren Standardwert.
@@ -61,6 +74,7 @@ Alles außer dem Schlüssel hat einen brauchbaren Standardwert.
 | `ANTHROPIC_BASE_URL` | nein | `https://api.anthropic.com` | nur für Tests |
 | `ALLOWED_ORIGINS` | nein | beide Domains mit und ohne `www` | CORS |
 | `TRUST_PROXY` | nein | `1` | Proxy-Hops für korrektes Rate-Limit je IP |
+| `DAILY_CACHE_MAX` | nein | `40` | Einträge im Tagesspeicher der Denkprobe |
 | `PORT` | nein | `3000` | Railway setzt das selbst |
 
 **Nur zur Bauzeit:** `SITE_URL` (Standard `https://nichts-geschenkt.de`) wird
@@ -72,7 +86,7 @@ Die `SMOKE_*`-Variablen gehören zum Prüfskript, nicht zum Server.
 ## Prüfen
 
 ```bash
-npm test              # Server-Tests (27)
+npm test              # Server-Tests (30)
 npm run lint          # ESLint (0 Fehler, 19 bekannte Warnungen)
 npm run i18n:check    # DE/EN-Parität der Übersetzungen
 npm run chrome:check  # Menü und Footer auf allen Seiten gleich
@@ -84,16 +98,12 @@ npm run smoke         # ruft Seiten und API live auf und prüft die Antwortform
 
 ## Bekannte offene Punkte
 
-Stand 18.08.2026, gemeldet im Wartungsdurchgang, noch nicht entschieden:
+Stand 19.08.2026 — reine Aufräumarbeiten, kein Fehlverhalten:
 
-1. `/api/widerspruch` antwortet mit HTTP 200 und leerer Liste, wenn die
-   KI-Antwort unlesbar ist — der Salon zeigt dann nichts an, ohne Fehler.
-2. `/api/translate` gibt bei unlesbarer Antwort den Rohtext des Modells als
-   Übersetzung aus.
-3. Vier Datendateien ohne jede Referenz: `data/manifest-fragments.json`,
+1. Vier Datendateien ohne jede Referenz: `data/manifest-fragments.json`,
    `data/ticker-messages.json` und beide `data/en/`-Entsprechungen.
-4. Rund 24 CSS-Regeln für entfernte Bauteile (Ticker, Stempel-Panel).
-5. Die `data.raw`-Zweige in `assets/js/werkstatt.js` und `daily.js` sind tot —
+2. Rund 24 CSS-Regeln für entfernte Bauteile (Ticker, Stempel-Panel).
+3. Die `data.raw`-Zweige in `assets/js/werkstatt.js` und `daily.js` sind tot —
    der Server sendet dieses Feld nicht mehr.
 
 ## Verlauf der Wartungsdurchgänge
@@ -101,3 +111,4 @@ Stand 18.08.2026, gemeldet im Wartungsdurchgang, noch nicht entschieden:
 | Datum | Befund in einem Satz |
 |---|---|
 | 18.08.2026 | Erster Durchgang: eine Dev-Abhängigkeit mit Advisory behoben, zwei Endpunkte melden Fehler weiterhin als Erfolg, vier tote Datendateien. |
+| 19.08.2026 | Nachlauf: beide Fehler-als-Erfolg-Stellen behoben; Denkprobe des Tages wird je Tag einmal statt je Besuch erzeugt. |
